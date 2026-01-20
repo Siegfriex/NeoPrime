@@ -32,7 +32,7 @@ export interface SimilarCase {
 export interface Student {
   id: string;
   name: string;
-  grade: '1st Year' | '2nd Year' | '3rd Year' | 'Repeater';
+  grade: '1학년' | '2학년' | '3학년' | '재수';
   school: string;
   targetUniversity: string;
   major: string;
