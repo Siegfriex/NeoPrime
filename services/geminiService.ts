@@ -15,7 +15,12 @@ export const generateAIFeedback = async (
     return {
       strengths: "Excellent composition balance and strong use of contrast in the focal point.",
       weaknesses: "Detail rendering in the background is slightly rushed, affecting overall depth.",
-      actionPlan: "Focus on refining the edges of the background elements next week to improve spatial depth."
+      actionPlan: "Focus on refining the edges of the background elements next week to improve spatial depth.",
+      comparisonInsight: {
+        similarities: "Composition stability matches the top 30% of last year's accepted students.",
+        differences: "Previous accepted works showed more experimental texture usage in the background.",
+        usp: "Your bold use of primary colors gives a higher visual impact than the average successful portfolio."
+      }
     };
   }
 
@@ -31,6 +36,8 @@ export const generateAIFeedback = async (
     - Completeness/Attitude: ${scores.completeness}
     
     Instructor Notes: "${notes}"
+
+    Context: Compare this student's current work against successful portfolios from previous years for ${student.targetUniversity}.
     
     Based on the scores and notes, generate a structured feedback report.
     The tone should be professional, direct yet encouraging (Director style).
@@ -46,9 +53,17 @@ export const generateAIFeedback = async (
       properties: {
         strengths: { type: Type.STRING, description: "What the student did well" },
         weaknesses: { type: Type.STRING, description: "Core issues to address" },
-        actionPlan: { type: Type.STRING, description: "Specific actionable advice for next week" }
+        actionPlan: { type: Type.STRING, description: "Specific actionable advice for next week" },
+        comparisonInsight: {
+          type: Type.OBJECT,
+          properties: {
+            similarities: { type: Type.STRING, description: "Common traits with passed students" },
+            differences: { type: Type.STRING, description: "What is lacking compared to passed students" },
+            usp: { type: Type.STRING, description: "The student's unique advantage" }
+          }
+        }
       },
-      required: ['strengths', 'weaknesses', 'actionPlan']
+      required: ['strengths', 'weaknesses', 'actionPlan', 'comparisonInsight']
     }
   };
 
@@ -75,7 +90,12 @@ export const generateAIFeedback = async (
     return {
       strengths: "Good effort on the main subject.",
       weaknesses: "Failed to generate detailed feedback due to connection issues.",
-      actionPlan: "Please review the instructor's manual notes."
+      actionPlan: "Please review the instructor's manual notes.",
+      comparisonInsight: {
+         similarities: "N/A",
+         differences: "N/A",
+         usp: "N/A"
+      }
     };
   }
 };
