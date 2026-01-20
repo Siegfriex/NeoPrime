@@ -1,5 +1,5 @@
 {
-  "name": "NeoPrime Dashboard",
-  "description": "A professional dashboard for NeoPrime Art Academy management, featuring student analytics, evaluation tracking, and AI-powered feedback generation.",
+  "name": "네오프라임 대시보드",
+  "description": "학생 분석, 평가 추적 및 AI 기반 피드백 생성을 특징으로 하는 네오프라임 미술학원 관리를 위한 전문 대시보드입니다.",
   "requestFramePermissions": []
 }

@@ -36,12 +36,12 @@ const StudentList: React.FC = () => {
     <div className="max-w-6xl mx-auto pb-12 animate-in slide-in-from-bottom-4 duration-500">
       <div className="flex justify-between items-center mb-8">
         <div>
-           <h1 className="text-3xl font-bold text-gray-900 tracking-tight">Student Analysis</h1>
-           <p className="text-gray-500 mt-2">Manage and analyze students by their target universities.</p>
+           <h1 className="text-3xl font-bold text-gray-900 tracking-tight">학생 분석</h1>
+           <p className="text-gray-500 mt-2">목표 대학별로 학생들을 관리하고 분석합니다.</p>
         </div>
         <button className="flex items-center px-6 py-3 bg-[#FC6401] text-white rounded-xl hover:bg-[#e55a00] transition-all shadow-lg shadow-[#FC6401]/30 font-semibold transform hover:-translate-y-0.5">
             <Plus className="w-5 h-5 mr-2" />
-            Add Student
+            학생 추가
         </button>
       </div>
 
@@ -52,7 +52,7 @@ const StudentList: React.FC = () => {
         <input
           type="text"
           className="block w-full pl-11 pr-4 py-4 bg-white border border-gray-200 rounded-2xl leading-5 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#FC6401] focus:border-[#FC6401] sm:text-sm shadow-sm transition-all hover:shadow-md"
-          placeholder="Search for a student name or high school..."
+          placeholder="학생 이름 또는 학교명 검색..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
@@ -64,7 +64,7 @@ const StudentList: React.FC = () => {
              <div className="bg-gray-50 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6">
                <UsersIcon className="w-10 h-10 text-gray-300" />
              </div>
-             <p className="text-gray-500 text-lg">No students found matching your search.</p>
+             <p className="text-gray-500 text-lg">검색 조건에 맞는 학생이 없습니다.</p>
            </div>
         ) : (
           Object.entries(filteredGroups).map(([univ, students]) => {
@@ -81,7 +81,7 @@ const StudentList: React.FC = () => {
                     </div>
                     <div className="text-left">
                       <h3 className="text-xl font-bold text-gray-900">{univ}</h3>
-                      <p className="text-sm text-gray-500 mt-0.5">{students.length} Students Preparing</p>
+                      <p className="text-sm text-gray-500 mt-0.5">{students.length}명 준비 중</p>
                     </div>
                   </div>
                   <ChevronDown className={`w-6 h-6 text-gray-400 transition-transform duration-300 ${isExpanded ? 'transform rotate-180 text-[#FC6401]' : ''}`} />
@@ -119,7 +119,7 @@ const StudentList: React.FC = () => {
                           
                           <div className="flex items-center gap-8">
                              <div className="hidden md:flex flex-col items-end mr-4">
-                                <span className="text-[10px] text-gray-400 uppercase font-bold tracking-wider mb-1">CSAT Korean</span>
+                                <span className="text-[10px] text-gray-400 uppercase font-bold tracking-wider mb-1">국어 표점</span>
                                 <span className="font-mono font-bold text-gray-800 bg-gray-50 px-2 py-1 rounded-md">{student.academicScores?.korean.standardScore || '-'}</span>
                              </div>
                              <div className="w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center group-hover:bg-[#FC6401] transition-colors">

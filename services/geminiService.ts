@@ -13,34 +13,34 @@ export const generateAIFeedback = async (
   if (!apiKey) {
     console.warn("API Key is missing. Returning mock response.");
     return {
-      strengths: "Excellent composition balance and strong use of contrast in the focal point.",
-      weaknesses: "Detail rendering in the background is slightly rushed, affecting overall depth.",
-      actionPlan: "Focus on refining the edges of the background elements next week to improve spatial depth.",
+      strengths: "구도 밸런스가 뛰어나며 주제부의 대비(Contrast) 활용이 돋보입니다.",
+      weaknesses: "배경부의 디테일 묘사가 다소 급하게 마무리되어 공간감이 부족합니다.",
+      actionPlan: "다음 주에는 배경 요소의 외곽 정리를 통해 공간의 깊이를 더하는 연습에 집중하세요.",
       comparisonInsight: {
-        similarities: "Composition stability matches the top 30% of last year's accepted students.",
-        differences: "Previous accepted works showed more experimental texture usage in the background.",
-        usp: "Your bold use of primary colors gives a higher visual impact than the average successful portfolio."
+        similarities: "구도의 안정성은 작년 합격생 상위 30%와 유사합니다.",
+        differences: "합격작들은 배경 텍스처 활용에서 더 실험적인 시도를 보였습니다.",
+        usp: "과감한 원색 사용이 평균적인 합격 포트폴리오보다 더 높은 시각적 임팩트를 줍니다."
       }
     };
   }
 
   const prompt = `
-    You are an expert art academy director providing feedback to a student.
+    당신은 전문 입시 미술 학원 원장입니다. 학생에게 평가 피드백을 제공해야 합니다.
     
-    Student: ${student.name} (${student.grade}, Target: ${student.targetUniversity}, Major: ${student.major})
+    학생 정보: ${student.name} (${student.grade}, 목표: ${student.targetUniversity}, 전공: ${student.major})
     
-    Evaluation Scores (0-10):
-    - Composition: ${scores.composition}
-    - Tone/Contrast: ${scores.tone}
-    - Idea/Concept: ${scores.idea}
-    - Completeness/Attitude: ${scores.completeness}
+    평가 점수 (0-10점):
+    - 구도 (Composition): ${scores.composition}
+    - 톤/명암 (Tone/Contrast): ${scores.tone}
+    - 발상/연출 (Idea/Concept): ${scores.idea}
+    - 완성도 (Completeness): ${scores.completeness}
     
-    Instructor Notes: "${notes}"
+    강사 노트: "${notes}"
 
-    Context: Compare this student's current work against successful portfolios from previous years for ${student.targetUniversity}.
+    컨텍스트: 이 학생의 현재 작품을 ${student.targetUniversity}의 과거 합격 포트폴리오와 비교하여 분석하세요.
     
-    Based on the scores and notes, generate a structured feedback report.
-    The tone should be professional, direct yet encouraging (Director style).
+    점수와 노트를 바탕으로 구조화된 피드백 리포트를 한국어로 생성하세요.
+    어조는 전문적이고 직설적이지만 격려하는 태도(원장님 스타일)를 유지하세요.
   `;
 
   // Select model based on thinking mode
@@ -51,15 +51,15 @@ export const generateAIFeedback = async (
     responseSchema: {
       type: Type.OBJECT,
       properties: {
-        strengths: { type: Type.STRING, description: "What the student did well" },
-        weaknesses: { type: Type.STRING, description: "Core issues to address" },
-        actionPlan: { type: Type.STRING, description: "Specific actionable advice for next week" },
+        strengths: { type: Type.STRING, description: "학생이 잘한 점 (한국어)" },
+        weaknesses: { type: Type.STRING, description: "핵심 보완 사항 (한국어)" },
+        actionPlan: { type: Type.STRING, description: "다음 주 구체적인 행동 계획 (한국어)" },
         comparisonInsight: {
           type: Type.OBJECT,
           properties: {
-            similarities: { type: Type.STRING, description: "Common traits with passed students" },
-            differences: { type: Type.STRING, description: "What is lacking compared to passed students" },
-            usp: { type: Type.STRING, description: "The student's unique advantage" }
+            similarities: { type: Type.STRING, description: "합격생들과의 공통점" },
+            differences: { type: Type.STRING, description: "합격생들에 비해 부족한 점" },
+            usp: { type: Type.STRING, description: "이 학생만의 유니크한 강점 (USP)" }
           }
         }
       },
@@ -88,9 +88,9 @@ export const generateAIFeedback = async (
     console.error("Gemini API Error:", error);
     // Fallback for demo purposes if API fails
     return {
-      strengths: "Good effort on the main subject.",
-      weaknesses: "Failed to generate detailed feedback due to connection issues.",
-      actionPlan: "Please review the instructor's manual notes.",
+      strengths: "주제부 표현에 노력을 기울였습니다.",
+      weaknesses: "연결 문제로 상세 피드백을 생성하지 못했습니다.",
+      actionPlan: "담당 강사의 수기 노트를 확인해주세요.",
       comparisonInsight: {
          similarities: "N/A",
          differences: "N/A",

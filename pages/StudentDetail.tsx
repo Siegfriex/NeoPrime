@@ -6,7 +6,7 @@ import {
   TrendingUp, Layers, AlertCircle, GraduationCap, 
   ArrowUpRight, ArrowDownRight, Minus, Users, 
   CheckCircle2, Calendar, Scale, ClipboardList, 
-  MessageSquare, CheckSquare, Clock, BookOpen, AlertTriangle, FileText
+  MessageSquare, CheckSquare, Clock, BookOpen, AlertTriangle, FileText, Pencil
 } from 'lucide-react';
 
 const StudentDetail: React.FC = () => {
@@ -15,15 +15,15 @@ const StudentDetail: React.FC = () => {
   const evaluations = getEvaluationsByStudentId(id || '');
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
-  // Worksheet State
+  // Worksheet State (한글화)
   const [todoList, setTodoList] = useState([
-    { id: 1, text: 'Schedule counseling on Ga/Na/Da selection strategy', done: false, due: '2d' },
-    { id: 2, text: 'Assign "Idea Generation" supplementary workshop', done: true, due: 'Done' },
-    { id: 3, text: 'Review academic score trend after June Mock Exam', done: false, due: '1w' },
+    { id: 1, text: '가/나/다군 지원 전략 상담 일정 잡기', done: false, due: '2일 남음' },
+    { id: 2, text: '"아이디어 발상" 보충 워크샵 배정', done: true, due: '완료' },
+    { id: 3, text: '6월 모의고사 이후 성적 추이 검토', done: false, due: '1주 남음' },
   ]);
 
   if (!student) {
-    return <div className="p-8 text-center text-gray-500">Student not found</div>;
+    return <div className="p-8 text-center text-gray-500">학생을 찾을 수 없습니다.</div>;
   }
 
   const hasImages = student.artworks && student.artworks.length > 0;
@@ -49,29 +49,29 @@ const StudentDetail: React.FC = () => {
   // --- Mock Analysis Data ---
   
   const strategyStatus = {
-    badge: 'High Potential'
+    badge: '잠재력 높음'
   };
 
-  // Recruitment Group Strategy (Ga/Na/Da)
+  // Recruitment Group Strategy (Ga/Na/Da) - 한글화
   const recruitmentStrategy = [
-    { group: 'Ga', univ: 'SNU', line: 'Reach', prob: 35, color: 'bg-rose-500', text: 'text-rose-600' },
-    { group: 'Na', univ: 'Hongik Univ.', line: 'Safe', prob: 78, color: 'bg-[#FC6401]', text: 'text-[#FC6401]' },
-    { group: 'Da', univ: 'Ewha Womans', line: 'Top', prob: 92, color: 'bg-emerald-500', text: 'text-emerald-600' }
+    { group: '가군', univ: '서울대', line: '상향(Reach)', prob: 35, color: 'bg-rose-500', text: 'text-rose-600' },
+    { group: '나군', univ: '홍익대', line: '적정(Safe)', prob: 78, color: 'bg-[#FC6401]', text: 'text-[#FC6401]' },
+    { group: '다군', univ: '이화여대', line: '소신(Top)', prob: 92, color: 'bg-emerald-500', text: 'text-emerald-600' }
   ];
 
   // Academic Score Data Structure for Table
   const academicTableData = [
-    { subject: 'Korean', student: student.academicScores.korean.standardScore, avg: 138, type: 'score' },
-    { subject: 'English', student: student.academicScores.english.grade, avg: 1, type: 'grade' },
-    { subject: 'Math', student: student.academicScores.math.standardScore, avg: 135, type: 'score' },
-    { subject: 'Soc 1', student: student.academicScores.social1.standardScore, avg: 66, type: 'score' },
-    { subject: 'Soc 2', student: student.academicScores.social2.standardScore, avg: 65, type: 'score' },
+    { subject: '국어', student: student.academicScores.korean.standardScore, avg: 138, type: 'score' },
+    { subject: '영어', student: student.academicScores.english.grade, avg: 1, type: 'grade' },
+    { subject: '수학', student: student.academicScores.math.standardScore, avg: 135, type: 'score' },
+    { subject: '탐구1', student: student.academicScores.social1.standardScore, avg: 66, type: 'score' },
+    { subject: '탐구2', student: student.academicScores.social2.standardScore, avg: 65, type: 'score' },
   ];
 
   const instructorBias = {
-    name: 'Instructor Han',
+    name: '한 강사',
     biasScore: -2.5,
-    note: 'Han tends to grade "Tone" heavily; adjusted score likely ~86.5.'
+    note: '한 강사는 "톤(Tone)"을 엄격하게 평가하는 경향이 있음; 보정된 점수는 약 86.5점 예상.'
   };
 
   return (
@@ -97,16 +97,16 @@ const StudentDetail: React.FC = () => {
                     {/* Recruitment Group Targets Header Line */}
                     <div className="flex items-center gap-6 text-sm mt-2">
                         <span className="flex items-center gap-1.5 font-medium text-gray-700 bg-gray-50 px-2 py-0.5 rounded-lg border border-gray-100">
-                            <span className="text-gray-400 font-bold text-xs uppercase">Target</span>
+                            <span className="text-gray-400 font-bold text-xs uppercase">목표 대학</span>
                         </span>
                         {recruitmentStrategy.map((strat, idx) => (
                             <div key={strat.group} className="flex items-center gap-2">
                                 <span className="text-gray-500 font-bold text-xs">{strat.group}:</span>
                                 <span className="font-bold text-gray-800">{strat.univ}</span>
                                 <span className={`text-[10px] px-1.5 py-0.5 rounded font-bold border uppercase ${
-                                    strat.line === 'Safe' || strat.line === 'Top' 
+                                    strat.line.includes('Safe') || strat.line.includes('Top') 
                                     ? 'bg-emerald-50 text-emerald-600 border-emerald-100' 
-                                    : strat.line === 'Reach' 
+                                    : strat.line.includes('Reach') 
                                     ? 'bg-rose-50 text-rose-600 border-rose-100'
                                     : 'bg-amber-50 text-amber-600 border-amber-100'
                                 }`}>
@@ -121,16 +121,19 @@ const StudentDetail: React.FC = () => {
             
             <div className="flex items-center gap-6">
                  <div className="text-right hidden sm:block">
-                     <div className="text-[10px] text-gray-400 uppercase font-bold tracking-wider mb-1">Current Level</div>
+                     <div className="text-[10px] text-gray-400 uppercase font-bold tracking-wider mb-1">현재 레벨</div>
                      <div className={`text-2xl font-bold ${student.currentLevel.includes('A') ? 'text-[#FC6401]' : 'text-emerald-600'}`}>
                          {student.currentLevel}
                      </div>
                  </div>
                  <div className="h-10 w-px bg-gray-200 mx-2"></div>
-                 <button className="flex items-center gap-2 bg-gray-900 text-white px-4 py-2.5 rounded-xl hover:bg-gray-800 transition-colors shadow-lg shadow-gray-900/10">
+                 <Link 
+                    to={`/evaluations/new?studentId=${student.id}`}
+                    className="flex items-center gap-2 bg-gray-900 text-white px-4 py-2.5 rounded-xl hover:bg-gray-800 transition-colors shadow-lg shadow-gray-900/10"
+                 >
                     <MessageSquare className="w-4 h-4" />
-                    <span className="text-sm font-bold">Start Consult</span>
-                 </button>
+                    <span className="text-sm font-bold">상담 시작</span>
+                 </Link>
             </div>
           </div>
       </div>
@@ -146,7 +149,7 @@ const StudentDetail: React.FC = () => {
                 {/* Section A: Admission & Academic Position */}
                 <div className="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm">
                     <h3 className="text-xs font-bold text-gray-400 uppercase mb-5 flex items-center gap-2 tracking-wider">
-                         <Activity className="w-4 h-4" /> Admission & Academic Position
+                         <Activity className="w-4 h-4" /> 입시 및 학업 위치
                     </h3>
                     
                     {/* 1. Group Summary Bars */}
@@ -155,7 +158,7 @@ const StudentDetail: React.FC = () => {
                             <div key={strat.group} className="relative">
                                 <div className="flex justify-between items-end mb-1.5">
                                     <div className="flex items-center gap-2">
-                                        <span className="text-xs font-bold text-gray-500 w-5">{strat.group}</span>
+                                        <span className="text-xs font-bold text-gray-500 w-8">{strat.group}</span>
                                         <span className="text-sm font-bold text-gray-800 truncate max-w-[140px]">{strat.univ}</span>
                                     </div>
                                     <span className={`text-sm font-bold ${strat.text}`}>{strat.prob}%</span>
@@ -175,10 +178,10 @@ const StudentDetail: React.FC = () => {
                         <table className="w-full text-xs text-left">
                             <thead>
                                 <tr className="text-gray-400 border-b border-gray-100">
-                                    <th className="pb-2 font-medium pl-1">Subject</th>
-                                    <th className="pb-2 font-medium text-right">Student</th>
-                                    <th className="pb-2 font-medium text-right text-gray-400">Avg Admit</th>
-                                    <th className="pb-2 font-medium text-right">Gap</th>
+                                    <th className="pb-2 font-medium pl-1">과목</th>
+                                    <th className="pb-2 font-medium text-right">학생 점수</th>
+                                    <th className="pb-2 font-medium text-right text-gray-400">합격 평균</th>
+                                    <th className="pb-2 font-medium text-right">차이</th>
                                 </tr>
                             </thead>
                             <tbody className="divide-y divide-gray-50">
@@ -205,7 +208,7 @@ const StudentDetail: React.FC = () => {
                                             <td className="py-2.5 font-medium text-gray-700 pl-1">{row.subject}</td>
                                             <td className="py-2.5 text-right font-bold text-gray-900">
                                                 {row.student || '-'}
-                                                {row.type === 'grade' && <span className="text-[9px] font-normal ml-0.5 text-gray-400">Gr</span>}
+                                                {row.type === 'grade' && <span className="text-[9px] font-normal ml-0.5 text-gray-400">등급</span>}
                                             </td>
                                             <td className="py-2.5 text-right text-gray-400">{row.avg}</td>
                                             <td className={`py-2.5 text-right font-bold ${isPositive ? 'text-emerald-600' : 'text-rose-500'}`}>
@@ -221,11 +224,11 @@ const StudentDetail: React.FC = () => {
                     {/* 3. Insight Summary */}
                     <div className="bg-gray-50 rounded-xl p-4 border border-gray-100">
                         <p className="text-xs text-gray-600 leading-relaxed mb-3">
-                            Overall academic index is <strong className="text-emerald-600">+4.5pts above</strong> the average admitted profile for Hongik (Na), and slightly below SNU (Ga) cutline in Math.
+                            전반적인 학업 지수는 홍익대(나군) 합격 평균보다 <strong className="text-emerald-600">+4.5점 높으며</strong>, 서울대(가군) 수학 커트라인보다는 약간 낮습니다.
                         </p>
                         <p className="text-xs text-gray-600 leading-relaxed flex items-start gap-2">
                             <AlertTriangle className="w-4 h-4 text-amber-500 mt-0.5 shrink-0" />
-                            <span>Main academic risk is <strong>SNU Math score</strong>; others are within target ranges.</span>
+                            <span>주요 학업 리스크는 <strong>서울대 수학 점수</strong>이며, 나머지는 목표 범위 내에 있습니다.</span>
                         </p>
                     </div>
                 </div>
@@ -238,7 +241,7 @@ const StudentDetail: React.FC = () => {
                 <div className="bg-white border border-gray-200 rounded-2xl shadow-sm overflow-hidden relative group flex-1 min-h-[500px] flex flex-col">
                     <div className="absolute top-6 left-6 z-10 bg-white/90 backdrop-blur px-4 py-1.5 rounded-full text-xs font-bold text-gray-800 shadow-sm border border-gray-200 flex items-center gap-2">
                         <Calendar className="w-3 h-3 text-[#FC6401]" />
-                        {latestEval ? new Date(latestEval.date).toLocaleDateString() : 'No Date'}
+                        {latestEval ? new Date(latestEval.date).toLocaleDateString() : '날짜 없음'}
                     </div>
                     
                     <div className="flex-1 bg-[#F7F9FB] relative flex items-center justify-center p-8">
@@ -260,11 +263,18 @@ const StudentDetail: React.FC = () => {
                                         <div key={idx} className={`w-2.5 h-2.5 rounded-full shadow-sm transition-all ${idx === currentImageIndex ? 'bg-[#FC6401] w-6' : 'bg-gray-300'}`} />
                                     ))}
                                 </div>
+                                {/* Edit Action Overlay */}
+                                <Link 
+                                    to={`/evaluations/new?studentId=${student.id}`}
+                                    className="absolute top-6 right-6 p-2 bg-white/90 backdrop-blur rounded-full text-gray-400 hover:text-[#FC6401] border border-gray-200 shadow-sm opacity-0 group-hover:opacity-100 transition-opacity"
+                                >
+                                    <Pencil className="w-4 h-4" />
+                                </Link>
                             </>
                         ) : (
                             <div className="text-gray-400 flex flex-col items-center">
                                 <AlertCircle className="w-16 h-16 mb-4 opacity-20" />
-                                <p>No artworks uploaded</p>
+                                <p>업로드된 작품이 없습니다.</p>
                             </div>
                         )}
                     </div>
@@ -273,26 +283,26 @@ const StudentDetail: React.FC = () => {
                     <div className="p-6 border-t border-gray-100 bg-white">
                         <div className="flex gap-6">
                             <div className="flex-1">
-                                <h4 className="font-bold text-gray-900 text-sm mb-2">Director's Review Note</h4>
+                                <h4 className="font-bold text-gray-900 text-sm mb-2">원장 리뷰 노트</h4>
                                 <p className="text-sm text-gray-500 leading-relaxed line-clamp-3">
-                                    {latestEval?.notes || "No specific notes available for this artwork."}
+                                    {latestEval?.notes || "이 작품에 대한 노트가 없습니다."}
                                 </p>
                             </div>
                             <div className="flex gap-4 border-l border-gray-100 pl-6">
                                 <div className="text-center">
-                                    <div className="text-[10px] text-gray-400 uppercase font-bold">Comp</div>
+                                    <div className="text-[10px] text-gray-400 uppercase font-bold">구도</div>
                                     <div className="font-bold text-gray-900 text-lg">{latestEval?.scores.composition}</div>
                                 </div>
                                 <div className="text-center">
-                                    <div className="text-[10px] text-gray-400 uppercase font-bold">Tone</div>
+                                    <div className="text-[10px] text-gray-400 uppercase font-bold">소묘/톤</div>
                                     <div className="font-bold text-gray-900 text-lg">{latestEval?.scores.tone}</div>
                                 </div>
                                 <div className="text-center">
-                                    <div className="text-[10px] text-gray-400 uppercase font-bold">Idea</div>
+                                    <div className="text-[10px] text-gray-400 uppercase font-bold">발상</div>
                                     <div className="font-bold text-gray-900 text-lg">{latestEval?.scores.idea}</div>
                                 </div>
                                 <div className="text-center">
-                                    <div className="text-[10px] text-gray-400 uppercase font-bold">Total</div>
+                                    <div className="text-[10px] text-gray-400 uppercase font-bold">총점</div>
                                     <div className="font-bold text-[#FC6401] text-xl">{latestEval?.totalScore}</div>
                                 </div>
                             </div>
@@ -307,7 +317,7 @@ const StudentDetail: React.FC = () => {
                 {/* Section D: Instructor Bias (Upgraded Visuals) */}
                 <div className="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm">
                     <h3 className="text-xs font-bold text-gray-400 uppercase mb-5 flex items-center gap-2 tracking-wider">
-                         <Scale className="w-4 h-4" /> Instructor Bias Analysis
+                         <Scale className="w-4 h-4" /> 강사 편차 분석
                     </h3>
                     
                     {/* Visual Dot Plot */}
@@ -321,13 +331,13 @@ const StudentDetail: React.FC = () => {
                         {/* Raw Score */}
                         <div className="absolute top-1/2 left-[40%] -translate-y-1/2 -translate-x-1/2 flex flex-col items-center group">
                             <div className="w-3 h-3 rounded-full bg-gray-500 border-2 border-white shadow-sm z-10"></div>
-                            <span className="text-[10px] text-gray-500 font-bold mt-1">Raw</span>
+                            <span className="text-[10px] text-gray-500 font-bold mt-1">원점수</span>
                         </div>
 
                         {/* Adjusted Score */}
                         <div className="absolute top-1/2 left-[55%] -translate-y-1/2 -translate-x-1/2 flex flex-col items-center group">
                             <div className="w-3.5 h-3.5 rounded-full bg-[#FC6401] border-2 border-white shadow-sm z-10"></div>
-                            <span className="text-[10px] text-[#FC6401] font-bold mt-1">Adj</span>
+                            <span className="text-[10px] text-[#FC6401] font-bold mt-1">보정값</span>
                         </div>
                         
                         {/* Connection Arc (Stylized) */}
@@ -340,7 +350,7 @@ const StudentDetail: React.FC = () => {
                         <div className="flex justify-between items-center mb-2">
                             <span className="text-sm font-bold text-gray-800">{instructorBias.name}</span>
                             <span className="text-xs font-bold text-rose-500 bg-rose-100 px-1.5 py-0.5 rounded">
-                                {instructorBias.biasScore} bias
+                                {instructorBias.biasScore} 편차
                             </span>
                         </div>
                         <p className="text-xs text-gray-600 leading-snug">
@@ -352,19 +362,19 @@ const StudentDetail: React.FC = () => {
                 {/* Section E: Resource Plan */}
                 <div className="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm">
                     <h3 className="text-xs font-bold text-gray-400 uppercase mb-4 flex items-center gap-2 tracking-wider">
-                         <Clock className="w-4 h-4" /> Resource Plan (4 Weeks)
+                         <Clock className="w-4 h-4" /> 리소스 플랜 (4주)
                     </h3>
                     <ul className="space-y-4">
                         <li className="flex gap-3 text-sm text-gray-700">
                             <div className="w-2 h-2 rounded-full bg-[#FC6401] mt-1.5 shrink-0"></div>
                             <span>
-                                Add <strong>+1.5h</strong> practical session/week focusing on composition.
+                                구도 집중 실기 세션 <strong>+1.5시간</strong> 추가/주.
                             </span>
                         </li>
                         <li className="flex gap-3 text-sm text-gray-700">
                             <div className="w-2 h-2 rounded-full bg-gray-300 mt-1.5 shrink-0"></div>
                             <span>
-                                Assign to 'Idea Generation' small group workshop (with student S.Y).
+                                '아이디어 발상' 소그룹 워크샵 배정 (학생 S.Y와 함께).
                             </span>
                         </li>
                     </ul>
@@ -373,25 +383,25 @@ const StudentDetail: React.FC = () => {
                 {/* Section F: Consultation Agenda */}
                 <div className="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm flex-1 bg-gradient-to-b from-white to-[#FFF9F5]">
                     <h3 className="text-xs font-bold text-gray-400 uppercase mb-4 flex items-center gap-2 tracking-wider">
-                         <ClipboardList className="w-4 h-4" /> Consult Agenda
+                         <ClipboardList className="w-4 h-4" /> 상담 아젠다
                     </h3>
                     <div className="space-y-5">
                         <div className="flex gap-3">
                             <div className="w-6 h-6 rounded-full bg-[#FFF0E6] text-[#FC6401] font-bold text-xs flex items-center justify-center shrink-0 border border-[#FC6401]/20">1</div>
                             <p className="text-sm text-gray-800 font-medium">
-                                Academic scores are stable above cut-off. Focus discussion on <span className="text-[#FC6401]">Practical "Idea" scores</span>.
+                                학업 성적은 안정적입니다. <span className="text-[#FC6401]">실기 "아이디어" 점수</span> 향상에 집중하세요.
                             </p>
                         </div>
                         <div className="flex gap-3">
                             <div className="w-6 h-6 rounded-full bg-[#FFF0E6] text-[#FC6401] font-bold text-xs flex items-center justify-center shrink-0 border border-[#FC6401]/20">2</div>
                             <p className="text-sm text-gray-800 font-medium">
-                                Discuss Hongik HIGH vs Ewha TOP strategic choice.
+                                홍익대(상위) vs 이화여대(최상위) 전략적 선택 논의.
                             </p>
                         </div>
                         <div className="flex gap-3">
                             <div className="w-6 h-6 rounded-full bg-[#FFF0E6] text-[#FC6401] font-bold text-xs flex items-center justify-center shrink-0 border border-[#FC6401]/20">3</div>
                             <p className="text-sm text-gray-800 font-medium">
-                                Review recent attendance pattern (2 late arrivals).
+                                최근 지각 패턴(2회) 점검.
                             </p>
                         </div>
                     </div>
@@ -406,7 +416,7 @@ const StudentDetail: React.FC = () => {
             <div className="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm">
                 <h3 className="font-bold text-gray-900 mb-6 flex items-center gap-2">
                     <TrendingUp className="w-5 h-5 text-gray-400" />
-                    Evaluation & Event Log
+                    평가 및 이벤트 로그
                 </h3>
                 <div className="relative pl-5 border-l-2 border-gray-100 space-y-8">
                     
@@ -416,12 +426,12 @@ const StudentDetail: React.FC = () => {
                             <FileText className="w-4 h-4 text-blue-600" />
                         </div>
                         <div className="flex justify-between items-start mb-1">
-                            <span className="text-sm font-bold text-blue-600">June Mock Exam</span>
+                            <span className="text-sm font-bold text-blue-600">6월 모의고사</span>
                             <span className="text-xs text-gray-400">2026-06-04</span>
                         </div>
-                        <div className="text-xs text-gray-500 mb-2 font-medium">Academic Checkpoint</div>
+                        <div className="text-xs text-gray-500 mb-2 font-medium">학업 체크포인트</div>
                         <p className="text-sm text-gray-600 bg-blue-50 p-3 rounded-xl border border-blue-100">
-                            Scores confirmed. Math percentile dropped slightly (-2), but Korean remains top tier (99%).
+                            성적 확인 완료. 수학 백분위가 소폭 하락(-2)했으나, 국어는 최상위권(99%) 유지.
                         </p>
                     </div>
 
@@ -431,11 +441,11 @@ const StudentDetail: React.FC = () => {
                                 <Target className="w-4 h-4 text-[#FC6401]" />
                             </div>
                             <div className="flex justify-between items-start mb-1">
-                                <span className="text-sm font-bold text-gray-900">Weekly Eval #{evaluations.length - idx}</span>
+                                <span className="text-sm font-bold text-gray-900">주간 평가 #{evaluations.length - idx}</span>
                                 <span className="text-xs text-gray-400">{new Date(ev.date).toLocaleDateString()}</span>
                             </div>
                             <div className="text-xs text-gray-500 mb-2 font-medium">
-                                Score: <span className="font-bold text-gray-700">{ev.totalScore}</span> ({ev.instructorId === 'i1' ? 'Instr. Han' : 'Instr. Kim'})
+                                점수: <span className="font-bold text-gray-700">{ev.totalScore}</span> ({ev.instructorId === 'i1' ? '한 강사' : '김 강사'})
                             </div>
                             <p className="text-sm text-gray-600 bg-gray-50 p-3 rounded-xl border border-gray-100">
                                 "{ev.notes}"
@@ -450,9 +460,9 @@ const StudentDetail: React.FC = () => {
                 <div className="flex justify-between items-center mb-6">
                     <h3 className="font-bold text-gray-900 flex items-center gap-2">
                         <CheckSquare className="w-5 h-5 text-gray-400" />
-                        Next Actions
+                        다음 할 일 (Next Actions)
                     </h3>
-                    <button className="text-xs font-bold text-[#FC6401] hover:underline">+ Add Task</button>
+                    <button className="text-xs font-bold text-[#FC6401] hover:underline">+ 할 일 추가</button>
                 </div>
                 
                 <div className="space-y-3 flex-1">

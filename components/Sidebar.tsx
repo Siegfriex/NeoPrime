@@ -4,10 +4,10 @@ import { LayoutDashboard, Users, FileEdit, BarChart2, Settings, LogOut, Hexagon 
 
 const Sidebar: React.FC = () => {
   const navItems = [
-    { to: '/', icon: LayoutDashboard, label: 'Dashboard' },
-    { to: '/students', icon: Users, label: 'Students' },
-    { to: '/evaluations/new', icon: FileEdit, label: 'Evaluation' },
-    { to: '/analytics', icon: BarChart2, label: 'Analytics' },
+    { to: '/', icon: LayoutDashboard, label: '대시보드' },
+    { to: '/students', icon: Users, label: '학생 관리' },
+    { to: '/evaluations/new', icon: FileEdit, label: '평가 입력' },
+    { to: '/analytics', icon: BarChart2, label: '데이터 분석' },
   ];
 
   return (
@@ -20,7 +20,7 @@ const Sidebar: React.FC = () => {
       </div>
 
       <div className="px-6 py-2">
-        <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider">Business</p>
+        <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider">업무</p>
       </div>
 
       <nav className="flex-1 px-4 space-y-1">
@@ -49,20 +49,20 @@ const Sidebar: React.FC = () => {
                     <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Felix" alt="User" />
                 </div>
                 <div>
-                    <p className="text-sm font-bold text-gray-900">Eun-il Lee</p>
-                    <p className="text-xs text-gray-500">Director</p>
+                    <p className="text-sm font-bold text-gray-900">이은일</p>
+                    <p className="text-xs text-gray-500">원장</p>
                 </div>
             </div>
-            <button className="text-xs text-[#FC6401] font-medium hover:underline">View Profile</button>
+            <button className="text-xs text-[#FC6401] font-medium hover:underline">프로필 보기</button>
         </div>
 
         <button className="flex items-center space-x-3 px-4 py-3 w-full text-gray-500 hover:bg-gray-50 hover:text-gray-900 rounded-xl transition-colors">
           <Settings className="w-5 h-5" />
-          <span>Settings</span>
+          <span>설정</span>
         </button>
         <button className="flex items-center space-x-3 px-4 py-3 w-full text-gray-500 hover:bg-rose-50 hover:text-rose-500 rounded-xl transition-colors mt-1">
           <LogOut className="w-5 h-5" />
-          <span>Logout</span>
+          <span>로그아웃</span>
         </button>
       </div>
     </div>

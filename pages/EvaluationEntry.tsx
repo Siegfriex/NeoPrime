@@ -3,8 +3,10 @@ import { STUDENTS } from '../services/mockData';
 import { generateAIFeedback } from '../services/geminiService';
 import { Sparkles, Save, Brain, X, Copy, Check, ChevronRight, Wand2, GraduationCap, ArrowUpRight, ArrowDownRight, LayoutTemplate, SplitSquareHorizontal } from 'lucide-react';
 import { Student } from '../types';
+import { useSearchParams } from 'react-router-dom';
 
 const EvaluationEntry: React.FC = () => {
+  const [searchParams] = useSearchParams();
   const [selectedStudentId, setSelectedStudentId] = useState('');
   const [scores, setScores] = useState({ composition: 5, tone: 5, idea: 5, completeness: 5 });
   const [notes, setNotes] = useState('');
@@ -19,15 +21,21 @@ const EvaluationEntry: React.FC = () => {
   // Comparison State
   const [selectedComparisonCase, setSelectedComparisonCase] = useState<any>(null);
 
+  // Pre-select student from URL
+  useEffect(() => {
+    const sid = searchParams.get('studentId');
+    if (sid) setSelectedStudentId(sid);
+  }, [searchParams]);
+
   const selectedStudent = STUDENTS.find(s => s.id === selectedStudentId);
 
-  // Thinking Animation Steps
+  // Thinking Animation Steps (한글화)
   const thinkingMessages = [
-    "Analyzing composition balance...",
-    "Retrieving academic standing...",
-    "Fetching similar past portfolios...",
-    "Comparing visual patterns...",
-    "Synthesizing strategic advice..."
+    "구도 밸런스 분석 중...",
+    "학업 성취도 데이터 조회 중...",
+    "과거 합격생 포트폴리오 비교 중...",
+    "시각적 패턴 매칭 중...",
+    "전략적 조언 합성 중..."
   ];
 
   useEffect(() => {
@@ -63,7 +71,7 @@ const EvaluationEntry: React.FC = () => {
   };
 
   const handleSave = () => {
-    alert('Evaluation saved! (Mock Action)');
+    alert('평가가 저장되었습니다! (Mock Action)');
     setNotes('');
     setGeneratedFeedback(null);
     setIsModalOpen(false);
@@ -71,7 +79,7 @@ const EvaluationEntry: React.FC = () => {
 
   const copyToClipboard = (text: string) => {
     navigator.clipboard.writeText(text);
-    alert("Copied to clipboard!");
+    alert("클립보드에 복사되었습니다!");
   };
 
   const getAcademicPosition = (student: Student) => {
@@ -87,11 +95,18 @@ const EvaluationEntry: React.FC = () => {
     { id: 'sc3', name: 'H.L.', year: 2024, result: 'Waitlisted', line: 'MID', img: 'https://images.unsplash.com/photo-1605721911519-3dfeb3be25e7?q=80&w=300&auto=format&fit=crop' }
   ];
 
+  const scoreLabels: any = {
+      composition: '구도 (Composition)',
+      tone: '소묘/톤 (Tone)',
+      idea: '발상 (Idea)',
+      completeness: '완성도 (Completeness)'
+  };
+
   return (
     <div className="max-w-4xl mx-auto relative animate-in fade-in duration-500">
       <div className="mb-8">
-        <h1 className="text-2xl font-bold text-gray-900">New Evaluation</h1>
-        <p className="text-gray-500 mt-1">Record weekly progress and generate AI feedback.</p>
+        <h1 className="text-2xl font-bold text-gray-900">새 평가 입력</h1>
+        <p className="text-gray-500 mt-1">주간 실기 진행 상황을 기록하고 AI 피드백을 생성합니다.</p>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -100,13 +115,13 @@ const EvaluationEntry: React.FC = () => {
             
             {/* Student Selection */}
             <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
-                <label className="block text-sm font-medium text-gray-700 mb-2">Select Student</label>
+                <label className="block text-sm font-medium text-gray-700 mb-2">학생 선택</label>
                 <select 
                     className="w-full p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#FC6401] focus:border-[#FC6401] outline-none transition-all"
                     value={selectedStudentId}
                     onChange={(e) => setSelectedStudentId(e.target.value)}
                 >
-                    <option value="">-- Choose a student --</option>
+                    <option value="">-- 학생을 선택하세요 --</option>
                     {STUDENTS.map(s => (
                         <option key={s.id} value={s.id}>{s.name} ({s.grade})</option>
                     ))}
@@ -125,12 +140,12 @@ const EvaluationEntry: React.FC = () => {
 
             {/* Scores */}
             <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 opacity-100 transition-opacity">
-                <h3 className="text-lg font-bold text-gray-900 mb-6">4-Axis Scoring</h3>
+                <h3 className="text-lg font-bold text-gray-900 mb-6">4축 평가 점수</h3>
                 <div className="space-y-6">
                     {Object.entries(scores).map(([key, value]) => (
                         <div key={key}>
                             <div className="flex justify-between mb-2">
-                                <label className="text-sm font-medium text-gray-700 capitalize">{key}</label>
+                                <label className="text-sm font-medium text-gray-700 capitalize">{scoreLabels[key]}</label>
                                 <span className="text-sm font-bold text-[#FC6401]">{value}/10</span>
                             </div>
                             <input 
@@ -149,10 +164,10 @@ const EvaluationEntry: React.FC = () => {
 
             {/* Notes */}
             <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
-                <h3 className="text-lg font-bold text-gray-900 mb-4">Instructor Notes</h3>
+                <h3 className="text-lg font-bold text-gray-900 mb-4">강사 노트</h3>
                 <textarea 
                     className="w-full p-4 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#FC6401] outline-none h-32 resize-none"
-                    placeholder="Describe specific observations about the artwork..."
+                    placeholder="작품에 대한 구체적인 관찰 내용을 기록하세요..."
                     value={notes}
                     onChange={(e) => setNotes(e.target.value)}
                 />
@@ -164,12 +179,12 @@ const EvaluationEntry: React.FC = () => {
             <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 sticky top-24">
                 <h3 className="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
                     {useThinking ? <Brain className="w-5 h-5 text-[#FC6401]" /> : <Sparkles className="w-5 h-5 text-[#FC6401]" />}
-                    {useThinking ? "Deep Feedback" : "AI Feedback Assistant"}
+                    {useThinking ? "심층 분석 피드백" : "AI 피드백 어시스턴트"}
                 </h3>
                 <p className="text-sm text-gray-500 mb-4">
                     {useThinking 
-                        ? "Using Gemini 3.0 Pro with reasoning capabilities for complex analysis."
-                        : "Generate structured feedback based on your scores and notes."
+                        ? "Gemini 3.0 Pro의 추론 능력을 사용하여 복합적인 입시 전략을 분석합니다."
+                        : "입력된 점수와 노트를 기반으로 구조화된 피드백을 생성합니다."
                     }
                 </p>
 
@@ -183,7 +198,7 @@ const EvaluationEntry: React.FC = () => {
                             onChange={(e) => setUseThinking(e.target.checked)}
                         />
                         <div className="w-9 h-5 bg-gray-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-[#FC6401]/30 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-[#FC6401]"></div>
-                        <span className="ml-3 text-sm font-medium text-gray-700">Thinking Mode</span>
+                        <span className="ml-3 text-sm font-medium text-gray-700">Thinking 모드</span>
                      </label>
                      <Brain className={`w-4 h-4 ${useThinking ? 'text-[#FC6401]' : 'text-gray-400'}`} />
                 </div>
@@ -197,7 +212,7 @@ const EvaluationEntry: React.FC = () => {
                             : 'bg-[#FC6401] hover:bg-[#e55a00] shadow-lg shadow-[#FC6401]/30'}`}
                 >
                     <Wand2 className="w-5 h-5" />
-                    Generate Feedback
+                    피드백 생성
                 </button>
             </div>
         </div>
@@ -222,21 +237,21 @@ const EvaluationEntry: React.FC = () => {
                               {useThinking ? <Brain className="w-5 h-5" /> : <Sparkles className="w-5 h-5" />}
                           </div>
                           <div>
-                              <h3 className="font-bold text-gray-900 text-lg">AI Deep Feedback</h3>
+                              <h3 className="font-bold text-gray-900 text-lg">AI 심층 피드백</h3>
                               <p className="text-xs text-gray-500">
-                                  for {selectedStudent?.name} • {new Date().toLocaleDateString()}
+                                  {selectedStudent?.name} 학생 • {new Date().toLocaleDateString()}
                               </p>
                           </div>
                       </div>
                       <div className="flex items-center gap-4">
                           {selectedStudent && (
                               <div className="text-right hidden sm:block">
-                                  <div className="text-xs font-bold text-gray-400 uppercase">Percentile</div>
+                                  <div className="text-xs font-bold text-gray-400 uppercase">백분위</div>
                                   <div className="flex items-center gap-2">
                                     <div className="relative h-1.5 w-24 bg-gray-200 rounded-full overflow-hidden">
                                         <div className="absolute top-0 left-0 h-full bg-emerald-500 w-[85%]"></div>
                                     </div>
-                                    <span className="text-xs font-bold text-emerald-600">Top 15%</span>
+                                    <span className="text-xs font-bold text-emerald-600">상위 15%</span>
                                   </div>
                               </div>
                           )}
@@ -261,9 +276,9 @@ const EvaluationEntry: React.FC = () => {
                                   </div>
                               </div>
                               <div className="text-center space-y-2">
-                                  <h4 className="text-lg font-bold text-gray-900">Generating Insight...</h4>
+                                  <h4 className="text-lg font-bold text-gray-900">인사이트 생성 중...</h4>
                                   <p className="text-[#FC6401] font-medium animate-pulse">
-                                      {useThinking ? thinkingMessages[thinkingStep] : "Processing evaluation data..."}
+                                      {useThinking ? thinkingMessages[thinkingStep] : "평가 데이터 처리 중..."}
                                   </p>
                               </div>
                           </div>
@@ -276,7 +291,7 @@ const EvaluationEntry: React.FC = () => {
                                   {/* Score Summary */}
                                   <div className="bg-gray-50 p-5 rounded-2xl border border-gray-100">
                                       <div className="flex justify-between items-center mb-4">
-                                          <div className="text-xs text-gray-400 uppercase font-bold">Practical Score</div>
+                                          <div className="text-xs text-gray-400 uppercase font-bold">실기 총점</div>
                                           <div className="text-sm font-bold text-[#FC6401] bg-[#FFF0E6] px-3 py-1 rounded-lg">
                                               {scores.composition + scores.tone + scores.idea + scores.completeness} / 40
                                           </div>
@@ -285,7 +300,7 @@ const EvaluationEntry: React.FC = () => {
                                           {Object.entries(scores).map(([k, v]) => (
                                               <div key={k} className="flex flex-col items-center bg-white p-2 rounded-xl shadow-sm border border-gray-100">
                                                   <span className="font-bold text-gray-900 text-lg">{v}</span>
-                                                  <span className="text-[9px] text-gray-400 uppercase font-bold mt-1">{k.slice(0,3)}</span>
+                                                  <span className="text-[9px] text-gray-400 uppercase font-bold mt-1">{scoreLabels[k].split(' ')[0]}</span>
                                               </div>
                                           ))}
                                       </div>
@@ -298,7 +313,7 @@ const EvaluationEntry: React.FC = () => {
                                               <Check className="w-4 h-4" />
                                           </div>
                                           <div>
-                                              <h4 className="text-base font-bold text-gray-900">Key Strengths</h4>
+                                              <h4 className="text-base font-bold text-gray-900">주요 강점</h4>
                                               <p className="text-sm text-gray-600 mt-2 leading-relaxed">{generatedFeedback?.strengths}</p>
                                           </div>
                                       </div>
@@ -308,7 +323,7 @@ const EvaluationEntry: React.FC = () => {
                                               <X className="w-4 h-4" />
                                           </div>
                                           <div>
-                                              <h4 className="text-base font-bold text-gray-900">Core Weaknesses</h4>
+                                              <h4 className="text-base font-bold text-gray-900">핵심 보완점</h4>
                                               <p className="text-sm text-gray-600 mt-2 leading-relaxed">{generatedFeedback?.weaknesses}</p>
                                           </div>
                                       </div>
@@ -318,7 +333,7 @@ const EvaluationEntry: React.FC = () => {
                                               <ChevronRight className="w-5 h-5" />
                                           </div>
                                           <div>
-                                              <h4 className="text-base font-bold text-[#FC6401]">Action Plan</h4>
+                                              <h4 className="text-base font-bold text-[#FC6401]">액션 플랜</h4>
                                               <p className="text-sm text-gray-800 font-medium mt-2 leading-relaxed p-4 bg-gray-50 rounded-xl border border-gray-100">
                                                   {generatedFeedback?.actionPlan}
                                               </p>
@@ -336,9 +351,9 @@ const EvaluationEntry: React.FC = () => {
                                           <div className="flex justify-between items-center mb-4">
                                               <div className="flex items-center gap-2">
                                                   <GraduationCap className="w-5 h-5 text-gray-400" />
-                                                  <span className="text-sm font-bold text-gray-900 uppercase">Academic Position</span>
+                                                  <span className="text-sm font-bold text-gray-900 uppercase">학업 위치</span>
                                               </div>
-                                              <span className="text-xs font-bold text-gray-400">{selectedStudent.targetUniversity} Avg</span>
+                                              <span className="text-xs font-bold text-gray-400">{selectedStudent.targetUniversity} 평균</span>
                                           </div>
                                           {(() => {
                                               const { studentScore, targetAvg, diff } = getAcademicPosition(selectedStudent);
@@ -354,7 +369,7 @@ const EvaluationEntry: React.FC = () => {
                                                               style={{ left: `${studentScore}%` }}
                                                           ></div>
                                                           <div className="absolute -bottom-6 text-[10px] font-bold transform -translate-x-1/2 whitespace-nowrap" style={{ left: `${studentScore}%` }}>
-                                                              You ({isPositive ? '+' : ''}{diff})
+                                                              본인 ({isPositive ? '+' : ''}{diff})
                                                           </div>
                                                       </div>
                                                   </div>
@@ -366,7 +381,7 @@ const EvaluationEntry: React.FC = () => {
                                   {/* Similar Cases Gallery */}
                                   <div>
                                       <h4 className="text-xs font-bold text-gray-500 uppercase flex items-center gap-2 mb-4">
-                                          <LayoutTemplate className="w-3 h-3" /> Similar Portfolios
+                                          <LayoutTemplate className="w-3 h-3" /> 유사 합격 사례
                                       </h4>
                                       <div className="grid grid-cols-3 gap-3 mb-6">
                                           {mockSimilarCases.map((sc) => (
@@ -387,27 +402,27 @@ const EvaluationEntry: React.FC = () => {
                                   <div className="bg-white rounded-2xl p-6 border border-gray-200 shadow-sm">
                                       <h4 className="text-sm font-bold text-gray-900 mb-4 flex items-center gap-2">
                                           <SplitSquareHorizontal className="w-4 h-4 text-gray-500" />
-                                          Comparison Analysis
+                                          비교 분석
                                       </h4>
 
                                       {generatedFeedback?.comparisonInsight ? (
                                           <div className="space-y-4 text-sm">
                                               <div className="p-3 bg-emerald-50 rounded-xl border border-emerald-100">
-                                                  <span className="text-xs font-bold text-emerald-600 uppercase mb-1 block">Similarities</span>
+                                                  <span className="text-xs font-bold text-emerald-600 uppercase mb-1 block">유사점</span>
                                                   <p className="text-gray-700 leading-snug">{generatedFeedback.comparisonInsight.similarities}</p>
                                               </div>
                                               <div className="p-3 bg-gray-50 rounded-xl border border-gray-100">
-                                                  <span className="text-xs font-bold text-gray-500 uppercase mb-1 block">Key Differences</span>
+                                                  <span className="text-xs font-bold text-gray-500 uppercase mb-1 block">차이점</span>
                                                   <p className="text-gray-600 leading-snug">{generatedFeedback.comparisonInsight.differences}</p>
                                               </div>
                                               <div className="p-3 bg-[#FFF0E6] rounded-xl border border-[#FC6401]/20">
-                                                  <span className="text-xs font-bold text-[#FC6401] uppercase mb-1 block">Unique Advantage</span>
+                                                  <span className="text-xs font-bold text-[#FC6401] uppercase mb-1 block">나만의 강점 (USP)</span>
                                                   <p className="text-gray-800 font-medium leading-snug">{generatedFeedback.comparisonInsight.usp}</p>
                                               </div>
                                           </div>
                                       ) : (
                                           <div className="flex items-center justify-center h-32 text-gray-400 text-sm italic bg-gray-50 rounded-xl border border-dashed border-gray-200">
-                                              Comparing against 20,000+ past works...
+                                              20,000+건의 과거 데이터와 비교 중...
                                           </div>
                                       )}
                                   </div>
@@ -424,14 +439,14 @@ const EvaluationEntry: React.FC = () => {
                               className="px-4 py-2.5 text-gray-600 bg-white border border-gray-200 rounded-xl hover:bg-gray-50 font-medium text-sm flex items-center gap-2 transition-colors"
                           >
                               <Copy className="w-4 h-4" />
-                              Copy Text
+                              텍스트 복사
                           </button>
                           <button 
                               onClick={handleSave}
                               className="px-8 py-2.5 bg-[#FC6401] text-white rounded-xl hover:bg-[#e55a00] font-bold shadow-lg shadow-[#FC6401]/30 flex items-center gap-2 transition-all"
                           >
                               <Save className="w-4 h-4" />
-                              Save Evaluation
+                              평가 저장
                           </button>
                       </div>
                   )}
