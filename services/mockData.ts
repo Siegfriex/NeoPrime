@@ -66,7 +66,7 @@ export const STUDENTS: Student[] = [
     school: 'Kyunggi High',
     targetUniversity: 'Hongik Univ.',
     major: 'Industrial Design',
-    currentLevel: 'A-',
+    currentLevel: 'A',
     instructorId: 'i1',
     avatarUrl: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Haeun',
     artworks: [],
