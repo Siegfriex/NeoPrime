@@ -9,7 +9,8 @@ const Layout: React.FC = () => {
       <Sidebar />
       <Header />
       <main className="ml-64 pt-20 min-h-screen">
-        <div className="p-8 max-w-7xl mx-auto">
+        {/* Changed max-w-7xl to max-w-[1600px] and px-8 for wider layout */}
+        <div className="p-8 max-w-[1600px] mx-auto w-full">
           <Outlet />
         </div>
       </main>

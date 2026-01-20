@@ -74,16 +74,13 @@ const EvaluationEntry: React.FC = () => {
     alert("Copied to clipboard!");
   };
 
-  // Mock Academic Positioning Data Calculation
   const getAcademicPosition = (student: Student) => {
-    // Just using Korean score as a proxy for the demo
     const studentScore = student.academicScores.korean.percentile || 0;
     const targetAvg = student.targetUnivAvgScores.korean.percentile || 0;
     const diff = studentScore - targetAvg;
     return { studentScore, targetAvg, diff };
   };
 
-  // Mock Similar Cases (In a real app, this would come from the AI or DB based on embeddings)
   const mockSimilarCases = [
     { id: 'sc1', name: 'J.K.', year: 2025, result: 'Accepted', line: 'TOP', img: 'https://images.unsplash.com/photo-1544531586-fde5298cdd40?q=80&w=300&auto=format&fit=crop' },
     { id: 'sc2', name: 'M.S.', year: 2024, result: 'Accepted', line: 'HIGH', img: 'https://images.unsplash.com/photo-1513364776144-60967b0f800f?q=80&w=300&auto=format&fit=crop' },
@@ -206,7 +203,7 @@ const EvaluationEntry: React.FC = () => {
         </div>
       </div>
 
-      {/* --- AI FEEDBACK MODAL --- */}
+      {/* --- AI FEEDBACK MODAL (WIDENED & 2-COL SPLIT) --- */}
       {isModalOpen && (
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
               {/* Backdrop */}
@@ -215,8 +212,8 @@ const EvaluationEntry: React.FC = () => {
                   onClick={() => setIsModalOpen(false)}
               ></div>
 
-              {/* Modal Content */}
-              <div className="bg-white rounded-2xl shadow-2xl w-full max-w-4xl max-h-[95vh] flex flex-col relative z-10 animate-in zoom-in-95 duration-200 overflow-hidden">
+              {/* Modal Content - Max Width increased to 6xl for 2-column layout */}
+              <div className="bg-white rounded-2xl shadow-2xl w-full max-w-6xl max-h-[90vh] flex flex-col relative z-10 animate-in zoom-in-95 duration-200 overflow-hidden">
                   
                   {/* Header */}
                   <div className="px-6 py-4 border-b border-gray-100 flex justify-between items-center bg-gray-50/50">
@@ -231,15 +228,29 @@ const EvaluationEntry: React.FC = () => {
                               </p>
                           </div>
                       </div>
-                      <button 
-                          onClick={() => setIsModalOpen(false)}
-                          className="p-2 hover:bg-gray-200 rounded-full text-gray-500 transition-colors"
-                      >
-                          <X className="w-5 h-5" />
-                      </button>
+                      <div className="flex items-center gap-4">
+                          {selectedStudent && (
+                              <div className="text-right hidden sm:block">
+                                  <div className="text-xs font-bold text-gray-400 uppercase">Percentile</div>
+                                  <div className="flex items-center gap-2">
+                                    <div className="relative h-1.5 w-24 bg-gray-200 rounded-full overflow-hidden">
+                                        <div className="absolute top-0 left-0 h-full bg-emerald-500 w-[85%]"></div>
+                                    </div>
+                                    <span className="text-xs font-bold text-emerald-600">Top 15%</span>
+                                  </div>
+                              </div>
+                          )}
+                          <div className="h-8 w-px bg-gray-200 mx-2"></div>
+                          <button 
+                              onClick={() => setIsModalOpen(false)}
+                              className="p-2 hover:bg-gray-200 rounded-full text-gray-500 transition-colors"
+                          >
+                              <X className="w-5 h-5" />
+                          </button>
+                      </div>
                   </div>
 
-                  {/* Body - Scrollable */}
+                  {/* Body - Split into 2 Columns */}
                   <div className="flex-1 overflow-y-auto custom-scrollbar bg-[#F7F9FB]">
                       {isGenerating ? (
                           <div className="flex flex-col items-center justify-center py-32 space-y-6">
@@ -257,166 +268,146 @@ const EvaluationEntry: React.FC = () => {
                               </div>
                           </div>
                       ) : (
-                          <div className="p-6 space-y-6">
+                          <div className="grid grid-cols-1 lg:grid-cols-2 min-h-full">
                               
-                              {/* Top Row: Score & Academic Positioning */}
-                              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                              {/* Left Column: Text Feedback */}
+                              <div className="p-8 space-y-8 bg-white border-r border-gray-100">
+                                  
                                   {/* Score Summary */}
-                                  <div className="bg-white p-5 rounded-2xl border border-gray-200 shadow-sm flex flex-col justify-center">
-                                      <div className="flex justify-between items-center mb-3">
+                                  <div className="bg-gray-50 p-5 rounded-2xl border border-gray-100">
+                                      <div className="flex justify-between items-center mb-4">
                                           <div className="text-xs text-gray-400 uppercase font-bold">Practical Score</div>
-                                          <div className="text-xs font-bold text-[#FC6401] bg-[#FFF0E6] px-2 py-0.5 rounded">
+                                          <div className="text-sm font-bold text-[#FC6401] bg-[#FFF0E6] px-3 py-1 rounded-lg">
                                               {scores.composition + scores.tone + scores.idea + scores.completeness} / 40
                                           </div>
                                       </div>
-                                      <div className="flex gap-4 justify-between">
+                                      <div className="grid grid-cols-4 gap-2">
                                           {Object.entries(scores).map(([k, v]) => (
-                                              <div key={k} className="flex flex-col items-center">
+                                              <div key={k} className="flex flex-col items-center bg-white p-2 rounded-xl shadow-sm border border-gray-100">
                                                   <span className="font-bold text-gray-900 text-lg">{v}</span>
-                                                  <span className="text-[10px] text-gray-400 uppercase">{k.slice(0,3)}</span>
+                                                  <span className="text-[9px] text-gray-400 uppercase font-bold mt-1">{k.slice(0,3)}</span>
                                               </div>
                                           ))}
                                       </div>
                                   </div>
 
-                                  {/* Academic Positioning */}
-                                  {selectedStudent && (
-                                      <div className="bg-white p-5 rounded-2xl border border-gray-200 shadow-sm flex flex-col justify-between">
-                                          <div className="flex justify-between items-start mb-2">
-                                              <div className="flex items-center gap-2">
-                                                  <GraduationCap className="w-4 h-4 text-gray-400" />
-                                                  <span className="text-xs font-bold text-gray-900 uppercase">Academic Positioning</span>
-                                              </div>
-                                              <span className="text-[10px] text-gray-400">{selectedStudent.targetUniversity}</span>
+                                  {/* Feedback Sections */}
+                                  <div className="space-y-6">
+                                      <div className="flex gap-4 items-start">
+                                          <div className="mt-1 w-8 h-8 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center shrink-0">
+                                              <Check className="w-4 h-4" />
                                           </div>
-                                          
+                                          <div>
+                                              <h4 className="text-base font-bold text-gray-900">Key Strengths</h4>
+                                              <p className="text-sm text-gray-600 mt-2 leading-relaxed">{generatedFeedback?.strengths}</p>
+                                          </div>
+                                      </div>
+                                      
+                                      <div className="flex gap-4 items-start">
+                                          <div className="mt-1 w-8 h-8 rounded-full bg-rose-100 text-rose-600 flex items-center justify-center shrink-0">
+                                              <X className="w-4 h-4" />
+                                          </div>
+                                          <div>
+                                              <h4 className="text-base font-bold text-gray-900">Core Weaknesses</h4>
+                                              <p className="text-sm text-gray-600 mt-2 leading-relaxed">{generatedFeedback?.weaknesses}</p>
+                                          </div>
+                                      </div>
+
+                                      <div className="flex gap-4 items-start">
+                                          <div className="mt-1 w-8 h-8 rounded-full bg-[#FFF0E6] text-[#FC6401] flex items-center justify-center shrink-0">
+                                              <ChevronRight className="w-5 h-5" />
+                                          </div>
+                                          <div>
+                                              <h4 className="text-base font-bold text-[#FC6401]">Action Plan</h4>
+                                              <p className="text-sm text-gray-800 font-medium mt-2 leading-relaxed p-4 bg-gray-50 rounded-xl border border-gray-100">
+                                                  {generatedFeedback?.actionPlan}
+                                              </p>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+
+                              {/* Right Column: Visual Comparison */}
+                              <div className="p-8 bg-[#F7F9FB] space-y-8">
+                                  
+                                  {/* Academic Position */}
+                                  {selectedStudent && (
+                                      <div className="bg-white p-6 rounded-2xl border border-gray-200 shadow-sm">
+                                          <div className="flex justify-between items-center mb-4">
+                                              <div className="flex items-center gap-2">
+                                                  <GraduationCap className="w-5 h-5 text-gray-400" />
+                                                  <span className="text-sm font-bold text-gray-900 uppercase">Academic Position</span>
+                                              </div>
+                                              <span className="text-xs font-bold text-gray-400">{selectedStudent.targetUniversity} Avg</span>
+                                          </div>
                                           {(() => {
                                               const { studentScore, targetAvg, diff } = getAcademicPosition(selectedStudent);
                                               const isPositive = diff >= 0;
                                               return (
                                                   <div>
-                                                      <div className="text-sm text-gray-600 mb-3">
-                                                          Top <span className="font-bold text-gray-900">{100 - studentScore}%</span> range 
-                                                          <span className={`ml-2 text-xs font-bold ${isPositive ? 'text-emerald-600' : 'text-rose-500'}`}>
-                                                              ({isPositive ? '+' : ''}{diff}pts vs Median)
-                                                          </span>
-                                                      </div>
-                                                      
-                                                      {/* Visual Bar */}
-                                                      <div className="relative h-2.5 bg-gray-100 rounded-full w-full mt-2">
-                                                          {/* Median Marker */}
+                                                      <div className="relative h-3 bg-gray-100 rounded-full w-full mt-2 mb-6">
                                                           <div className="absolute top-0 bottom-0 w-0.5 bg-gray-400 z-10" style={{ left: `${targetAvg}%` }}></div>
-                                                          <div className="absolute -top-4 text-[9px] text-gray-400 font-medium transform -translate-x-1/2" style={{ left: `${targetAvg}%` }}>Avg</div>
+                                                          <div className="absolute -top-5 text-[10px] text-gray-400 font-bold transform -translate-x-1/2" style={{ left: `${targetAvg}%` }}>CUT-OFF</div>
                                                           
-                                                          {/* Student Marker */}
                                                           <div 
-                                                              className={`absolute top-1/2 transform -translate-y-1/2 w-3 h-3 rounded-full border-2 border-white shadow-sm ${isPositive ? 'bg-emerald-500' : 'bg-rose-500'}`} 
+                                                              className={`absolute top-1/2 transform -translate-y-1/2 w-4 h-4 rounded-full border-2 border-white shadow-md ${isPositive ? 'bg-emerald-500' : 'bg-rose-500'}`} 
                                                               style={{ left: `${studentScore}%` }}
                                                           ></div>
+                                                          <div className="absolute -bottom-6 text-[10px] font-bold transform -translate-x-1/2 whitespace-nowrap" style={{ left: `${studentScore}%` }}>
+                                                              You ({isPositive ? '+' : ''}{diff})
+                                                          </div>
                                                       </div>
                                                   </div>
                                               );
                                           })()}
                                       </div>
                                   )}
-                              </div>
 
-                              {/* Feedback Sections */}
-                              <div className="space-y-4 bg-white p-6 rounded-2xl border border-gray-200 shadow-sm">
-                                  <div className="flex gap-4 items-start">
-                                      <div className="mt-1 w-6 h-6 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center shrink-0">
-                                          <Check className="w-3.5 h-3.5" />
-                                      </div>
-                                      <div>
-                                          <h4 className="text-sm font-bold text-gray-900">Key Strengths</h4>
-                                          <p className="text-sm text-gray-600 mt-1">{generatedFeedback?.strengths}</p>
-                                      </div>
-                                  </div>
-                                  <div className="w-full h-px bg-gray-100"></div>
-                                  
-                                  <div className="flex gap-4 items-start">
-                                      <div className="mt-1 w-6 h-6 rounded-full bg-rose-100 text-rose-600 flex items-center justify-center shrink-0">
-                                          <X className="w-3.5 h-3.5" />
-                                      </div>
-                                      <div>
-                                          <h4 className="text-sm font-bold text-gray-900">Core Weaknesses</h4>
-                                          <p className="text-sm text-gray-600 mt-1">{generatedFeedback?.weaknesses}</p>
-                                      </div>
-                                  </div>
-                                  <div className="w-full h-px bg-gray-100"></div>
-
-                                  <div className="flex gap-4 items-start">
-                                      <div className="mt-1 w-6 h-6 rounded-full bg-[#FFF0E6] text-[#FC6401] flex items-center justify-center shrink-0">
-                                          <ChevronRight className="w-3.5 h-3.5" />
-                                      </div>
-                                      <div>
-                                          <h4 className="text-sm font-bold text-[#FC6401]">Action Plan</h4>
-                                          <p className="text-sm text-gray-800 font-medium mt-1">{generatedFeedback?.actionPlan}</p>
-                                      </div>
-                                  </div>
-                              </div>
-
-                              {/* Similar Cases & Comparison */}
-                              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                                  {/* Left: Gallery */}
-                                  <div className="md:col-span-1 space-y-3">
-                                      <h4 className="text-xs font-bold text-gray-500 uppercase flex items-center gap-2">
+                                  {/* Similar Cases Gallery */}
+                                  <div>
+                                      <h4 className="text-xs font-bold text-gray-500 uppercase flex items-center gap-2 mb-4">
                                           <LayoutTemplate className="w-3 h-3" /> Similar Portfolios
                                       </h4>
-                                      <div className="grid grid-cols-1 gap-3">
+                                      <div className="grid grid-cols-3 gap-3 mb-6">
                                           {mockSimilarCases.map((sc) => (
-                                              <button 
-                                                key={sc.id}
-                                                onClick={() => setSelectedComparisonCase(sc)}
-                                                className={`flex items-center gap-3 p-2 rounded-xl border transition-all text-left group
-                                                    ${selectedComparisonCase?.id === sc.id 
-                                                        ? 'bg-gray-800 border-gray-800 text-white' 
-                                                        : 'bg-white border-gray-200 hover:border-[#FC6401]'}`}
-                                              >
-                                                  <img src={sc.img} alt="" className="w-12 h-12 rounded-lg object-cover bg-gray-200" />
-                                                  <div>
-                                                      <div className="font-bold text-sm">{sc.name} · {sc.year}</div>
-                                                      <div className="flex items-center gap-2 mt-0.5">
-                                                          <span className={`text-[10px] px-1.5 py-0.5 rounded font-bold ${
-                                                              sc.result === 'Accepted' ? 'bg-emerald-100 text-emerald-800' : 'bg-gray-100 text-gray-600'
-                                                          }`}>
-                                                              {sc.result}
-                                                          </span>
-                                                          <span className="text-[10px] text-gray-400">{sc.line} Line</span>
+                                              <div key={sc.id} className="relative group cursor-pointer">
+                                                  <img src={sc.img} alt="" className="w-full h-24 object-cover rounded-xl bg-gray-200 border border-gray-200 group-hover:border-[#FC6401] transition-all" />
+                                                  <div className="absolute bottom-0 left-0 right-0 p-2 bg-gradient-to-t from-black/60 to-transparent rounded-b-xl">
+                                                      <div className="flex justify-between items-center text-white text-[10px] font-bold">
+                                                          <span>{sc.result}</span>
+                                                          <span className="opacity-75">{sc.year}</span>
                                                       </div>
                                                   </div>
-                                              </button>
+                                              </div>
                                           ))}
                                       </div>
                                   </div>
 
-                                  {/* Right: Insights */}
-                                  <div className="md:col-span-2 bg-[#F0F4F8] rounded-2xl p-5 border border-gray-200 flex flex-col relative overflow-hidden">
-                                      <div className="absolute top-0 right-0 p-16 bg-[#FC6401] opacity-5 blur-3xl rounded-full pointer-events-none"></div>
-                                      
-                                      <h4 className="text-sm font-bold text-gray-900 mb-4 flex items-center gap-2 relative z-10">
+                                  {/* Insights */}
+                                  <div className="bg-white rounded-2xl p-6 border border-gray-200 shadow-sm">
+                                      <h4 className="text-sm font-bold text-gray-900 mb-4 flex items-center gap-2">
                                           <SplitSquareHorizontal className="w-4 h-4 text-gray-500" />
                                           Comparison Analysis
                                       </h4>
 
                                       {generatedFeedback?.comparisonInsight ? (
-                                          <div className="space-y-4 relative z-10 text-sm">
-                                              <div className="p-3 bg-white rounded-xl shadow-sm border border-gray-100">
+                                          <div className="space-y-4 text-sm">
+                                              <div className="p-3 bg-emerald-50 rounded-xl border border-emerald-100">
                                                   <span className="text-xs font-bold text-emerald-600 uppercase mb-1 block">Similarities</span>
-                                                  <p className="text-gray-600 leading-relaxed">{generatedFeedback.comparisonInsight.similarities}</p>
+                                                  <p className="text-gray-700 leading-snug">{generatedFeedback.comparisonInsight.similarities}</p>
                                               </div>
-                                              <div className="p-3 bg-white rounded-xl shadow-sm border border-gray-100">
+                                              <div className="p-3 bg-gray-50 rounded-xl border border-gray-100">
                                                   <span className="text-xs font-bold text-gray-500 uppercase mb-1 block">Key Differences</span>
-                                                  <p className="text-gray-600 leading-relaxed">{generatedFeedback.comparisonInsight.differences}</p>
+                                                  <p className="text-gray-600 leading-snug">{generatedFeedback.comparisonInsight.differences}</p>
                                               </div>
-                                              <div className="p-3 bg-[#FFF0E6] rounded-xl shadow-sm border border-[#FC6401]/10">
-                                                  <span className="text-xs font-bold text-[#FC6401] uppercase mb-1 block">Your Unique Advantage</span>
-                                                  <p className="text-gray-800 font-medium leading-relaxed">{generatedFeedback.comparisonInsight.usp}</p>
+                                              <div className="p-3 bg-[#FFF0E6] rounded-xl border border-[#FC6401]/20">
+                                                  <span className="text-xs font-bold text-[#FC6401] uppercase mb-1 block">Unique Advantage</span>
+                                                  <p className="text-gray-800 font-medium leading-snug">{generatedFeedback.comparisonInsight.usp}</p>
                                               </div>
                                           </div>
                                       ) : (
-                                          <div className="flex-1 flex items-center justify-center text-gray-400 text-sm italic">
-                                              Generating comparative insights...
+                                          <div className="flex items-center justify-center h-32 text-gray-400 text-sm italic bg-gray-50 rounded-xl border border-dashed border-gray-200">
+                                              Comparing against 20,000+ past works...
                                           </div>
                                       )}
                                   </div>
@@ -437,82 +428,11 @@ const EvaluationEntry: React.FC = () => {
                           </button>
                           <button 
                               onClick={handleSave}
-                              className="px-6 py-2.5 bg-[#FC6401] text-white rounded-xl hover:bg-[#e55a00] font-bold shadow-lg shadow-[#FC6401]/30 flex items-center gap-2 transition-all"
+                              className="px-8 py-2.5 bg-[#FC6401] text-white rounded-xl hover:bg-[#e55a00] font-bold shadow-lg shadow-[#FC6401]/30 flex items-center gap-2 transition-all"
                           >
                               <Save className="w-4 h-4" />
-                              Save & Close
+                              Save Evaluation
                           </button>
-                      </div>
-                  )}
-
-                  {/* Side-by-Side Overlay (When a case is selected) */}
-                  {selectedComparisonCase && (
-                      <div className="absolute inset-0 bg-white z-20 flex flex-col animate-in slide-in-from-right duration-300">
-                          <div className="p-4 border-b border-gray-100 flex justify-between items-center bg-gray-50">
-                              <h3 className="font-bold text-gray-900 flex items-center gap-2">
-                                  <LayoutTemplate className="w-4 h-4" />
-                                  Comparison View
-                              </h3>
-                              <button onClick={() => setSelectedComparisonCase(null)} className="p-2 hover:bg-gray-200 rounded-full">
-                                  <X className="w-5 h-5" />
-                              </button>
-                          </div>
-                          <div className="flex-1 grid grid-cols-2 gap-4 p-4 overflow-hidden">
-                              {/* Current Student */}
-                              <div className="flex flex-col h-full bg-gray-50 rounded-xl p-4">
-                                  <div className="flex items-center gap-2 mb-3">
-                                      <div className="w-2 h-2 rounded-full bg-[#FC6401]"></div>
-                                      <span className="font-bold text-gray-900">{selectedStudent?.name}</span>
-                                      <span className="text-xs text-gray-500">(Current)</span>
-                                  </div>
-                                  <div className="flex-1 bg-white rounded-lg border border-gray-200 flex items-center justify-center text-gray-400">
-                                      {/* Placeholder for current artwork */}
-                                      {selectedStudent?.artworks?.[0] ? (
-                                        <img src={selectedStudent.artworks[0]} className="w-full h-full object-contain" alt="Current work" />
-                                      ) : (
-                                        <span>No Artwork</span>
-                                      )}
-                                  </div>
-                                  <div className="mt-3 grid grid-cols-4 gap-2 text-center text-xs">
-                                      <div className="bg-white p-2 rounded border">
-                                          <div className="font-bold text-[#FC6401]">{scores.composition}</div>
-                                          <div className="text-[9px] text-gray-400 uppercase">Comp</div>
-                                      </div>
-                                      <div className="bg-white p-2 rounded border">
-                                          <div className="font-bold text-[#FC6401]">{scores.tone}</div>
-                                          <div className="text-[9px] text-gray-400 uppercase">Tone</div>
-                                      </div>
-                                      <div className="bg-white p-2 rounded border">
-                                          <div className="font-bold text-[#FC6401]">{scores.idea}</div>
-                                          <div className="text-[9px] text-gray-400 uppercase">Idea</div>
-                                      </div>
-                                      <div className="bg-white p-2 rounded border">
-                                          <div className="font-bold text-[#FC6401]">{scores.completeness}</div>
-                                          <div className="text-[9px] text-gray-400 uppercase">Att</div>
-                                      </div>
-                                  </div>
-                              </div>
-
-                              {/* Comparison Case */}
-                              <div className="flex flex-col h-full bg-gray-900 rounded-xl p-4 text-white">
-                                  <div className="flex items-center gap-2 mb-3">
-                                      <div className="w-2 h-2 rounded-full bg-emerald-400"></div>
-                                      <span className="font-bold">{selectedComparisonCase.name}</span>
-                                      <span className="text-xs text-gray-400">({selectedComparisonCase.year})</span>
-                                      <span className="ml-auto text-xs bg-emerald-500/20 text-emerald-300 px-2 py-0.5 rounded">
-                                          {selectedComparisonCase.result}
-                                      </span>
-                                  </div>
-                                  <div className="flex-1 bg-black/50 rounded-lg border border-gray-700 overflow-hidden">
-                                      <img src={selectedComparisonCase.img} className="w-full h-full object-contain" alt="Comparison work" />
-                                  </div>
-                                  <div className="mt-3">
-                                      <p className="text-xs text-gray-400 leading-relaxed italic">
-                                          "This piece was noted for its exceptional spatial depth and daring color choices in the focal area."
-                                      </p>
-                                  </div>
-                              </div>
-                          </div>
                       </div>
                   )}
               </div>
