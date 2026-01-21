@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python -m theory_engine.matchers.subject_matcher:*)",
+      "Bash(python -m theory_engine.optimizers.index_optimizer:*)",
+      "Bash(python -m theory_engine.cutoff.cutoff_extractor:*)",
+      "Bash(python -m theory_engine.probability.admission_model:*)",
+      "Bash",
+      "FileRead",
+      "FileWrite",
+      "FileEdit",
+      "Bash(python -m theory_engine.disqualification.disqualification_engine:*)",
+      "Bash(python -m theory_engine.rules:*)",
+      "Bash(python -m pytest:*)",
+      "Bash(python:*)"
+    ]
+  }
+}

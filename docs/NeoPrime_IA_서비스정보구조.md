@@ -1,9 +1,11 @@
 # NeoPrime 서비스 IA (Information Architecture)
 ## 정보구조 설계서
 
-**Version**: 1.0  
+**Version**: 1.1 (실제 구현 반영)  
 **Date**: 2026-01-21  
-**Status**: Draft
+**최종 업데이트**: 2026-01-21  
+**기준**: 실제 구현 코드 분석 완료  
+**Status**: ✅ 검증 완료
 
 ---
 
@@ -152,39 +154,37 @@ NeoPrime Platform
 
 ## 3. 사이트맵
 
-### 3.1 웹 대시보드 사이트맵
+### 3.1 웹 대시보드 사이트맵 (실제 구현 기준)
+
+**라우터 타입**: HashRouter (SPA)  
+**기준**: `App.tsx` 실제 구현
 
 ```
-/                                    → 대시보드 홈
+/                                    → Dashboard (대시보드 홈)
 │
-├── /students                        → 학생 관리
-│   ├── /students/list              → 전체 학생 리스트
-│   ├── /students/:id               → 학생 상세 프로필
-│   ├── /students/new               → 학생 추가
-│   └── /students/:id/edit          → 학생 수정
+├── /students                        → StudentList (학생 목록 & 분석)
+│   ├── /students/:id               → StudentDetail (학생 상세 프로필)
+│   └── /students/new               → StudentAdd (학생 추가)
 │
-├── /evaluations                     → 평가 관리
-│   ├── /evaluations/new            → 주간 평가 입력
-│   ├── /evaluations/history        → 평가 이력 조회
-│   └── /evaluations/ai-feedback    → AI 피드백 생성기
+├── /evaluations/new                → EvaluationEntry (주간 평가 입력)
 │
-├── /analytics                       → 분석 & 리포트
-│   ├── /analytics/admission        → 합격 예측 분석
-│   ├── /analytics/growth           → 성장 분석
-│   ├── /analytics/teacher-bias     → 강사 편차 분석
-│   └── /analytics/reports          → 리포트 다운로드
-│
-├── /settings                        → 설정
-│   ├── /settings/account           → 계정 설정
-│   ├── /settings/academy           → 학원 정보
-│   ├── /settings/teachers          → 강사 관리
-│   └── /settings/data              → 데이터 관리
-│
-└── /auth                            → 인증
-    ├── /auth/login                 → 로그인
-    ├── /auth/logout                → 로그아웃
-    └── /auth/forgot-password       → 비밀번호 찾기
+├── /analytics                       → Analytics (고급 분석 Lab)
+│   │   └── ?univ=홍익대            → 쿼리 파라미터 (대학 필터)
+│   │
+├── /simulation                      → AdmissionSimulator (입시 시뮬레이터)
+│   │   └── ?studentId=s1          → 쿼리 파라미터 (학생 선택)
+│   │
+├── /settings                        → Settings (설정)
+│   │   └── 탭: 내 계정/학원 정보/강사 관리/데이터 관리
+│   │
+├── /profile                         → Profile (사용자 프로필)
+│   │
+└── /auth                            → 인증 (AuthLayout)
+    ├── /auth/login                 → Login (로그인)
+    └── /auth/signup                → Signup (회원가입)
 ```
+
+**참고**: 실제 구현에서는 `/students/list` 경로가 아닌 `/students`로 직접 접근합니다.
 
 ### 3.2 모바일 앱 사이트맵
 
@@ -215,26 +215,28 @@ NeoPrime Platform
     └── /auth/logout                → 로그아웃
 ```
 
-### 3.3 URL 구조 상세
+### 3.3 URL 구조 상세 (실제 구현 기준)
 
-| Depth | URL | 페이지명 | 기능 설명 | 권한 |
-|:-----:|:----|:--------|:----------|:-----|
-| **웹 대시보드** |||||
-| 1 | `/` | 대시보드 홈 | 학원 전체 현황, 주간 통계, 예상 합격 인원 | 원장, 강사 |
-| 1 | `/students/list` | 학생 리스트 | 학생 목록 조회, 필터/검색/정렬 | 원장, 강사 |
-| 2 | `/students/:id` | 학생 상세 | 개별 학생 상세 정보, 성장 곡선, 합격 예측 | 원장, 강사 |
-| 2 | `/students/new` | 학생 추가 | 신규 학생 등록 | 원장, 강사 |
-| 2 | `/students/:id/edit` | 학생 수정 | 학생 정보 수정 | 원장, 강사 |
-| 1 | `/evaluations/new` | 평가 입력 | 주간 평가 등록, AI 피드백 생성 | 원장, 강사 |
-| 1 | `/evaluations/history` | 평가 이력 | 과거 평가 조회, 필터링 | 원장, 강사 |
-| 1 | `/evaluations/ai-feedback` | AI 피드백 | AI 피드백 생성기 독립 페이지 | 원장, 강사 |
-| 1 | `/analytics/admission` | 합격 예측 | 대학별 합격 예측, 라인 분포 | 원장 |
-| 1 | `/analytics/growth` | 성장 분석 | 학원 전체/학생별 성장 추이 | 원장, 강사 |
-| 1 | `/analytics/teacher-bias` | 강사 편차 | 강사별 평가 기준 비교 | 원장 |
-| 1 | `/analytics/reports` | 리포트 | PDF 리포트 다운로드 | 원장 |
-| 1 | `/settings/account` | 계정 설정 | 비밀번호, 알림 설정 | 전체 |
-| 1 | `/settings/academy` | 학원 정보 | 학원 기본 정보 관리 | 원장 |
-| 1 | `/settings/teachers` | 강사 관리 | 강사 계정 관리 | 원장 |
+| Depth | URL | 컴포넌트 | 기능 설명 | 권한 | 상태 |
+|:-----:|:----|:--------|:----------|:-----|:----:|
+| **웹 대시보드** ||||| |
+| 1 | `/` | Dashboard.tsx | 시즌 목표 추적, KPI 카드, 대학별 라인 분포, 리스크 진단, 실행 큐, 코호트 추이 | 원장, 강사 | ✅ |
+| 1 | `/students` | StudentList.tsx | 대학별 그룹화, 검색, 상대적 위치 분석 (Scatter Plot), 인터랙티브 패널 | 원장, 강사 | ✅ |
+| 2 | `/students/:id` | StudentDetail.tsx | 학생 상세, 작품 갤러리, 평가 이력, 학업 점수 비교, 워크시트 | 원장, 강사 | ✅ |
+| 2 | `/students/new` | StudentAdd.tsx | 신규 학생 등록 폼 (6개 섹션) | 원장, 강사 | ✅ |
+| 1 | `/evaluations/new` | EvaluationEntry.tsx | 4축 점수 입력, 강사 노트, Thinking Mode, AI 피드백 생성 | 원장, 강사 | ✅ |
+| 1 | `/analytics` | Analytics.tsx | Analysis Lab UI, 데이터 탐색기, 3-Tab 분석 (Explain/Compare/Simulate), AI 콘솔 | 원장, 강사 | ✅ |
+| 1 | `/simulation` | AdmissionSimulator.tsx | 학생 선택, 목표 대학 멀티 선택, 점수 슬라이더, 합격 확률 계산, Radar/Bar Chart | 원장, 강사 | ✅ |
+| 1 | `/settings` | Settings.tsx | 내 계정/학원 정보/강사 관리/데이터 관리 탭 | 원장, 강사 | ✅ |
+| 1 | `/profile` | Profile.tsx | 사용자 프로필, 최근 활동 로그, 구독 정보 | 원장, 강사 | ✅ |
+| 1 | `/auth/login` | Login.tsx | 이메일/비밀번호 로그인 폼 | 전체 | ✅ |
+| 1 | `/auth/signup` | Signup.tsx | 회원가입 폼 (이름/학원명/이메일/비밀번호) | 전체 | ✅ |
+
+**참고**: 
+- 실제 구현에서는 `/students/list` 경로가 아닌 `/students`로 직접 접근
+- `/evaluations/history`는 StudentDetail 페이지 내에서 평가 이력으로 통합됨
+- `/analytics`는 단일 페이지에서 3-Tab으로 Explain/Compare/Simulate 기능 제공
+- `/simulation`은 별도 페이지로 구현됨 (IA에는 없었음)
 | **모바일 앱** |||||
 | 1 | `/` | 홈 | 주간 성과 요약, 알림 | 학생, 학부모 |
 | 1 | `/performance/weekly` | 주간 리포트 | 이번 주 평가 결과, 피드백 | 학생, 학부모 |
@@ -258,45 +260,55 @@ NeoPrime Platform
 | **탭 ID** | TAB-W01 |
 | **탭 명** | 대시보드 홈 |
 | **URL** | `/` |
+| **컴포넌트** | `Dashboard.tsx` (539줄) |
 | **접근 권한** | 원장, 강사 |
 | **상위 메뉴** | - |
 | **설명** | 학원 전체 현황을 한눈에 파악할 수 있는 메인 대시보드 |
+| **구현 상태** | ✅ 완료 |
 
-**기능명세**:
+**실제 구현된 기능**:
 
 | 기능 ID | 기능명 | 설명 | 우선순위 | 상태 |
 |:--------|:-------|:-----|:--------:|:----:|
-| F-W01-01 | 총 학생 수 카드 | 현재 등록된 총 학생 수 표시 | P0 | 🔲 |
-| F-W01-02 | 평균 레벨 카드 | 전체 학생의 평균 레벨 표시 (A+~F) | P0 | 🔲 |
-| F-W01-03 | 예상 합격 인원 카드 | 대학별 예상 합격 인원 합계 | P0 | 🔲 |
-| F-W01-04 | 레벨 분포 차트 | A+~C 레벨별 학생 수 바 차트 | P1 | 🔲 |
-| F-W01-05 | 대학별 예상 합격률 | 서울대/홍대/이대/경희 등 대학별 예상 합격 인원 | P1 | 🔲 |
-| F-W01-06 | 빠른 액션 버튼 | 학생 추가, 평가 입력, 리포트 다운로드 바로가기 | P1 | 🔲 |
-| F-W01-07 | 최근 알림 | 최근 알림 목록 (최대 5개) | P2 | 🔲 |
-| F-W01-08 | 주간 평가 현황 | 이번 주 평가 완료/미완료 학생 수 | P2 | 🔲 |
+| F-W01-01 | 시즌 컨텍스트 바 | 2026 시즌 목표(52명) vs 현재(45명), 프로그레스 바 | P0 | ✅ |
+| F-W01-02 | 재원생 카드 | 총 학생 수 (20명), 작년 대비 +5% | P0 | ✅ |
+| F-W01-03 | 리스크 경고 카드 | 리스크 학생 수 (5명), 조치 필요 배지 | P0 | ✅ |
+| F-W01-04 | 대학별 지원 라인 분포 | ComposedChart (Stacked Bar + Line), 대학별 클릭 → Analytics 이동 | P0 | ✅ |
+| F-W01-05 | 전략적 갭 분석 | 홍익대 티어 격차 경고, 2025 vs 2026 분포 비교 | P1 | ✅ |
+| F-W01-06 | 리스크 진단 테이블 | 대학별 지원자/합격률/추세/리스크 레벨, Sparkline | P1 | ✅ |
+| F-W01-07 | 실행 큐 | Action Queue (P0/P1 과제 체크리스트) | P1 | ✅ |
+| F-W01-08 | 코호트 성과 추이 | AreaChart (2025 vs 2026 듀얼 라인), 모멘텀 표시 | P1 | ✅ |
+| F-W01-09 | 집중 관리 대상 | Level C/B 학생 목록 (최대 3명) | P1 | ✅ |
+| F-W01-10 | 데이터 건전성 | 유효율 94%, 평가 누락 12건 표시 | P2 | ✅ |
+| F-W01-11 | 리포트 생성 버튼 | PDF 리포트 생성 (버튼만, 기능 미구현) | P2 | ✅ |
 
 ---
 
-#### TAB-W02: 학생 리스트
+#### TAB-W02: 학생 리스트 & 분석
 
 | 항목 | 내용 |
 |:-----|:-----|
 | **탭 ID** | TAB-W02 |
-| **탭 명** | 학생 리스트 |
-| **URL** | `/students/list` |
+| **탭 명** | 학생 리스트 & 분석 |
+| **URL** | `/students` |
+| **컴포넌트** | `StudentList.tsx` (563줄) |
 | **접근 권한** | 원장, 강사 |
 | **상위 메뉴** | 학생 관리 |
-| **설명** | 전체 학생 목록 조회 및 관리 |
+| **설명** | 대학별 그룹화 뷰 및 상대적 위치 분석 (Scatter Plot) |
+| **구현 상태** | ✅ 완료 |
 
-**기능명세**:
+**실제 구현된 기능**:
 
 | 기능 ID | 기능명 | 설명 | 우선순위 | 상태 |
 |:--------|:-------|:-----|:--------:|:----:|
-| F-W02-01 | 학생 목록 테이블 | 학생 이름, 학년, 전공, 현재 레벨, 담당 강사 표시 | P0 | 🔲 |
-| F-W02-02 | 학년 필터 | 고1/고2/고3/재수 필터링 | P0 | 🔲 |
-| F-W02-03 | 반/담당강사 필터 | 반 또는 담당 강사별 필터링 | P1 | 🔲 |
-| F-W02-04 | 이름/학교 검색 | 학생 이름 또는 학교명 검색 | P0 | 🔲 |
-| F-W02-05 | 정렬 기능 | 이름/최근평가일/성장률 기준 정렬 | P1 | 🔲 |
+| F-W02-01 | 대학별 그룹 아코디언 | 대학별 학생 그룹핑, 확장/축소, 지원자 수/평균 확률 표시 | P0 | ✅ |
+| F-W02-02 | 검색 바 | 학생 이름/학교/대학 실시간 검색 | P0 | ✅ |
+| F-W02-03 | 상대적 위치 분석 | Scatter Plot (학업 vs 실기), Quadrant 구분, Zone/Trend 토글 | P0 | ✅ |
+| F-W02-04 | 뷰 모드 전환 | 기본 보기 (라인 타입별) / 군집 보기 (4가지 클러스터) | P1 | ✅ |
+| F-W02-05 | 인터랙티브 사이드 패널 | 차트 포인트 클릭 시 학생 상세 패널 표시, 전략 가이드 | P1 | ✅ |
+| F-W02-06 | AI Insight 오버레이 | 차트 상단 인사이트 텍스트 표시 | P2 | ✅ |
+| F-W02-07 | 학생 카드 그리드 | 하단 그리드 (3열), 아바타/이름/전공/레벨 표시 | P1 | ✅ |
+| F-W02-08 | "+ 학생 추가" 버튼 | `/students/new` 이동 | P0 | ✅ |
 | F-W02-06 | 학생 상세 이동 | 클릭 시 학생 상세 페이지로 이동 | P0 | 🔲 |
 | F-W02-07 | 학생 추가 버튼 | 신규 학생 등록 페이지로 이동 | P0 | 🔲 |
 | F-W02-08 | 페이지네이션 | 20명 단위 페이지네이션 | P1 | 🔲 |

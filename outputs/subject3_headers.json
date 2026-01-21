@@ -1,0 +1,3362 @@
+{
+  "A": {
+    "index": "□ 과목별-표준점수(등급)별 환산점수표",
+    "university": null,
+    "method": null,
+    "department": "영역"
+  },
+  "B": {
+    "index": null,
+    "university": null,
+    "method": null,
+    "department": "과목"
+  },
+  "C": {
+    "index": null,
+    "university": null,
+    "method": null,
+    "department": "표준점수"
+  },
+  "D": {
+    "index": null,
+    "university": null,
+    "method": null,
+    "department": "과목-표준점수"
+  },
+  "E": {
+    "index": null,
+    "university": null,
+    "method": null,
+    "department": "백분위(성적표)"
+  },
+  "F": {
+    "index": null,
+    "university": null,
+    "method": null,
+    "department": "백분위(선택과목內)"
+  },
+  "G": {
+    "index": null,
+    "university": null,
+    "method": null,
+    "department": "등급(성적표)"
+  },
+  "H": {
+    "index": null,
+    "university": null,
+    "method": null,
+    "department": "등급(선택과목內)"
+  },
+  "I": {
+    "index": null,
+    "university": null,
+    "method": null,
+    "department": "누적(%,성적표)"
+  },
+  "J": {
+    "index": null,
+    "university": null,
+    "method": null,
+    "department": "누적(%,선택과목內)"
+  },
+  "K": {
+    "index": 1.0,
+    "university": "★백분위합",
+    "method": "백+백",
+    "department": "★백분위합"
+  },
+  "L": {
+    "index": 2.0,
+    "university": "★표점합",
+    "method": "표+표",
+    "department": "★표점합"
+  },
+  "M": {
+    "index": 3.0,
+    "university": "가천대",
+    "method": "백+백",
+    "department": "가천의학"
+  },
+  "N": {
+    "index": 4.0,
+    "university": "가천대",
+    "method": "백+백",
+    "department": "가천통합백"
+  },
+  "O": {
+    "index": 5.0,
+    "university": "가천대",
+    "method": "표+표",
+    "department": "가천통합표"
+  },
+  "P": {
+    "index": 6.0,
+    "university": "가천대",
+    "method": "백+백",
+    "department": "가천한의"
+  },
+  "Q": {
+    "index": 7.0,
+    "university": "가톨릭",
+    "method": "표+변",
+    "department": "가톨릭간호"
+  },
+  "R": {
+    "index": 8.0,
+    "university": "가톨릭",
+    "method": "표+변",
+    "department": "가톨릭약학"
+  },
+  "S": {
+    "index": 9.0,
+    "university": "가톨릭",
+    "method": "표+변",
+    "department": "가톨릭의학"
+  },
+  "T": {
+    "index": 10.0,
+    "university": "가톨릭",
+    "method": "백+백",
+    "department": "가톨릭일반1"
+  },
+  "U": {
+    "index": 11.0,
+    "university": "가톨릭",
+    "method": "백+백",
+    "department": "가톨릭일반2"
+  },
+  "V": {
+    "index": 12.0,
+    "university": "가톨릭상지",
+    "method": "백+백",
+    "department": "가톨릭상지"
+  },
+  "W": {
+    "index": 13.0,
+    "university": "감리교",
+    "method": "백+백",
+    "department": "감리교신학"
+  },
+  "X": {
+    "index": 14.0,
+    "university": "강남대",
+    "method": "백+백",
+    "department": "강남인문"
+  },
+  "Y": {
+    "index": 15.0,
+    "university": "강남대",
+    "method": "백+백",
+    "department": "강남자연"
+  },
+  "Z": {
+    "index": 16.0,
+    "university": "강남대",
+    "method": "백+백",
+    "department": "강남자전"
+  },
+  "AA": {
+    "index": 17.0,
+    "university": "강릉대",
+    "method": "백+백",
+    "department": "강릉간호"
+  },
+  "AB": {
+    "index": 18.0,
+    "university": "강릉대",
+    "method": "백+백",
+    "department": "강릉치의"
+  },
+  "AC": {
+    "index": 19.0,
+    "university": "강릉대",
+    "method": "백+백",
+    "department": "강릉통합"
+  },
+  "AD": {
+    "index": 20.0,
+    "university": "강서대",
+    "method": "백+백",
+    "department": "강서간호"
+  },
+  "AE": {
+    "index": 21.0,
+    "university": "강서대",
+    "method": "백+백",
+    "department": "강서인문"
+  },
+  "AF": {
+    "index": 22.0,
+    "university": "강서대",
+    "method": "백+백",
+    "department": "강서자연"
+  },
+  "AG": {
+    "index": 23.0,
+    "university": "강원대",
+    "method": "백+백",
+    "department": "강원간호"
+  },
+  "AH": {
+    "index": 24.0,
+    "university": "강원대",
+    "method": "백+백",
+    "department": "강원삼인문"
+  },
+  "AI": {
+    "index": 25.0,
+    "university": "강원대",
+    "method": "백+백",
+    "department": "강원삼자연"
+  },
+  "AJ": {
+    "index": 26.0,
+    "university": "강원대",
+    "method": "백+백",
+    "department": "강원의학"
+  },
+  "AK": {
+    "index": 27.0,
+    "university": "강원대",
+    "method": "백+백",
+    "department": "강원인문"
+  },
+  "AL": {
+    "index": 28.0,
+    "university": "거제대학",
+    "method": "백+백",
+    "department": "거제대학"
+  },
+  "AM": {
+    "index": 29.0,
+    "university": "건국글",
+    "method": "표+표",
+    "department": "건국글의학"
+  },
+  "AN": {
+    "index": 30.0,
+    "university": "건국글",
+    "method": "백+백",
+    "department": "건국글인문"
+  },
+  "AO": {
+    "index": 31.0,
+    "university": "건국글",
+    "method": "백+백",
+    "department": "건국글자연"
+  },
+  "AP": {
+    "index": 32.0,
+    "university": "건국대",
+    "method": "표+변",
+    "department": "건국인문"
+  },
+  "AQ": {
+    "index": 33.0,
+    "university": "건국대",
+    "method": "표+변",
+    "department": "건국자연"
+  },
+  "AR": {
+    "index": 34.0,
+    "university": "건국대",
+    "method": "표+변",
+    "department": "건국자전"
+  },
+  "AS": {
+    "index": 35.0,
+    "university": "건양대",
+    "method": "백+백",
+    "department": "건양간호"
+  },
+  "AT": {
+    "index": 36.0,
+    "university": "건양대",
+    "method": "백+백",
+    "department": "건양의학"
+  },
+  "AU": {
+    "index": 37.0,
+    "university": "건양대",
+    "method": "백+백",
+    "department": "건양통합"
+  },
+  "AV": {
+    "index": 38.0,
+    "university": "경기과기",
+    "method": "백+백",
+    "department": "경기과기"
+  },
+  "AW": {
+    "index": 39.0,
+    "university": "경기대",
+    "method": "백+백",
+    "department": "경기인문"
+  },
+  "AX": {
+    "index": 40.0,
+    "university": "경기대",
+    "method": "백+백",
+    "department": "경기자연"
+  },
+  "AY": {
+    "index": 41.0,
+    "university": "경기대",
+    "method": "백+백",
+    "department": "경기자전"
+  },
+  "AZ": {
+    "index": 42.0,
+    "university": "경남거창",
+    "method": "백+백",
+    "department": "거창간호"
+  },
+  "BA": {
+    "index": 43.0,
+    "university": "경남거창",
+    "method": "백+백",
+    "department": "거창사복"
+  },
+  "BB": {
+    "index": 44.0,
+    "university": "경남대",
+    "method": "백+백",
+    "department": "경남통합"
+  },
+  "BC": {
+    "index": 45.0,
+    "university": "경남정보",
+    "method": "백+백",
+    "department": "경남정보"
+  },
+  "BD": {
+    "index": 46.0,
+    "university": "경민대학",
+    "method": "백+백",
+    "department": "경민대학"
+  },
+  "BE": {
+    "index": 47.0,
+    "university": "경복대학",
+    "method": "백+백",
+    "department": "경복대학"
+  },
+  "BF": {
+    "index": 48.0,
+    "university": "경북대",
+    "method": "표+변",
+    "department": "경북간호"
+  },
+  "BG": {
+    "index": 49.0,
+    "university": "경북대",
+    "method": "표+변",
+    "department": "경북모바일"
+  },
+  "BH": {
+    "index": 50.0,
+    "university": "경북대",
+    "method": "표+변",
+    "department": "경북예능"
+  },
+  "BI": {
+    "index": 51.0,
+    "university": "경북대",
+    "method": "표+변",
+    "department": "경북인문"
+  },
+  "BJ": {
+    "index": 52.0,
+    "university": "경북대",
+    "method": "표+변",
+    "department": "경북자전"
+  },
+  "BK": {
+    "index": 53.0,
+    "university": "경북대",
+    "method": "표+변",
+    "department": "경북치위생"
+  },
+  "BL": {
+    "index": 54.0,
+    "university": "경북전문",
+    "method": "표+표",
+    "department": "경북전문"
+  },
+  "BM": {
+    "index": 55.0,
+    "university": "경상대",
+    "method": "표+표",
+    "department": "경상예능"
+  },
+  "BN": {
+    "index": 56.0,
+    "university": "경상대",
+    "method": "표+표",
+    "department": "경상의학"
+  },
+  "BO": {
+    "index": 57.0,
+    "university": "경상대",
+    "method": "표+표",
+    "department": "경상이공"
+  },
+  "BP": {
+    "index": 58.0,
+    "university": "경상대",
+    "method": "표+표",
+    "department": "경상인문"
+  },
+  "BQ": {
+    "index": 59.0,
+    "university": "경성대",
+    "method": "표+표",
+    "department": "경성사진"
+  },
+  "BR": {
+    "index": 60.0,
+    "university": "경성대",
+    "method": "표+표",
+    "department": "경성약학"
+  },
+  "BS": {
+    "index": 61.0,
+    "university": "경성대",
+    "method": "표+표",
+    "department": "경성통합"
+  },
+  "BT": {
+    "index": 62.0,
+    "university": "경인교",
+    "method": "백+백",
+    "department": "경인교대"
+  },
+  "BU": {
+    "index": 63.0,
+    "university": "경인여대",
+    "method": "백+백",
+    "department": "경인여간호"
+  },
+  "BV": {
+    "index": 64.0,
+    "university": "경인여대",
+    "method": "백+백",
+    "department": "경인여사복"
+  },
+  "BW": {
+    "index": 65.0,
+    "university": "경일대",
+    "method": "백+백",
+    "department": "경일간호"
+  },
+  "BX": {
+    "index": 66.0,
+    "university": "경일대",
+    "method": "백+백",
+    "department": "경일통합"
+  },
+  "BY": {
+    "index": 67.0,
+    "university": "경주대",
+    "method": "백+백",
+    "department": "신경주인문"
+  },
+  "BZ": {
+    "index": 68.0,
+    "university": "경주대",
+    "method": "백+백",
+    "department": "신경주자연"
+  },
+  "CA": {
+    "index": 69.0,
+    "university": "경희대",
+    "method": "표+변",
+    "department": "경희사회"
+  },
+  "CB": {
+    "index": 70.0,
+    "university": "경희대",
+    "method": "표+변",
+    "department": "경희예술"
+  },
+  "CC": {
+    "index": 71.0,
+    "university": "경희대",
+    "method": "표+변",
+    "department": "경희인문"
+  },
+  "CD": {
+    "index": 72.0,
+    "university": "경희대",
+    "method": "표+변",
+    "department": "경희자연"
+  },
+  "CE": {
+    "index": 73.0,
+    "university": "경희대",
+    "method": "표+변",
+    "department": "경희자전국제"
+  },
+  "CF": {
+    "index": 74.0,
+    "university": "경희대",
+    "method": "표+변",
+    "department": "경희태권"
+  },
+  "CG": {
+    "index": 75.0,
+    "university": "계명대",
+    "method": "백+백",
+    "department": "계명예능"
+  },
+  "CH": {
+    "index": 76.0,
+    "university": "계명대",
+    "method": "백+백",
+    "department": "계명의학"
+  },
+  "CI": {
+    "index": 77.0,
+    "university": "계명대",
+    "method": "백+백",
+    "department": "계명인문"
+  },
+  "CJ": {
+    "index": 78.0,
+    "university": "계명대",
+    "method": "백+백",
+    "department": "계명자연"
+  },
+  "CK": {
+    "index": 79.0,
+    "university": "계원예대",
+    "method": "백+백",
+    "department": "계원예대"
+  },
+  "CL": {
+    "index": 80.0,
+    "university": "고려대",
+    "method": "표+변",
+    "department": "고려가교"
+  },
+  "CM": {
+    "index": 81.0,
+    "university": "고려대",
+    "method": "표+변",
+    "department": "고려가교교과"
+  },
+  "CN": {
+    "index": 82.0,
+    "university": "고려대",
+    "method": "표+변",
+    "department": "고려사국"
+  },
+  "CO": {
+    "index": 83.0,
+    "university": "고려대",
+    "method": "표+변",
+    "department": "고려인문"
+  },
+  "CP": {
+    "index": 84.0,
+    "university": "고려대",
+    "method": "표+변",
+    "department": "고려인문교과"
+  },
+  "CQ": {
+    "index": 85.0,
+    "university": "고려대",
+    "method": "표+변",
+    "department": "고려자연"
+  },
+  "CR": {
+    "index": 86.0,
+    "university": "고려대",
+    "method": "표+변",
+    "department": "고려자연교과"
+  },
+  "CS": {
+    "index": 87.0,
+    "university": "고려대",
+    "method": "표+변",
+    "department": "고려학부"
+  },
+  "CT": {
+    "index": 88.0,
+    "university": "고려대",
+    "method": "표+변",
+    "department": "고려학부교과"
+  },
+  "CU": {
+    "index": 89.0,
+    "university": "고려세",
+    "method": "표+변",
+    "department": "고려세경통"
+  },
+  "CV": {
+    "index": 90.0,
+    "university": "고려세",
+    "method": "표+변",
+    "department": "고려세기계"
+  },
+  "CW": {
+    "index": 91.0,
+    "university": "고려세",
+    "method": "표+변",
+    "department": "고려세문화"
+  },
+  "CX": {
+    "index": 92.0,
+    "university": "고려세",
+    "method": "표+변",
+    "department": "고려세빅데사"
+  },
+  "CY": {
+    "index": 93.0,
+    "university": "고려세",
+    "method": "표+변",
+    "department": "고려세신약"
+  },
+  "CZ": {
+    "index": 94.0,
+    "university": "고신대",
+    "method": "표+표",
+    "department": "고신간호"
+  },
+  "DA": {
+    "index": 95.0,
+    "university": "고신대",
+    "method": "표+표",
+    "department": "고신식영"
+  },
+  "DB": {
+    "index": 96.0,
+    "university": "고신대",
+    "method": "표+표",
+    "department": "고신유교"
+  },
+  "DC": {
+    "index": 97.0,
+    "university": "고신대",
+    "method": "표+표",
+    "department": "고신의학"
+  },
+  "DD": {
+    "index": 98.0,
+    "university": "공주교",
+    "method": "표+표",
+    "department": "공주교대"
+  },
+  "DE": {
+    "index": 99.0,
+    "university": "공주대",
+    "method": "백+백",
+    "department": "공주수교"
+  },
+  "DF": {
+    "index": 100.0,
+    "university": "공주대",
+    "method": "백+백",
+    "department": "공주인문"
+  },
+  "DG": {
+    "index": 101.0,
+    "university": "공주대",
+    "method": "백+백",
+    "department": "공주자연"
+  },
+  "DH": {
+    "index": 102.0,
+    "university": "과기원",
+    "method": "표+변",
+    "department": "카이스트"
+  },
+  "DI": {
+    "index": 103.0,
+    "university": "관동대",
+    "method": "백+백",
+    "department": "관동간호"
+  },
+  "DJ": {
+    "index": 104.0,
+    "university": "관동대",
+    "method": "백+백",
+    "department": "관동의학"
+  },
+  "DK": {
+    "index": 105.0,
+    "university": "관동대",
+    "method": "백+백",
+    "department": "관동통합"
+  },
+  "DL": {
+    "index": 106.0,
+    "university": "광운대",
+    "method": "표+변",
+    "department": "광운상경"
+  },
+  "DM": {
+    "index": 107.0,
+    "university": "광운대",
+    "method": "표+변",
+    "department": "광운이공"
+  },
+  "DN": {
+    "index": 108.0,
+    "university": "광운대",
+    "method": "표+변",
+    "department": "광운인문"
+  },
+  "DO": {
+    "index": 109.0,
+    "university": "광운대",
+    "method": "표+변",
+    "department": "광운정보"
+  },
+  "DP": {
+    "index": 110.0,
+    "university": "광주과",
+    "method": "표+변",
+    "department": "지스트"
+  },
+  "DQ": {
+    "index": 111.0,
+    "university": "광주교",
+    "method": "백+백",
+    "department": "광주교대"
+  },
+  "DR": {
+    "index": 112.0,
+    "university": "교원대",
+    "method": "백+백",
+    "department": "교원가교"
+  },
+  "DS": {
+    "index": 113.0,
+    "university": "교원대",
+    "method": "백+백",
+    "department": "교원국교"
+  },
+  "DT": {
+    "index": 114.0,
+    "university": "교원대",
+    "method": "백+백",
+    "department": "교원독교"
+  },
+  "DU": {
+    "index": 115.0,
+    "university": "교원대",
+    "method": "백+백",
+    "department": "교원물교"
+  },
+  "DV": {
+    "index": 116.0,
+    "university": "교원대",
+    "method": "백+백",
+    "department": "교원불교"
+  },
+  "DW": {
+    "index": 117.0,
+    "university": "교원대",
+    "method": "백+백",
+    "department": "교원생교"
+  },
+  "DX": {
+    "index": 118.0,
+    "university": "교원대",
+    "method": "백+백",
+    "department": "교원수교"
+  },
+  "DY": {
+    "index": 119.0,
+    "university": "교원대",
+    "method": "백+백",
+    "department": "교원영교"
+  },
+  "DZ": {
+    "index": 120.0,
+    "university": "교원대",
+    "method": "백+백",
+    "department": "교원유교"
+  },
+  "EA": {
+    "index": 121.0,
+    "university": "교원대",
+    "method": "백+백",
+    "department": "교원중교"
+  },
+  "EB": {
+    "index": 122.0,
+    "university": "교원대",
+    "method": "백+백",
+    "department": "교원지교"
+  },
+  "EC": {
+    "index": 123.0,
+    "university": "교원대",
+    "method": "백+백",
+    "department": "교원초교"
+  },
+  "ED": {
+    "index": 124.0,
+    "university": "교원대",
+    "method": "백+백",
+    "department": "교원화교"
+  },
+  "EE": {
+    "index": 125.0,
+    "university": "교통대",
+    "method": "백+백",
+    "department": "교통통합"
+  },
+  "EF": {
+    "index": 126.0,
+    "university": "국민대",
+    "method": "표+표",
+    "department": "국민예체능"
+  },
+  "EG": {
+    "index": 127.0,
+    "university": "국민대",
+    "method": "표+표",
+    "department": "국민인문"
+  },
+  "EH": {
+    "index": 128.0,
+    "university": "국민대",
+    "method": "표+표",
+    "department": "국민자연"
+  },
+  "EI": {
+    "index": 129.0,
+    "university": "국민대",
+    "method": "표+표",
+    "department": "국민자전인문"
+  },
+  "EJ": {
+    "index": 130.0,
+    "university": "국민대",
+    "method": "표+표",
+    "department": "국민자전자연"
+  },
+  "EK": {
+    "index": 131.0,
+    "university": "국민대",
+    "method": "표+표",
+    "department": "국민조형"
+  },
+  "EL": {
+    "index": 132.0,
+    "university": "국민대",
+    "method": "표+표",
+    "department": "국민체능"
+  },
+  "EM": {
+    "index": 133.0,
+    "university": "국제대학",
+    "method": "백+백",
+    "department": "국제간호"
+  },
+  "EN": {
+    "index": 134.0,
+    "university": "국제대학",
+    "method": "백+백",
+    "department": "국제사복"
+  },
+  "EO": {
+    "index": 135.0,
+    "university": "군산간호",
+    "method": "표+표",
+    "department": "군산간전"
+  },
+  "EP": {
+    "index": 136.0,
+    "university": "군산대",
+    "method": "백+백",
+    "department": "군산간호"
+  },
+  "EQ": {
+    "index": 137.0,
+    "university": "군산대",
+    "method": "백+백",
+    "department": "군산인문"
+  },
+  "ER": {
+    "index": 138.0,
+    "university": "군산대",
+    "method": "백+백",
+    "department": "군산자전"
+  },
+  "ES": {
+    "index": 139.0,
+    "university": "극동대",
+    "method": "백+백",
+    "department": "극동인재"
+  },
+  "ET": {
+    "index": 140.0,
+    "university": "금강대",
+    "method": "백+백",
+    "department": "금강인문"
+  },
+  "EU": {
+    "index": 141.0,
+    "university": "금오공",
+    "method": "백+백",
+    "department": "금오인문"
+  },
+  "EV": {
+    "index": 142.0,
+    "university": "금오공",
+    "method": "백+백",
+    "department": "금오자연"
+  },
+  "EW": {
+    "index": 143.0,
+    "university": "기독간호",
+    "method": "표+표",
+    "department": "기독간호"
+  },
+  "EX": {
+    "index": 144.0,
+    "university": "김천대",
+    "method": "백+백",
+    "department": "김천간호"
+  },
+  "EY": {
+    "index": 145.0,
+    "university": "꽃동네",
+    "method": "백+백",
+    "department": "꽃동네통합"
+  },
+  "EZ": {
+    "index": 146.0,
+    "university": "나사렛",
+    "method": "백+백",
+    "department": "나사렛중특"
+  },
+  "FA": {
+    "index": 147.0,
+    "university": "나사렛",
+    "method": "백+백",
+    "department": "나사렛통합"
+  },
+  "FB": {
+    "index": 148.0,
+    "university": "남부대",
+    "method": "백+백",
+    "department": "남부간호"
+  },
+  "FC": {
+    "index": 149.0,
+    "university": "남서울",
+    "method": "백+백",
+    "department": "남서울통합"
+  },
+  "FD": {
+    "index": 150.0,
+    "university": "농협대학",
+    "method": "백+백",
+    "department": "농협인문"
+  },
+  "FE": {
+    "index": 151.0,
+    "university": "단국대",
+    "method": "백+백",
+    "department": "단국상경"
+  },
+  "FF": {
+    "index": 152.0,
+    "university": "단국대",
+    "method": "백+백",
+    "department": "단국이공"
+  },
+  "FG": {
+    "index": 153.0,
+    "university": "단국대",
+    "method": "백+백",
+    "department": "단국인문"
+  },
+  "FH": {
+    "index": 154.0,
+    "university": "단국대",
+    "method": "백+백",
+    "department": "단국퇴계"
+  },
+  "FI": {
+    "index": 155.0,
+    "university": "단국천",
+    "method": "백+백",
+    "department": "단국천간호"
+  },
+  "FJ": {
+    "index": 156.0,
+    "university": "단국천",
+    "method": "백+백",
+    "department": "단국천과기"
+  },
+  "FK": {
+    "index": 157.0,
+    "university": "단국천",
+    "method": "백+백",
+    "department": "단국천외문"
+  },
+  "FL": {
+    "index": 158.0,
+    "university": "단국천",
+    "method": "표+백",
+    "department": "단국천의학"
+  },
+  "FM": {
+    "index": 159.0,
+    "university": "대가대",
+    "method": "백+백",
+    "department": "대가간호"
+  },
+  "FN": {
+    "index": 160.0,
+    "university": "대가대",
+    "method": "표+표",
+    "department": "대가의학"
+  },
+  "FO": {
+    "index": 161.0,
+    "university": "대가대",
+    "method": "백+백",
+    "department": "대가통합"
+  },
+  "FP": {
+    "index": 162.0,
+    "university": "대구과",
+    "method": "표+변",
+    "department": "디지스트"
+  },
+  "FQ": {
+    "index": 163.0,
+    "university": "대구교",
+    "method": "표+표",
+    "department": "대구교대"
+  },
+  "FR": {
+    "index": 164.0,
+    "university": "대구대",
+    "method": "백+백",
+    "department": "대구대인문"
+  },
+  "FS": {
+    "index": 165.0,
+    "university": "대구대",
+    "method": "백+백",
+    "department": "대구대자연"
+  },
+  "FT": {
+    "index": 166.0,
+    "university": "대구대",
+    "method": "백+백",
+    "department": "대구대조형"
+  },
+  "FU": {
+    "index": 167.0,
+    "university": "대구한",
+    "method": "백+백",
+    "department": "대구한인문"
+  },
+  "FV": {
+    "index": 168.0,
+    "university": "대구한",
+    "method": "백+백",
+    "department": "대구한자연"
+  },
+  "FW": {
+    "index": 169.0,
+    "university": "대구한",
+    "method": "백+백",
+    "department": "대구한통합"
+  },
+  "FX": {
+    "index": 170.0,
+    "university": "대동대학",
+    "method": "백+백",
+    "department": "대동대학"
+  },
+  "FY": {
+    "index": 171.0,
+    "university": "대림대학",
+    "method": "백+백",
+    "department": "대림대학"
+  },
+  "FZ": {
+    "index": 172.0,
+    "university": "대전대",
+    "method": "백+백",
+    "department": "대전간호"
+  },
+  "GA": {
+    "index": 173.0,
+    "university": "대전대",
+    "method": "백+백",
+    "department": "대전통합"
+  },
+  "GB": {
+    "index": 174.0,
+    "university": "대전대",
+    "method": "백+백",
+    "department": "대전한의"
+  },
+  "GC": {
+    "index": 175.0,
+    "university": "대진대",
+    "method": "백+백",
+    "department": "대진인문"
+  },
+  "GD": {
+    "index": 176.0,
+    "university": "대진대",
+    "method": "백+백",
+    "department": "대진자연"
+  },
+  "GE": {
+    "index": 177.0,
+    "university": "덕성여",
+    "method": "백+백",
+    "department": "덕성약학"
+  },
+  "GF": {
+    "index": 178.0,
+    "university": "덕성여",
+    "method": "백+백",
+    "department": "덕성통합"
+  },
+  "GG": {
+    "index": 179.0,
+    "university": "동국경",
+    "method": "백+백",
+    "department": "동국경간호"
+  },
+  "GH": {
+    "index": 180.0,
+    "university": "동국경",
+    "method": "백+백",
+    "department": "동국경의학"
+  },
+  "GI": {
+    "index": 181.0,
+    "university": "동국경",
+    "method": "백+백",
+    "department": "동국경통합"
+  },
+  "GJ": {
+    "index": 182.0,
+    "university": "동국경",
+    "method": "백+백",
+    "department": "동국경한자연"
+  },
+  "GK": {
+    "index": 183.0,
+    "university": "동국경",
+    "method": "백+백",
+    "department": "동국경한통합"
+  },
+  "GL": {
+    "index": 184.0,
+    "university": "동국대",
+    "method": "표+변",
+    "department": "동국물리"
+  },
+  "GM": {
+    "index": 185.0,
+    "university": "동국대",
+    "method": "표+변",
+    "department": "동국수학"
+  },
+  "GN": {
+    "index": 186.0,
+    "university": "동국대",
+    "method": "표+변",
+    "department": "동국인공"
+  },
+  "GO": {
+    "index": 187.0,
+    "university": "동국대",
+    "method": "표+변",
+    "department": "동국인문"
+  },
+  "GP": {
+    "index": 188.0,
+    "university": "동국대",
+    "method": "표+변",
+    "department": "동국화학"
+  },
+  "GQ": {
+    "index": 189.0,
+    "university": "동남보건",
+    "method": "백+백",
+    "department": "동남보건"
+  },
+  "GR": {
+    "index": 190.0,
+    "university": "동덕여",
+    "method": "백+백",
+    "department": "동덕앙트러"
+  },
+  "GS": {
+    "index": 191.0,
+    "university": "동덕여",
+    "method": "백+백",
+    "department": "동덕약학"
+  },
+  "GT": {
+    "index": 192.0,
+    "university": "동덕여",
+    "method": "백+백",
+    "department": "동덕예능"
+  },
+  "GU": {
+    "index": 193.0,
+    "university": "동덕여",
+    "method": "백+백",
+    "department": "동덕인문"
+  },
+  "GV": {
+    "index": 194.0,
+    "university": "동덕여",
+    "method": "백+백",
+    "department": "동덕자연"
+  },
+  "GW": {
+    "index": 195.0,
+    "university": "동명대",
+    "method": "표+표",
+    "department": "동명통합"
+  },
+  "GX": {
+    "index": 196.0,
+    "university": "동서대",
+    "method": "표+표",
+    "department": "동서통합"
+  },
+  "GY": {
+    "index": 197.0,
+    "university": "동서울대학",
+    "method": "표+표",
+    "department": "동서울대학"
+  },
+  "GZ": {
+    "index": 198.0,
+    "university": "동신대",
+    "method": "백+백",
+    "department": "동신한의"
+  },
+  "HA": {
+    "index": 199.0,
+    "university": "동아대",
+    "method": "표+표",
+    "department": "동아의학"
+  },
+  "HB": {
+    "index": 200.0,
+    "university": "동아대",
+    "method": "표+표",
+    "department": "동아인문"
+  },
+  "HC": {
+    "index": 201.0,
+    "university": "동아대",
+    "method": "표+표",
+    "department": "동아자연"
+  },
+  "HD": {
+    "index": 202.0,
+    "university": "동아방송",
+    "method": "백+백",
+    "department": "동아방송"
+  },
+  "HE": {
+    "index": 203.0,
+    "university": "동양대",
+    "method": "백+백",
+    "department": "동양통합"
+  },
+  "HF": {
+    "index": 204.0,
+    "university": "동양미래",
+    "method": "백+백",
+    "department": "동양미래"
+  },
+  "HG": {
+    "index": 205.0,
+    "university": "동의과학",
+    "method": "백+백",
+    "department": "동의과학"
+  },
+  "HH": {
+    "index": 206.0,
+    "university": "동의대",
+    "method": "표+표",
+    "department": "동의인문"
+  },
+  "HI": {
+    "index": 207.0,
+    "university": "동의대",
+    "method": "표+표",
+    "department": "동의자연"
+  },
+  "HJ": {
+    "index": 208.0,
+    "university": "동의대",
+    "method": "표+변",
+    "department": "동의한인문"
+  },
+  "HK": {
+    "index": 209.0,
+    "university": "동의대",
+    "method": "표+변",
+    "department": "동의한자연"
+  },
+  "HL": {
+    "index": 210.0,
+    "university": "두원공대",
+    "method": "백+백",
+    "department": "두원공대"
+  },
+  "HM": {
+    "index": 211.0,
+    "university": "명지대",
+    "method": "백+백",
+    "department": "명지경영"
+  },
+  "HN": {
+    "index": 212.0,
+    "university": "명지대",
+    "method": "백+백",
+    "department": "명지인문"
+  },
+  "HO": {
+    "index": 213.0,
+    "university": "명지대",
+    "method": "백+백",
+    "department": "명지자연"
+  },
+  "HP": {
+    "index": 214.0,
+    "university": "명지전문",
+    "method": "표+표",
+    "department": "명지전문"
+  },
+  "HQ": {
+    "index": 215.0,
+    "university": "목원대",
+    "method": "백+백",
+    "department": "목원통합"
+  },
+  "HR": {
+    "index": 216.0,
+    "university": "목포가",
+    "method": "백+백",
+    "department": "목포가대"
+  },
+  "HS": {
+    "index": 217.0,
+    "university": "목포대",
+    "method": "백+백",
+    "department": "목포약학"
+  },
+  "HT": {
+    "index": 218.0,
+    "university": "목포대",
+    "method": "백+백",
+    "department": "목포인문"
+  },
+  "HU": {
+    "index": 219.0,
+    "university": "목포대",
+    "method": "백+백",
+    "department": "목포자연"
+  },
+  "HV": {
+    "index": 220.0,
+    "university": "목해대",
+    "method": "백+백",
+    "department": "목해건환"
+  },
+  "HW": {
+    "index": 221.0,
+    "university": "목해대",
+    "method": "백+백",
+    "department": "목해운송"
+  },
+  "HX": {
+    "index": 222.0,
+    "university": "목해대",
+    "method": "백+백",
+    "department": "목해컴공"
+  },
+  "HY": {
+    "index": 223.0,
+    "university": "배재대",
+    "method": "백+백",
+    "department": "배재통합"
+  },
+  "HZ": {
+    "index": 224.0,
+    "university": "배화여대",
+    "method": "백+백",
+    "department": "배화여대"
+  },
+  "IA": {
+    "index": 225.0,
+    "university": "백석대",
+    "method": "백+백",
+    "department": "백석통합"
+  },
+  "IB": {
+    "index": 226.0,
+    "university": "백석대",
+    "method": "백+백",
+    "department": "백석항공"
+  },
+  "IC": {
+    "index": 227.0,
+    "university": "부경대",
+    "method": "표+표",
+    "department": "부경공학"
+  },
+  "ID": {
+    "index": 228.0,
+    "university": "부경대",
+    "method": "표+표",
+    "department": "부경인문"
+  },
+  "IE": {
+    "index": 229.0,
+    "university": "부경대",
+    "method": "표+표",
+    "department": "부경자연"
+  },
+  "IF": {
+    "index": 230.0,
+    "university": "부경대",
+    "method": "표+표",
+    "department": "부경통합"
+  },
+  "IG": {
+    "index": 231.0,
+    "university": "부산가",
+    "method": "표+표",
+    "department": "부가통합"
+  },
+  "IH": {
+    "index": 232.0,
+    "university": "부산과기",
+    "method": "백+백",
+    "department": "부산과기"
+  },
+  "II": {
+    "index": 233.0,
+    "university": "부산교",
+    "method": "백+백",
+    "department": "부산교대"
+  },
+  "IJ": {
+    "index": 234.0,
+    "university": "부산대",
+    "method": "표+변",
+    "department": "부산건축"
+  },
+  "IK": {
+    "index": 235.0,
+    "university": "부산대",
+    "method": "표+변",
+    "department": "부산기계"
+  },
+  "IL": {
+    "index": 236.0,
+    "university": "부산대",
+    "method": "표+변",
+    "department": "부산사회"
+  },
+  "IM": {
+    "index": 237.0,
+    "university": "부산대",
+    "method": "표+변",
+    "department": "부산수학"
+  },
+  "IN": {
+    "index": 238.0,
+    "university": "부산대",
+    "method": "표+변",
+    "department": "부산약학"
+  },
+  "IO": {
+    "index": 239.0,
+    "university": "부산대",
+    "method": "표+변",
+    "department": "부산의학"
+  },
+  "IP": {
+    "index": 240.0,
+    "university": "부산대",
+    "method": "표+변",
+    "department": "부산자전"
+  },
+  "IQ": {
+    "index": 241.0,
+    "university": "부산외",
+    "method": "표+표",
+    "department": "부외통합"
+  },
+  "IR": {
+    "index": 242.0,
+    "university": "부천대학",
+    "method": "백+백",
+    "department": "부천대학"
+  },
+  "IS": {
+    "index": 243.0,
+    "university": "삼육대",
+    "method": "백+백",
+    "department": "삼육약학"
+  },
+  "IT": {
+    "index": 244.0,
+    "university": "삼육대",
+    "method": "백+백",
+    "department": "삼육인문"
+  },
+  "IU": {
+    "index": 245.0,
+    "university": "삼육대",
+    "method": "백+백",
+    "department": "삼육자연"
+  },
+  "IV": {
+    "index": 246.0,
+    "university": "삼육보건",
+    "method": "백+백",
+    "department": "삼육보건"
+  },
+  "IW": {
+    "index": 247.0,
+    "university": "상명대",
+    "method": "백+백",
+    "department": "상명예능"
+  },
+  "IX": {
+    "index": 248.0,
+    "university": "상명대",
+    "method": "백+백",
+    "department": "상명인문"
+  },
+  "IY": {
+    "index": 249.0,
+    "university": "상명대",
+    "method": "백+백",
+    "department": "상명자연"
+  },
+  "IZ": {
+    "index": 250.0,
+    "university": "상명천",
+    "method": "백+백",
+    "department": "상명천인문"
+  },
+  "JA": {
+    "index": 251.0,
+    "university": "상명천",
+    "method": "백+백",
+    "department": "상명천자연"
+  },
+  "JB": {
+    "index": 252.0,
+    "university": "상지대",
+    "method": "백+백",
+    "department": "상지간호"
+  },
+  "JC": {
+    "index": 253.0,
+    "university": "상지대",
+    "method": "백+백",
+    "department": "상지물치"
+  },
+  "JD": {
+    "index": 254.0,
+    "university": "상지대",
+    "method": "백+백",
+    "department": "상지한자연"
+  },
+  "JE": {
+    "index": 255.0,
+    "university": "상지대",
+    "method": "백+백",
+    "department": "상지한통합"
+  },
+  "JF": {
+    "index": 256.0,
+    "university": "서강대",
+    "method": "표+변",
+    "department": "서강인문"
+  },
+  "JG": {
+    "index": 257.0,
+    "university": "서강대",
+    "method": "표+변",
+    "department": "서강자연"
+  },
+  "JH": {
+    "index": 258.0,
+    "university": "서강대",
+    "method": "표+변",
+    "department": "서강자전인문"
+  },
+  "JI": {
+    "index": 259.0,
+    "university": "서강대",
+    "method": "표+변",
+    "department": "서강자전자연"
+  },
+  "JJ": {
+    "index": 260.0,
+    "university": "서경대",
+    "method": "백+백",
+    "department": "서경통합"
+  },
+  "JK": {
+    "index": 261.0,
+    "university": "서울과",
+    "method": "표+표",
+    "department": "서과기술"
+  },
+  "JL": {
+    "index": 262.0,
+    "university": "서울과",
+    "method": "표+표",
+    "department": "서과문예"
+  },
+  "JM": {
+    "index": 263.0,
+    "university": "서울과",
+    "method": "표+표",
+    "department": "서과산디"
+  },
+  "JN": {
+    "index": 264.0,
+    "university": "서울과",
+    "method": "표+표",
+    "department": "서과시디"
+  },
+  "JO": {
+    "index": 265.0,
+    "university": "서울과",
+    "method": "표+표",
+    "department": "서과인문"
+  },
+  "JP": {
+    "index": 266.0,
+    "university": "서울과",
+    "method": "표+표",
+    "department": "서과자연"
+  },
+  "JQ": {
+    "index": 267.0,
+    "university": "서울과",
+    "method": "표+표",
+    "department": "서과체육"
+  },
+  "JR": {
+    "index": 268.0,
+    "university": "서울교",
+    "method": "표+표",
+    "department": "서울교대"
+  },
+  "JS": {
+    "index": 269.0,
+    "university": "서울대",
+    "method": "표+표",
+    "department": "서울간호"
+  },
+  "JT": {
+    "index": 270.0,
+    "university": "서울대",
+    "method": "표+표",
+    "department": "서울인문"
+  },
+  "JU": {
+    "index": 271.0,
+    "university": "서울대",
+    "method": "표+표",
+    "department": "서울자연"
+  },
+  "JV": {
+    "index": 272.0,
+    "university": "서울대",
+    "method": "표+표",
+    "department": "서울통합"
+  },
+  "JW": {
+    "index": 273.0,
+    "university": "서울신학",
+    "method": "백+백",
+    "department": "서울신인문"
+  },
+  "JX": {
+    "index": 274.0,
+    "university": "서울신학",
+    "method": "백+백",
+    "department": "서울신자연"
+  },
+  "JY": {
+    "index": 275.0,
+    "university": "서울여",
+    "method": "백+백",
+    "department": "서울여수학"
+  },
+  "JZ": {
+    "index": 276.0,
+    "university": "서울여",
+    "method": "백+백",
+    "department": "서울여통합"
+  },
+  "KA": {
+    "index": 277.0,
+    "university": "서울여간",
+    "method": "표+표",
+    "department": "서여간호"
+  },
+  "KB": {
+    "index": 278.0,
+    "university": "서원대",
+    "method": "백+백",
+    "department": "서원사범"
+  },
+  "KC": {
+    "index": 279.0,
+    "university": "서일대",
+    "method": "백+백",
+    "department": "서일간호"
+  },
+  "KD": {
+    "index": 280.0,
+    "university": "서정대학",
+    "method": "표+표",
+    "department": "서정대학"
+  },
+  "KE": {
+    "index": 281.0,
+    "university": "선린대학",
+    "method": "표+표",
+    "department": "선린대학"
+  },
+  "KF": {
+    "index": 282.0,
+    "university": "선문대",
+    "method": "백+백",
+    "department": "선문간호"
+  },
+  "KG": {
+    "index": 283.0,
+    "university": "성결대",
+    "method": "백+백",
+    "department": "성결통합"
+  },
+  "KH": {
+    "index": 284.0,
+    "university": "성공회",
+    "method": "백+백",
+    "department": "성공사회"
+  },
+  "KI": {
+    "index": 285.0,
+    "university": "성공회",
+    "method": "백+백",
+    "department": "성공자연"
+  },
+  "KJ": {
+    "index": 286.0,
+    "university": "성균관",
+    "method": "백+백",
+    "department": "성균공학"
+  },
+  "KK": {
+    "index": 287.0,
+    "university": "성균관",
+    "method": "백+백",
+    "department": "성균교육"
+  },
+  "KL": {
+    "index": 288.0,
+    "university": "성균관",
+    "method": "표+변",
+    "department": "성균글경영"
+  },
+  "KM": {
+    "index": 289.0,
+    "university": "성균관",
+    "method": "표+변",
+    "department": "성균글경제"
+  },
+  "KN": {
+    "index": 290.0,
+    "university": "성균관",
+    "method": "표+변",
+    "department": "성균글바메"
+  },
+  "KO": {
+    "index": 291.0,
+    "university": "성균관",
+    "method": "표+변",
+    "department": "성균글융합"
+  },
+  "KP": {
+    "index": 292.0,
+    "university": "성균관",
+    "method": "백+백",
+    "department": "성균수교"
+  },
+  "KQ": {
+    "index": 293.0,
+    "university": "성균관",
+    "method": "표+변",
+    "department": "성균의학"
+  },
+  "KR": {
+    "index": 294.0,
+    "university": "성균관",
+    "method": "백+백",
+    "department": "성균인문"
+  },
+  "KS": {
+    "index": 295.0,
+    "university": "성서대",
+    "method": "백+백",
+    "department": "성서간호"
+  },
+  "KT": {
+    "index": 296.0,
+    "university": "성서대",
+    "method": "백+백",
+    "department": "성서인문"
+  },
+  "KU": {
+    "index": 297.0,
+    "university": "성서대",
+    "method": "백+백",
+    "department": "성서자연"
+  },
+  "KV": {
+    "index": 298.0,
+    "university": "성신여",
+    "method": "백+백",
+    "department": "성신간호인문"
+  },
+  "KW": {
+    "index": 299.0,
+    "university": "성신여",
+    "method": "백+백",
+    "department": "성신간호자연"
+  },
+  "KX": {
+    "index": 300.0,
+    "university": "성신여",
+    "method": "백+백",
+    "department": "성신교육"
+  },
+  "KY": {
+    "index": 301.0,
+    "university": "성신여",
+    "method": "백+백",
+    "department": "성신사회"
+  },
+  "KZ": {
+    "index": 302.0,
+    "university": "성신여",
+    "method": "백+백",
+    "department": "성신생명"
+  },
+  "LA": {
+    "index": 303.0,
+    "university": "성신여",
+    "method": "백+백",
+    "department": "성신인문"
+  },
+  "LB": {
+    "index": 304.0,
+    "university": "성신여",
+    "method": "백+백",
+    "department": "성신자전"
+  },
+  "LC": {
+    "index": 305.0,
+    "university": "성신여",
+    "method": "백+백",
+    "department": "성신정보"
+  },
+  "LD": {
+    "index": 306.0,
+    "university": "성신여",
+    "method": "백+백",
+    "department": "성신첨단"
+  },
+  "LE": {
+    "index": 307.0,
+    "university": "세명대",
+    "method": "백+백",
+    "department": "세명간호"
+  },
+  "LF": {
+    "index": 308.0,
+    "university": "세명대",
+    "method": "백+백",
+    "department": "세명통합"
+  },
+  "LG": {
+    "index": 309.0,
+    "university": "세명대",
+    "method": "백+백",
+    "department": "세명한의"
+  },
+  "LH": {
+    "index": 310.0,
+    "university": "세종대",
+    "method": "표+변",
+    "department": "세종기계"
+  },
+  "LI": {
+    "index": 311.0,
+    "university": "세종대",
+    "method": "표+변",
+    "department": "세종물리"
+  },
+  "LJ": {
+    "index": 312.0,
+    "university": "세종대",
+    "method": "표+변",
+    "department": "세종인문"
+  },
+  "LK": {
+    "index": 313.0,
+    "university": "세종대",
+    "method": "표+변",
+    "department": "세종창의"
+  },
+  "LL": {
+    "index": 314.0,
+    "university": "수원과학",
+    "method": "백+백",
+    "department": "수원간전"
+  },
+  "LM": {
+    "index": 315.0,
+    "university": "수원과학",
+    "method": "백+백",
+    "department": "수원치위생"
+  },
+  "LN": {
+    "index": 316.0,
+    "university": "수원과학",
+    "method": "백+백",
+    "department": "수원항공"
+  },
+  "LO": {
+    "index": 317.0,
+    "university": "수원대",
+    "method": "백+백",
+    "department": "수원인문1"
+  },
+  "LP": {
+    "index": 318.0,
+    "university": "수원대",
+    "method": "백+백",
+    "department": "수원인문2"
+  },
+  "LQ": {
+    "index": 319.0,
+    "university": "수원대",
+    "method": "백+백",
+    "department": "수원자연1"
+  },
+  "LR": {
+    "index": 320.0,
+    "university": "수원대",
+    "method": "백+백",
+    "department": "수원자연2"
+  },
+  "LS": {
+    "index": 321.0,
+    "university": "수원여대",
+    "method": "백+백",
+    "department": "수원여대"
+  },
+  "LT": {
+    "index": 322.0,
+    "university": "숙명여",
+    "method": "표+변",
+    "department": "숙명이공"
+  },
+  "LU": {
+    "index": 323.0,
+    "university": "숙명여",
+    "method": "표+변",
+    "department": "숙명인문"
+  },
+  "LV": {
+    "index": 324.0,
+    "university": "숙명여",
+    "method": "표+변",
+    "department": "숙명자전"
+  },
+  "LW": {
+    "index": 325.0,
+    "university": "순천대",
+    "method": "백+백",
+    "department": "순천수교"
+  },
+  "LX": {
+    "index": 326.0,
+    "university": "순천대",
+    "method": "백+백",
+    "department": "순천약학"
+  },
+  "LY": {
+    "index": 327.0,
+    "university": "순천대",
+    "method": "백+백",
+    "department": "순천인문"
+  },
+  "LZ": {
+    "index": 328.0,
+    "university": "순천대",
+    "method": "백+백",
+    "department": "순천자연"
+  },
+  "MA": {
+    "index": 329.0,
+    "university": "순천대",
+    "method": "백+백",
+    "department": "순천자전"
+  },
+  "MB": {
+    "index": 330.0,
+    "university": "순천향",
+    "method": "백+백",
+    "department": "순천향의학"
+  },
+  "MC": {
+    "index": 331.0,
+    "university": "순천향",
+    "method": "백+백",
+    "department": "순천향인문"
+  },
+  "MD": {
+    "index": 332.0,
+    "university": "순천향",
+    "method": "백+백",
+    "department": "순천향자연"
+  },
+  "ME": {
+    "index": 333.0,
+    "university": "숭실대",
+    "method": "표+변",
+    "department": "숭실건축"
+  },
+  "MF": {
+    "index": 334.0,
+    "university": "숭실대",
+    "method": "표+변",
+    "department": "숭실기계"
+  },
+  "MG": {
+    "index": 335.0,
+    "university": "숭실대",
+    "method": "표+변",
+    "department": "숭실상경"
+  },
+  "MH": {
+    "index": 336.0,
+    "university": "숭실대",
+    "method": "표+변",
+    "department": "숭실인문"
+  },
+  "MI": {
+    "index": 337.0,
+    "university": "숭실대",
+    "method": "표+변",
+    "department": "숭실자전인문"
+  },
+  "MJ": {
+    "index": 338.0,
+    "university": "숭의여대",
+    "method": "백+백",
+    "department": "숭의여대"
+  },
+  "MK": {
+    "index": 339.0,
+    "university": "시립대",
+    "method": "표+변",
+    "department": "시립교통공"
+  },
+  "ML": {
+    "index": 340.0,
+    "university": "시립대",
+    "method": "표+변",
+    "department": "시립기계공"
+  },
+  "MM": {
+    "index": 341.0,
+    "university": "시립대",
+    "method": "표+변",
+    "department": "시립세무"
+  },
+  "MN": {
+    "index": 342.0,
+    "university": "시립대",
+    "method": "표+변",
+    "department": "시립영문"
+  },
+  "MO": {
+    "index": 343.0,
+    "university": "신구대학",
+    "method": "표+표",
+    "department": "신구대학"
+  },
+  "MP": {
+    "index": 344.0,
+    "university": "신라대",
+    "method": "표+표",
+    "department": "신라통합"
+  },
+  "MQ": {
+    "index": 345.0,
+    "university": "신안산대",
+    "method": "백+백",
+    "department": "신안산대"
+  },
+  "MR": {
+    "index": 346.0,
+    "university": "신한대",
+    "method": "백+백",
+    "department": "신한통합1"
+  },
+  "MS": {
+    "index": 347.0,
+    "university": "신한대",
+    "method": "백+백",
+    "department": "신한통합2"
+  },
+  "MT": {
+    "index": 348.0,
+    "university": "신한대",
+    "method": "백+백",
+    "department": "신한통합3"
+  },
+  "MU": {
+    "index": 349.0,
+    "university": "아주대",
+    "method": "표+변",
+    "department": "아주경영"
+  },
+  "MV": {
+    "index": 350.0,
+    "university": "아주대",
+    "method": "표+변",
+    "department": "아주국디"
+  },
+  "MW": {
+    "index": 351.0,
+    "university": "아주대",
+    "method": "표+변",
+    "department": "아주의학"
+  },
+  "MX": {
+    "index": 352.0,
+    "university": "아주대",
+    "method": "표+변",
+    "department": "아주인문"
+  },
+  "MY": {
+    "index": 353.0,
+    "university": "아주대",
+    "method": "표+변",
+    "department": "아주자연"
+  },
+  "MZ": {
+    "index": 354.0,
+    "university": "안동과학",
+    "method": "표+표",
+    "department": "안동과학"
+  },
+  "NA": {
+    "index": 355.0,
+    "university": "안산대학",
+    "method": "백+백",
+    "department": "안산대학"
+  },
+  "NB": {
+    "index": 356.0,
+    "university": "안양대",
+    "method": "백+백",
+    "department": "안양인문"
+  },
+  "NC": {
+    "index": 357.0,
+    "university": "안양대",
+    "method": "백+백",
+    "department": "안양자연"
+  },
+  "ND": {
+    "index": 358.0,
+    "university": "안양대",
+    "method": "백+백",
+    "department": "안양자전"
+  },
+  "NE": {
+    "index": 359.0,
+    "university": "여주대학",
+    "method": "백+백",
+    "department": "여주대학"
+  },
+  "NF": {
+    "index": 360.0,
+    "university": "연성대학",
+    "method": "백+백",
+    "department": "연성대학"
+  },
+  "NG": {
+    "index": 361.0,
+    "university": "연세대",
+    "method": "표+변",
+    "department": "연세간호"
+  },
+  "NH": {
+    "index": 362.0,
+    "university": "연세대",
+    "method": "표+변",
+    "department": "연세국제"
+  },
+  "NI": {
+    "index": 363.0,
+    "university": "연세대",
+    "method": "표+변",
+    "department": "연세의학"
+  },
+  "NJ": {
+    "index": 364.0,
+    "university": "연세대",
+    "method": "표+변",
+    "department": "연세인문"
+  },
+  "NK": {
+    "index": 365.0,
+    "university": "연세대",
+    "method": "표+변",
+    "department": "연세자연"
+  },
+  "NL": {
+    "index": 366.0,
+    "university": "연세원",
+    "method": "표+변",
+    "department": "연세원의학"
+  },
+  "NM": {
+    "index": 367.0,
+    "university": "연세원",
+    "method": "표+변",
+    "department": "연세원자연"
+  },
+  "NN": {
+    "index": 368.0,
+    "university": "연세원",
+    "method": "표+변",
+    "department": "연세원자율"
+  },
+  "NO": {
+    "index": 369.0,
+    "university": "연암공대",
+    "method": "백+백",
+    "department": "연암공대"
+  },
+  "NP": {
+    "index": 370.0,
+    "university": "영남대",
+    "method": "백+백",
+    "department": "영남예능"
+  },
+  "NQ": {
+    "index": 371.0,
+    "university": "영남대",
+    "method": "백+백",
+    "department": "영남의류"
+  },
+  "NR": {
+    "index": 372.0,
+    "university": "영남대",
+    "method": "백+백",
+    "department": "영남의학"
+  },
+  "NS": {
+    "index": 373.0,
+    "university": "영남대",
+    "method": "백+백",
+    "department": "영남인문"
+  },
+  "NT": {
+    "index": 374.0,
+    "university": "영남대",
+    "method": "백+백",
+    "department": "영남자연"
+  },
+  "NU": {
+    "index": 375.0,
+    "university": "영남대",
+    "method": "백+백",
+    "department": "영남항공"
+  },
+  "NV": {
+    "index": 376.0,
+    "university": "예수대",
+    "method": "백+백",
+    "department": "예수통합"
+  },
+  "NW": {
+    "index": 377.0,
+    "university": "외국어",
+    "method": "표+변",
+    "department": "외대사회"
+  },
+  "NX": {
+    "index": 378.0,
+    "university": "외국어",
+    "method": "표+변",
+    "department": "외대인문"
+  },
+  "NY": {
+    "index": 379.0,
+    "university": "외국어",
+    "method": "표+변",
+    "department": "외대자연"
+  },
+  "NZ": {
+    "index": 380.0,
+    "university": "용인대",
+    "method": "백+백",
+    "department": "용인경행"
+  },
+  "OA": {
+    "index": 381.0,
+    "university": "용인대",
+    "method": "백+백",
+    "department": "용인예술"
+  },
+  "OB": {
+    "index": 382.0,
+    "university": "용인대",
+    "method": "백+백",
+    "department": "용인인문"
+  },
+  "OC": {
+    "index": 383.0,
+    "university": "용인대",
+    "method": "백+백",
+    "department": "용인자연"
+  },
+  "OD": {
+    "index": 384.0,
+    "university": "용인대",
+    "method": "백+백",
+    "department": "용인자전"
+  },
+  "OE": {
+    "index": 385.0,
+    "university": "용인예대",
+    "method": "백+백",
+    "department": "용인예대"
+  },
+  "OF": {
+    "index": 386.0,
+    "university": "우석대",
+    "method": "백+백",
+    "department": "우석약학"
+  },
+  "OG": {
+    "index": 387.0,
+    "university": "우석대",
+    "method": "백+백",
+    "department": "우석통합"
+  },
+  "OH": {
+    "index": 388.0,
+    "university": "우석대",
+    "method": "백+백",
+    "department": "우석한의"
+  },
+  "OI": {
+    "index": 389.0,
+    "university": "우송대",
+    "method": "백+백",
+    "department": "우송통합"
+  },
+  "OJ": {
+    "index": 390.0,
+    "university": "울산과",
+    "method": "표+변",
+    "department": "유니스트"
+  },
+  "OK": {
+    "index": 391.0,
+    "university": "울산대",
+    "method": "백+백",
+    "department": "울산간호"
+  },
+  "OL": {
+    "index": 392.0,
+    "university": "울산대",
+    "method": "표+표",
+    "department": "울산의학"
+  },
+  "OM": {
+    "index": 393.0,
+    "university": "울산대",
+    "method": "백+백",
+    "department": "울산인문"
+  },
+  "ON": {
+    "index": 394.0,
+    "university": "울산대",
+    "method": "백+백",
+    "department": "울산자연"
+  },
+  "OO": {
+    "index": 395.0,
+    "university": "원광대",
+    "method": "표+백",
+    "department": "원광간호"
+  },
+  "OP": {
+    "index": 396.0,
+    "university": "원광대",
+    "method": "표+백",
+    "department": "원광의학"
+  },
+  "OQ": {
+    "index": 397.0,
+    "university": "원광대",
+    "method": "표+백",
+    "department": "원광통합"
+  },
+  "OR": {
+    "index": 398.0,
+    "university": "원광대",
+    "method": "표+백",
+    "department": "원광한인문"
+  },
+  "OS": {
+    "index": 399.0,
+    "university": "원광보건",
+    "method": "표+표",
+    "department": "원광보건"
+  },
+  "OT": {
+    "index": 400.0,
+    "university": "유원대",
+    "method": "백+백",
+    "department": "유원간호"
+  },
+  "OU": {
+    "index": 401.0,
+    "university": "유원대",
+    "method": "백+백",
+    "department": "유원통합"
+  },
+  "OV": {
+    "index": 402.0,
+    "university": "유한대학",
+    "method": "백+백",
+    "department": "유한대학"
+  },
+  "OW": {
+    "index": 403.0,
+    "university": "을지대",
+    "method": "백+백",
+    "department": "을지간호1"
+  },
+  "OX": {
+    "index": 404.0,
+    "university": "을지대",
+    "method": "백+백",
+    "department": "을지간호2"
+  },
+  "OY": {
+    "index": 405.0,
+    "university": "을지대",
+    "method": "백+백",
+    "department": "을지사회1"
+  },
+  "OZ": {
+    "index": 406.0,
+    "university": "을지대",
+    "method": "백+백",
+    "department": "을지사회2"
+  },
+  "PA": {
+    "index": 407.0,
+    "university": "을지대",
+    "method": "백+백",
+    "department": "을지의학"
+  },
+  "PB": {
+    "index": 408.0,
+    "university": "이화여",
+    "method": "표+변",
+    "department": "이화간호"
+  },
+  "PC": {
+    "index": 409.0,
+    "university": "이화여",
+    "method": "표+변",
+    "department": "이화인문"
+  },
+  "PD": {
+    "index": 410.0,
+    "university": "이화여",
+    "method": "표+변",
+    "department": "이화자연"
+  },
+  "PE": {
+    "index": 411.0,
+    "university": "인덕대학",
+    "method": "백+백",
+    "department": "인덕대학"
+  },
+  "PF": {
+    "index": 412.0,
+    "university": "인제대",
+    "method": "표+표",
+    "department": "인제글로컬"
+  },
+  "PG": {
+    "index": 413.0,
+    "university": "인제대",
+    "method": "표+표",
+    "department": "인제의학"
+  },
+  "PH": {
+    "index": 414.0,
+    "university": "인제대",
+    "method": "표+표",
+    "department": "인제통합"
+  },
+  "PI": {
+    "index": 415.0,
+    "university": "인천가",
+    "method": "백+백",
+    "department": "인가간호"
+  },
+  "PJ": {
+    "index": 416.0,
+    "university": "인천가",
+    "method": "백+백",
+    "department": "인가문화"
+  },
+  "PK": {
+    "index": 417.0,
+    "university": "인천대",
+    "method": "백+백",
+    "department": "인천디자인"
+  },
+  "PL": {
+    "index": 418.0,
+    "university": "인천대",
+    "method": "백+백",
+    "department": "인천인문"
+  },
+  "PM": {
+    "index": 419.0,
+    "university": "인천대",
+    "method": "백+백",
+    "department": "인천자연"
+  },
+  "PN": {
+    "index": 420.0,
+    "university": "인천재능",
+    "method": "백+백",
+    "department": "인천재능"
+  },
+  "PO": {
+    "index": 421.0,
+    "university": "인하공전",
+    "method": "백+백",
+    "department": "인하공전"
+  },
+  "PP": {
+    "index": 422.0,
+    "university": "인하대",
+    "method": "표+변",
+    "department": "인하융합인문"
+  },
+  "PQ": {
+    "index": 423.0,
+    "university": "인하대",
+    "method": "표+변",
+    "department": "인하융합자연"
+  },
+  "PR": {
+    "index": 424.0,
+    "university": "인하대",
+    "method": "표+변",
+    "department": "인하인문"
+  },
+  "PS": {
+    "index": 425.0,
+    "university": "인하대",
+    "method": "표+변",
+    "department": "인하자연"
+  },
+  "PT": {
+    "index": 426.0,
+    "university": "인하대",
+    "method": "표+변",
+    "department": "인하자전인문"
+  },
+  "PU": {
+    "index": 427.0,
+    "university": "인하대",
+    "method": "표+변",
+    "department": "인하자전자연"
+  },
+  "PV": {
+    "index": 428.0,
+    "university": "장로회",
+    "method": "백+백",
+    "department": "장로회신학"
+  },
+  "PW": {
+    "index": 429.0,
+    "university": "장안대학",
+    "method": "백+백",
+    "department": "장안대학"
+  },
+  "PX": {
+    "index": 430.0,
+    "university": "전남대",
+    "method": "표+표",
+    "department": "전남농생"
+  },
+  "PY": {
+    "index": 431.0,
+    "university": "전남대",
+    "method": "표+표",
+    "department": "전남물리"
+  },
+  "PZ": {
+    "index": 432.0,
+    "university": "전남대",
+    "method": "표+표",
+    "department": "전남의학"
+  },
+  "QA": {
+    "index": 433.0,
+    "university": "전남대",
+    "method": "표+표",
+    "department": "전남인문"
+  },
+  "QB": {
+    "index": 434.0,
+    "university": "전북대",
+    "method": "표+변",
+    "department": "전북과교"
+  },
+  "QC": {
+    "index": 435.0,
+    "university": "전북대",
+    "method": "표+변",
+    "department": "전북수교"
+  },
+  "QD": {
+    "index": 436.0,
+    "university": "전북대",
+    "method": "표+변",
+    "department": "전북의학"
+  },
+  "QE": {
+    "index": 437.0,
+    "university": "전북대",
+    "method": "표+변",
+    "department": "전북이공"
+  },
+  "QF": {
+    "index": 438.0,
+    "university": "전북대",
+    "method": "표+변",
+    "department": "전북인문"
+  },
+  "QG": {
+    "index": 439.0,
+    "university": "전주교",
+    "method": "백+백",
+    "department": "전주교대"
+  },
+  "QH": {
+    "index": 440.0,
+    "university": "전주대",
+    "method": "백+백",
+    "department": "전주수교"
+  },
+  "QI": {
+    "index": 441.0,
+    "university": "전주대",
+    "method": "백+백",
+    "department": "전주통합"
+  },
+  "QJ": {
+    "index": 442.0,
+    "university": "제주관광",
+    "method": "백+백",
+    "department": "제주관광"
+  },
+  "QK": {
+    "index": 443.0,
+    "university": "제주대",
+    "method": "백+백",
+    "department": "제주공대"
+  },
+  "QL": {
+    "index": 444.0,
+    "university": "제주대",
+    "method": "백+백",
+    "department": "제주과교"
+  },
+  "QM": {
+    "index": 445.0,
+    "university": "제주대",
+    "method": "백+백",
+    "department": "제주수교"
+  },
+  "QN": {
+    "index": 446.0,
+    "university": "제주대",
+    "method": "백+백",
+    "department": "제주의학"
+  },
+  "QO": {
+    "index": 447.0,
+    "university": "제주대",
+    "method": "백+백",
+    "department": "제주인문"
+  },
+  "QP": {
+    "index": 448.0,
+    "university": "제주대",
+    "method": "백+백",
+    "department": "제주자연"
+  },
+  "QQ": {
+    "index": 449.0,
+    "university": "제주대",
+    "method": "백+백",
+    "department": "제주자전"
+  },
+  "QR": {
+    "index": 450.0,
+    "university": "제주대",
+    "method": "백+백",
+    "department": "제주초교"
+  },
+  "QS": {
+    "index": 451.0,
+    "university": "제주한라",
+    "method": "백+백",
+    "department": "제주한라"
+  },
+  "QT": {
+    "index": 452.0,
+    "university": "조선간호",
+    "method": "표+표",
+    "department": "조선간전"
+  },
+  "QU": {
+    "index": 453.0,
+    "university": "조선대",
+    "method": "백+백",
+    "department": "조선사회"
+  },
+  "QV": {
+    "index": 454.0,
+    "university": "조선대",
+    "method": "백+백",
+    "department": "조선예능"
+  },
+  "QW": {
+    "index": 455.0,
+    "university": "조선대",
+    "method": "백+백",
+    "department": "조선의학"
+  },
+  "QX": {
+    "index": 456.0,
+    "university": "조선대",
+    "method": "백+백",
+    "department": "조선자연"
+  },
+  "QY": {
+    "index": 457.0,
+    "university": "조선대",
+    "method": "백+백",
+    "department": "조선자전"
+  },
+  "QZ": {
+    "index": 458.0,
+    "university": "중부대",
+    "method": "백+백",
+    "department": "중부사범"
+  },
+  "RA": {
+    "index": 459.0,
+    "university": "중부대",
+    "method": "백+백",
+    "department": "중부통합"
+  },
+  "RB": {
+    "index": 460.0,
+    "university": "중앙대",
+    "method": "표+변",
+    "department": "중앙사회"
+  },
+  "RC": {
+    "index": 461.0,
+    "university": "중앙대",
+    "method": "표+변",
+    "department": "중앙영화"
+  },
+  "RD": {
+    "index": 462.0,
+    "university": "중앙대",
+    "method": "표+변",
+    "department": "중앙인문"
+  },
+  "RE": {
+    "index": 463.0,
+    "university": "중앙대",
+    "method": "표+변",
+    "department": "중앙자연"
+  },
+  "RF": {
+    "index": 464.0,
+    "university": "중앙대",
+    "method": "표+변",
+    "department": "중앙체교"
+  },
+  "RG": {
+    "index": 465.0,
+    "university": "중원대",
+    "method": "백+백",
+    "department": "중원통합"
+  },
+  "RH": {
+    "index": 466.0,
+    "university": "진주교",
+    "method": "백+백",
+    "department": "진주교대"
+  },
+  "RI": {
+    "index": 467.0,
+    "university": "차의대",
+    "method": "백+백",
+    "department": "차의간호"
+  },
+  "RJ": {
+    "index": 468.0,
+    "university": "차의대",
+    "method": "표+변",
+    "department": "차의약학"
+  },
+  "RK": {
+    "index": 469.0,
+    "university": "차의대",
+    "method": "백+백",
+    "department": "차의통합"
+  },
+  "RL": {
+    "index": 470.0,
+    "university": "창원대",
+    "method": "백+백",
+    "department": "창원인문"
+  },
+  "RM": {
+    "index": 471.0,
+    "university": "창원대",
+    "method": "백+백",
+    "department": "창원자연"
+  },
+  "RN": {
+    "index": 472.0,
+    "university": "창원대",
+    "method": "백+백",
+    "department": "창원자전"
+  },
+  "RO": {
+    "index": 473.0,
+    "university": "청강문화",
+    "method": "백+백",
+    "department": "청강문화"
+  },
+  "RP": {
+    "index": 474.0,
+    "university": "청주교",
+    "method": "표+표",
+    "department": "청주교대"
+  },
+  "RQ": {
+    "index": 475.0,
+    "university": "청주대",
+    "method": "백+백",
+    "department": "청주국교"
+  },
+  "RR": {
+    "index": 476.0,
+    "university": "청주대",
+    "method": "백+백",
+    "department": "청주수교"
+  },
+  "RS": {
+    "index": 477.0,
+    "university": "청주대",
+    "method": "백+백",
+    "department": "청주인문"
+  },
+  "RT": {
+    "index": 478.0,
+    "university": "청주대",
+    "method": "백+백",
+    "department": "청주자연"
+  },
+  "RU": {
+    "index": 479.0,
+    "university": "청주대",
+    "method": "백+백",
+    "department": "청주항운"
+  },
+  "RV": {
+    "index": 480.0,
+    "university": "총신대",
+    "method": "백+백",
+    "department": "총신통합"
+  },
+  "RW": {
+    "index": 481.0,
+    "university": "추계예대",
+    "method": "백+백",
+    "department": "추계예대"
+  },
+  "RX": {
+    "index": 482.0,
+    "university": "춘천교",
+    "method": "표+표",
+    "department": "춘천교대"
+  },
+  "RY": {
+    "index": 483.0,
+    "university": "충남대",
+    "method": "표+표",
+    "department": "충남사회"
+  },
+  "RZ": {
+    "index": 484.0,
+    "university": "충남대",
+    "method": "표+표",
+    "department": "충남소비자"
+  },
+  "SA": {
+    "index": 485.0,
+    "university": "충남대",
+    "method": "표+표",
+    "department": "충남수학"
+  },
+  "SB": {
+    "index": 486.0,
+    "university": "충남대",
+    "method": "표+표",
+    "department": "충남식영"
+  },
+  "SC": {
+    "index": 487.0,
+    "university": "충남대",
+    "method": "표+표",
+    "department": "충남의학"
+  },
+  "SD": {
+    "index": 488.0,
+    "university": "충남대",
+    "method": "표+표",
+    "department": "충남이공"
+  },
+  "SE": {
+    "index": 489.0,
+    "university": "충남대",
+    "method": "표+표",
+    "department": "충남자전"
+  },
+  "SF": {
+    "index": 490.0,
+    "university": "충남대",
+    "method": "표+표",
+    "department": "충남체육"
+  },
+  "SG": {
+    "index": 491.0,
+    "university": "충북대",
+    "method": "표+표",
+    "department": "충북공학"
+  },
+  "SH": {
+    "index": 492.0,
+    "university": "충북대",
+    "method": "표+표",
+    "department": "충북농생"
+  },
+  "SI": {
+    "index": 493.0,
+    "university": "충북대",
+    "method": "표+표",
+    "department": "충북의학"
+  },
+  "SJ": {
+    "index": 494.0,
+    "university": "충북대",
+    "method": "표+표",
+    "department": "충북인문"
+  },
+  "SK": {
+    "index": 495.0,
+    "university": "충청대학",
+    "method": "백+백",
+    "department": "충청대학"
+  },
+  "SL": {
+    "index": 496.0,
+    "university": "한경대",
+    "method": "백+백",
+    "department": "한경농생"
+  },
+  "SM": {
+    "index": 497.0,
+    "university": "한경대",
+    "method": "백+백",
+    "department": "한경인문"
+  },
+  "SN": {
+    "index": 498.0,
+    "university": "한경대",
+    "method": "백+백",
+    "department": "한경컴공"
+  },
+  "SO": {
+    "index": 499.0,
+    "university": "한국공대",
+    "method": "백+백",
+    "department": "한국공경영1"
+  },
+  "SP": {
+    "index": 500.0,
+    "university": "한국공대",
+    "method": "백+백",
+    "department": "한국공공학1"
+  },
+  "SQ": {
+    "index": 501.0,
+    "university": "한국공대",
+    "method": "백+백",
+    "department": "한국공통합2"
+  },
+  "SR": {
+    "index": 502.0,
+    "university": "한기대",
+    "method": "백+백",
+    "department": "한기경영"
+  },
+  "SS": {
+    "index": 503.0,
+    "university": "한기대",
+    "method": "백+백",
+    "department": "한기공학"
+  },
+  "ST": {
+    "index": 504.0,
+    "university": "한기대",
+    "method": "백+백",
+    "department": "한기디자인"
+  },
+  "SU": {
+    "index": 505.0,
+    "university": "한남대",
+    "method": "백+백",
+    "department": "한남인문"
+  },
+  "SV": {
+    "index": 506.0,
+    "university": "한남대",
+    "method": "백+백",
+    "department": "한남자연"
+  },
+  "SW": {
+    "index": 507.0,
+    "university": "한동대",
+    "method": "백+백",
+    "department": "한동통합"
+  },
+  "SX": {
+    "index": 508.0,
+    "university": "한라대",
+    "method": "백+백",
+    "department": "한라통합"
+  },
+  "SY": {
+    "index": 509.0,
+    "university": "한림대",
+    "method": "백+백",
+    "department": "한림간호"
+  },
+  "SZ": {
+    "index": 510.0,
+    "university": "한림대",
+    "method": "백+백",
+    "department": "한림글로벌"
+  },
+  "TA": {
+    "index": 511.0,
+    "university": "한림대",
+    "method": "표+표",
+    "department": "한림의학"
+  },
+  "TB": {
+    "index": 512.0,
+    "university": "한림대",
+    "method": "백+백",
+    "department": "한림인문"
+  },
+  "TC": {
+    "index": 513.0,
+    "university": "한림대",
+    "method": "백+백",
+    "department": "한림자연"
+  },
+  "TD": {
+    "index": 514.0,
+    "university": "한림성심",
+    "method": "백+백",
+    "department": "한림성심"
+  },
+  "TE": {
+    "index": 515.0,
+    "university": "한밭대",
+    "method": "백+백",
+    "department": "한밭인문"
+  },
+  "TF": {
+    "index": 516.0,
+    "university": "한밭대",
+    "method": "백+백",
+    "department": "한밭자연"
+  },
+  "TG": {
+    "index": 517.0,
+    "university": "한서대",
+    "method": "백+백",
+    "department": "한서통합"
+  },
+  "TH": {
+    "index": 518.0,
+    "university": "한서대",
+    "method": "백+백",
+    "department": "한서항운"
+  },
+  "TI": {
+    "index": 519.0,
+    "university": "한성대",
+    "method": "백+백",
+    "department": "한성인문"
+  },
+  "TJ": {
+    "index": 520.0,
+    "university": "한성대",
+    "method": "백+백",
+    "department": "한성자연"
+  },
+  "TK": {
+    "index": 521.0,
+    "university": "한성대",
+    "method": "백+백",
+    "department": "한성자전"
+  },
+  "TL": {
+    "index": 522.0,
+    "university": "한세대",
+    "method": "백+백",
+    "department": "한세통합"
+  },
+  "TM": {
+    "index": 523.0,
+    "university": "한신대",
+    "method": "백+백",
+    "department": "한신인문"
+  },
+  "TN": {
+    "index": 524.0,
+    "university": "한신대",
+    "method": "백+백",
+    "department": "한신자연"
+  },
+  "TO": {
+    "index": 525.0,
+    "university": "한양대",
+    "method": "표+변",
+    "department": "한양간호"
+  },
+  "TP": {
+    "index": 526.0,
+    "university": "한양대",
+    "method": "표+변",
+    "department": "한양상경"
+  },
+  "TQ": {
+    "index": 527.0,
+    "university": "한양대",
+    "method": "표+변",
+    "department": "한양스산"
+  },
+  "TR": {
+    "index": 528.0,
+    "university": "한양대",
+    "method": "표+변",
+    "department": "한양인문"
+  },
+  "TS": {
+    "index": 529.0,
+    "university": "한양대",
+    "method": "표+변",
+    "department": "한양자연"
+  },
+  "TT": {
+    "index": 530.0,
+    "university": "한양에",
+    "method": "표+변",
+    "department": "한양에기계"
+  },
+  "TU": {
+    "index": 531.0,
+    "university": "한양에",
+    "method": "표+변",
+    "department": "한양에인문"
+  },
+  "TV": {
+    "index": 532.0,
+    "university": "한양에",
+    "method": "표+변",
+    "department": "한양에자전"
+  },
+  "TW": {
+    "index": 533.0,
+    "university": "한양에",
+    "method": "표+변",
+    "department": "한양에컴퓨터"
+  },
+  "TX": {
+    "index": 534.0,
+    "university": "한양여대",
+    "method": "표+표",
+    "department": "한양여대"
+  },
+  "TY": {
+    "index": 535.0,
+    "university": "한에공",
+    "method": "표+표",
+    "department": "한전공대"
+  },
+  "TZ": {
+    "index": 536.0,
+    "university": "한체대",
+    "method": "표+표",
+    "department": "한체인문"
+  },
+  "UA": {
+    "index": 537.0,
+    "university": "항공대",
+    "method": "표+표",
+    "department": "항공공학"
+  },
+  "UB": {
+    "index": 538.0,
+    "university": "항공대",
+    "method": "표+표",
+    "department": "항공통합"
+  },
+  "UC": {
+    "index": 539.0,
+    "university": "해양대",
+    "method": "표+표",
+    "department": "해양경찰"
+  },
+  "UD": {
+    "index": 540.0,
+    "university": "해양대",
+    "method": "표+표",
+    "department": "해양과기"
+  },
+  "UE": {
+    "index": 541.0,
+    "university": "해양대",
+    "method": "표+표",
+    "department": "해양인문"
+  },
+  "UF": {
+    "index": 542.0,
+    "university": "해양대",
+    "method": "표+표",
+    "department": "해양해사"
+  },
+  "UG": {
+    "index": 543.0,
+    "university": "협성대",
+    "method": "백+백",
+    "department": "협성통합"
+  },
+  "UH": {
+    "index": 544.0,
+    "university": "호서대",
+    "method": "백+백",
+    "department": "호서통합"
+  },
+  "UI": {
+    "index": 545.0,
+    "university": "홍익대",
+    "method": "표+표",
+    "department": "홍익미술"
+  },
+  "UJ": {
+    "index": 546.0,
+    "university": "홍익대",
+    "method": "표+표",
+    "department": "홍익인문"
+  },
+  "UK": {
+    "index": 547.0,
+    "university": "홍익대",
+    "method": "표+표",
+    "department": "홍익자연"
+  },
+  "UL": {
+    "index": 548.0,
+    "university": "홍익세",
+    "method": "표+표",
+    "department": "홍익세미술"
+  },
+  "UM": {
+    "index": 549.0,
+    "university": "홍익세",
+    "method": "표+표",
+    "department": "홍익세인문"
+  },
+  "UN": {
+    "index": 550.0,
+    "university": "홍익세",
+    "method": "표+표",
+    "department": "홍익세자연"
+  }
+}

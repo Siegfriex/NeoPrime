@@ -1,0 +1,174 @@
+{
+  "nodes": [
+    {
+      "id": "INDEX",
+      "type": "sheet"
+    },
+    {
+      "id": "PERCENTAGE",
+      "type": "sheet"
+    },
+    {
+      "id": "RAWSCORE",
+      "type": "sheet"
+    },
+    {
+      "id": "RESTRICT",
+      "type": "sheet"
+    },
+    {
+      "id": "SUBJECT1",
+      "type": "sheet"
+    },
+    {
+      "id": "SUBJECT2",
+      "type": "sheet"
+    },
+    {
+      "id": "SUBJECT3",
+      "type": "sheet"
+    },
+    {
+      "id": "INFO",
+      "type": "sheet"
+    },
+    {
+      "id": "이과계열분석결과",
+      "type": "sheet"
+    }
+  ],
+  "edges": [
+    {
+      "from": "이과계열분석결과",
+      "to": "INFO",
+      "type": "sheet_ref",
+      "weight": 199957
+    },
+    {
+      "from": "INDEX",
+      "to": "SUBJECT3",
+      "type": "sheet_ref",
+      "weight": 61050
+    },
+    {
+      "from": "SUBJECT3",
+      "to": "COMPUTE",
+      "type": "sheet_ref",
+      "weight": 46632
+    },
+    {
+      "from": "PERCENTAGE",
+      "to": "COMPUTE",
+      "type": "sheet_ref",
+      "weight": 46632
+    },
+    {
+      "from": "INDEX",
+      "to": "수능입력",
+      "type": "sheet_ref",
+      "weight": 40833
+    },
+    {
+      "from": "SUBJECT3",
+      "to": "RESTRICT",
+      "type": "sheet_ref",
+      "weight": 17487
+    },
+    {
+      "from": "PERCENTAGE",
+      "to": "RESTRICT",
+      "type": "sheet_ref",
+      "weight": 17487
+    },
+    {
+      "from": "SUBJECT3",
+      "to": "수능입력",
+      "type": "sheet_ref",
+      "weight": 11658
+    },
+    {
+      "from": "PERCENTAGE",
+      "to": "수능입력",
+      "type": "sheet_ref",
+      "weight": 11658
+    },
+    {
+      "from": "INDEX",
+      "to": "PERCENTAGE",
+      "type": "sheet_ref",
+      "weight": 8800
+    },
+    {
+      "from": "SUBJECT3",
+      "to": "SUBJECT1",
+      "type": "sheet_ref",
+      "weight": 5829
+    },
+    {
+      "from": "PERCENTAGE",
+      "to": "SUBJECT1",
+      "type": "sheet_ref",
+      "weight": 5829
+    },
+    {
+      "from": "INDEX",
+      "to": "내신입력",
+      "type": "sheet_ref",
+      "weight": 1650
+    },
+    {
+      "from": "RAWSCORE",
+      "to": "COMPUTE",
+      "type": "sheet_ref",
+      "weight": 1650
+    },
+    {
+      "from": "RAWSCORE",
+      "to": "수능입력",
+      "type": "sheet_ref",
+      "weight": 147
+    },
+    {
+      "from": "SUBJECT1",
+      "to": "SUBJECT3",
+      "type": "sheet_ref",
+      "weight": 96
+    },
+    {
+      "from": "INDEX",
+      "to": "SUBJECT2",
+      "type": "sheet_ref",
+      "weight": 60
+    },
+    {
+      "from": "RESTRICT",
+      "to": "RAWSCORE",
+      "type": "sheet_ref",
+      "weight": 33
+    },
+    {
+      "from": "SUBJECT2",
+      "to": "수능입력",
+      "type": "sheet_ref",
+      "weight": 14
+    },
+    {
+      "from": "INFO",
+      "to": "수능입력",
+      "type": "sheet_ref",
+      "weight": 2
+    },
+    {
+      "from": "INFO",
+      "to": "INDEX",
+      "type": "sheet_ref",
+      "weight": 1
+    },
+    {
+      "from": "SUBJECT1",
+      "to": "INFO",
+      "type": "sheet_ref",
+      "weight": 1
+    }
+  ]
+}

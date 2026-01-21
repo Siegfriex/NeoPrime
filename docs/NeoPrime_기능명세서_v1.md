@@ -6,6 +6,8 @@
 **Status**: Draft  
 **Document ID**: FRS-NEOPRIME-001
 
+**참고**: 실제 구현 기준 상세 명세는 `NeoPrime_FRD_프론트엔드명세서_v1.md` 참조
+
 ---
 
 ## 변경 이력
@@ -19,11 +21,12 @@
 ## 목차
 
 1. [문서 개요](#1-문서-개요)
-2. [섹션 1: 기능 명세 – 웹 대시보드](#섹션-1-기능-명세--웹-대시보드)
-3. [섹션 2: 기능 명세 – 모바일 앱](#섹션-2-기능-명세--모바일-앱)
-4. [섹션 3: 기능 명세 – Ask NeoPrime (Analytics) 상세](#섹션-3-기능-명세--ask-neoprime-analytics-상세)
-5. [섹션 4: 비기능 명세 – 공통](#섹션-4-비기능-명세--공통)
-6. [섹션 5: 릴리즈 단계별 우선순위 태깅](#섹션-5-릴리즈-단계별-우선순위-태깅)
+2. [실제 구현 상태 (2026-01-21 기준)](#실제-구현-상태-2026-01-21-기준) ⭐
+3. [섹션 1: 기능 명세 – 웹 대시보드](#섹션-1-기능-명세--웹-대시보드)
+4. [섹션 2: 기능 명세 – 모바일 앱](#섹션-2-기능-명세--모바일-앱)
+5. [섹션 3: 기능 명세 – Ask NeoPrime (Analytics) 상세](#섹션-3-기능-명세--ask-neoprime-analytics-상세)
+6. [섹션 4: 비기능 명세 – 공통](#섹션-4-비기능-명세--공통)
+7. [섹션 5: 릴리즈 단계별 우선순위 태깅](#섹션-5-릴리즈-단계별-우선순위-태깅)
 
 ---
 
@@ -70,6 +73,49 @@ interface FourAxisScore {
   completion: number;   // 완성도/태도 (0-10)
 }
 ```
+
+---
+
+## 실제 구현 상태 (2026-01-21 기준)
+
+**⚠️ 중요**: 본 문서는 설계 기준 PRD입니다. 실제 구현된 프론트엔드 상세 명세는 **`NeoPrime_FRD_프론트엔드명세서_v1.md`**를 참조하세요.
+
+### 구현 완료 현황
+
+| Phase | 계획 기능 | 실제 구현 | 완료율 | 주요 화면 |
+|:-----:|:---------|:---------|:------:|:---------|
+| **Phase 1: MVP** | 40개 | 38개 | 95% ✅ | Dashboard, StudentList, StudentDetail, StudentAdd, EvaluationEntry |
+| **Phase 2: AI 멘토** | 45개 | 42개 | 93% ✅ | Analytics, ChatBot, AI 피드백 |
+| **Phase 3: 고도화** | 25개 | 8개 | 32% 🟡 | 코호트 추이, 평가 이력 |
+
+### 실제 구현된 화면 (11개)
+
+1. ✅ **Dashboard** (`/`) - 시즌 목표 추적, KPI 카드, 대학별 라인 분포, 리스크 진단
+2. ✅ **StudentList** (`/students`) - 대학별 그룹화, Scatter Plot 분석
+3. ✅ **StudentDetail** (`/students/:id`) - 학생 상세, 작품 갤러리, 평가 이력
+4. ✅ **StudentAdd** (`/students/new`) - 학생 등록 폼
+5. ✅ **EvaluationEntry** (`/evaluations/new`) - 4축 평가, AI 피드백 생성
+6. ✅ **Analytics** (`/analytics`) - Analysis Lab UI, 3-Tab 분석
+7. ✅ **AdmissionSimulator** (`/simulation`) - 입시 시뮬레이터 (다중 대학 비교)
+8. ✅ **Login** (`/auth/login`) - 로그인 폼
+9. ✅ **Signup** (`/auth/signup`) - 회원가입 폼
+10. ✅ **Settings** (`/settings`) - 설정 (탭 구조)
+11. ✅ **Profile** (`/profile`) - 사용자 프로필
+
+### 추가 구현된 기능 (계획에 없었음)
+
+1. ✅ **상대적 위치 분석** (Scatter Plot) - StudentList
+2. ✅ **입시 시뮬레이터** (다중 대학 비교) - AdmissionSimulator
+3. ✅ **Analysis Lab UI** (VS Code 스타일) - Analytics
+4. ✅ **AI 콘솔** (자연어 명령어) - Analytics
+5. ✅ **Thinking Mode** (고급 추론 체인) - EvaluationEntry
+
+### 관련 문서
+
+- **상세 명세**: `NeoPrime_FRD_프론트엔드명세서_v1.md` ⭐
+- **IA 문서**: `Frontend_IA_실제구현_v2.md`
+- **구현 현황**: `Frontend_구현현황_v1.md`
+- **코드베이스 분석**: `Frontend_코드베이스_분석보고서_v1.md`
 
 ---
 

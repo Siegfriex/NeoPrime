@@ -632,18 +632,19 @@ def compute_theory_result(
             profile.track.value
         )
 
-    # INDEX 조회 실패 시 폴백 사용
+    # INDEX 조회 실패 시 폴백 비활성화 (Phase 2: 가중치 없이 호출 불가)
     if not index_result or not index_result.get("found"):
-        logger.warning("INDEX 조회 실패, RAWSCORE 폴백 사용")
-        fallback = get_index_fallback()
-        index_result = fallback.calculate_from_rawscore(
-            korean_conv,
-            math_conv,
-            inq1_conv,
-            inq2_conv,
-            english_grade=profile.english_grade,
-            method="weighted"
-        )
+        logger.error("INDEX 조회 실패 - 폴백 비활성화 (가중치 미제공)")
+        index_result = {
+            "found": False,
+            "error": "INDEX 조회 실패, 폴백 비활성화됨",
+            "match_type": "fallback_disabled",
+            "cumulative_pct": None,
+            "percentile_sum": None,
+            "national_rank": None,
+            "confidence": 0.0,
+            "subjects_used": [],
+        }
 
     if index_result:
         cumulative_pct = index_result.get("cumulative_pct")

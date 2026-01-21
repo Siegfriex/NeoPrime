@@ -1,9 +1,18 @@
 """
-Excel Parity Test - 엑셀 결과와 Python 결과 100% 일치 검증
+Excel Parity Test (Legacy) - 엑셀 결과와 Python 결과 100% 일치 검증
 
 SSOT 문서 기준:
 - 절대 오차: 1e-6 이하
 - 상대 오차: 1e-9 이하 (둘 다 만족해야 함)
+
+Phase 2 주의사항:
+- 이 파일은 xlwings를 사용하여 Excel COM 연결이 필요합니다.
+- 런타임에 xlwings 없이 테스트하려면 test_excel_parity_standalone.py 사용
+- 이 테스트는 Excel 환산점수 값을 직접 읽어서 합산하는 방식입니다.
+- Python이 JSON 테이블에서 환산점수를 조회하는 방식은 standalone 테스트 참조.
+
+xlwings 없이 실행:
+    pytest tests/test_excel_parity_standalone.py -v
 """
 
 import sys

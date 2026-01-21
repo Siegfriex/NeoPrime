@@ -1,0 +1,107 @@
+{
+  "sheets": {
+    "INFO": {
+      "exists": true,
+      "note": "read_only 모드에서는 정확한 크기 측정 제한적"
+    },
+    "원점수입력": {
+      "exists": true,
+      "note": "read_only 모드에서는 정확한 크기 측정 제한적"
+    },
+    "수능입력": {
+      "exists": true,
+      "note": "read_only 모드에서는 정확한 크기 측정 제한적"
+    },
+    "내신입력": {
+      "exists": true,
+      "note": "read_only 모드에서는 정확한 크기 측정 제한적"
+    },
+    "이과계열분석결과": {
+      "exists": true,
+      "note": "read_only 모드에서는 정확한 크기 측정 제한적"
+    },
+    "문과계열분석결과": {
+      "exists": true,
+      "note": "read_only 모드에서는 정확한 크기 측정 제한적"
+    },
+    "COMPUTE": {
+      "exists": true,
+      "note": "read_only 모드에서는 정확한 크기 측정 제한적"
+    },
+    "RESTRICT": {
+      "exists": true,
+      "note": "read_only 모드에서는 정확한 크기 측정 제한적"
+    },
+    "SUBJECT1": {
+      "exists": true,
+      "note": "read_only 모드에서는 정확한 크기 측정 제한적"
+    },
+    "SUBJECT2": {
+      "exists": true,
+      "note": "read_only 모드에서는 정확한 크기 측정 제한적"
+    },
+    "SUBJECT3": {
+      "exists": true,
+      "note": "read_only 모드에서는 정확한 크기 측정 제한적"
+    },
+    "PERCENTAGE": {
+      "exists": true,
+      "note": "read_only 모드에서는 정확한 크기 측정 제한적"
+    },
+    "INDEX": {
+      "exists": true,
+      "note": "read_only 모드에서는 정확한 크기 측정 제한적"
+    },
+    "RAWSCORE": {
+      "exists": true,
+      "note": "read_only 모드에서는 정확한 크기 측정 제한적"
+    },
+    "메모장": {
+      "exists": true,
+      "note": "read_only 모드에서는 정확한 크기 측정 제한적"
+    }
+  },
+  "formulas": {
+    "total_cells": 3282407,
+    "formula_cells": 303215,
+    "shared_formula_groups": 337,
+    "array_formulas": 0,
+    "function_counts": {
+      "IF": 282833,
+      "INDEX": 46985,
+      "MATCH": 46984,
+      "VLOOKUP": 23531,
+      "AVERAGE": 11662,
+      "OFFSET": 2200,
+      "SUM": 258,
+      "COUNT": 51,
+      "IFS": 51
+    }
+  },
+  "named_ranges": {
+    "count": 0,
+    "types": {}
+  },
+  "tables": {
+    "count": 0,
+    "details": []
+  },
+  "data_validations": {
+    "count": 1,
+    "sheets": {
+      "내신입력": 1
+    }
+  },
+  "conditional_formats": {
+    "count": 16,
+    "sheets": {
+      "수능입력": 2,
+      "이과계열분석결과": 7,
+      "문과계열분석결과": 7
+    }
+  },
+  "external_links": {
+    "exists": false,
+    "count": 0
+  }
+}

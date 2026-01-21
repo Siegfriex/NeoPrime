@@ -1,0 +1,19 @@
+[
+  {
+    "sheet": "내신입력",
+    "sqref": "D18:D21",
+    "type": "list",
+    "operator": "notBetween",
+    "allowBlank": "1",
+    "showDropDown": null,
+    "showInputMessage": null,
+    "showErrorMessage": null,
+    "errorStyle": "information",
+    "formula1": "$C$18:$C$21",
+    "formula2": null,
+    "promptTitle": null,
+    "prompt": null,
+    "errorTitle": null,
+    "error": null
+  }
+]

@@ -59,7 +59,9 @@ class IndexCalculator:
         inquiry1_score: float,
         inquiry2_score: float,
         history_grade: int,
-        required_subjects: str = "국수영탐(2)"
+        required_subjects: str = "국수영탐(2)",
+        inquiry1_subject: str = "",
+        inquiry2_subject: str = ""
     ) -> CalculationResult:
         """
         대학/학과별 수능 환산점수 계산
@@ -74,9 +76,15 @@ class IndexCalculator:
             inquiry2_score: 탐구2 표준점수
             history_grade: 한국사 등급 (1-9)
             required_subjects: 필수과목 문자열 (예: "국수영탐(2)")
+            inquiry1_subject: 탐구1 실제 과목명 (예: "물리학 Ⅰ") - Phase 2 추가
+            inquiry2_subject: 탐구2 실제 과목명 (예: "화학 Ⅰ") - Phase 2 추가
 
         Returns:
             CalculationResult: 계산 결과
+
+        Phase 2 변경:
+            - inquiry1_subject, inquiry2_subject 파라미터 추가
+            - 실제 과목명으로 환산점수 조회 (정규화 자동 적용)
         """
         subject_scores = []
         total = 0.0
@@ -116,21 +124,39 @@ class IndexCalculator:
                 logger.debug(f"영어 환산점수 없음 (등급 기반): {english_grade}")
 
         # 4. 탐구 환산점수
+        # Phase 2: 실제 과목명 사용 (정규화 자동 적용)
         if "탐" in required_subjects:
             inquiry_count = self._parse_inquiry_count(required_subjects)
-            inquiry_scores = sorted([inquiry1_score, inquiry2_score], reverse=True)
 
-            for i, score in enumerate(inquiry_scores[:inquiry_count]):
+            # 탐구 과목/점수 쌍 구성
+            inquiry_items = []
+            if inquiry1_score:
+                inquiry_items.append((inquiry1_subject or "탐구1", inquiry1_score))
+            if inquiry2_score:
+                inquiry_items.append((inquiry2_subject or "탐구2", inquiry2_score))
+
+            # 점수 기준 내림차순 정렬 (높은 점수 우선 사용)
+            inquiry_items.sort(key=lambda x: x[1], reverse=True)
+
+            for i, (subject_name, score) in enumerate(inquiry_items[:inquiry_count]):
                 try:
-                    # 탐구 과목명은 실제로 다양할 수 있음 (물리, 화학 등)
-                    # 여기서는 일반화된 "탐구" 사용
+                    # Phase 2: 실제 과목명으로 조회 (정규화는 get_converted_score에서 자동 처리)
                     inquiry_conv = self.weights.get_converted_score(
-                        university, department, f"탐구{i+1}", score
+                        university, department, subject_name, score
                     )
-                    subject_scores.append(SubjectScore(f"탐구{i+1}", score, inquiry_conv))
+                    subject_scores.append(SubjectScore(subject_name, score, inquiry_conv))
                     total += inquiry_conv
-                except (WeightNotFoundError, ConversionNotFoundError):
-                    logger.debug(f"탐구{i+1} 환산점수 없음")
+                except (WeightNotFoundError, ConversionNotFoundError) as e:
+                    # 실제 과목명 조회 실패 시 일반 "탐구N" 키로 재시도
+                    logger.debug(f"탐구 환산점수 조회 실패 ({subject_name}): {e}")
+                    try:
+                        inquiry_conv = self.weights.get_converted_score(
+                            university, department, f"탐구{i+1}", score
+                        )
+                        subject_scores.append(SubjectScore(f"탐구{i+1}", score, inquiry_conv))
+                        total += inquiry_conv
+                    except (WeightNotFoundError, ConversionNotFoundError):
+                        logger.debug(f"탐구{i+1} 환산점수도 없음")
 
         # 5. 한국사 (대부분 가산점 또는 감점)
         # 한국사는 복잡한 조건이 있어 별도 처리 필요
@@ -174,7 +200,9 @@ class ComputeCalculator:
         inquiry1_score: float,
         inquiry2_score: float,
         history_grade: int,
-        required_subjects: str = "국수영탐(2)"
+        required_subjects: str = "국수영탐(2)",
+        inquiry1_subject: str = "",
+        inquiry2_subject: str = ""
     ) -> Dict:
         """
         COMPUTE Row 3 계산 (최종 환산점수)
@@ -194,7 +222,9 @@ class ComputeCalculator:
             inquiry1_score=inquiry1_score,
             inquiry2_score=inquiry2_score,
             history_grade=history_grade,
-            required_subjects=required_subjects
+            required_subjects=required_subjects,
+            inquiry1_subject=inquiry1_subject,
+            inquiry2_subject=inquiry2_subject
         )
 
         return {

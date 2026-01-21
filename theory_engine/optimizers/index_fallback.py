@@ -173,17 +173,28 @@ class IndexFallback:
         }
 
     def _weighted_average(self, pcts: Dict[str, float]) -> float:
-        """가중 평균 계산"""
+        """가중 평균 계산
+
+        Raises:
+            KeyError: 가중치 키가 등록되지 않은 경우
+            ValueError: 유효한 과목 가중치가 없는 경우 (total_weight=0)
+        """
         total_weight = 0.0
         weighted_sum = 0.0
 
         for key, pct in pcts.items():
-            weight = self.weights.get(key, 0.2)  # 기본 가중치 0.2
+            # Phase 2: 숨은 기본값 제거 - 명시적 예외 발생
+            if key not in self.weights:
+                raise KeyError(
+                    f"가중치 키 '{key}' 미등록. 등록된 키: {list(self.weights.keys())}"
+                )
+            weight = self.weights[key]
             weighted_sum += pct * weight
             total_weight += weight
 
         if total_weight == 0:
-            return 50.0  # 기본값
+            # Phase 2: 숨은 폴백값 제거 - 명시적 예외 발생
+            raise ValueError("total_weight=0: 유효한 과목 가중치가 없습니다")
 
         return weighted_sum / total_weight
 

@@ -1,0 +1,194 @@
+[
+  {
+    "sheet": "수능입력",
+    "sqref": "D9:D45",
+    "type": "expression",
+    "operator": null,
+    "priority": "1",
+    "stopIfTrue": null,
+    "dxfId": "15",
+    "formulas": [
+      "$D9=\"☜ 등급을 입력\""
+    ]
+  },
+  {
+    "sheet": "수능입력",
+    "sqref": "G9:I45",
+    "type": "expression",
+    "operator": null,
+    "priority": "2",
+    "stopIfTrue": null,
+    "dxfId": "14",
+    "formulas": [
+      "OR($H9=0,$H9=\"\")"
+    ]
+  },
+  {
+    "sheet": "이과계열분석결과",
+    "sqref": "A6:C5834",
+    "type": "expression",
+    "operator": null,
+    "priority": "4",
+    "stopIfTrue": null,
+    "dxfId": "13",
+    "formulas": [
+      "OR(MID($D6,1,2)=\"제외\",MID($D6,1,2)=\"오류\")"
+    ]
+  },
+  {
+    "sheet": "이과계열분석결과",
+    "sqref": "A6:C5834",
+    "type": "expression",
+    "operator": null,
+    "priority": "5",
+    "stopIfTrue": null,
+    "dxfId": "12",
+    "formulas": [
+      "OR($G6<10,$G6<($K6/10))"
+    ]
+  },
+  {
+    "sheet": "이과계열분석결과",
+    "sqref": "A6:C5834",
+    "type": "expression",
+    "operator": null,
+    "priority": "6",
+    "stopIfTrue": null,
+    "dxfId": "11",
+    "formulas": [
+      "$G6>=$J6"
+    ]
+  },
+  {
+    "sheet": "이과계열분석결과",
+    "sqref": "A6:C5834",
+    "type": "expression",
+    "operator": null,
+    "priority": "7",
+    "stopIfTrue": null,
+    "dxfId": "10",
+    "formulas": [
+      "$G6>=$K6"
+    ]
+  },
+  {
+    "sheet": "이과계열분석결과",
+    "sqref": "A6:C5834",
+    "type": "expression",
+    "operator": null,
+    "priority": "8",
+    "stopIfTrue": null,
+    "dxfId": "9",
+    "formulas": [
+      "$G6>=$L6"
+    ]
+  },
+  {
+    "sheet": "이과계열분석결과",
+    "sqref": "A6:C5834",
+    "type": "expression",
+    "operator": null,
+    "priority": "9",
+    "stopIfTrue": null,
+    "dxfId": "8",
+    "formulas": [
+      "AND(0<$G6,$G6<$L6)"
+    ]
+  },
+  {
+    "sheet": "이과계열분석결과",
+    "sqref": "D6:D5834",
+    "type": "expression",
+    "operator": null,
+    "priority": "3",
+    "stopIfTrue": null,
+    "dxfId": "7",
+    "formulas": [
+      "MID($D6,1,2)=\"제외\""
+    ]
+  },
+  {
+    "sheet": "문과계열분석결과",
+    "sqref": "A6:C5834",
+    "type": "expression",
+    "operator": null,
+    "priority": "2",
+    "stopIfTrue": null,
+    "dxfId": "6",
+    "formulas": [
+      "OR(MID($D6,1,2)=\"제외\",MID($D6,1,2)=\"오류\")"
+    ]
+  },
+  {
+    "sheet": "문과계열분석결과",
+    "sqref": "A6:C5834",
+    "type": "expression",
+    "operator": null,
+    "priority": "3",
+    "stopIfTrue": null,
+    "dxfId": "5",
+    "formulas": [
+      "OR($G6<10,$G6<($K6/10))"
+    ]
+  },
+  {
+    "sheet": "문과계열분석결과",
+    "sqref": "A6:C5834",
+    "type": "expression",
+    "operator": null,
+    "priority": "4",
+    "stopIfTrue": null,
+    "dxfId": "4",
+    "formulas": [
+      "$G6>=$J6"
+    ]
+  },
+  {
+    "sheet": "문과계열분석결과",
+    "sqref": "A6:C5834",
+    "type": "expression",
+    "operator": null,
+    "priority": "5",
+    "stopIfTrue": null,
+    "dxfId": "3",
+    "formulas": [
+      "$G6>=$K6"
+    ]
+  },
+  {
+    "sheet": "문과계열분석결과",
+    "sqref": "A6:C5834",
+    "type": "expression",
+    "operator": null,
+    "priority": "6",
+    "stopIfTrue": null,
+    "dxfId": "2",
+    "formulas": [
+      "$G6>=$L6"
+    ]
+  },
+  {
+    "sheet": "문과계열분석결과",
+    "sqref": "A6:C5834",
+    "type": "expression",
+    "operator": null,
+    "priority": "7",
+    "stopIfTrue": null,
+    "dxfId": "1",
+    "formulas": [
+      "AND(0<$G6,$G6<$L6)"
+    ]
+  },
+  {
+    "sheet": "문과계열분석결과",
+    "sqref": "D6:D5834",
+    "type": "expression",
+    "operator": null,
+    "priority": "1",
+    "stopIfTrue": null,
+    "dxfId": "0",
+    "formulas": [
+      "MID($D6,1,2)=\"제외\""
+    ]
+  }
+]
