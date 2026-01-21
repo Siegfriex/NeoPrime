@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink, Link } from 'react-router-dom';
-import { LayoutDashboard, Users, FileEdit, BarChart2, Settings, LogOut, Hexagon, Calculator } from 'lucide-react';
+import { LayoutDashboard, Users, FileEdit, BarChart2, Settings, LogOut, Hexagon, Calculator, Presentation } from 'lucide-react';
 
 const Sidebar: React.FC = () => {
   // Reordered navigation items for better flow
@@ -57,6 +57,15 @@ const Sidebar: React.FC = () => {
                 <p className="text-[10px] text-gray-500 font-medium">Elite Director</p>
             </div>
         </div>
+
+        <a
+          href="/ir-deck/"
+          className="flex items-center space-x-2 px-3 py-2 mb-3 text-xs font-semibold text-gray-400 hover:text-[#FC6401] hover:bg-[#FFF0E6] rounded-lg transition-all border border-transparent hover:border-[#FC6401]/20"
+          title="투자자 IR Deck"
+        >
+          <Presentation className="w-4 h-4" />
+          <span>IR Deck</span>
+        </a>
 
         <Link to="/settings" className="flex items-center space-x-3 px-4 py-2.5 w-full text-gray-500 hover:bg-gray-50 hover:text-gray-900 rounded-lg transition-colors text-sm font-medium">
           <Settings className="w-4 h-4" />
