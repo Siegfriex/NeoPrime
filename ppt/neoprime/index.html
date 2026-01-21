@@ -1083,6 +1083,527 @@
     <p class="text-sm" style="margin-top: var(--space-2); color: var(--text-muted);">React 19 + Gemini 3 Pro + Recharts</p>
 </section>
 
+<!-- 14-1: 사이트맵 & 전체 화면 구조 (신규 추가) -->
+<section aria-labelledby="sitemap-title">
+    <header class="slide-header">
+        <span class="overline" role="doc-subtitle">전체 화면 구조</span>
+        <h2 id="sitemap-title">웹 대시보드 사이트맵 <span class="text-primary-color">11개 화면</span></h2>
+        <p>React Router v7 기반 SPA (Single Page Application)</p>
+    </header>
+    
+    <div class="grid grid-2 gap-6" style="margin-top: var(--space-4);">
+        <!-- 좌측: 사이트맵 트리 -->
+        <div>
+            <div style="background: var(--bg-card); padding: var(--space-5); border-radius: var(--radius-lg); border: 1px solid rgba(255,255,255,0.06); font-family: 'Courier New', monospace; font-size: 13px; line-height: 1.8;">
+                <p style="color: var(--primary); font-weight: var(--weight-bold); margin-bottom: var(--space-3);">/ (root) - NeoPrime Dashboard</p>
+                <p style="margin-left: 16px;">├── <strong style="color: var(--primary);">/</strong> → Dashboard (메인)</p>
+                <p style="margin-left: 16px;">├── <strong>/students</strong> → 학생 목록 & 분석</p>
+                <p style="margin-left: 32px;">│   ├── /students/new → 학생 추가</p>
+                <p style="margin-left: 32px;">│   └── /students/:id → 학생 상세</p>
+                <p style="margin-left: 16px;">├── <strong>/evaluations/new</strong> → 평가 입력</p>
+                <p style="margin-left: 16px;">├── <strong style="color: var(--primary);">/analytics</strong> → Analysis Lab</p>
+                <p style="margin-left: 16px;">├── <strong style="color: var(--primary);">/simulation</strong> → 입시 시뮬레이터</p>
+                <p style="margin-left: 16px;">├── /settings → 설정</p>
+                <p style="margin-left: 16px;">├── /profile → 프로필</p>
+                <p style="margin-left: 16px;">└── /auth</p>
+                <p style="margin-left: 32px;">    ├── /auth/login → 로그인</p>
+                <p style="margin-left: 32px;">    └── /auth/signup → 회원가입</p>
+            </div>
+        </div>
+
+        <!-- 우측: 화면 분류 -->
+        <div>
+            <div class="card" style="margin-bottom: var(--space-3);">
+                <h3 class="card-header">🎯 핵심 기능 (5개)</h3>
+                <div style="display: grid; grid-template-columns: 1fr; gap: 8px; margin-top: var(--space-2);">
+                    <div style="display: flex; justify-content: space-between; padding: 8px 12px; background: rgba(252,100,1,0.08); border-radius: 6px; border: 1px solid rgba(252,100,1,0.2);">
+                        <span style="font-size: 14px; font-weight: var(--weight-semibold);">Dashboard</span>
+                        <span class="text-xs text-primary-color">시즌 목표 추적</span>
+                    </div>
+                    <div style="display: flex; justify-between; padding: 8px 12px; background: rgba(252,100,1,0.08); border-radius: 6px; border: 1px solid rgba(252,100,1,0.2);">
+                        <span style="font-size: 14px; font-weight: var(--weight-semibold);">StudentList</span>
+                        <span class="text-xs text-primary-color">Scatter Plot 분석</span>
+                    </div>
+                    <div style="display: flex; justify-between; padding: 8px 12px; background: rgba(252,100,1,0.08); border-radius: 6px; border: 1px solid rgba(252,100,1,0.2);">
+                        <span style="font-size: 14px; font-weight: var(--weight-semibold);">AdmissionSimulator</span>
+                        <span class="text-xs text-primary-color">다중 대학 비교</span>
+                    </div>
+                    <div style="display: flex; justify-between; padding: 8px 12px; background: rgba(252,100,1,0.08); border-radius: 6px; border: 1px solid rgba(252,100,1,0.2);">
+                        <span style="font-size: 14px; font-weight: var(--weight-semibold);">EvaluationEntry</span>
+                        <span class="text-xs text-primary-color">AI 피드백 생성</span>
+                    </div>
+                    <div style="display: flex; justify-between; padding: 8px 12px; background: rgba(252,100,1,0.08); border-radius: 6px; border: 1px solid rgba(252,100,1,0.2);">
+                        <span style="font-size: 14px; font-weight: var(--weight-semibold);">Analytics</span>
+                        <span class="text-xs text-primary-color">Analysis Lab</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3 class="card-header">📄 지원 기능 (6개)</h3>
+                <ul style="font-size: 13px; margin-top: var(--space-2); line-height: 1.6; color: var(--text-secondary);">
+                    <li>StudentDetail - 학생 상세 프로필</li>
+                    <li>StudentAdd - 신규 등록</li>
+                    <li>Login/Signup - 인증</li>
+                    <li>Settings/Profile - 설정 관리</li>
+                    <li>ChatBot - AI 챗봇 (전역)</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 14-2: Dashboard 화면 소개 -->
+<section aria-labelledby="screen-dashboard">
+    <header class="slide-header">
+        <span class="overline" role="doc-subtitle">Screen 01 - Dashboard</span>
+        <h2 id="screen-dashboard">메인 대시보드 <code>/</code></h2>
+        <p><strong class="text-primary-color">의도:</strong> 원장이 "한눈에" 학원 전체 현황과 리스크를 파악</p>
+    </header>
+    
+    <div class="grid grid-2 gap-6">
+        <div>
+            <h3 style="font-size: 18px; margin-bottom: var(--space-3); color: var(--primary);">✅ 실제 구현된 8개 섹션</h3>
+            
+            <div class="step">
+                <div class="step-num">1</div>
+                <div class="step-content">
+                    <h4>시즌 목표 추적</h4>
+                    <p>2026 시즌 52명 목표 vs 45명 예상 (-7명 갭), 프로그레스 바</p>
+                </div>
+            </div>
+            
+            <div class="step">
+                <div class="step-num">2</div>
+                <div class="step-content">
+                    <h4>KPI 카드 (2개)</h4>
+                    <p>재원생 20명 (+5%), 리스크 경고 5명</p>
+                </div>
+            </div>
+            
+            <div class="step" style="background: rgba(252,100,1,0.08);">
+                <div class="step-num">3</div>
+                <div class="step-content">
+                    <h4 class="text-primary-color">대학별 지원 라인 분포 차트</h4>
+                    <p>Composed Chart (Stacked Bar + Line), 5개 대학</p>
+                </div>
+            </div>
+            
+            <div class="step">
+                <div class="step-num">4</div>
+                <div class="step-content">
+                    <h4>전략적 갭 분석</h4>
+                    <p>홍익대 티어 격차 -18%p 경고 (Dark 카드)</p>
+                </div>
+            </div>
+        </div>
+        
+        <div>
+            <div class="step">
+                <div class="step-num">5</div>
+                <div class="step-content">
+                    <h4>리스크 진단 테이블</h4>
+                    <p>6개 컬럼 + Sparkline, High/Mid/Low 자동 판정</p>
+                </div>
+            </div>
+            
+            <div class="step">
+                <div class="step-num">6</div>
+                <div class="step-content">
+                    <h4>실행 큐 (Action Queue)</h4>
+                    <p>P0/P1 우선순위 과제 체크리스트</p>
+                </div>
+            </div>
+            
+            <div class="step">
+                <div class="step-num">7</div>
+                <div class="step-content">
+                    <h4>코호트 성과 추이</h4>
+                    <p>Area Chart (2025 vs 2026 듀얼 라인), 8개월 데이터</p>
+                </div>
+            </div>
+            
+            <div class="step">
+                <div class="step-num">8</div>
+                <div class="step-content">
+                    <h4>집중 관리 대상 + 데이터 건전성</h4>
+                    <p>Level C/B 학생 5명, 유효율 94%</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <aside class="highlight-box" style="margin-top: var(--space-4);">
+        <p style="margin: 0; font-size: 15px; line-height: 1.6;"><strong>핵심 의도:</strong> 입시 직전 2개월간 원장 혼자 처리하던 "학생 200명 × 대학 5지망 = 1,000개 결정"을 <strong class="text-primary-color">한 화면에서 자동화</strong>. 시즌 목표 달성 여부, 대학별 리스크, 집중 관리 대상을 즉시 파악 가능.</p>
+    </aside>
+</section>
+
+<!-- 14-3: StudentList 화면 소개 -->
+<section aria-labelledby="screen-studentlist">
+    <header class="slide-header">
+        <span class="overline" role="doc-subtitle">Screen 02 - StudentList</span>
+        <h2 id="screen-studentlist">학생 목록 & 상대적 위치 분석 <code>/students</code></h2>
+        <p><strong class="text-primary-color">의도:</strong> "이 학생이 학업 우위형인지 실기 우위형인지" 한눈에 파악</p>
+    </header>
+    
+    <div class="grid grid-2 gap-6">
+        <div>
+            <h3 style="font-size: 18px; margin-bottom: var(--space-3); color: var(--primary);">✅ 실제 구현 내용</h3>
+            
+            <div class="card" style="margin-bottom: var(--space-3);">
+                <h4 class="card-header">대학별 그룹화 아코디언</h4>
+                <ul style="font-size: 14px; margin-top: var(--space-2); line-height: 1.6;">
+                    <li>목표 대학별 자동 그룹핑 (홍익대 12명, 서울대 3명 등)</li>
+                    <li>그룹 헤더: 지원자 수, 평균 합격률, 안정/상향 인원</li>
+                    <li>펼침 시 Scatter Plot + 학생 카드 표시</li>
+                </ul>
+            </div>
+            
+            <div class="card">
+                <h4 class="card-header" style="color: var(--primary);">Scatter Plot 상대적 위치 분석</h4>
+                <ul style="font-size: 14px; margin-top: var(--space-2); line-height: 1.6;">
+                    <li><strong>X축:</strong> 학업 상대 위치 (20-100)</li>
+                    <li><strong>Y축:</strong> 실기 상대 위치 (20-100)</li>
+                    <li><strong>4 Quadrant:</strong> Elite/Risk/Academic/Practical</li>
+                    <li><strong>뷰 모드:</strong> 기본(라인 타입) / 군집(Cluster)</li>
+                    <li><strong>Zone/Trend 토글:</strong> Target Zone, 회귀선</li>
+                    <li><strong>클릭 시:</strong> 인터랙티브 사이드 패널 (전략 가이드)</li>
+                </ul>
+            </div>
+        </div>
+        
+        <aside class="demo-screen">
+            <div class="demo-header">✅ Scatter Plot 실제 구현</div>
+            <div class="demo-content" style="text-align: center;">
+                <!-- Quadrant Mockup -->
+                <div style="position: relative; width: 100%; aspect-ratio: 1; background: rgba(255,255,255,0.02); border-radius: var(--radius-md); border: 1px solid rgba(255,255,255,0.1); margin-bottom: var(--space-3);">
+                    <!-- Elite Zone (우상단) -->
+                    <div style="position: absolute; top: 5%; right: 5%; width: 42%; height: 42%; background: rgba(0,200,83,0.08); border: 1px dashed rgba(0,200,83,0.3); border-radius: 8px; display: flex; align-items: center; justify-content: center;">
+                        <p style="font-size: 11px; font-weight: var(--weight-bold); color: var(--success); margin: 0;">Elite Group</p>
+                    </div>
+                    
+                    <!-- Risk Zone (좌하단) -->
+                    <div style="position: absolute; bottom: 5%; left: 5%; width: 42%; height: 42%; background: rgba(255,23,68,0.08); border: 1px dashed rgba(255,23,68,0.3); border-radius: 8px; display: flex; align-items: center; justify-content: center;">
+                        <p style="font-size: 11px; font-weight: var(--weight-bold); color: var(--error); margin: 0;">Risk Group</p>
+                    </div>
+                    
+                    <!-- Sample Points -->
+                    <div style="position: absolute; top: 20%; right: 25%; width: 12px; height: 12px; background: var(--success); border-radius: 50%; border: 2px solid white;"></div>
+                    <div style="position: absolute; top: 30%; right: 35%; width: 10px; height: 10px; background: var(--primary); border-radius: 50%; border: 2px solid white;"></div>
+                    <div style="position: absolute; bottom: 35%; left: 40%; width: 10px; height: 10px; background: var(--warning); border-radius: 50%; border: 2px solid white;"></div>
+                    <div style="position: absolute; bottom: 25%; left: 20%; width: 8px; height: 8px; background: var(--error); border-radius: 50%; border: 2px solid white;"></div>
+                    
+                    <!-- Axis Labels -->
+                    <p style="position: absolute; bottom: -20px; left: 50%; transform: translateX(-50%); font-size: 10px; color: var(--text-muted); margin: 0;">학업 위치 →</p>
+                    <p style="position: absolute; left: -35px; top: 50%; transform: translateY(-50%) rotate(-90deg); font-size: 10px; color: var(--text-muted); margin: 0;">실기 위치 →</p>
+                </div>
+                
+                <div style="display: flex; justify-content: center; gap: 12px; font-size: 11px;">
+                    <div style="display: flex; align-items: center; gap: 4px;">
+                        <div style="width: 8px; height: 8px; background: var(--success); border-radius: 50%;"></div>
+                        <span>Safe</span>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 4px;">
+                        <div style="width: 8px; height: 8px; background: var(--primary); border-radius: 50%;"></div>
+                        <span>Reach</span>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 4px;">
+                        <div style="width: 8px; height: 8px; background: var(--warning); border-radius: 50%;"></div>
+                        <span>Stable</span>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 4px;">
+                        <div style="width: 8px; height: 8px; background: var(--error); border-radius: 50%;"></div>
+                        <span>Risk</span>
+                    </div>
+                </div>
+            </div>
+        </aside>
+    </div>
+    
+    <aside class="highlight-box" style="margin-top: var(--space-4);">
+        <p style="margin: 0; font-size: 15px; line-height: 1.6;"><strong>핵심 의도:</strong> "강사 A는 관대, 강사 B는 엄격" 문제 해결. 학생의 학업·실기 상대적 위치를 2D 맵핑으로 시각화해 <strong class="text-primary-color">"학업 우위형 → 수능 집중" vs "실기 우위형 → 작품 완성도"</strong> 전략을 자동 제시.</p>
+    </aside>
+</section>
+
+<!-- 14-4: AdmissionSimulator 화면 소개 -->
+<section aria-labelledby="screen-simulator">
+    <header class="slide-header">
+        <span class="overline" role="doc-subtitle">Screen 03 - AdmissionSimulator</span>
+        <h2 id="screen-simulator">입시 시뮬레이터 <code>/simulation</code></h2>
+        <p><strong class="text-primary-color">의도:</strong> "만약 국어를 +4점 올리면?" 시나리오 실시간 예측</p>
+    </header>
+    
+    <div class="grid grid-2 gap-6">
+        <div>
+            <h3 style="font-size: 18px; margin-bottom: var(--space-3); color: var(--primary);">✅ 실제 구현 내용</h3>
+            
+            <div class="card" style="margin-bottom: var(--space-3);">
+                <h4 class="card-header">좌측 패널 (3 cols) - 입력</h4>
+                <ul style="font-size: 14px; margin-top: var(--space-2); line-height: 1.6;">
+                    <li>학생 선택 드롭다운 (20명)</li>
+                    <li>목표 대학 멀티 선택 (최대 3개)</li>
+                    <li>6개 슬라이더: 국어/수학/탐구1/탐구2/실기</li>
+                    <li>시나리오 프리셋 (Current/Realistic/Aggressive)</li>
+                </ul>
+            </div>
+            
+            <div class="card">
+                <h4 class="card-header">우측 패널 (9 cols) - 결과</h4>
+                <ul style="font-size: 14px; margin-top: var(--space-2); line-height: 1.6;">
+                    <li><strong>3개 대학 카드:</strong> 확률%, 변화량, 환산점수, 리스크</li>
+                    <li><strong>Radar Chart:</strong> 국어/수학/탐구/실기 4축 밸런스</li>
+                    <li><strong>Bar Chart:</strong> 대학별 확률 변화 (현재 vs 시뮬)</li>
+                    <li><strong>AI Meta-Insight:</strong> 분석 텍스트 + 4주 액션 플랜</li>
+                </ul>
+            </div>
+        </div>
+        
+        <aside class="demo-screen">
+            <div class="demo-header">✅ 합격 확률 계산 엔진</div>
+            <div class="demo-content">
+                <div style="background: rgba(255,255,255,0.04); padding: var(--space-3); border-radius: var(--radius-md); margin-bottom: var(--space-3); border: 1px solid rgba(255,255,255,0.08);">
+                    <p class="text-xs text-secondary" style="margin-bottom: var(--space-2);">대학별 가중치 적용 (실제 코드)</p>
+                    <div style="font-size: 12px; font-family: 'Courier New', monospace; line-height: 1.8;">
+                        <p style="margin: 0; color: var(--text-muted);">홍익대 시각디자인:</p>
+                        <p style="margin: 0;">국어 × <span style="color: var(--primary);">1.0</span> + 수학 × 0.8</p>
+                        <p style="margin: 0;">+ 영어 × 0.5 + 탐구 × 1.0</p>
+                        <p style="margin: 0; margin-top: 8px; color: var(--text-muted);">서울대 공예:</p>
+                        <p style="margin: 0;">국어 × 1.0 + 수학 × 1.0</p>
+                        <p style="margin: 0;">+ 실기 × <span style="color: var(--primary);">1.5</span> (실기 중시)</p>
+                    </div>
+                </div>
+                
+                <div style="background: rgba(252,100,1,0.08); padding: var(--space-3); border-radius: var(--radius-md); border: 1px solid rgba(252,100,1,0.2);">
+                    <p class="text-xs text-primary-color" style="margin-bottom: var(--space-2); font-weight: var(--weight-bold);">리스크 레벨 자동 분류</p>
+                    <div style="font-size: 13px; line-height: 1.6;">
+                        <p style="margin: 4px 0;"><span style="color: var(--success);">●</span> Safe (90%+): 안정권</p>
+                        <p style="margin: 4px 0;"><span style="color: #3b82f6;">●</span> Stable (75-89%): 적정</p>
+                        <p style="margin: 4px 0;"><span style="color: var(--primary);">●</span> Reach (50-74%): 소신</p>
+                        <p style="margin: 4px 0;"><span style="color: var(--error);">●</span> Risk (<50%): 위험</p>
+                    </div>
+                </div>
+            </div>
+        </aside>
+    </div>
+    
+    <aside class="highlight-box" style="margin-top: var(--space-4);">
+        <p style="margin: 0; font-size: 15px; line-height: 1.6;"><strong>핵심 의도:</strong> "이 학생, 국어를 +4점 올리면 홍대 확률이 얼마나 오를까?"를 <strong class="text-primary-color">실시간으로 시뮬레이션</strong>. 가/나/다군 전략 수립 시 수치 기반 의사결정 가능.</p>
+    </aside>
+</section>
+
+<!-- 14-5: EvaluationEntry 화면 소개 -->
+<section aria-labelledby="screen-evaluation">
+    <header class="slide-header">
+        <span class="overline" role="doc-subtitle">Screen 04 - EvaluationEntry</span>
+        <h2 id="screen-evaluation">AI 피드백 자동 생성 <code>/evaluations/new</code></h2>
+        <p><strong class="text-primary-color">의도:</strong> 강사 입력 → 원장 스타일 피드백 2초 만에 자동 생성</p>
+    </header>
+    
+    <div class="grid grid-2 gap-6">
+        <div>
+            <h3 style="font-size: 18px; margin-bottom: var(--space-3); color: var(--primary);">✅ Gemini 3 Pro 통합</h3>
+            
+            <div class="card" style="margin-bottom: var(--space-3);">
+                <h4 class="card-header">입력 폼</h4>
+                <ul style="font-size: 14px; margin-top: var(--space-2); line-height: 1.6;">
+                    <li>학생 선택 (URL 파라미터 지원)</li>
+                    <li><strong>4축 점수:</strong> 구도/톤/발상/완성도 (0-10, 0.5 step)</li>
+                    <li>강사 노트 (Textarea)</li>
+                    <li><strong>Thinking Mode 토글:</strong> 32K budget 고급 추론</li>
+                </ul>
+            </div>
+            
+            <div class="card" style="background: rgba(252,100,1,0.05); border: 1px solid rgba(252,100,1,0.2);">
+                <h4 class="card-header" style="color: var(--primary);">Structured Output (JSON Schema)</h4>
+                <ul style="font-size: 14px; margin-top: var(--space-2); line-height: 1.6;">
+                    <li><strong>strengths:</strong> 주요 강점 (2-3문장)</li>
+                    <li><strong>weaknesses:</strong> 핵심 보완점 (2-3문장)</li>
+                    <li><strong>actionPlan:</strong> 다음 주 액션 (구체적)</li>
+                    <li><strong>comparisonInsight:</strong> 유사점/차이점/USP</li>
+                </ul>
+            </div>
+        </div>
+        
+        <aside class="demo-screen">
+            <div class="demo-header">✅ Thinking Mode 5단계 애니메이션</div>
+            <div class="demo-content">
+                <div style="background: rgba(66,66,66,0.3); padding: var(--space-3); border-radius: var(--radius-md); font-family: 'Courier New', monospace; font-size: 12px; line-height: 2; margin-bottom: var(--space-3);">
+                    <p style="margin: 0; color: var(--success);">✓ 구도 밸런스 분석 중...</p>
+                    <p style="margin: 0; color: var(--success);">✓ 학업 성취도 데이터 조회 중...</p>
+                    <p style="margin: 0; color: var(--primary);">⟳ 과거 합격생 포트폴리오 비교 중...</p>
+                    <p style="margin: 0; color: var(--text-muted);">○ 시각적 패턴 매칭 중...</p>
+                    <p style="margin: 0; color: var(--text-muted);">○ 전략적 조언 합성 중...</p>
+                </div>
+                
+                <div style="background: rgba(252,100,1,0.08); padding: var(--space-3); border-radius: var(--radius-md); border: 1px solid rgba(252,100,1,0.2);">
+                    <p class="text-xs text-primary-color" style="margin-bottom: var(--space-2); font-weight: var(--weight-bold);">생성 완료 (10-15초)</p>
+                    <p style="font-size: 13px; line-height: 1.5; margin: 0;">"구도 밸런스가 뛰어나며 주제부의 대비 활용이 돋보입니다. <strong>배경 디테일 묘사가 급하게 마무리</strong>되어 공간감 부족. <strong>다음 주 3단계 명도 활용 연습</strong> 필요."</p>
+                </div>
+                
+                <div style="margin-top: var(--space-3); display: flex; gap: 8px;">
+                    <button style="flex: 1; padding: 8px; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.1); border-radius: 6px; font-size: 11px; font-weight: var(--weight-bold); color: var(--text-secondary); cursor: pointer;">📋 복사</button>
+                    <button style="flex: 1; padding: 8px; background: var(--primary); border: none; border-radius: 6px; font-size: 11px; font-weight: var(--weight-bold); color: white; cursor: pointer;">💾 저장</button>
+                </div>
+            </div>
+        </aside>
+    </div>
+    
+    <aside class="highlight-box" style="margin-top: var(--space-4);">
+        <p style="margin: 0; font-size: 15px; line-height: 1.6;"><strong>핵심 의도:</strong> "강사 편차" 문제 해결. 어느 강사가 입력하든 <strong class="text-primary-color">Gemini 3 Pro가 원장 스타일로 표준화된 피드백</strong>을 2초 만에 생성. 클립보드 복사로 학생에게 즉시 전달 가능.</p>
+    </aside>
+</section>
+
+<!-- 14-6: Analytics 화면 소개 -->
+<section aria-labelledby="screen-analytics">
+    <header class="slide-header">
+        <span class="overline" role="doc-subtitle">Screen 05 - Analytics</span>
+        <h2 id="screen-analytics">Analysis Lab (고급 분석) <code>/analytics</code></h2>
+        <p><strong class="text-primary-color">의도:</strong> "왜 홍익대 합격률이 떨어졌어?" AI가 요인 분해</p>
+    </header>
+    
+    <div class="grid grid-2 gap-6">
+        <div>
+            <h3 style="font-size: 18px; margin-bottom: var(--space-3); color: var(--primary);">✅ VS Code 스타일 UI</h3>
+            
+            <div class="card" style="margin-bottom: var(--space-3);">
+                <h4 class="card-header">데이터 탐색기 (Tree View)</h4>
+                <div style="font-family: 'Courier New', monospace; font-size: 12px; line-height: 1.8; margin-top: var(--space-2);">
+                    <p style="margin: 0;">📁 2026 정시 시즌</p>
+                    <p style="margin: 0; margin-left: 16px;">├── 📁 홍익대 (Hongik Univ)</p>
+                    <p style="margin: 0; margin-left: 32px;">│   └── 📄 전체 지원자.dta</p>
+                    <p style="margin: 0; margin-left: 16px;">├── 📁 서울대 (SNU)</p>
+                    <p style="margin: 0; margin-left: 16px;">└── 📄 개인: 김지민.std</p>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h4 class="card-header" style="color: var(--primary);">3-Tab 분석 뷰</h4>
+                <ul style="font-size: 14px; margin-top: var(--space-2); line-height: 1.6;">
+                    <li><strong>[Explain]</strong> 인과관계 분석 - Waterfall + Radar</li>
+                    <li><strong>[Compare]</strong> 세그먼트 비교 - Pie + Histogram</li>
+                    <li><strong>[Simulate]</strong> 시나리오 예측 - Sliders + Gauge</li>
+                </ul>
+            </div>
+        </div>
+        
+        <aside class="demo-screen">
+            <div class="demo-header">✅ AI 콘솔 (Resizable)</div>
+            <div class="demo-content">
+                <div style="background: rgba(30,30,30,0.9); padding: var(--space-3); border-radius: var(--radius-md); font-family: 'Courier New', monospace; font-size: 11px; line-height: 1.8; margin-bottom: var(--space-3);">
+                    <p style="margin: 0; color: #888;">14:00:01 [SYSTEM] Analysis Lab v2.0 Loaded.</p>
+                    <p style="margin: 0; color: #4A90E2;">14:00:02 [AI] 데이터 탐색기가 준비되었습니다.</p>
+                    <p style="margin: 0; color: var(--primary);">14:01:15 [USER] 홍익대랑 국민대 비교해줘</p>
+                    <p style="margin: 0; color: #888;">14:01:16 [SYSTEM] Switched to [Compare] mode.</p>
+                    <p style="margin: 0; color: #4A90E2;">14:01:17 [AI] 경쟁 그룹 데이터 오버레이 완료.</p>
+                </div>
+                
+                <div style="display: flex; gap: 8px; align-items: center;">
+                    <div style="flex: 1; background: rgba(255,255,255,0.05); padding: 8px 12px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.1); font-size: 12px; color: var(--text-muted);">자연어로 명령하세요...</div>
+                    <button style="padding: 8px 16px; background: var(--primary); border: none; border-radius: 6px; font-size: 11px; font-weight: var(--weight-bold); color: white; cursor: pointer;">▶</button>
+                </div>
+            </div>
+        </aside>
+    </div>
+    
+    <aside class="highlight-box" style="margin-top: var(--space-4);">
+        <p style="margin: 0; font-size: 15px; line-height: 1.6;"><strong>핵심 의도:</strong> "왜 작년보다 합격률이 떨어졌어?" 같은 질문에 AI가 <strong class="text-primary-color">Waterfall Chart로 요인 분해</strong> (수능 +12, 내신 +3, 실기 완성도 -4). 자연어 명령어("비교해줘")로 즉시 분석 전환.</p>
+    </aside>
+</section>
+
+<!-- 14-7: 나머지 화면 요약 소개 -->
+<section aria-labelledby="screen-others">
+    <header class="slide-header">
+        <span class="overline" role="doc-subtitle">나머지 화면 (6개)</span>
+        <h2 id="screen-others">지원 기능 & AI 챗봇</h2>
+        <p>학생 상세, 인증, 설정 등 완전 구현</p>
+    </header>
+    
+    <div class="grid grid-3 gap-4" style="margin-top: var(--space-4);">
+        <div class="card">
+            <h4 style="font-size: 16px; margin-bottom: var(--space-2); color: var(--primary);">StudentDetail</h4>
+            <p class="text-sm text-secondary" style="margin-bottom: var(--space-2);"><code>/students/:id</code></p>
+            <ul class="text-sm" style="line-height: 1.6;">
+                <li>가/나/다군 목표 대학 (3개)</li>
+                <li>작품 갤러리 (Carousel)</li>
+                <li>평가 이력 차트 (Line Chart)</li>
+                <li>학업 점수 비교 테이블</li>
+                <li>유사 합격 사례</li>
+                <li>워크시트 (To-Do)</li>
+            </ul>
+            <p class="text-xs text-primary-color" style="margin-top: var(--space-2); font-weight: var(--weight-bold);">의도: 학생별 종합 리포트</p>
+        </div>
+        
+        <div class="card">
+            <h4 style="font-size: 16px; margin-bottom: var(--space-2); color: var(--primary);">AI 챗봇 (전역)</h4>
+            <p class="text-sm text-secondary" style="margin-bottom: var(--space-2);">Floating Component</p>
+            <ul class="text-sm" style="line-height: 1.6;">
+                <li>우하단 플로팅 버튼</li>
+                <li>Gemini 3 Pro 스트리밍 응답</li>
+                <li>학원생 데이터 컨텍스트 주입</li>
+                <li>자연어 질의응답 (24/7)</li>
+            </ul>
+            <div style="margin-top: var(--space-2); background: rgba(252,100,1,0.08); padding: 8px 12px; border-radius: 6px; border: 1px solid rgba(252,100,1,0.2);">
+                <p class="text-xs" style="margin: 0; line-height: 1.5;"><strong>예시:</strong> "홍익대 지망생들의 평균 성적은?" → AI가 20명 데이터 기반 답변</p>
+            </div>
+            <p class="text-xs text-primary-color" style="margin-top: var(--space-2); font-weight: var(--weight-bold);">의도: 24/7 데이터 기반 상담</p>
+        </div>
+        
+        <div class="card">
+            <h4 style="font-size: 16px; margin-bottom: var(--space-2);">인증 & 설정 (4개)</h4>
+            <p class="text-sm text-secondary" style="margin-bottom: var(--space-2);">지원 기능</p>
+            <ul class="text-sm" style="line-height: 1.6;">
+                <li><strong>Login:</strong> 이메일/비밀번호</li>
+                <li><strong>Signup:</strong> 회원가입 폼</li>
+                <li><strong>Settings:</strong> 학원 설정</li>
+                <li><strong>Profile:</strong> 사용자 프로필</li>
+                <li><strong>StudentAdd:</strong> 학생 등록 폼</li>
+            </ul>
+            <p class="text-xs text-primary-color" style="margin-top: var(--space-2); font-weight: var(--weight-bold);">의도: 완전한 학원 관리 시스템</p>
+        </div>
+    </div>
+    
+    <div class="grid grid-2 gap-6" style="margin-top: var(--space-6);">
+        <div class="card" style="background: rgba(252,100,1,0.05); border: 1px solid rgba(252,100,1,0.2);">
+            <h4 class="card-header" style="color: var(--primary);">차트 라이브러리 (Recharts 3.6)</h4>
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: var(--space-3);">
+                <div style="text-align: center;">
+                    <p style="font-size: 20px; margin: 0;">📊</p>
+                    <p class="text-xs" style="margin: 4px 0 0;">Composed</p>
+                </div>
+                <div style="text-align: center;">
+                    <p style="font-size: 20px; margin: 0;">📈</p>
+                    <p class="text-xs" style="margin: 4px 0 0;">Area</p>
+                </div>
+                <div style="text-align: center;">
+                    <p style="font-size: 20px; margin: 0;">🎯</p>
+                    <p class="text-xs" style="margin: 4px 0 0;">Scatter</p>
+                </div>
+                <div style="text-align: center;">
+                    <p style="font-size: 20px; margin: 0;">🕸️</p>
+                    <p class="text-xs" style="margin: 4px 0 0;">Radar</p>
+                </div>
+                <div style="text-align: center;">
+                    <p style="font-size: 20px; margin: 0;">📉</p>
+                    <p class="text-xs" style="margin: 4px 0 0;">Bar</p>
+                </div>
+                <div style="text-align: center;">
+                    <p style="font-size: 20px; margin: 0;">💧</p>
+                    <p class="text-xs" style="margin: 4px 0 0;">Waterfall</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card" style="background: rgba(66,133,244,0.05); border: 1px solid rgba(66,133,244,0.2);">
+            <h4 class="card-header" style="color: #4285f4;">Gemini AI 통합 (3가지)</h4>
+            <div style="margin-top: var(--space-3); font-size: 14px; line-height: 1.8;">
+                <p style="margin: 0;"><span style="color: var(--primary);">●</span> <strong>피드백 생성:</strong> gemini-3-pro-preview</p>
+                <p style="margin: 0;"><span style="color: var(--primary);">●</span> <strong>챗봇:</strong> Streaming 응답</p>
+                <p style="margin: 0;"><span style="color: var(--primary);">●</span> <strong>고급 분석:</strong> Explain/Compare/Simulate</p>
+            </div>
+        </div>
+    </div>
+</section>
+
 <!-- 15: Scenario 1 - 실제 구현 화면 -->
 <section aria-labelledby="scenario-01-title">
     <header class="slide-header">
