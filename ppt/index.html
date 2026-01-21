@@ -123,13 +123,45 @@
     </style>
 </head>
 <body>
+    <!-- Fixed Navigation -->
+    <nav class="ir-nav" style="
+        position: fixed;
+        top: 16px;
+        left: 16px;
+        z-index: 1000;
+        display: flex;
+        gap: 8px;
+    ">
+        <a href="/" class="ir-nav-btn" style="
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 14px;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 8px;
+            color: #fff;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 500;
+            backdrop-filter: blur(8px);
+            transition: all 200ms ease;
+        " onmouseover="this.style.background='rgba(255,255,255,0.2)'" onmouseout="this.style.background='rgba(255,255,255,0.1)'">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                <polyline points="9 22 9 12 15 12 15 22"></polyline>
+            </svg>
+            Dashboard
+        </a>
+    </nav>
+
     <div class="container">
         <p class="overline">Investor Relations</p>
         <h1>IR Presentations</h1>
         <p class="subtitle">Select a deck to view</p>
         
         <div class="deck-grid">
-            <a href="/neoprime/" class="deck-card neoprime">
+            <a href="/ir-deck/neoprime/" class="deck-card neoprime">
                 <p class="deck-logo">NeoPrime</p>
                 <p class="deck-desc">데이터 드리븐 예체능 입시 인텔리전스 플랫폼<br>B2B SaaS Model</p>
                 <div class="deck-meta">
@@ -139,7 +171,7 @@
                 </div>
             </a>
             
-            <a href="/designmate/" class="deck-card designmate">
+            <a href="/ir-deck/designmate/" class="deck-card designmate">
                 <p class="deck-logo">DesignMate</p>
                 <p class="deck-desc">AI 기반 기초디자인 입시 코칭 플랫폼<br>B2C Subscription</p>
                 <div class="deck-meta">
