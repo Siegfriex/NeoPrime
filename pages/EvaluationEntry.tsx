@@ -1,0 +1,438 @@
+
+import React, { useState, useEffect } from 'react';
+import { getStudents, addEvaluation } from '../services/storageService';
+import { generateAIFeedback } from '../services/geminiService';
+import { Sparkles, Save, Brain, X, Copy, Check, ChevronRight, Wand2, GraduationCap, ArrowUpRight, ArrowDownRight, LayoutTemplate, SplitSquareHorizontal } from 'lucide-react';
+import { Student } from '../types';
+import { useSearchParams, useNavigate } from 'react-router-dom';
+
+const EvaluationEntry: React.FC = () => {
+  const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
+  const [selectedStudentId, setSelectedStudentId] = useState('');
+  const [scores, setScores] = useState({ composition: 5, tone: 5, idea: 5, completeness: 5 });
+  const [notes, setNotes] = useState('');
+  const [useThinking, setUseThinking] = useState(false);
+  
+  // Data State
+  const [allStudents, setAllStudents] = useState<Student[]>([]);
+
+  // Modal & Generation State
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isGenerating, setIsGenerating] = useState(false);
+  const [generatedFeedback, setGeneratedFeedback] = useState<any>(null);
+  const [thinkingStep, setThinkingStep] = useState(0);
+
+  // Load Students on Mount
+  useEffect(() => {
+    setAllStudents(getStudents());
+  }, []);
+
+  // Pre-select student from URL
+  useEffect(() => {
+    const sid = searchParams.get('studentId');
+    if (sid) setSelectedStudentId(sid);
+  }, [searchParams]);
+
+  const selectedStudent = allStudents.find(s => s.id === selectedStudentId);
+
+  // Thinking Animation Steps
+  const thinkingMessages = [
+    "구도 밸런스 분석 중...",
+    "학업 성취도 데이터 조회 중...",
+    "과거 합격생 포트폴리오 비교 중...",
+    "시각적 패턴 매칭 중...",
+    "전략적 조언 합성 중..."
+  ];
+
+  useEffect(() => {
+    let interval: any;
+    if (isGenerating && useThinking) {
+      interval = setInterval(() => {
+        setThinkingStep((prev) => (prev + 1) % thinkingMessages.length);
+      }, 1500);
+    }
+    return () => clearInterval(interval);
+  }, [isGenerating, useThinking]);
+
+  const handleScoreChange = (key: string, value: number) => {
+    setScores(prev => ({ ...prev, [key]: value }));
+  };
+
+  const handleGenerateAI = async () => {
+    if (!selectedStudent) return;
+    
+    setIsModalOpen(true);
+    setIsGenerating(true);
+    setGeneratedFeedback(null);
+    setThinkingStep(0);
+
+    if (useThinking) {
+        await new Promise(resolve => setTimeout(resolve, 3000));
+    }
+
+    const feedback = await generateAIFeedback(selectedStudent, scores, notes, useThinking);
+    setGeneratedFeedback(feedback);
+    setIsGenerating(false);
+  };
+
+  const handleSave = () => {
+    if (!selectedStudent) return;
+
+    const totalScore = scores.composition + scores.tone + scores.idea + scores.completeness;
+    
+    addEvaluation({
+      studentId: selectedStudent.id,
+      date: new Date().toISOString().split('T')[0],
+      scores: scores,
+      totalScore: totalScore * 2.5, // Scaling to 100 for storage consistency with mock data
+      notes: notes,
+      instructorId: 'i1', // Mock Current User
+      aiFeedback: generatedFeedback ? {
+        strengths: generatedFeedback.strengths,
+        weaknesses: generatedFeedback.weaknesses,
+        actionPlan: generatedFeedback.actionPlan
+      } : undefined
+    });
+
+    alert('평가가 저장되었습니다!');
+    setIsModalOpen(false);
+    // Redirect to student detail to see the new evaluation
+    navigate(`/students/${selectedStudent.id}`);
+  };
+
+  const getFormattedFeedbackText = () => {
+    if (!generatedFeedback || !selectedStudent) return "";
+    return `[NeoPrime AI 피드백]
+학생: ${selectedStudent.name} (${selectedStudent.grade})
+날짜: ${new Date().toLocaleDateString()}
+점수: ${Object.entries(scores).map(([k,v]) => `${k}:${v}`).join(', ')}
+
+1. 주요 강점
+${generatedFeedback.strengths}
+
+2. 핵심 보완점
+${generatedFeedback.weaknesses}
+
+3. 액션 플랜
+${generatedFeedback.actionPlan}
+
+[비교 분석]
+유사점: ${generatedFeedback.comparisonInsight?.similarities || '-'}
+차이점: ${generatedFeedback.comparisonInsight?.differences || '-'}
+USP: ${generatedFeedback.comparisonInsight?.usp || '-'}
+`;
+  };
+
+  const copyToClipboard = () => {
+    const text = getFormattedFeedbackText();
+    navigator.clipboard.writeText(text);
+    alert("피드백이 클립보드에 복사되었습니다!");
+  };
+
+  const scoreLabels: any = {
+      composition: '구도 (Composition)',
+      tone: '소묘/톤 (Tone)',
+      idea: '발상 (Idea)',
+      completeness: '완성도 (Completeness)'
+  };
+
+  return (
+    <div className="h-full overflow-y-auto custom-scrollbar">
+      <div className="max-w-4xl mx-auto relative animate-in fade-in duration-500 p-8 pb-20">
+        <div className="mb-8">
+          <h1 className="text-2xl font-bold text-gray-900">새 평가 입력</h1>
+          <p className="text-gray-500 mt-1">주간 실기 진행 상황을 기록하고 AI 피드백을 생성합니다.</p>
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          {/* Left Column: Form */}
+          <div className="lg:col-span-2 space-y-6">
+              
+              {/* Student Selection */}
+              <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+                  <label className="block text-sm font-medium text-gray-700 mb-2">학생 선택</label>
+                  <select 
+                      className="w-full p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#FC6401] focus:border-[#FC6401] outline-none transition-all"
+                      value={selectedStudentId}
+                      onChange={(e) => setSelectedStudentId(e.target.value)}
+                  >
+                      <option value="">-- 학생을 선택하세요 --</option>
+                      {allStudents.map(s => (
+                          <option key={s.id} value={s.id}>{s.name} ({s.grade})</option>
+                      ))}
+                  </select>
+                  
+                  {selectedStudent && (
+                      <div className="mt-4 p-4 bg-gray-50 rounded-xl flex items-center gap-4">
+                          <img src={selectedStudent.avatarUrl} alt="" className="w-12 h-12 rounded-full border-2 border-white shadow-sm" />
+                          <div>
+                              <p className="font-semibold text-gray-900">{selectedStudent.name}</p>
+                              <p className="text-sm text-gray-500">{selectedStudent.targetUniversity} • {selectedStudent.major}</p>
+                          </div>
+                      </div>
+                  )}
+              </div>
+
+              {/* Scores */}
+              <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 opacity-100 transition-opacity">
+                  <h3 className="text-lg font-bold text-gray-900 mb-6">4축 평가 점수</h3>
+                  <div className="space-y-6">
+                      {Object.entries(scores).map(([key, value]) => (
+                          <div key={key}>
+                              <div className="flex justify-between mb-2">
+                                  <label className="text-sm font-medium text-gray-700 capitalize">{scoreLabels[key]}</label>
+                                  <span className="text-sm font-bold text-[#FC6401]">{value}/10</span>
+                              </div>
+                              <input 
+                                  type="range" 
+                                  min="0" 
+                                  max="10" 
+                                  step="0.5"
+                                  value={value}
+                                  onChange={(e) => handleScoreChange(key, parseFloat(e.target.value))}
+                                  className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-[#FC6401]"
+                              />
+                          </div>
+                      ))}
+                  </div>
+              </div>
+
+              {/* Notes */}
+              <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+                  <h3 className="text-lg font-bold text-gray-900 mb-4">강사 노트</h3>
+                  <textarea 
+                      className="w-full p-4 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#FC6401] outline-none h-32 resize-none"
+                      placeholder="작품에 대한 구체적인 관찰 내용을 기록하세요..."
+                      value={notes}
+                      onChange={(e) => setNotes(e.target.value)}
+                  />
+              </div>
+          </div>
+
+          {/* Right Column: Actions */}
+          <div className="space-y-6">
+              <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 sticky top-4">
+                  <h3 className="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
+                      {useThinking ? <Brain className="w-5 h-5 text-[#FC6401]" /> : <Sparkles className="w-5 h-5 text-[#FC6401]" />}
+                      {useThinking ? "심층 분석 피드백" : "AI 피드백 어시스턴트"}
+                  </h3>
+                  <p className="text-sm text-gray-500 mb-4">
+                      {useThinking 
+                          ? "Gemini 3.0 Pro의 추론 능력을 사용하여 복합적인 입시 전략을 분석합니다."
+                          : "입력된 점수와 노트를 기반으로 구조화된 피드백을 생성합니다."
+                      }
+                  </p>
+
+                  {/* Toggle for Thinking Mode */}
+                  <div className="flex items-center gap-2 mb-6 p-3 bg-gray-50 rounded-xl border border-gray-100">
+                      <label className="relative inline-flex items-center cursor-pointer">
+                          <input 
+                              type="checkbox" 
+                              className="sr-only peer" 
+                              checked={useThinking}
+                              onChange={(e) => setUseThinking(e.target.checked)}
+                          />
+                          <div className="w-9 h-5 bg-gray-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-[#FC6401]/30 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-[#FC6401]"></div>
+                          <span className="ml-3 text-sm font-medium text-gray-700">Thinking 모드</span>
+                      </label>
+                      <Brain className={`w-4 h-4 ${useThinking ? 'text-[#FC6401]' : 'text-gray-400'}`} />
+                  </div>
+
+                  <button 
+                      onClick={handleGenerateAI}
+                      disabled={!selectedStudent}
+                      className={`w-full py-3 px-4 rounded-xl font-medium text-white flex items-center justify-center gap-2 transition-all
+                          ${!selectedStudent 
+                              ? 'bg-gray-300 cursor-not-allowed' 
+                              : 'bg-[#FC6401] hover:bg-[#e55a00] shadow-lg shadow-[#FC6401]/30'}`}
+                  >
+                      <Wand2 className="w-5 h-5" />
+                      피드백 생성
+                  </button>
+              </div>
+          </div>
+        </div>
+
+        {/* --- AI FEEDBACK MODAL --- */}
+        {isModalOpen && (
+            <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+                <div 
+                    className="absolute inset-0 bg-gray-900/40 backdrop-blur-sm transition-opacity"
+                    onClick={() => setIsModalOpen(false)}
+                ></div>
+
+                <div className="bg-white rounded-2xl shadow-2xl w-full max-w-6xl max-h-[90vh] flex flex-col relative z-10 animate-in zoom-in-95 duration-200 overflow-hidden">
+                    
+                    {/* Header */}
+                    <div className="px-6 py-4 border-b border-gray-100 flex justify-between items-center bg-gray-50/50">
+                        <div className="flex items-center gap-3">
+                            <div className={`p-2 rounded-xl ${useThinking ? 'bg-[#FFF0E6] text-[#FC6401]' : 'bg-amber-50 text-amber-600'}`}>
+                                {useThinking ? <Brain className="w-5 h-5" /> : <Sparkles className="w-5 h-5" />}
+                            </div>
+                            <div>
+                                <h3 className="font-bold text-gray-900 text-lg">AI 심층 피드백</h3>
+                                <p className="text-xs text-gray-500">
+                                    {selectedStudent?.name} 학생 • {new Date().toLocaleDateString()}
+                                </p>
+                            </div>
+                        </div>
+                        <div className="flex items-center gap-4">
+                            <button 
+                                onClick={() => setIsModalOpen(false)}
+                                className="p-2 hover:bg-gray-200 rounded-full text-gray-500 transition-colors"
+                            >
+                                <X className="w-5 h-5" />
+                            </button>
+                        </div>
+                    </div>
+
+                    {/* Body - Split into 2 Columns */}
+                    <div className="flex-1 overflow-y-auto custom-scrollbar bg-[#F7F9FB]">
+                        {isGenerating ? (
+                            <div className="flex flex-col items-center justify-center py-32 space-y-6">
+                                <div className="relative">
+                                    <div className="w-20 h-20 border-4 border-[#FFF0E6] border-t-[#FC6401] rounded-full animate-spin"></div>
+                                    <div className="absolute inset-0 flex items-center justify-center">
+                                        <Brain className="w-8 h-8 text-[#FC6401] animate-pulse" />
+                                    </div>
+                                </div>
+                                <div className="text-center space-y-4 max-w-md">
+                                    <h4 className="text-xl font-bold text-gray-900">Gemini 3.0 Pro Reasoning...</h4>
+                                    
+                                    {useThinking && (
+                                        <div className="w-full bg-gray-200 h-2 rounded-full overflow-hidden">
+                                            <div 
+                                              className="h-full bg-[#FC6401] transition-all duration-500 ease-out"
+                                              style={{ width: `${((thinkingStep + 1) / thinkingMessages.length) * 100}%` }}
+                                            ></div>
+                                        </div>
+                                    )}
+                                    
+                                    <p className="text-[#FC6401] font-medium animate-pulse text-sm">
+                                        {useThinking ? thinkingMessages[thinkingStep] : "평가 데이터 처리 중..."}
+                                    </p>
+                                </div>
+                            </div>
+                        ) : (
+                            <div className="grid grid-cols-1 lg:grid-cols-2 min-h-full">
+                                
+                                {/* Left Column: Text Feedback */}
+                                <div className="p-8 space-y-8 bg-white border-r border-gray-100">
+                                    
+                                    {/* Score Summary */}
+                                    <div className="bg-gray-50 p-5 rounded-2xl border border-gray-100">
+                                        <div className="flex justify-between items-center mb-4">
+                                            <div className="text-xs text-gray-400 uppercase font-bold">실기 총점</div>
+                                            <div className="text-sm font-bold text-[#FC6401] bg-[#FFF0E6] px-3 py-1 rounded-lg">
+                                                {scores.composition + scores.tone + scores.idea + scores.completeness} / 40
+                                            </div>
+                                        </div>
+                                        <div className="grid grid-cols-4 gap-2">
+                                            {Object.entries(scores).map(([k, v]) => (
+                                                <div key={k} className="flex flex-col items-center bg-white p-2 rounded-xl shadow-sm border border-gray-100">
+                                                    <span className="font-bold text-gray-900 text-lg">{v}</span>
+                                                    <span className="text-[9px] text-gray-400 uppercase font-bold mt-1">{scoreLabels[k].split(' ')[0]}</span>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
+
+                                    {/* Feedback Sections */}
+                                    <div className="space-y-6">
+                                        <div className="flex gap-4 items-start">
+                                            <div className="mt-1 w-8 h-8 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center shrink-0">
+                                                <Check className="w-4 h-4" />
+                                            </div>
+                                            <div>
+                                                <h4 className="text-base font-bold text-gray-900">주요 강점</h4>
+                                                <p className="text-sm text-gray-600 mt-2 leading-relaxed">{generatedFeedback?.strengths}</p>
+                                            </div>
+                                        </div>
+                                        
+                                        <div className="flex gap-4 items-start">
+                                            <div className="mt-1 w-8 h-8 rounded-full bg-rose-100 text-rose-600 flex items-center justify-center shrink-0">
+                                                <X className="w-4 h-4" />
+                                            </div>
+                                            <div>
+                                                <h4 className="text-base font-bold text-gray-900">핵심 보완점</h4>
+                                                <p className="text-sm text-gray-600 mt-2 leading-relaxed">{generatedFeedback?.weaknesses}</p>
+                                            </div>
+                                        </div>
+
+                                        <div className="flex gap-4 items-start">
+                                            <div className="mt-1 w-8 h-8 rounded-full bg-[#FFF0E6] text-[#FC6401] flex items-center justify-center shrink-0">
+                                                <ChevronRight className="w-5 h-5" />
+                                            </div>
+                                            <div>
+                                                <h4 className="text-base font-bold text-[#FC6401]">액션 플랜</h4>
+                                                <p className="text-sm text-gray-800 font-medium mt-2 leading-relaxed p-4 bg-gray-50 rounded-xl border border-gray-100">
+                                                    {generatedFeedback?.actionPlan}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {/* Right Column: Comparison (Simplified for brevity in update) */}
+                                <div className="p-8 bg-[#F7F9FB] space-y-8">
+                                    <div className="bg-white rounded-2xl p-6 border border-gray-200 shadow-sm">
+                                        <h4 className="text-sm font-bold text-gray-900 mb-4 flex items-center gap-2">
+                                            <SplitSquareHorizontal className="w-4 h-4 text-gray-500" />
+                                            비교 분석
+                                        </h4>
+
+                                        {generatedFeedback?.comparisonInsight ? (
+                                            <div className="space-y-4 text-sm">
+                                                <div className="p-3 bg-emerald-50 rounded-xl border border-emerald-100">
+                                                    <span className="text-xs font-bold text-emerald-600 uppercase mb-1 block">유사점</span>
+                                                    <p className="text-gray-700 leading-snug">{generatedFeedback.comparisonInsight.similarities}</p>
+                                                </div>
+                                                <div className="p-3 bg-gray-50 rounded-xl border border-gray-100">
+                                                    <span className="text-xs font-bold text-gray-500 uppercase mb-1 block">차이점</span>
+                                                    <p className="text-gray-600 leading-snug">{generatedFeedback.comparisonInsight.differences}</p>
+                                                </div>
+                                                <div className="p-3 bg-[#FFF0E6] rounded-xl border border-[#FC6401]/20">
+                                                    <span className="text-xs font-bold text-[#FC6401] uppercase mb-1 block">나만의 강점 (USP)</span>
+                                                    <p className="text-gray-800 font-medium leading-snug">{generatedFeedback.comparisonInsight.usp}</p>
+                                                </div>
+                                            </div>
+                                        ) : (
+                                            <div className="flex items-center justify-center h-32 text-gray-400 text-sm italic bg-gray-50 rounded-xl border border-dashed border-gray-200">
+                                                20,000+건의 과거 데이터와 비교 중...
+                                            </div>
+                                        )}
+                                    </div>
+                                </div>
+                            </div>
+                        )}
+                    </div>
+
+                    {/* Footer */}
+                    {!isGenerating && (
+                        <div className="p-4 border-t border-gray-100 bg-white flex justify-between items-center gap-4">
+                            <button 
+                                onClick={copyToClipboard}
+                                className="px-4 py-2.5 text-gray-600 bg-white border border-gray-200 rounded-xl hover:bg-gray-50 font-medium text-sm flex items-center gap-2 transition-colors"
+                            >
+                                <Copy className="w-4 h-4" />
+                                텍스트 복사
+                            </button>
+                            <button 
+                                onClick={handleSave}
+                                className="px-8 py-2.5 bg-[#FC6401] text-white rounded-xl hover:bg-[#e55a00] font-bold shadow-lg shadow-[#FC6401]/30 flex items-center gap-2 transition-all"
+                            >
+                                <Save className="w-4 h-4" />
+                                평가 저장
+                            </button>
+                        </div>
+                    )}
+                </div>
+            </div>
+        )}
+      </div>
+    </div>
+  );
+};
+
+export default EvaluationEntry;
