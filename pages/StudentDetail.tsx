@@ -1,21 +1,32 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { getStudentById, getEvaluationsByStudentId } from '../services/mockData';
+import { getStudentById, getEvaluationsByStudentId } from '../services/storageService';
 import { 
-  ArrowLeft, ChevronLeft, ChevronRight, Target, Activity, 
-  TrendingUp, Layers, AlertCircle, GraduationCap, 
-  ArrowUpRight, ArrowDownRight, Minus, Users, 
+  ArrowLeft, ChevronLeft, ChevronRight, Activity, 
+  TrendingUp, AlertCircle, GraduationCap, 
   CheckCircle2, Calendar, Scale, ClipboardList, 
-  MessageSquare, CheckSquare, Clock, BookOpen, AlertTriangle, FileText, Pencil
+  MessageSquare, CheckSquare, Clock, AlertTriangle, FileText, Pencil, Calculator
 } from 'lucide-react';
+import { 
+  LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer 
+} from 'recharts';
+import { Student, Evaluation } from '../types';
 
 const StudentDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();
-  const student = getStudentById(id || '');
-  const evaluations = getEvaluationsByStudentId(id || '');
+  const [student, setStudent] = useState<Student | undefined>(undefined);
+  const [evaluations, setEvaluations] = useState<Evaluation[]>([]);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
-  // Worksheet State (한글화)
+  // Load Data
+  useEffect(() => {
+    if (id) {
+      setStudent(getStudentById(id));
+      setEvaluations(getEvaluationsByStudentId(id));
+    }
+  }, [id]);
+
+  // Worksheet State
   const [todoList, setTodoList] = useState([
     { id: 1, text: '가/나/다군 지원 전략 상담 일정 잡기', done: false, due: '2일 남음' },
     { id: 2, text: '"아이디어 발상" 보충 워크샵 배정', done: true, due: '완료' },
@@ -40,7 +51,7 @@ const StudentDetail: React.FC = () => {
     }
   };
 
-  const latestEval = evaluations[evaluations.length - 1];
+  const latestEval = evaluations.length > 0 ? evaluations[0] : null;
 
   const toggleTodo = (id: number) => {
     setTodoList(prev => prev.map(todo => todo.id === id ? { ...todo, done: !todo.done } : todo));
@@ -52,7 +63,7 @@ const StudentDetail: React.FC = () => {
     badge: '잠재력 높음'
   };
 
-  // Recruitment Group Strategy (Ga/Na/Da) - 한글화
+  // Recruitment Group Strategy (Ga/Na/Da)
   const recruitmentStrategy = [
     { group: '가군', univ: '서울대', line: '상향(Reach)', prob: 35, color: 'bg-rose-500', text: 'text-rose-600' },
     { group: '나군', univ: '홍익대', line: '적정(Safe)', prob: 78, color: 'bg-[#FC6401]', text: 'text-[#FC6401]' },
@@ -73,6 +84,13 @@ const StudentDetail: React.FC = () => {
     biasScore: -2.5,
     note: '한 강사는 "톤(Tone)"을 엄격하게 평가하는 경향이 있음; 보정된 점수는 약 86.5점 예상.'
   };
+  
+  // Format Data for Chart (Reverse order to show timeline left to right)
+  const chartData = [...evaluations].reverse().map(e => ({
+      date: e.date.substring(5), // MM-DD
+      score: e.totalScore,
+      fullDate: e.date
+  }));
 
   return (
     <div className="min-h-screen font-sans pb-12 animate-in fade-in duration-500 bg-[#F7F9FB]">
@@ -148,9 +166,18 @@ const StudentDetail: React.FC = () => {
                 
                 {/* Section A: Admission & Academic Position */}
                 <div className="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm">
-                    <h3 className="text-xs font-bold text-gray-400 uppercase mb-5 flex items-center gap-2 tracking-wider">
-                         <Activity className="w-4 h-4" /> 입시 및 학업 위치
-                    </h3>
+                    <div className="flex justify-between items-center mb-5">
+                        <h3 className="text-xs font-bold text-gray-400 uppercase flex items-center gap-2 tracking-wider">
+                             <Activity className="w-4 h-4" /> 입시 및 학업 위치
+                        </h3>
+                        <Link 
+                            to={`/simulation?studentId=${student.id}`}
+                            className="text-xs font-bold text-[#FC6401] hover:bg-[#FFF0E6] px-2 py-1 rounded transition-colors flex items-center gap-1"
+                        >
+                            <Calculator className="w-3 h-3" />
+                            시뮬레이터 실행
+                        </Link>
+                    </div>
                     
                     {/* 1. Group Summary Bars */}
                     <div className="space-y-4 mb-8">
@@ -416,8 +443,28 @@ const StudentDetail: React.FC = () => {
             <div className="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm">
                 <h3 className="font-bold text-gray-900 mb-6 flex items-center gap-2">
                     <TrendingUp className="w-5 h-5 text-gray-400" />
-                    평가 및 이벤트 로그
+                    성적 변화 추이
                 </h3>
+
+                {/* --- Trend Chart --- */}
+                {chartData.length > 1 ? (
+                   <div className="h-48 w-full mb-8">
+                      <ResponsiveContainer width="100%" height="100%">
+                         <LineChart data={chartData}>
+                            <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e5e7eb" />
+                            <XAxis dataKey="date" tick={{fontSize: 10, fill: '#9ca3af'}} axisLine={false} tickLine={false} />
+                            <YAxis domain={[50, 100]} hide />
+                            <Tooltip contentStyle={{borderRadius: '8px', border: 'none', boxShadow: '0 2px 5px rgba(0,0,0,0.1)'}} />
+                            <Line type="monotone" dataKey="score" stroke="#FC6401" strokeWidth={3} dot={{r: 4, fill: '#FC6401', strokeWidth: 2, stroke: '#fff'}} />
+                         </LineChart>
+                      </ResponsiveContainer>
+                   </div>
+                ) : (
+                   <div className="h-24 w-full mb-8 bg-gray-50 rounded-xl flex items-center justify-center text-gray-400 text-sm">
+                      데이터가 충분하지 않습니다. (최소 2개 이상의 평가 필요)
+                   </div>
+                )}
+
                 <div className="relative pl-5 border-l-2 border-gray-100 space-y-8">
                     
                     {/* Mock Academic Event (Inserted) */}
@@ -435,10 +482,10 @@ const StudentDetail: React.FC = () => {
                         </p>
                     </div>
 
-                    {evaluations.slice(0, 3).map((ev, idx) => (
+                    {evaluations.map((ev, idx) => (
                         <div key={ev.id} className="relative">
                             <div className="absolute -left-[27px] top-1 w-8 h-8 rounded-full bg-[#FFF0E6] border-4 border-white shadow-sm flex items-center justify-center">
-                                <Target className="w-4 h-4 text-[#FC6401]" />
+                                <Activity className="w-4 h-4 text-[#FC6401]" />
                             </div>
                             <div className="flex justify-between items-start mb-1">
                                 <span className="text-sm font-bold text-gray-900">주간 평가 #{evaluations.length - idx}</span>

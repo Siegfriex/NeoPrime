@@ -1,486 +1,417 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { 
-  ComposedChart, 
-  Line, 
-  ScatterChart,
-  Scatter, 
-  XAxis, 
-  YAxis, 
-  CartesianGrid, 
-  Tooltip, 
-  ResponsiveContainer, 
-  ReferenceLine,
-  ZAxis,
-  Area
+  BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell, ReferenceLine
 } from 'recharts';
-import { STUDENTS, EVALUATIONS } from '../services/mockData';
-import { ChevronDown, ChevronUp, Users, User, School, TrendingUp, Target, Activity, Info, CheckCircle2 } from 'lucide-react';
-import { Student } from '../types';
-
-// --- Helper Types & Generators ---
-
-interface ChartPoint {
-  date: number;
-  dateStr: string;
-  score: number;
-  studentId: string;
-  type: 'target' | 'avg';
-  rankPercentile?: number; // Calculated for the target
-}
-
-interface ScatterPoint {
-  id: string;
-  academic: number; // Y-axis
-  practical: number; // X-axis
-  type: 'target' | 'peer';
-}
-
-// Generate consistent cohort data for a session
-const generateCohortSnapshot = (univName: string, count: number = 30): ScatterPoint[] => {
-  const points: ScatterPoint[] = [];
-  
-  // Baseline scores based on Univ tier (mock logic)
-  let baseAcad = 80;
-  let basePrac = 80;
-  
-  if (univName.includes('서울대')) { baseAcad = 92; basePrac = 88; }
-  else if (univName.includes('홍익')) { baseAcad = 88; basePrac = 84; }
-  else if (univName.includes('이화')) { baseAcad = 86; basePrac = 82; }
-  
-  for (let i = 0; i < count; i++) {
-    points.push({
-      id: `peer-${i}`,
-      // Randomize around the baseline with some variance
-      academic: Math.min(100, Math.max(50, baseAcad + (Math.random() * 20 - 10))),
-      practical: Math.min(100, Math.max(50, basePrac + (Math.random() * 20 - 10))),
-      type: 'peer'
-    });
-  }
-  return points;
-};
-
-// Calculate trend lines for Trajectory Chart
-const calculateTrajectoryData = (studentId: string) => {
-  const studentEvals = EVALUATIONS.filter(e => e.studentId === studentId);
-  const dataPoints: ChartPoint[] = [];
-
-  // 1. Student Line
-  studentEvals.forEach(e => {
-    dataPoints.push({
-      date: new Date(e.date).getTime(),
-      dateStr: new Date(e.date).toLocaleDateString(undefined, { month: 'short', day: 'numeric' }),
-      score: e.totalScore,
-      studentId,
-      type: 'target',
-      // Mock percentile calculation: correlated with score roughly
-      rankPercentile: Math.max(1, Math.round(100 - ((e.totalScore - 60) / 40) * 100)) 
-    });
-  });
-
-  // 2. Cohort Average Line
-  // Mocking a smooth curve generally slightly lower or higher depending on student
-  if (dataPoints.length > 0) {
-    const start = dataPoints[0].date;
-    const end = dataPoints[dataPoints.length - 1].date;
-    const steps = 5;
-    const stepSize = (end - start) / steps;
-    
-    // Cohort starts at 75 and ends at 85 (linear growth mock)
-    for (let i = 0; i <= steps; i++) {
-      const d = start + stepSize * i;
-      const trendScore = 75 + (i * 2); 
-      
-      dataPoints.push({
-        date: d,
-        dateStr: new Date(d).toLocaleDateString(undefined, { month: 'short', day: 'numeric' }),
-        score: trendScore,
-        studentId: 'avg',
-        type: 'avg'
-      });
-    }
-  }
-
-  return dataPoints.sort((a, b) => a.date - b.date);
-};
+import { 
+  Sparkles, Search, ArrowRight, Brain, TrendingUp,
+  Target, Users, Zap, Filter,
+  SplitSquareHorizontal, GitCompare, Sliders, Loader2,
+  CheckCircle2, Plus, AlertTriangle, MessageSquare, ChevronRight, X
+} from 'lucide-react';
+import { analyzeAcademyData, AnalyzeAcademyDataResponse } from '../services/geminiService';
 
 const Analytics: React.FC = () => {
-  // State
-  const [expandedUniv, setExpandedUniv] = useState<string | null>('홍익대');
-  const [selectedStudentId, setSelectedStudentId] = useState<string>('');
+  // --- State ---
+  const [query, setQuery] = useState('');
+  const [aiAnswer, setAiAnswer] = useState<AnalyzeAcademyDataResponse | null>(null);
+  const [isAnalyzing, setIsAnalyzing] = useState(false);
+  const [activeDetailTab, setActiveDetailTab] = useState<'drilldown' | 'segment' | 'simulation'>('drilldown');
+  const [conversationContext, setConversationContext] = useState<string>("");
+  const scrollRef = useRef<HTMLDivElement>(null);
 
-  // Group Students
-  const groupedStudents = useMemo(() => {
-    return STUDENTS.reduce((acc, student) => {
-      const univ = student.targetUniversity;
-      if (!acc[univ]) acc[univ] = [];
-      acc[univ].push(student);
-      return acc;
-    }, {} as Record<string, Student[]>);
-  }, []);
+  // --- Functions ---
 
-  // Toggle Accordion
-  const toggleUniv = (univ: string) => {
-    if (expandedUniv === univ) {
-      setExpandedUniv(null);
-    } else {
-      setExpandedUniv(univ);
-      const firstStudent = groupedStudents[univ]?.[0];
-      if (firstStudent) setSelectedStudentId(firstStudent.id);
+  const handleAsk = async (e?: React.FormEvent, overrideQuery?: string) => {
+    e?.preventDefault();
+    const q = overrideQuery || query;
+    if (!q.trim()) return;
+
+    if (overrideQuery) setQuery(q);
+
+    setIsAnalyzing(true);
+
+    try {
+        const result = await analyzeAcademyData(q, conversationContext);
+        if (result) {
+            setAiAnswer(result);
+            setConversationContext(prev => prev + `\n\n[User]: ${q}\n[AI]: ${result.summary}`);
+            
+            // Mode switching
+            if (result.mode === 'explain') setActiveDetailTab('drilldown');
+            if (result.mode === 'compare') setActiveDetailTab('segment');
+            if (result.mode === 'simulate') setActiveDetailTab('simulation');
+        }
+    } catch (error) {
+        console.error("Analytics Error", error);
+    } finally {
+        setIsAnalyzing(false);
     }
   };
 
-  // Selected Student Object
-  const selectedStudent = useMemo(() => {
-    return STUDENTS.find(s => s.id === selectedStudentId);
-  }, [selectedStudentId]);
+  const handleInsightClick = (insightTitle: string) => {
+      const prompt = `Analyze detail for insight: "${insightTitle}". Provide objective evidence and explanation.`;
+      handleAsk(undefined, prompt);
+  };
 
-  // Chart Data Preparation
-  const { trajectoryData, scatterData, percentileStats } = useMemo(() => {
-    if (!expandedUniv || !selectedStudent) return { trajectoryData: [], scatterData: [], percentileStats: null };
+  // --- Chart Data Helpers ---
+  const getFactorData = () => {
+    if (aiAnswer?.mode === 'explain' && aiAnswer.explainResult && aiAnswer.explainResult.factors) {
+      return aiAnswer.explainResult.factors.map(f => ({
+          name: f.name.length > 8 ? f.name.substring(0, 8) + '..' : f.name, 
+          full_name: f.name,
+          value: f.impact || 0, 
+          fill: f.direction === 'positive' ? '#10b981' : '#f43f5e' 
+      }));
+    }
+    return [];
+  };
 
-    // 1. Snapshot Scatter Data
-    const peers = generateCohortSnapshot(expandedUniv);
-    
-    // Add current student to scatter
-    // Using mock average of academic scores for Y-axis (Standard Score or Percentile)
-    const studentAcadAvg = selectedStudent.academicScores.korean.percentile || 80; 
-    // Using latest eval total score for X-axis
-    const studentEvals = EVALUATIONS.filter(e => e.studentId === selectedStudentId);
-    const latestScore = studentEvals.length > 0 ? studentEvals[studentEvals.length - 1].totalScore : 75;
+  const getCompareData = () => {
+      if (aiAnswer?.mode === 'compare' && aiAnswer.compareResult) {
+          const { segmentA, segmentB } = aiAnswer.compareResult;
+          return [
+              { name: '합격률(%)', A: segmentA.metrics.acceptanceRate, B: segmentB.metrics.acceptanceRate },
+              { name: '실기평균', A: segmentA.metrics.avgPracticalScore, B: segmentB.metrics.avgPracticalScore },
+              { name: '출결(%)', A: segmentA.metrics.avgAttendanceRate, B: segmentB.metrics.avgAttendanceRate }
+          ];
+      }
+      return [];
+  };
 
-    const targetPoint: ScatterPoint = {
-      id: selectedStudent.id,
-      academic: studentAcadAvg,
-      practical: latestScore,
-      type: 'target'
-    };
-
-    const combinedScatter = [...peers, targetPoint];
-
-    // 2. Trajectory Data
-    const trajectory = calculateTrajectoryData(selectedStudentId);
-
-    // 3. Percentile Stats (Based on Scatter Practical Score)
-    // Sort all by practical
-    const sortedByPrac = [...combinedScatter].sort((a, b) => b.practical - a.practical);
-    const rank = sortedByPrac.findIndex(p => p.type === 'target') + 1;
-    const total = sortedByPrac.length;
-    const percentile = Math.round(((total - rank) / total) * 100); 
-    const topRankPercent = Math.round((rank / total) * 100);
-
-    // Stats for distribution bar
-    const values = sortedByPrac.map(p => p.practical);
-    const min = Math.min(...values);
-    const max = Math.max(...values);
-    const median = values[Math.floor(values.length / 2)];
-
-    return {
-      trajectoryData: trajectory,
-      scatterData: combinedScatter,
-      percentileStats: { rank, total, percentile, topRankPercent, min, max, median, score: latestScore }
-    };
-
-  }, [expandedUniv, selectedStudent, selectedStudentId]);
+  const getSimulateData = () => {
+      if (aiAnswer?.mode === 'simulate' && aiAnswer.simulateResult) {
+          const { baseline, scenario } = aiAnswer.simulateResult;
+          return [
+              { name: '현재 상태', prob: baseline.acceptanceRate, fill: '#9ca3af' },
+              { name: '시뮬레이션', prob: scenario.acceptanceRate, fill: '#FC6401' }
+          ];
+      }
+      return [];
+  };
 
   return (
-    <div className="space-y-8 animate-in fade-in duration-500 max-w-7xl mx-auto pb-20">
+    <div className="max-w-[1600px] mx-auto pb-12 animate-in fade-in duration-500">
       
-      {/* Header */}
-      <div>
-         <h1 className="text-3xl font-bold text-gray-900 tracking-tight">데이터 분석 센터</h1>
-         <p className="text-gray-500 mt-2">학생의 성과 추이와 코호트 내 위치를 비교 분석합니다.</p>
+      {/* --- Header --- */}
+      <div className="mb-8 flex flex-col md:flex-row md:items-end justify-between gap-4">
+        <div>
+           <div className="flex items-center gap-2 mb-2">
+             <span className="bg-gray-900 text-white text-xs font-bold px-2 py-1 rounded border border-gray-700">PRO</span>
+             <span className="text-[#FC6401] font-bold text-xs uppercase tracking-wider flex items-center gap-1">
+                <Sparkles className="w-3 h-3" />
+                Meta-AI Powered
+             </span>
+           </div>
+           <h1 className="text-3xl font-bold text-gray-900">Meta-Intelligence Console</h1>
+           <p className="text-gray-500 mt-2 flex items-center gap-2">
+              <Brain className="w-4 h-4 text-gray-400" />
+              Tuned with Academy-Specific Meta Parameters
+           </p>
+        </div>
       </div>
 
-      {/* University Accordions */}
-      <div className="space-y-4">
-        {Object.entries(groupedStudents).map(([univ, students]: [string, Student[]]) => {
-          const isExpanded = expandedUniv === univ;
-          
-          return (
-            <div key={univ} className={`bg-white border transition-all duration-300 overflow-hidden ${isExpanded ? 'border-[#FC6401] shadow-lg ring-1 ring-[#FC6401]/20 rounded-2xl' : 'border-gray-200 hover:border-gray-300 rounded-xl'}`}>
-              
-              {/* Accordion Header */}
-              <button 
-                onClick={() => toggleUniv(univ)}
-                className="w-full flex items-center justify-between p-6 bg-white hover:bg-gray-50 transition-colors"
-              >
-                <div className="flex items-center gap-4">
-                  <div className={`p-3 rounded-xl transition-colors ${isExpanded ? 'bg-[#FFF0E6] text-[#FC6401]' : 'bg-gray-100 text-gray-500'}`}>
-                    <School className="w-6 h-6" />
-                  </div>
-                  <div className="text-left">
-                    <h3 className={`text-lg font-bold ${isExpanded ? 'text-gray-900' : 'text-gray-700'}`}>{univ}</h3>
-                    <p className="text-sm text-gray-500">{students.length}명 데이터 추적 중</p>
-                  </div>
-                </div>
-                {isExpanded ? <ChevronUp className="w-5 h-5 text-[#FC6401]" /> : <ChevronDown className="w-5 h-5 text-gray-400" />}
-              </button>
+      {/* --- Section 1: Ask NeoPrime --- */}
+      <section className="mb-10">
+        <div className="bg-gradient-to-br from-gray-900 to-gray-800 rounded-2xl p-1 shadow-xl">
+          <div className="bg-[#1F2937] rounded-xl p-6 md:p-8">
+             <div className="flex flex-col gap-4">
+               <div className="flex items-center gap-3 mb-2">
+                 <div className="p-2 bg-[#FC6401]/20 rounded-lg">
+                    <Sparkles className="w-5 h-5 text-[#FC6401] animate-pulse" />
+                 </div>
+                 <h2 className="text-white font-bold text-lg">Ask NeoPrime</h2>
+               </div>
+               
+               <form onSubmit={handleAsk} className="relative">
+                 <input 
+                    type="text" 
+                    placeholder="예) 홍대 합격률 하락 원인 분석해줘 (Explain) 또는 특강 수강생 효과 비교해줘 (Compare)"
+                    className="w-full bg-gray-800/50 border border-gray-700 text-white placeholder-gray-500 rounded-2xl pl-6 pr-32 py-4 focus:ring-2 focus:ring-[#FC6401] focus:border-transparent outline-none transition-all text-lg"
+                    value={query}
+                    onChange={(e) => setQuery(e.target.value)}
+                    disabled={isAnalyzing}
+                 />
+                 <button 
+                    type="submit"
+                    disabled={isAnalyzing}
+                    className="absolute right-2 top-2 bottom-2 bg-[#FC6401] hover:bg-[#e55a00] text-white px-6 rounded-xl font-bold transition-all flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                 >
+                    {isAnalyzing ? (
+                        <>
+                            <Loader2 className="w-4 h-4 animate-spin" /> 분석 중...
+                        </>
+                    ) : (
+                        <>
+                            분석하기 <ArrowRight className="w-4 h-4" />
+                        </>
+                    )}
+                 </button>
+               </form>
 
-              {/* Accordion Content */}
-              {isExpanded && (
-                <div className="border-t border-gray-100 bg-[#F7F9FB] p-6">
-                  
-                  {/* Toolbar */}
-                  <div className="flex flex-col md:flex-row justify-between items-center gap-4 mb-6 bg-white p-4 rounded-xl border border-gray-200 shadow-sm">
-                    {/* Student Selector */}
-                    <div className="flex items-center gap-3 w-full md:w-auto">
-                      <div className="p-2 bg-gray-100 rounded-lg">
-                        <User className="w-4 h-4 text-gray-600" />
-                      </div>
-                      <select 
-                        className="bg-transparent font-semibold text-gray-900 outline-none w-full md:w-48 cursor-pointer"
-                        value={selectedStudentId}
-                        onChange={(e) => setSelectedStudentId(e.target.value)}
-                      >
-                        {students.map(s => (
-                          <option key={s.id} value={s.id}>{s.name}</option>
-                        ))}
-                      </select>
-                    </div>
-                    <div className="hidden md:flex items-center gap-2 text-sm text-gray-500">
-                        <Info className="w-4 h-4" />
-                        <span>{univ} 2026 합격 코호트와 비교 중</span>
-                    </div>
-                  </div>
+               {/* Preset Questions */}
+               {!aiAnswer && (
+                   <div className="flex flex-wrap gap-2">
+                      {[
+                        "📉 홍대 합격률 하락 원인 (Explain)", 
+                        "🆚 특강 수강생 vs 미수강생 성과 비교 (Compare)", 
+                        "🎚️ 상향 지원율 10% 감소 시 합격률 예측 (Simulate)"
+                      ].map((q, i) => (
+                        <button 
+                          key={i} 
+                          onClick={() => handleInsightClick(q)}
+                          disabled={isAnalyzing}
+                          className="text-xs md:text-sm text-gray-400 bg-gray-800/50 hover:bg-gray-700 hover:text-white px-3 py-1.5 rounded-lg border border-gray-700 transition-colors disabled:opacity-50"
+                        >
+                          {q}
+                        </button>
+                      ))}
+                   </div>
+               )}
+             </div>
 
-                  {/* Dashboard Grid */}
-                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-
-                    {/* 1. Trajectory Chart (Full Width Top) */}
-                    <div className="lg:col-span-2 bg-white p-6 rounded-2xl border border-gray-200 shadow-sm min-h-[400px]">
-                        <div className="flex justify-between items-start mb-6">
-                            <div>
-                                <h4 className="text-lg font-bold text-gray-900 flex items-center gap-2">
-                                    <TrendingUp className="w-5 h-5 text-[#FC6401]" />
-                                    성과 추이 그래프
-                                </h4>
-                                <p className="text-sm text-gray-500">본인의 점수 상승세 vs 코호트 평균 성장세 비교</p>
-                            </div>
-                            <div className="flex items-center gap-4 text-xs font-medium">
-                                <div className="flex items-center gap-1.5">
-                                    <span className="w-3 h-3 rounded-full bg-[#FC6401]"></span>
-                                    <span>본인</span>
-                                </div>
-                                <div className="flex items-center gap-1.5">
-                                    <span className="w-6 h-0.5 bg-gray-300 border-t border-dashed border-gray-400"></span>
-                                    <span>코호트 평균</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="h-[300px] w-full">
-                            <ResponsiveContainer width="100%" height="100%">
-                                <ComposedChart data={trajectoryData} margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
-                                    <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f3f4f6" />
-                                    <XAxis 
-                                        dataKey="date" 
-                                        type="number" 
-                                        domain={['dataMin', 'dataMax']} 
-                                        tickFormatter={(t) => new Date(t).toLocaleDateString(undefined, {month:'short', day:'numeric'})}
-                                        tick={{fontSize: 12, fill: '#9ca3af'}}
-                                        axisLine={false}
-                                        tickLine={false}
-                                    />
-                                    <YAxis 
-                                        domain={[60, 100]} 
-                                        axisLine={false}
-                                        tickLine={false}
-                                        tick={{fontSize: 12, fill: '#9ca3af'}}
-                                    />
-                                    <Tooltip 
-                                        labelFormatter={(t) => new Date(t).toLocaleDateString()}
-                                        content={({ active, payload, label }: any) => {
-                                            if (active && payload && payload.length) {
-                                                const studentPoint = payload.find((p: any) => p.payload.type === 'target');
-                                                const avgPoint = payload.find((p: any) => p.payload.type === 'avg');
-                                                return (
-                                                    <div className="bg-white p-3 border border-gray-200 shadow-lg rounded-xl text-xs">
-                                                        <div className="font-bold text-gray-900 mb-2">{new Date(label).toLocaleDateString()}</div>
-                                                        {studentPoint && (
-                                                            <div className="flex items-center justify-between gap-4 mb-1">
-                                                                <span className="text-gray-500">점수</span>
-                                                                <span className="font-bold text-[#FC6401]">{studentPoint.value}</span>
-                                                            </div>
-                                                        )}
-                                                        {avgPoint && (
-                                                            <div className="flex items-center justify-between gap-4">
-                                                                <span className="text-gray-500">코호트 평균</span>
-                                                                <span className="font-medium text-gray-600">{avgPoint.value}</span>
-                                                            </div>
-                                                        )}
-                                                        {studentPoint?.payload.rankPercentile && (
-                                                            <div className="mt-2 pt-2 border-t border-gray-100 font-bold text-emerald-600">
-                                                                상위 {100 - studentPoint.payload.rankPercentile}% 랭크
-                                                            </div>
-                                                        )}
-                                                    </div>
-                                                );
-                                            }
-                                            return null;
-                                        }}
-                                    />
-                                    <Line 
-                                        dataKey="score" 
-                                        data={trajectoryData.filter(d => d.type === 'avg')}
-                                        stroke="#9ca3af" 
-                                        strokeWidth={2} 
-                                        strokeDasharray="5 5"
-                                        dot={false}
-                                        type="monotone"
-                                    />
-                                    <Line 
-                                        dataKey="score" 
-                                        data={trajectoryData.filter(d => d.type === 'target')}
-                                        stroke="#FC6401" 
-                                        strokeWidth={3} 
-                                        dot={{r:5, fill:'#FC6401', stroke:'#fff', strokeWidth:2}}
-                                        activeDot={{r:7}}
-                                        type="monotone"
-                                    />
-                                </ComposedChart>
-                            </ResponsiveContainer>
-                        </div>
-                    </div>
-
-                    {/* 2. Snapshot Scatter (Bottom Left) */}
-                    <div className="bg-white p-6 rounded-2xl border border-gray-200 shadow-sm min-h-[350px]">
-                        <div className="mb-6">
-                            <h4 className="text-lg font-bold text-gray-900 flex items-center gap-2">
-                                <Target className="w-5 h-5 text-blue-600" />
-                                스냅샷: 코호트 내 위치
-                            </h4>
-                            <p className="text-sm text-gray-500">실기(X) vs 학업(Y) 분포도</p>
-                        </div>
-                        <div className="h-[250px] w-full">
-                            <ResponsiveContainer width="100%" height="100%">
-                                <ScatterChart margin={{ top: 20, right: 20, bottom: 20, left: 10 }}>
-                                    <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f3f4f6" />
-                                    <XAxis 
-                                        type="number" 
-                                        dataKey="practical" 
-                                        name="Practical" 
-                                        domain={[50, 100]} 
-                                        tick={{fontSize: 10, fill: '#9ca3af'}}
-                                        axisLine={false}
-                                        tickLine={false}
-                                        label={{ value: '실기 점수', position: 'insideBottom', offset: -10, fontSize: 10, fill: '#9ca3af' }}
-                                    />
-                                    <YAxis 
-                                        type="number" 
-                                        dataKey="academic" 
-                                        name="Academic" 
-                                        domain={[50, 100]} 
-                                        tick={{fontSize: 10, fill: '#9ca3af'}}
-                                        axisLine={false}
-                                        tickLine={false}
-                                        label={{ value: '학업 점수', angle: -90, position: 'insideLeft', fontSize: 10, fill: '#9ca3af', offset: 0 }}
-                                    />
-                                    <ZAxis type="number" range={[60, 400]} />
-                                    <Tooltip 
-                                        cursor={{ strokeDasharray: '3 3' }} 
-                                        content={({ active, payload }: any) => {
-                                            if (active && payload && payload.length) {
-                                                const data = payload[0].payload;
-                                                return (
-                                                    <div className="bg-white p-2 border border-gray-200 shadow-md rounded-lg text-xs z-50">
-                                                        <div className={`font-bold ${data.type === 'target' ? 'text-[#FC6401]' : 'text-gray-700'}`}>
-                                                            {data.type === 'target' ? '본인' : '경쟁자'}
-                                                        </div>
-                                                        <div>실기: {Math.round(data.practical)}</div>
-                                                        <div>학업: {Math.round(data.academic)}</div>
-                                                    </div>
-                                                );
-                                            }
-                                            return null;
-                                        }}
-                                    />
-                                    {/* Peers */}
-                                    <Scatter name="Cohort" data={scatterData.filter(d => d.type === 'peer')} fill="#cbd5e1" shape="circle" />
-                                    {/* Target */}
-                                    <Scatter name="You" data={scatterData.filter(d => d.type === 'target')} fill="#FC6401" shape="circle" />
-                                    
-                                    {/* Reference Lines (Mock Admission Cut-offs) */}
-                                    <ReferenceLine x={85} stroke="#10b981" strokeDasharray="3 3">
-                                        <text x={87} y={55} fill="#10b981" fontSize={10} fontWeight="bold">실기 컷</text>
-                                    </ReferenceLine>
-                                    <ReferenceLine y={88} stroke="#10b981" strokeDasharray="3 3">
-                                        <text x={55} y={85} fill="#10b981" fontSize={10} fontWeight="bold">학업 컷</text>
-                                    </ReferenceLine>
-                                </ScatterChart>
-                            </ResponsiveContainer>
-                        </div>
-                    </div>
-
-                    {/* 3. Percentile Summary (Bottom Right) */}
-                    <div className="bg-white p-6 rounded-2xl border border-gray-200 shadow-sm min-h-[350px] flex flex-col">
-                        <div className="mb-4">
-                            <h4 className="text-lg font-bold text-gray-900 flex items-center gap-2">
-                                <Activity className="w-5 h-5 text-emerald-600" />
-                                랭킹 및 분포
-                            </h4>
-                            <p className="text-sm text-gray-500">현재 {univ} 지원자 그룹 내 순위</p>
-                        </div>
-
-                        {percentileStats && (
-                            <div className="flex-1 flex flex-col justify-center">
-                                {/* Text Summary */}
-                                <div className="mb-6 bg-gray-50 rounded-xl p-4 border border-gray-100">
-                                    <p className="text-sm text-gray-800 leading-relaxed">
-                                        전체 <span className="font-bold">{percentileStats.total}</span>명의 추적 지원자 중, 
-                                        당신은 <span className="font-bold text-[#FC6401]">{percentileStats.rank}위</span>입니다.
-                                    </p>
-                                    <div className="mt-2 flex items-center gap-2">
-                                        <CheckCircle2 className="w-4 h-4 text-emerald-600" />
-                                        <span className="text-xs font-bold text-emerald-600">코호트 상위 {percentileStats.topRankPercent}%</span>
-                                    </div>
-                                </div>
-
-                                {/* Visual Distribution Bar (Box Plot Simulation) */}
-                                <div className="relative pt-8 pb-4 px-2">
-                                    {/* Range Line */}
-                                    <div className="absolute top-1/2 left-0 right-0 h-1.5 bg-gray-100 rounded-full"></div>
-                                    
-                                    {/* Min/Max Ticks */}
-                                    <div className="absolute top-1/2 left-0 w-0.5 h-4 bg-gray-300 transform -translate-y-1/2"></div>
-                                    <div className="absolute top-1/2 right-0 w-0.5 h-4 bg-gray-300 transform -translate-y-1/2"></div>
-                                    
-                                    {/* Median Tick */}
-                                    <div 
-                                        className="absolute top-1/2 w-0.5 h-4 bg-gray-400 transform -translate-y-1/2 z-0"
-                                        style={{ left: `${((percentileStats.median - percentileStats.min) / (percentileStats.max - percentileStats.min)) * 100}%` }}
-                                    ></div>
-                                    <div 
-                                        className="absolute -top-6 text-[10px] text-gray-400 font-medium transform -translate-x-1/2"
-                                        style={{ left: `${((percentileStats.median - percentileStats.min) / (percentileStats.max - percentileStats.min)) * 100}%` }}
-                                    >
-                                        평균
-                                    </div>
-
-                                    {/* Target Student Marker */}
-                                    <div 
-                                        className="absolute top-1/2 transform -translate-y-1/2 -translate-x-1/2 flex flex-col items-center group cursor-pointer transition-all hover:scale-110 z-10"
-                                        style={{ left: `${((percentileStats.score - percentileStats.min) / (percentileStats.max - percentileStats.min)) * 100}%` }}
-                                    >
-                                        <div className="w-4 h-4 rounded-full bg-[#FC6401] border-2 border-white shadow-md mb-1 relative z-10"></div>
-                                        <div className="bg-[#FC6401] text-white text-[10px] font-bold px-1.5 py-0.5 rounded shadow-sm">
-                                            본인
+             {/* AI Answer Display */}
+             {aiAnswer && (
+               <div className="mt-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
+                 <div className="bg-gray-800/50 rounded-2xl border border-gray-700 p-6">
+                    <div className="flex items-start gap-4">
+                       <div className="p-3 bg-[#FC6401]/20 rounded-xl shrink-0">
+                          <Brain className="w-6 h-6 text-[#FC6401]" />
+                       </div>
+                       <div className="flex-1 w-full">
+                          <div className="flex items-center gap-2 mb-2">
+                             <span className={`px-2 py-0.5 rounded text-[10px] font-bold uppercase border ${
+                                 aiAnswer.mode === 'explain' ? 'bg-blue-500/10 text-blue-400 border-blue-500/20' :
+                                 aiAnswer.mode === 'compare' ? 'bg-purple-500/10 text-purple-400 border-purple-500/20' :
+                                 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20'
+                             }`}>
+                                 {aiAnswer.mode.toUpperCase()} MODE
+                             </span>
+                          </div>
+                          <p className="text-white text-lg font-medium leading-relaxed mb-6">
+                             {aiAnswer.summary}
+                          </p>
+                          
+                          {/* Explain Factors */}
+                          {aiAnswer.mode === 'explain' && aiAnswer.explainResult && (
+                             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                                {aiAnswer.explainResult.factors?.slice(0, 3).map((f, i) => (
+                                    <div key={i} className="bg-gray-900/50 p-4 rounded-xl border border-gray-700">
+                                        <div className="text-gray-400 text-xs font-bold uppercase mb-1">{f.name}</div>
+                                        <div className={`text-2xl font-bold ${f.direction === 'positive' ? 'text-emerald-400' : 'text-rose-400'}`}>
+                                            {f.impact > 0 ? '+' : ''}{f.impact}
                                         </div>
                                     </div>
+                                ))}
+                             </div>
+                          )}
 
-                                    {/* Labels */}
-                                    <div className="absolute -bottom-6 left-0 text-[10px] text-gray-400 font-medium">최저 ({Math.round(percentileStats.min)})</div>
-                                    <div className="absolute -bottom-6 right-0 text-[10px] text-gray-400 font-medium">최고 ({Math.round(percentileStats.max)})</div>
-                                </div>
+                          {/* Compare Lift */}
+                          {aiAnswer.mode === 'compare' && aiAnswer.compareResult && aiAnswer.compareResult.lift && (
+                              <div className="flex gap-8 mb-6 p-4 bg-gray-900/50 rounded-xl border border-gray-700">
+                                  <div>
+                                      <div className="text-gray-400 text-xs font-bold uppercase mb-1">Lift (개선효과)</div>
+                                      <div className="text-3xl font-bold text-emerald-400">+{aiAnswer.compareResult.lift.acceptanceRate}%p</div>
+                                  </div>
+                                  <div className="h-full w-px bg-gray-700"></div>
+                                  <div>
+                                      <div className="text-gray-400 text-xs font-bold uppercase mb-1">통계적 유의성</div>
+                                      <div className="text-lg font-bold text-white">높음 (p{'<'}0.05)</div>
+                                  </div>
+                              </div>
+                          )}
+
+                          <div className="p-4 bg-[#FC6401]/10 border border-[#FC6401]/20 rounded-xl flex items-start gap-3">
+                             <Zap className="w-5 h-5 text-[#FC6401] shrink-0 mt-0.5" />
+                             <div>
+                                 <div className="text-[#FC6401] font-bold text-sm mb-1">AI 권장 액션</div>
+                                 <p className="text-gray-300 text-sm">{aiAnswer.recommendation}</p>
+                             </div>
+                          </div>
+
+                          {/* Follow-up Context Input */}
+                          <div className="mt-6 pt-4 border-t border-gray-700">
+                              <div className="flex items-center gap-2 mb-2 text-xs font-bold text-gray-400">
+                                  <MessageSquare className="w-3 h-3" />
+                                  <span>이어서 질문하기 (Context-Aware)</span>
+                              </div>
+                              <form onSubmit={(e) => {
+                                  e.preventDefault();
+                                  const target = e.target as typeof e.target & {
+                                      followup: { value: string };
+                                  };
+                                  handleAsk(e, target.followup.value);
+                                  target.followup.value = '';
+                              }} className="relative">
+                                  <input 
+                                      name="followup"
+                                      type="text" 
+                                      placeholder="예) 그렇다면 출결을 95%로 올리면 어떻게 되나요?"
+                                      className="w-full bg-gray-900 border border-gray-600 text-white rounded-xl pl-4 pr-12 py-3 focus:ring-1 focus:ring-[#FC6401] focus:border-[#FC6401] outline-none text-sm"
+                                  />
+                                  <button type="submit" className="absolute right-2 top-2 p-1.5 bg-gray-700 text-white rounded-lg hover:bg-[#FC6401] transition-colors">
+                                      <ArrowRight className="w-4 h-4" />
+                                  </button>
+                              </form>
+                          </div>
+                       </div>
+                    </div>
+                 </div>
+               </div>
+             )}
+          </div>
+        </div>
+      </section>
+
+      {/* --- Section 2: Insight Carousel --- */}
+      <section className="mb-12">
+         <div className="flex items-center justify-between mb-6">
+            <div className="flex items-center gap-2">
+                <SplitSquareHorizontal className="w-5 h-5 text-gray-500" />
+                <h3 className="text-xl font-bold text-gray-900">핵심 인사이트 (Key Findings)</h3>
+            </div>
+            <div className="flex gap-2">
+                <button className="p-2 rounded-full border border-gray-200 hover:bg-gray-50" onClick={() => scrollRef.current?.scrollBy({left: -300, behavior: 'smooth'})}>
+                    <ChevronRight className="w-4 h-4 rotate-180" />
+                </button>
+                <button className="p-2 rounded-full border border-gray-200 hover:bg-gray-50" onClick={() => scrollRef.current?.scrollBy({left: 300, behavior: 'smooth'})}>
+                    <ChevronRight className="w-4 h-4" />
+                </button>
+            </div>
+         </div>
+         <div ref={scrollRef} className="flex gap-6 overflow-x-auto pb-6 snap-x snap-mandatory scrollbar-hide" style={{scrollbarWidth: 'none', msOverflowStyle: 'none'}}>
+            {[
+                { title: "상향 라인 과다 위험", summary: "상향 지원 비율이 과도합니다.", type: "risk", color: "rose" },
+                { title: "국민대 성과 이상치", summary: "합격률이 전국 평균보다 높습니다.", type: "positive", color: "emerald" },
+                { title: "겨울특강 A 코스 효과", summary: "특강 수강생 성적이 우수합니다.", type: "neutral", color: "blue" },
+                { title: "중위권 이탈 위험", summary: "중위권 학생 관리가 필요합니다.", type: "risk", color: "amber" }
+            ].map((card, i) => (
+                <div key={i} className="min-w-[300px] snap-center bg-white rounded-2xl p-6 border border-gray-200 shadow-sm hover:shadow-md transition-all cursor-pointer group" onClick={() => handleInsightClick(card.title)}>
+                    <div className={`w-full h-1 bg-${card.color}-500 mb-4 rounded-full`}></div>
+                    <h4 className="font-bold text-gray-900 group-hover:text-[#FC6401] transition-colors">{card.title}</h4>
+                    <p className="text-sm text-gray-600 mt-2 mb-4">{card.summary}</p>
+                    <div className="flex justify-between items-center text-xs">
+                        <span className={`px-2 py-1 rounded bg-${card.color}-50 text-${card.color}-600 font-bold border border-${card.color}-100`}>
+                            {card.type.toUpperCase()}
+                        </span>
+                        <span className="text-gray-400 font-medium">Auto-detected</span>
+                    </div>
+                </div>
+            ))}
+         </div>
+      </section>
+
+      {/* --- Section 3: Detailed Analysis Views --- */}
+      <section>
+         <div className="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden min-h-[600px] flex flex-col">
+            <div className="border-b border-gray-100 flex overflow-x-auto bg-gray-50/50">
+               <button onClick={() => setActiveDetailTab('drilldown')} className={`px-8 py-5 text-sm font-bold flex items-center gap-2 border-b-2 transition-colors ${activeDetailTab === 'drilldown' ? 'border-[#FC6401] text-[#FC6401] bg-white' : 'border-transparent text-gray-500'}`}>
+                  <Search className="w-4 h-4" /> Explain
+               </button>
+               <button onClick={() => setActiveDetailTab('segment')} className={`px-8 py-5 text-sm font-bold flex items-center gap-2 border-b-2 transition-colors ${activeDetailTab === 'segment' ? 'border-[#FC6401] text-[#FC6401] bg-white' : 'border-transparent text-gray-500'}`}>
+                  <GitCompare className="w-4 h-4" /> Compare
+               </button>
+               <button onClick={() => setActiveDetailTab('simulation')} className={`px-8 py-5 text-sm font-bold flex items-center gap-2 border-b-2 transition-colors ${activeDetailTab === 'simulation' ? 'border-[#FC6401] text-[#FC6401] bg-white' : 'border-transparent text-gray-500'}`}>
+                  <Sliders className="w-4 h-4" /> Simulate
+               </button>
+            </div>
+
+            <div className="p-8 flex-1 bg-[#F7F9FB]">
+               {/* Explain View */}
+               {activeDetailTab === 'drilldown' && (
+                  <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 h-full animate-in fade-in duration-300">
+                     <div className="lg:col-span-2 bg-white p-6 rounded-2xl border border-gray-200 shadow-sm h-96">
+                        <ResponsiveContainer width="100%" height="100%">
+                           <BarChart data={getFactorData()} layout="vertical">
+                              <CartesianGrid strokeDasharray="3 3" horizontal={false} stroke="#f3f4f6" />
+                              <XAxis type="number" hide />
+                              <YAxis dataKey="name" type="category" width={100} tick={{fontSize: 12, fontWeight: 'bold'}} axisLine={false} tickLine={false} />
+                              <Bar dataKey="value" barSize={32} radius={[4, 4, 4, 4]}>
+                                 {getFactorData().map((entry, index) => (
+                                    <Cell key={`cell-${index}`} fill={entry.fill} />
+                                 ))}
+                              </Bar>
+                           </BarChart>
+                        </ResponsiveContainer>
+                     </div>
+                     <div className="bg-white p-6 rounded-2xl border border-gray-200 shadow-sm flex items-center justify-center text-center text-gray-500">
+                        {aiAnswer?.explainResult?.factors?.[0]?.explanation || "분석 결과가 여기에 표시됩니다."}
+                     </div>
+                  </div>
+               )}
+
+               {/* Compare View */}
+               {activeDetailTab === 'segment' && (
+                   <div className="bg-white p-6 rounded-2xl border border-gray-200 shadow-sm h-96 animate-in fade-in">
+                       <ResponsiveContainer width="100%" height="100%">
+                           <BarChart data={getCompareData()} layout="vertical" barSize={30}>
+                                <CartesianGrid strokeDasharray="3 3" horizontal={true} stroke="#f3f4f6" />
+                                <XAxis type="number" hide />
+                                <YAxis dataKey="name" type="category" width={100} tick={{fontSize: 12, fontWeight: 'bold'}} axisLine={false} tickLine={false} />
+                                <Tooltip cursor={{fill: 'transparent'}} />
+                                <Bar dataKey="A" fill="#FC6401" radius={[0, 4, 4, 0]} />
+                                <Bar dataKey="B" fill="#e5e7eb" radius={[0, 4, 4, 0]} />
+                           </BarChart>
+                       </ResponsiveContainer>
+                   </div>
+               )}
+
+               {/* Simulate View */}
+               {activeDetailTab === 'simulation' && (
+                  <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 h-full animate-in fade-in duration-300">
+                     <div className="bg-white p-6 rounded-2xl border border-gray-200 shadow-sm lg:col-span-1">
+                        <div className="mb-6 pb-6 border-b border-gray-100">
+                           <h4 className="text-lg font-bold text-gray-900 mb-2">파라미터 조정</h4>
+                           <p className="text-sm text-gray-500">슬라이더를 움직여 합격률 변화를 예측하세요.</p>
+                        </div>
+                        <div className="space-y-6">
+                           {aiAnswer?.simulateResult?.controls?.map((ctrl, i) => (
+                               <div key={i}>
+                                   <div className="flex justify-between mb-2">
+                                       <label className="text-sm font-bold text-gray-700">{ctrl.control}</label>
+                                       <span className="text-sm font-bold text-[#FC6401]">{ctrl.targetValue} (목표)</span>
+                                   </div>
+                                   <input type="range" className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-not-allowed" disabled value={50} />
+                                   <p className="text-xs text-gray-400 mt-1">예측 효과: {ctrl.estimatedDelta > 0 ? '+' : ''}{ctrl.estimatedDelta}%</p>
+                               </div>
+                           )) || (
+                               <div className="text-center text-gray-400 py-10">시뮬레이션 데이터 없음</div>
+                           )}
+                        </div>
+                     </div>
+                     <div className="lg:col-span-2 bg-white p-6 rounded-2xl border border-gray-200 shadow-sm flex flex-col items-center justify-center">
+                        <div className="h-64 w-full max-w-md">
+                           <ResponsiveContainer width="100%" height="100%">
+                              <BarChart data={getSimulateData()}>
+                                 <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e5e7eb" />
+                                 <XAxis dataKey="name" tick={{fontSize: 14, fontWeight: 'bold'}} axisLine={false} tickLine={false} />
+                                 <YAxis hide domain={[0, 100]} />
+                                 <Bar dataKey="prob" radius={[8, 8, 0, 0]}>
+                                    {getSimulateData().map((entry, index) => (
+                                       <Cell key={`cell-${index}`} fill={entry.fill} />
+                                    ))}
+                                 </Bar>
+                              </BarChart>
+                           </ResponsiveContainer>
+                        </div>
+                        {getSimulateData().length > 0 && (
+                            <div className="mt-4 flex gap-8">
+                               <div className="text-center">
+                                  <div className="text-gray-400 text-sm font-bold uppercase">현재</div>
+                                  <div className="text-2xl font-bold text-gray-600">{getSimulateData()[0].prob}%</div>
+                               </div>
+                               <ArrowRight className="w-8 h-8 text-gray-300 mt-2" />
+                               <div className="text-center">
+                                  <div className="text-[#FC6401] text-sm font-bold uppercase">시뮬레이션</div>
+                                  <div className="text-4xl font-bold text-[#FC6401]">{getSimulateData()[1].prob}%</div>
+                               </div>
                             </div>
                         )}
-                    </div>
-
+                     </div>
                   </div>
-                </div>
-              )}
+               )}
             </div>
-          );
-        })}
-      </div>
+         </div>
+      </section>
     </div>
   );
 };

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Bell, Search, Calendar, ChevronDown, MapPin } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const Header: React.FC = () => {
   return (
@@ -43,10 +44,10 @@ const Header: React.FC = () => {
             </div>
         </div>
 
-        <button className="relative p-2.5 bg-white text-gray-500 border border-gray-200 hover:border-[#FC6401] hover:text-[#FC6401] rounded-xl transition-all shadow-sm active:scale-95">
+        <Link to="/profile" className="relative p-2.5 bg-white text-gray-500 border border-gray-200 hover:border-[#FC6401] hover:text-[#FC6401] rounded-xl transition-all shadow-sm active:scale-95">
           <Bell className="w-5 h-5" />
           <span className="absolute top-2 right-2.5 w-2 h-2 bg-[#FC6401] rounded-full border-2 border-white"></span>
-        </button>
+        </Link>
       </div>
     </header>
   );

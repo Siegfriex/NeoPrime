@@ -1,11 +1,13 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
-import { LayoutDashboard, Users, FileEdit, BarChart2, Settings, LogOut, Hexagon } from 'lucide-react';
+import { NavLink, Link } from 'react-router-dom';
+import { LayoutDashboard, Users, FileEdit, BarChart2, Settings, LogOut, Hexagon, Calculator } from 'lucide-react';
 
 const Sidebar: React.FC = () => {
+  // Reordered navigation items for better flow
   const navItems = [
     { to: '/', icon: LayoutDashboard, label: '대시보드' },
     { to: '/students', icon: Users, label: '학생 관리' },
+    { to: '/simulation', icon: Calculator, label: '합격 시뮬레이터' }, // Moved up
     { to: '/evaluations/new', icon: FileEdit, label: '평가 입력' },
     { to: '/analytics', icon: BarChart2, label: '데이터 분석' },
   ];
@@ -28,6 +30,7 @@ const Sidebar: React.FC = () => {
           <NavLink
             key={item.to}
             to={item.to}
+            end={item.to === '/'}
             className={({ isActive }) =>
               `flex items-center space-x-3 px-4 py-3 rounded-xl transition-all duration-200 group ${
                 isActive
@@ -53,17 +56,17 @@ const Sidebar: React.FC = () => {
                     <p className="text-xs text-gray-500">원장</p>
                 </div>
             </div>
-            <button className="text-xs text-[#FC6401] font-medium hover:underline">프로필 보기</button>
+            <Link to="/profile" className="text-xs text-[#FC6401] font-medium hover:underline">프로필 보기</Link>
         </div>
 
-        <button className="flex items-center space-x-3 px-4 py-3 w-full text-gray-500 hover:bg-gray-50 hover:text-gray-900 rounded-xl transition-colors">
+        <Link to="/settings" className="flex items-center space-x-3 px-4 py-3 w-full text-gray-500 hover:bg-gray-50 hover:text-gray-900 rounded-xl transition-colors">
           <Settings className="w-5 h-5" />
           <span>설정</span>
-        </button>
-        <button className="flex items-center space-x-3 px-4 py-3 w-full text-gray-500 hover:bg-rose-50 hover:text-rose-500 rounded-xl transition-colors mt-1">
+        </Link>
+        <Link to="/auth/login" className="flex items-center space-x-3 px-4 py-3 w-full text-gray-500 hover:bg-rose-50 hover:text-rose-500 rounded-xl transition-colors mt-1">
           <LogOut className="w-5 h-5" />
           <span>로그아웃</span>
-        </button>
+        </Link>
       </div>
     </div>
   );

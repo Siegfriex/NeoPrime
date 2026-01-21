@@ -2,6 +2,7 @@ import React from 'react';
 import { Outlet } from 'react-router-dom';
 import Sidebar from './Sidebar';
 import Header from './Header';
+import ChatBot from './ChatBot';
 
 const Layout: React.FC = () => {
   return (
@@ -14,6 +15,7 @@ const Layout: React.FC = () => {
           <Outlet />
         </div>
       </main>
+      <ChatBot />
     </div>
   );
 };

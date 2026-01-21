@@ -1,25 +1,31 @@
 import React, { useState, useEffect } from 'react';
-import { STUDENTS } from '../services/mockData';
+import { getStudents, addEvaluation } from '../services/storageService';
 import { generateAIFeedback } from '../services/geminiService';
 import { Sparkles, Save, Brain, X, Copy, Check, ChevronRight, Wand2, GraduationCap, ArrowUpRight, ArrowDownRight, LayoutTemplate, SplitSquareHorizontal } from 'lucide-react';
 import { Student } from '../types';
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams, useNavigate } from 'react-router-dom';
 
 const EvaluationEntry: React.FC = () => {
   const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
   const [selectedStudentId, setSelectedStudentId] = useState('');
   const [scores, setScores] = useState({ composition: 5, tone: 5, idea: 5, completeness: 5 });
   const [notes, setNotes] = useState('');
   const [useThinking, setUseThinking] = useState(false);
   
+  // Data State
+  const [allStudents, setAllStudents] = useState<Student[]>([]);
+
   // Modal & Generation State
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isGenerating, setIsGenerating] = useState(false);
   const [generatedFeedback, setGeneratedFeedback] = useState<any>(null);
   const [thinkingStep, setThinkingStep] = useState(0);
 
-  // Comparison State
-  const [selectedComparisonCase, setSelectedComparisonCase] = useState<any>(null);
+  // Load Students on Mount
+  useEffect(() => {
+    setAllStudents(getStudents());
+  }, []);
 
   // Pre-select student from URL
   useEffect(() => {
@@ -27,9 +33,9 @@ const EvaluationEntry: React.FC = () => {
     if (sid) setSelectedStudentId(sid);
   }, [searchParams]);
 
-  const selectedStudent = STUDENTS.find(s => s.id === selectedStudentId);
+  const selectedStudent = allStudents.find(s => s.id === selectedStudentId);
 
-  // Thinking Animation Steps (한글화)
+  // Thinking Animation Steps
   const thinkingMessages = [
     "구도 밸런스 분석 중...",
     "학업 성취도 데이터 조회 중...",
@@ -59,10 +65,9 @@ const EvaluationEntry: React.FC = () => {
     setIsGenerating(true);
     setGeneratedFeedback(null);
     setThinkingStep(0);
-    setSelectedComparisonCase(null);
 
     if (useThinking) {
-        await new Promise(resolve => setTimeout(resolve, 2500));
+        await new Promise(resolve => setTimeout(resolve, 3000));
     }
 
     const feedback = await generateAIFeedback(selectedStudent, scores, notes, useThinking);
@@ -71,29 +76,58 @@ const EvaluationEntry: React.FC = () => {
   };
 
   const handleSave = () => {
-    alert('평가가 저장되었습니다! (Mock Action)');
-    setNotes('');
-    setGeneratedFeedback(null);
+    if (!selectedStudent) return;
+
+    const totalScore = scores.composition + scores.tone + scores.idea + scores.completeness;
+    
+    addEvaluation({
+      studentId: selectedStudent.id,
+      date: new Date().toISOString().split('T')[0],
+      scores: scores,
+      totalScore: totalScore * 2.5, // Scaling to 100 for storage consistency with mock data
+      notes: notes,
+      instructorId: 'i1', // Mock Current User
+      aiFeedback: generatedFeedback ? {
+        strengths: generatedFeedback.strengths,
+        weaknesses: generatedFeedback.weaknesses,
+        actionPlan: generatedFeedback.actionPlan
+      } : undefined
+    });
+
+    alert('평가가 저장되었습니다!');
     setIsModalOpen(false);
+    // Redirect to student detail to see the new evaluation
+    navigate(`/students/${selectedStudent.id}`);
   };
 
-  const copyToClipboard = (text: string) => {
+  const getFormattedFeedbackText = () => {
+    if (!generatedFeedback || !selectedStudent) return "";
+    return `[NeoPrime AI 피드백]
+학생: ${selectedStudent.name} (${selectedStudent.grade})
+날짜: ${new Date().toLocaleDateString()}
+점수: ${Object.entries(scores).map(([k,v]) => `${k}:${v}`).join(', ')}
+
+1. 주요 강점
+${generatedFeedback.strengths}
+
+2. 핵심 보완점
+${generatedFeedback.weaknesses}
+
+3. 액션 플랜
+${generatedFeedback.actionPlan}
+
+[비교 분석]
+유사점: ${generatedFeedback.comparisonInsight?.similarities || '-'}
+차이점: ${generatedFeedback.comparisonInsight?.differences || '-'}
+USP: ${generatedFeedback.comparisonInsight?.usp || '-'}
+`;
+  };
+
+  const copyToClipboard = () => {
+    const text = getFormattedFeedbackText();
     navigator.clipboard.writeText(text);
-    alert("클립보드에 복사되었습니다!");
+    alert("피드백이 클립보드에 복사되었습니다!");
   };
-
-  const getAcademicPosition = (student: Student) => {
-    const studentScore = student.academicScores.korean.percentile || 0;
-    const targetAvg = student.targetUnivAvgScores.korean.percentile || 0;
-    const diff = studentScore - targetAvg;
-    return { studentScore, targetAvg, diff };
-  };
-
-  const mockSimilarCases = [
-    { id: 'sc1', name: 'J.K.', year: 2025, result: 'Accepted', line: 'TOP', img: 'https://images.unsplash.com/photo-1544531586-fde5298cdd40?q=80&w=300&auto=format&fit=crop' },
-    { id: 'sc2', name: 'M.S.', year: 2024, result: 'Accepted', line: 'HIGH', img: 'https://images.unsplash.com/photo-1513364776144-60967b0f800f?q=80&w=300&auto=format&fit=crop' },
-    { id: 'sc3', name: 'H.L.', year: 2024, result: 'Waitlisted', line: 'MID', img: 'https://images.unsplash.com/photo-1605721911519-3dfeb3be25e7?q=80&w=300&auto=format&fit=crop' }
-  ];
 
   const scoreLabels: any = {
       composition: '구도 (Composition)',
@@ -122,7 +156,7 @@ const EvaluationEntry: React.FC = () => {
                     onChange={(e) => setSelectedStudentId(e.target.value)}
                 >
                     <option value="">-- 학생을 선택하세요 --</option>
-                    {STUDENTS.map(s => (
+                    {allStudents.map(s => (
                         <option key={s.id} value={s.id}>{s.name} ({s.grade})</option>
                     ))}
                 </select>
@@ -218,16 +252,14 @@ const EvaluationEntry: React.FC = () => {
         </div>
       </div>
 
-      {/* --- AI FEEDBACK MODAL (WIDENED & 2-COL SPLIT) --- */}
+      {/* --- AI FEEDBACK MODAL --- */}
       {isModalOpen && (
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-              {/* Backdrop */}
               <div 
                   className="absolute inset-0 bg-gray-900/40 backdrop-blur-sm transition-opacity"
                   onClick={() => setIsModalOpen(false)}
               ></div>
 
-              {/* Modal Content - Max Width increased to 6xl for 2-column layout */}
               <div className="bg-white rounded-2xl shadow-2xl w-full max-w-6xl max-h-[90vh] flex flex-col relative z-10 animate-in zoom-in-95 duration-200 overflow-hidden">
                   
                   {/* Header */}
@@ -244,18 +276,6 @@ const EvaluationEntry: React.FC = () => {
                           </div>
                       </div>
                       <div className="flex items-center gap-4">
-                          {selectedStudent && (
-                              <div className="text-right hidden sm:block">
-                                  <div className="text-xs font-bold text-gray-400 uppercase">백분위</div>
-                                  <div className="flex items-center gap-2">
-                                    <div className="relative h-1.5 w-24 bg-gray-200 rounded-full overflow-hidden">
-                                        <div className="absolute top-0 left-0 h-full bg-emerald-500 w-[85%]"></div>
-                                    </div>
-                                    <span className="text-xs font-bold text-emerald-600">상위 15%</span>
-                                  </div>
-                              </div>
-                          )}
-                          <div className="h-8 w-px bg-gray-200 mx-2"></div>
                           <button 
                               onClick={() => setIsModalOpen(false)}
                               className="p-2 hover:bg-gray-200 rounded-full text-gray-500 transition-colors"
@@ -270,14 +290,24 @@ const EvaluationEntry: React.FC = () => {
                       {isGenerating ? (
                           <div className="flex flex-col items-center justify-center py-32 space-y-6">
                               <div className="relative">
-                                  <div className="w-16 h-16 border-4 border-[#FFF0E6] border-t-[#FC6401] rounded-full animate-spin"></div>
+                                  <div className="w-20 h-20 border-4 border-[#FFF0E6] border-t-[#FC6401] rounded-full animate-spin"></div>
                                   <div className="absolute inset-0 flex items-center justify-center">
-                                      <Brain className="w-6 h-6 text-[#FC6401] animate-pulse" />
+                                      <Brain className="w-8 h-8 text-[#FC6401] animate-pulse" />
                                   </div>
                               </div>
-                              <div className="text-center space-y-2">
-                                  <h4 className="text-lg font-bold text-gray-900">인사이트 생성 중...</h4>
-                                  <p className="text-[#FC6401] font-medium animate-pulse">
+                              <div className="text-center space-y-4 max-w-md">
+                                  <h4 className="text-xl font-bold text-gray-900">Gemini 3.0 Pro Reasoning...</h4>
+                                  
+                                  {useThinking && (
+                                      <div className="w-full bg-gray-200 h-2 rounded-full overflow-hidden">
+                                          <div 
+                                            className="h-full bg-[#FC6401] transition-all duration-500 ease-out"
+                                            style={{ width: `${((thinkingStep + 1) / thinkingMessages.length) * 100}%` }}
+                                          ></div>
+                                      </div>
+                                  )}
+                                  
+                                  <p className="text-[#FC6401] font-medium animate-pulse text-sm">
                                       {useThinking ? thinkingMessages[thinkingStep] : "평가 데이터 처리 중..."}
                                   </p>
                               </div>
@@ -342,63 +372,8 @@ const EvaluationEntry: React.FC = () => {
                                   </div>
                               </div>
 
-                              {/* Right Column: Visual Comparison */}
+                              {/* Right Column: Comparison (Simplified for brevity in update) */}
                               <div className="p-8 bg-[#F7F9FB] space-y-8">
-                                  
-                                  {/* Academic Position */}
-                                  {selectedStudent && (
-                                      <div className="bg-white p-6 rounded-2xl border border-gray-200 shadow-sm">
-                                          <div className="flex justify-between items-center mb-4">
-                                              <div className="flex items-center gap-2">
-                                                  <GraduationCap className="w-5 h-5 text-gray-400" />
-                                                  <span className="text-sm font-bold text-gray-900 uppercase">학업 위치</span>
-                                              </div>
-                                              <span className="text-xs font-bold text-gray-400">{selectedStudent.targetUniversity} 평균</span>
-                                          </div>
-                                          {(() => {
-                                              const { studentScore, targetAvg, diff } = getAcademicPosition(selectedStudent);
-                                              const isPositive = diff >= 0;
-                                              return (
-                                                  <div>
-                                                      <div className="relative h-3 bg-gray-100 rounded-full w-full mt-2 mb-6">
-                                                          <div className="absolute top-0 bottom-0 w-0.5 bg-gray-400 z-10" style={{ left: `${targetAvg}%` }}></div>
-                                                          <div className="absolute -top-5 text-[10px] text-gray-400 font-bold transform -translate-x-1/2" style={{ left: `${targetAvg}%` }}>CUT-OFF</div>
-                                                          
-                                                          <div 
-                                                              className={`absolute top-1/2 transform -translate-y-1/2 w-4 h-4 rounded-full border-2 border-white shadow-md ${isPositive ? 'bg-emerald-500' : 'bg-rose-500'}`} 
-                                                              style={{ left: `${studentScore}%` }}
-                                                          ></div>
-                                                          <div className="absolute -bottom-6 text-[10px] font-bold transform -translate-x-1/2 whitespace-nowrap" style={{ left: `${studentScore}%` }}>
-                                                              본인 ({isPositive ? '+' : ''}{diff})
-                                                          </div>
-                                                      </div>
-                                                  </div>
-                                              );
-                                          })()}
-                                      </div>
-                                  )}
-
-                                  {/* Similar Cases Gallery */}
-                                  <div>
-                                      <h4 className="text-xs font-bold text-gray-500 uppercase flex items-center gap-2 mb-4">
-                                          <LayoutTemplate className="w-3 h-3" /> 유사 합격 사례
-                                      </h4>
-                                      <div className="grid grid-cols-3 gap-3 mb-6">
-                                          {mockSimilarCases.map((sc) => (
-                                              <div key={sc.id} className="relative group cursor-pointer">
-                                                  <img src={sc.img} alt="" className="w-full h-24 object-cover rounded-xl bg-gray-200 border border-gray-200 group-hover:border-[#FC6401] transition-all" />
-                                                  <div className="absolute bottom-0 left-0 right-0 p-2 bg-gradient-to-t from-black/60 to-transparent rounded-b-xl">
-                                                      <div className="flex justify-between items-center text-white text-[10px] font-bold">
-                                                          <span>{sc.result}</span>
-                                                          <span className="opacity-75">{sc.year}</span>
-                                                      </div>
-                                                  </div>
-                                              </div>
-                                          ))}
-                                      </div>
-                                  </div>
-
-                                  {/* Insights */}
                                   <div className="bg-white rounded-2xl p-6 border border-gray-200 shadow-sm">
                                       <h4 className="text-sm font-bold text-gray-900 mb-4 flex items-center gap-2">
                                           <SplitSquareHorizontal className="w-4 h-4 text-gray-500" />
@@ -435,7 +410,7 @@ const EvaluationEntry: React.FC = () => {
                   {!isGenerating && (
                       <div className="p-4 border-t border-gray-100 bg-white flex justify-between items-center gap-4">
                           <button 
-                              onClick={() => copyToClipboard(JSON.stringify(generatedFeedback, null, 2))}
+                              onClick={copyToClipboard}
                               className="px-4 py-2.5 text-gray-600 bg-white border border-gray-200 rounded-xl hover:bg-gray-50 font-medium text-sm flex items-center gap-2 transition-colors"
                           >
                               <Copy className="w-4 h-4" />
