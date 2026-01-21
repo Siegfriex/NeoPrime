@@ -1121,35 +1121,56 @@
                 </div>
             </div>
         </div>
-        <aside class="demo-screen" aria-label="실제 구현 화면">
-            <div class="demo-header">✅ AdmissionSimulator 실제 화면</div>
+        <aside class="demo-screen" aria-label="AdmissionSimulator 실제 구현 화면">
+            <div class="demo-header">✅ /simulation - 입시 시뮬레이터 (실제 작동 화면)</div>
             <div class="demo-content">
-                <p class="text-sm text-secondary" style="margin-bottom: var(--space-3);"><strong>학생:</strong> 김지민 (고3, 홍익대 시각디자인) | <strong>레벨:</strong> A</p>
-                <div style="margin-bottom: var(--space-3);">
-                    <div class="flex justify-between" style="margin-bottom: 4px;">
-                        <span><strong>홍익대</strong> 시각디자인 (나군)</span>
-                        <span class="text-primary-color font-bold">78%</span>
+                <!-- Student Info -->
+                <div style="display: flex; align-items: center; gap: 12px; padding: var(--space-3); background: rgba(255,255,255,0.04); border-radius: var(--radius-md); margin-bottom: var(--space-4);">
+                    <div style="width: 40px; height: 40px; background: var(--primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: var(--weight-bold); color: white; font-size: 18px;">김</div>
+                    <div>
+                        <p style="font-weight: var(--weight-bold); margin: 0; font-size: 15px;">김지민</p>
+                        <p class="text-xs text-secondary" style="margin: 0;">고3 • 세화고 • 홍익대 시각디자인</p>
                     </div>
-                    <div class="progress-bar"><div class="progress-fill" style="width: 78%;"></div></div>
-                    <p class="text-xs text-secondary" style="margin-top: 4px;">환산점수 420점 (예상 컷: 400점) | 리스크: <strong class="text-primary-color">적정 (Stable)</strong></p>
-                </div>
-                <div style="margin-bottom: var(--space-3);">
-                    <div class="flex justify-between" style="margin-bottom: 4px;">
-                        <span><strong>이화여대</strong> 디자인 (다군)</span>
-                        <span class="font-bold">65%</span>
+                    <div style="margin-left: auto; text-align: right;">
+                        <p class="text-xs text-secondary" style="margin: 0;">현재 레벨</p>
+                        <p style="font-size: 20px; font-weight: var(--weight-extrabold); color: var(--primary); margin: 0; font-family: var(--font-en);">A</p>
                     </div>
-                    <div class="progress-bar"><div class="progress-fill" style="width: 65%; background: var(--text-primary);"></div></div>
                 </div>
-                <div style="margin-bottom: var(--space-3);">
-                    <div class="flex justify-between" style="margin-bottom: 4px;">
-                        <span><strong>서울대</strong> 공예 (가군)</span>
-                        <span style="color: var(--warning);" class="font-bold">42%</span>
+
+                <!-- University Cards (Compact) -->
+                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: var(--space-4);">
+                    <div style="background: rgba(252,100,1,0.08); padding: var(--space-2); border-radius: var(--radius-md); border: 2px solid rgba(252,100,1,0.3); text-align: center;">
+                        <p class="text-xs text-secondary" style="margin: 0;">홍익대</p>
+                        <p style="font-size: 24px; font-weight: var(--weight-extrabold); color: var(--primary); margin: 4px 0; font-family: var(--font-en);">78%</p>
+                        <p style="font-size: 10px; color: var(--success); margin: 0; font-weight: var(--weight-bold);">적정</p>
                     </div>
-                    <div class="progress-bar"><div class="progress-fill" style="width: 42%; background: var(--warning);"></div></div>
+                    <div style="background: rgba(255,255,255,0.04); padding: var(--space-2); border-radius: var(--radius-md); border: 1px solid rgba(255,255,255,0.1); text-align: center;">
+                        <p class="text-xs text-secondary" style="margin: 0;">이화여대</p>
+                        <p style="font-size: 24px; font-weight: var(--weight-extrabold); color: var(--text-primary); margin: 4px 0; font-family: var(--font-en);">65%</p>
+                        <p style="font-size: 10px; color: var(--text-muted); margin: 0; font-weight: var(--weight-bold);">소신</p>
+                    </div>
+                    <div style="background: rgba(255,255,255,0.04); padding: var(--space-2); border-radius: var(--radius-md); border: 1px solid rgba(255,255,255,0.1); text-align: center;">
+                        <p class="text-xs text-secondary" style="margin: 0;">서울대</p>
+                        <p style="font-size: 24px; font-weight: var(--weight-extrabold); color: var(--warning); margin: 4px 0; font-family: var(--font-en);">42%</p>
+                        <p style="font-size: 10px; color: var(--warning); margin: 0; font-weight: var(--weight-bold);">상향</p>
+                    </div>
                 </div>
-                <div style="background: rgba(0,200,83,0.1); padding: var(--space-3) var(--space-4); border-radius: var(--radius-md); margin-top: var(--space-4); border: 1px solid rgba(0,200,83,0.2);">
-                    <p class="text-sm font-semibold" style="color: var(--success); margin-bottom: var(--space-1);">✅ AI 추천 전략</p>
-                    <p class="text-sm">가군: 서울대 (상향), 나군: <strong>홍대 (1지망)</strong>, 다군: 이대 (2지망)</p>
+
+                <!-- Radar Chart Mockup (4-axis) -->
+                <div style="background: rgba(255,255,255,0.02); padding: var(--space-3); border-radius: var(--radius-md); margin-bottom: var(--space-3); border: 1px solid rgba(255,255,255,0.06);">
+                    <p class="text-xs text-secondary" style="margin-bottom: var(--space-2); font-weight: var(--weight-semibold);">📊 Radar Chart - 4축 밸런스</p>
+                    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; font-size: 12px;">
+                        <div><span class="text-muted">국어:</span> <strong style="color: var(--primary);">135</strong> <span class="text-xs" style="color: var(--success);">(+3)</span></div>
+                        <div><span class="text-muted">수학:</span> <strong>128</strong> <span class="text-xs" style="color: var(--success);">(+3)</span></div>
+                        <div><span class="text-muted">탐구:</span> <strong>64</strong> <span class="text-xs" style="color: var(--success);">(+1)</span></div>
+                        <div><span class="text-muted">실기:</span> <strong style="color: var(--primary);">92</strong> <span class="text-xs">(A)</span></div>
+                    </div>
+                </div>
+
+                <!-- AI Insight Box -->
+                <div style="background: rgba(0,200,83,0.1); padding: var(--space-3); border-radius: var(--radius-md); border: 1px solid rgba(0,200,83,0.25);">
+                    <p class="text-xs" style="color: var(--success); margin-bottom: var(--space-1); font-weight: var(--weight-bold);">✅ NeoPrime Meta-Insight</p>
+                    <p class="text-sm" style="line-height: 1.5; margin: 0;">"국어 +4점, 실기 A(92점) 달성 시 홍대 합격률 <strong>78% → 85%</strong> 급상승. 추천 액션: 국어 비문학 집중 (일 3지문)"</p>
                 </div>
             </div>
         </aside>
@@ -1193,12 +1214,36 @@
             </ul>
         </div>
     </div>
-    <aside class="highlight-box" style="margin-top: var(--space-5); text-align: center;">
-        <p style="font-size: 20px; margin: 0; line-height: 1.5;">
-            시간 절감: <strong class="text-primary-color">90시간 (90%)</strong> | 
-            정확도: 감 → 데이터 | 
-            <strong class="text-primary-color">✅ 웹 대시보드 85% 완성</strong>
-        </p>
+    <aside class="highlight-box" style="margin-top: var(--space-5);">
+        <div style="text-align: center; margin-bottom: var(--space-3);">
+            <p style="font-size: 20px; margin: 0; line-height: 1.5;">
+                시간 절감: <strong class="text-primary-color">90시간 (90%)</strong> | 
+                정확도: 감 → 데이터 | 
+                <strong class="text-primary-color">✅ 웹 대시보드 85% 완성</strong>
+            </p>
+        </div>
+        <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: var(--space-2); margin-top: var(--space-3); padding-top: var(--space-3); border-top: 1px solid rgba(252,100,1,0.2);">
+            <div style="text-align: center;">
+                <p style="font-size: 24px; font-weight: var(--weight-extrabold); color: var(--success); margin: 0; font-family: var(--font-en);">11</p>
+                <p class="text-xs text-secondary" style="margin: 0;">화면 구현</p>
+            </div>
+            <div style="text-align: center;">
+                <p style="font-size: 24px; font-weight: var(--weight-extrabold); color: var(--success); margin: 0; font-family: var(--font-en);">6</p>
+                <p class="text-xs text-secondary" style="margin: 0;">차트 타입</p>
+            </div>
+            <div style="text-align: center;">
+                <p style="font-size: 24px; font-weight: var(--weight-extrabold); color: var(--success); margin: 0; font-family: var(--font-en);">3</p>
+                <p class="text-xs text-secondary" style="margin: 0;">AI 기능</p>
+            </div>
+            <div style="text-align: center;">
+                <p style="font-size: 24px; font-weight: var(--weight-extrabold); color: var(--success); margin: 0; font-family: var(--font-en);">51ms</p>
+                <p class="text-xs text-secondary" style="margin: 0;">빌드 시간</p>
+            </div>
+            <div style="text-align: center;">
+                <p style="font-size: 24px; font-weight: var(--weight-extrabold); color: var(--success); margin: 0; font-family: var(--font-en);">0</p>
+                <p class="text-xs text-secondary" style="margin: 0;">취약점</p>
+            </div>
+        </div>
     </aside>
 </section>
 
@@ -1386,7 +1431,7 @@
     </div>
     <div class="grid grid-4 gap-4" style="margin-top: var(--space-6);">
         <div class="metric">
-            <div class="metric-value">226,695</div>
+            <div class="metric-value" aria-label="데이터 행 수 226,695개">226,695</div>
             <div class="metric-label">데이터 행 수</div>
         </div>
         <div class="metric">
@@ -1394,7 +1439,7 @@
             <div class="metric-label">엑셀 시트</div>
         </div>
         <div class="metric">
-            <div class="metric-value">17초</div>
+            <div class="metric-value">17<span style="font-size: 0.5em;">초</span></div>
             <div class="metric-label">로딩 시간</div>
         </div>
         <div class="metric">
@@ -1402,16 +1447,36 @@
             <div class="metric-label">목표 정확도</div>
         </div>
     </div>
+    
+    <!-- Frontend Tech Stack -->
+    <div class="highlight-box" style="margin-top: var(--space-6);">
+        <p style="font-weight: var(--weight-semibold); margin-bottom: var(--space-2); font-size: 15px;">✅ 프론트엔드 기술 스택 (구현 완료)</p>
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-3); margin-top: var(--space-3);">
+            <div>
+                <p class="text-xs text-secondary">Framework</p>
+                <p style="margin: 0; font-weight: var(--weight-bold); font-family: var(--font-en);">React 19.2.3</p>
+            </div>
+            <div>
+                <p class="text-xs text-secondary">Charts</p>
+                <p style="margin: 0; font-weight: var(--weight-bold); font-family: var(--font-en);">Recharts 3.6</p>
+            </div>
+            <div>
+                <p class="text-xs text-secondary">AI</p>
+                <p style="margin: 0; font-weight: var(--weight-bold); font-family: var(--font-en);">Gemini 3 Pro</p>
+            </div>
+        </div>
+        <p class="text-sm text-secondary" style="margin-top: var(--space-3);">빌드: 51ms | 의존성: 191 packages, 0 vulnerabilities</p>
+    </div>
 </section>
 
 <!-- ==================== MARKET & BM ==================== -->
 
 <!-- 20: Market -->
-<section>
-    <div class="slide-header">
-        <span class="overline">Market</span>
-        <h2>시장 기회</h2>
-    </div>
+<section aria-labelledby="market-title">
+    <header class="slide-header">
+        <span class="overline" role="doc-subtitle">Market</span>
+        <h2 id="market-title">시장 기회</h2>
+    </header>
     <div class="grid grid-2 gap-6" style="margin-top: var(--space-4);">
         <div>
             <div class="card" style="margin-bottom: var(--space-3);">
