@@ -1,9 +1,10 @@
+
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { getStudentById, getEvaluationsByStudentId } from '../services/storageService';
 import { 
   ArrowLeft, ChevronLeft, ChevronRight, Activity, 
-  TrendingUp, AlertCircle, GraduationCap, 
+  TrendingUp, AlertCircle, 
   CheckCircle2, Calendar, Scale, ClipboardList, 
   MessageSquare, CheckSquare, Clock, AlertTriangle, FileText, Pencil, Calculator
 } from 'lucide-react';
@@ -93,10 +94,10 @@ const StudentDetail: React.FC = () => {
   }));
 
   return (
-    <div className="min-h-screen font-sans pb-12 animate-in fade-in duration-500 bg-[#F7F9FB]">
+    <div className="h-full overflow-y-auto custom-scrollbar bg-[#F7F9FB]">
       
       {/* --- 1. Top: Executive Summary Header --- */}
-      <div className="bg-white border-b border-gray-200 sticky top-20 z-20 px-8 py-4 shadow-sm">
+      <div className="bg-white border-b border-gray-200 sticky top-0 z-20 px-8 py-4 shadow-sm">
           <div className="max-w-[1600px] mx-auto flex justify-between items-center">
             <div className="flex items-center gap-5">
                 <Link to="/students" className="p-2.5 bg-gray-50 hover:bg-[#FFF0E6] text-gray-500 hover:text-[#FC6401] rounded-xl transition-colors">
@@ -156,7 +157,7 @@ const StudentDetail: React.FC = () => {
           </div>
       </div>
 
-      <div className="max-w-[1600px] mx-auto p-8 space-y-8">
+      <div className="max-w-[1600px] mx-auto p-8 space-y-8 pb-20 animate-in fade-in duration-500">
         
         {/* --- 2. Main Worksheet Grid (4/4/4 Columns) --- */}
         <div className="grid grid-cols-12 gap-8">

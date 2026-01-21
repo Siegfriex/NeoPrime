@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Outlet } from 'react-router-dom';
 import Sidebar from './Sidebar';
@@ -6,15 +7,15 @@ import ChatBot from './ChatBot';
 
 const Layout: React.FC = () => {
   return (
-    <div className="min-h-screen bg-[#F7F9FB]">
+    <div className="h-screen w-screen bg-[#F9FAFB] flex font-sans selection:bg-[#FC6401] selection:text-white overflow-hidden">
       <Sidebar />
-      <Header />
-      <main className="ml-64 pt-20 min-h-screen">
-        {/* Changed max-w-7xl to max-w-[1600px] and px-8 for wider layout */}
-        <div className="p-8 max-w-[1600px] mx-auto w-full">
+      <div className="flex-1 flex flex-col min-w-0 pl-[280px] transition-all duration-300 h-full">
+        <Header />
+        {/* Main Content Area: Fixed height, allowing children to decide scrolling behavior */}
+        <main className="flex-1 pt-[60px] h-full relative overflow-hidden flex flex-col">
           <Outlet />
-        </div>
-      </main>
+        </main>
+      </div>
       <ChatBot />
     </div>
   );
