@@ -1094,20 +1094,20 @@
     <div class="grid grid-2 gap-6" style="margin-top: var(--space-4);">
         <!-- 좌측: 사이트맵 트리 -->
         <div>
-            <div style="background: var(--bg-card); padding: var(--space-5); border-radius: var(--radius-lg); border: 1px solid rgba(255,255,255,0.06); font-family: 'Courier New', monospace; font-size: 13px; line-height: 1.8;">
-                <p style="color: var(--primary); font-weight: var(--weight-bold); margin-bottom: var(--space-3);">/ (root) - NeoPrime Dashboard</p>
-                <p style="margin-left: 16px;">├── <strong style="color: var(--primary);">/</strong> → Dashboard (메인)</p>
-                <p style="margin-left: 16px;">├── <strong>/students</strong> → 학생 목록 & 분석</p>
-                <p style="margin-left: 32px;">│   ├── /students/new → 학생 추가</p>
-                <p style="margin-left: 32px;">│   └── /students/:id → 학생 상세</p>
-                <p style="margin-left: 16px;">├── <strong>/evaluations/new</strong> → 평가 입력</p>
-                <p style="margin-left: 16px;">├── <strong style="color: var(--primary);">/analytics</strong> → Analysis Lab</p>
-                <p style="margin-left: 16px;">├── <strong style="color: var(--primary);">/simulation</strong> → 입시 시뮬레이터</p>
-                <p style="margin-left: 16px;">├── /settings → 설정</p>
-                <p style="margin-left: 16px;">├── /profile → 프로필</p>
-                <p style="margin-left: 16px;">└── /auth</p>
-                <p style="margin-left: 32px;">    ├── /auth/login → 로그인</p>
-                <p style="margin-left: 32px;">    └── /auth/signup → 회원가입</p>
+            <div style="background: rgba(30,30,30,0.6); padding: var(--space-5); border-radius: var(--radius-lg); border: 2px solid rgba(252,100,1,0.3); font-family: 'Courier New', monospace; font-size: 14px; line-height: 1.8; color: var(--text-primary);">
+                <p style="color: var(--primary); font-weight: var(--weight-bold); margin-bottom: var(--space-3); font-size: 15px;">/ (root) - NeoPrime Dashboard</p>
+                <p style="margin-left: 16px; color: var(--text-primary);">├── <strong style="color: var(--primary);">/</strong> → Dashboard (메인)</p>
+                <p style="margin-left: 16px; color: var(--text-primary);">├── <strong style="color: white;">/students</strong> → 학생 목록 & 분석</p>
+                <p style="margin-left: 32px; color: var(--text-secondary);">│   ├── /students/new → 학생 추가</p>
+                <p style="margin-left: 32px; color: var(--text-secondary);">│   └── /students/:id → 학생 상세</p>
+                <p style="margin-left: 16px; color: var(--text-primary);">├── <strong style="color: white;">/evaluations/new</strong> → 평가 입력</p>
+                <p style="margin-left: 16px; color: var(--text-primary);">├── <strong style="color: var(--primary);">/analytics</strong> → Analysis Lab</p>
+                <p style="margin-left: 16px; color: var(--text-primary);">├── <strong style="color: var(--primary);">/simulation</strong> → 입시 시뮬레이터</p>
+                <p style="margin-left: 16px; color: var(--text-secondary);">├── /settings → 설정</p>
+                <p style="margin-left: 16px; color: var(--text-secondary);">├── /profile → 프로필</p>
+                <p style="margin-left: 16px; color: var(--text-secondary);">└── /auth</p>
+                <p style="margin-left: 32px; color: var(--text-muted);">    ├── /auth/login → 로그인</p>
+                <p style="margin-left: 32px; color: var(--text-muted);">    └── /auth/signup → 회원가입</p>
             </div>
         </div>
 
@@ -1139,14 +1139,14 @@
                 </div>
             </div>
 
-            <div class="card">
-                <h3 class="card-header">📄 지원 기능 (6개)</h3>
-                <ul style="font-size: 13px; margin-top: var(--space-2); line-height: 1.6; color: var(--text-secondary);">
-                    <li>StudentDetail - 학생 상세 프로필</li>
-                    <li>StudentAdd - 신규 등록</li>
-                    <li>Login/Signup - 인증</li>
-                    <li>Settings/Profile - 설정 관리</li>
-                    <li>ChatBot - AI 챗봇 (전역)</li>
+            <div class="card" style="border: 1px solid rgba(255,255,255,0.2);">
+                <h3 class="card-header" style="color: var(--primary);">📄 지원 기능 (6개)</h3>
+                <ul style="font-size: 14px; margin-top: var(--space-2); line-height: 1.6; color: var(--text-primary);">
+                    <li><strong>StudentDetail</strong> - 학생 상세 프로필</li>
+                    <li><strong>StudentAdd</strong> - 신규 등록</li>
+                    <li><strong>Login/Signup</strong> - 인증</li>
+                    <li><strong>Settings/Profile</strong> - 설정 관리</li>
+                    <li><strong>ChatBot</strong> - AI 챗봇 (전역)</li>
                 </ul>
             </div>
         </div>
@@ -1361,25 +1361,25 @@
         <aside class="demo-screen">
             <div class="demo-header">✅ 합격 확률 계산 엔진</div>
             <div class="demo-content">
-                <div style="background: rgba(255,255,255,0.04); padding: var(--space-3); border-radius: var(--radius-md); margin-bottom: var(--space-3); border: 1px solid rgba(255,255,255,0.08);">
-                    <p class="text-xs text-secondary" style="margin-bottom: var(--space-2);">대학별 가중치 적용 (실제 코드)</p>
-                    <div style="font-size: 12px; font-family: 'Courier New', monospace; line-height: 1.8;">
-                        <p style="margin: 0; color: var(--text-muted);">홍익대 시각디자인:</p>
-                        <p style="margin: 0;">국어 × <span style="color: var(--primary);">1.0</span> + 수학 × 0.8</p>
-                        <p style="margin: 0;">+ 영어 × 0.5 + 탐구 × 1.0</p>
-                        <p style="margin: 0; margin-top: 8px; color: var(--text-muted);">서울대 공예:</p>
-                        <p style="margin: 0;">국어 × 1.0 + 수학 × 1.0</p>
-                        <p style="margin: 0;">+ 실기 × <span style="color: var(--primary);">1.5</span> (실기 중시)</p>
+                <div style="background: rgba(30,30,30,0.7); padding: var(--space-3); border-radius: var(--radius-md); margin-bottom: var(--space-3); border: 2px solid rgba(252,100,1,0.3);">
+                    <p class="text-sm" style="margin-bottom: var(--space-2); color: var(--primary); font-weight: var(--weight-bold);">대학별 가중치 적용 (실제 코드)</p>
+                    <div style="font-size: 13px; font-family: 'Courier New', monospace; line-height: 1.8; color: white;">
+                        <p style="margin: 0; color: var(--text-secondary);">홍익대 시각디자인:</p>
+                        <p style="margin: 0; color: white;">국어 × <span style="color: var(--primary); font-weight: var(--weight-bold);">1.0</span> + 수학 × 0.8</p>
+                        <p style="margin: 0; color: white;">+ 영어 × 0.5 + 탐구 × 1.0</p>
+                        <p style="margin: 0; margin-top: 8px; color: var(--text-secondary);">서울대 공예:</p>
+                        <p style="margin: 0; color: white;">국어 × 1.0 + 수학 × 1.0</p>
+                        <p style="margin: 0; color: white;">+ 실기 × <span style="color: var(--primary); font-weight: var(--weight-bold);">1.5</span> (실기 중시)</p>
                     </div>
                 </div>
                 
-                <div style="background: rgba(252,100,1,0.08); padding: var(--space-3); border-radius: var(--radius-md); border: 1px solid rgba(252,100,1,0.2);">
-                    <p class="text-xs text-primary-color" style="margin-bottom: var(--space-2); font-weight: var(--weight-bold);">리스크 레벨 자동 분류</p>
-                    <div style="font-size: 13px; line-height: 1.6;">
-                        <p style="margin: 4px 0;"><span style="color: var(--success);">●</span> Safe (90%+): 안정권</p>
-                        <p style="margin: 4px 0;"><span style="color: #3b82f6;">●</span> Stable (75-89%): 적정</p>
-                        <p style="margin: 4px 0;"><span style="color: var(--primary);">●</span> Reach (50-74%): 소신</p>
-                        <p style="margin: 4px 0;"><span style="color: var(--error);">●</span> Risk (<50%): 위험</p>
+                <div style="background: rgba(252,100,1,0.15); padding: var(--space-3); border-radius: var(--radius-md); border: 2px solid rgba(252,100,1,0.4);">
+                    <p class="text-sm" style="margin-bottom: var(--space-2); font-weight: var(--weight-bold); color: white;">리스크 레벨 자동 분류</p>
+                    <div style="font-size: 14px; line-height: 1.6; color: white;">
+                        <p style="margin: 4px 0;"><span style="color: var(--success); font-size: 18px;">●</span> <strong>Safe (90%+):</strong> 안정권</p>
+                        <p style="margin: 4px 0;"><span style="color: #60a5fa; font-size: 18px;">●</span> <strong>Stable (75-89%):</strong> 적정</p>
+                        <p style="margin: 4px 0;"><span style="color: #fb923c; font-size: 18px;">●</span> <strong>Reach (50-74%):</strong> 소신</p>
+                        <p style="margin: 4px 0;"><span style="color: #f87171; font-size: 18px;">●</span> <strong>Risk (&lt;50%):</strong> 위험</p>
                     </div>
                 </div>
             </div>
@@ -1519,10 +1519,10 @@
     </header>
     
     <div class="grid grid-3 gap-4" style="margin-top: var(--space-4);">
-        <div class="card">
-            <h4 style="font-size: 16px; margin-bottom: var(--space-2); color: var(--primary);">StudentDetail</h4>
-            <p class="text-sm text-secondary" style="margin-bottom: var(--space-2);"><code>/students/:id</code></p>
-            <ul class="text-sm" style="line-height: 1.6;">
+        <div class="card" style="border: 2px solid rgba(255,255,255,0.15);">
+            <h4 style="font-size: 17px; margin-bottom: var(--space-2); color: var(--primary);">StudentDetail</h4>
+            <p class="text-sm" style="margin-bottom: var(--space-2); color: var(--text-secondary); background: rgba(255,255,255,0.05); padding: 4px 8px; border-radius: 4px; display: inline-block;"><code>/students/:id</code></p>
+            <ul class="text-sm" style="line-height: 1.6; color: var(--text-primary); margin-top: var(--space-3);">
                 <li>가/나/다군 목표 대학 (3개)</li>
                 <li>작품 갤러리 (Carousel)</li>
                 <li>평가 이력 차트 (Line Chart)</li>
@@ -1530,35 +1530,35 @@
                 <li>유사 합격 사례</li>
                 <li>워크시트 (To-Do)</li>
             </ul>
-            <p class="text-xs text-primary-color" style="margin-top: var(--space-2); font-weight: var(--weight-bold);">의도: 학생별 종합 리포트</p>
+            <p class="text-xs text-primary-color" style="margin-top: var(--space-3); font-weight: var(--weight-bold); background: rgba(252,100,1,0.1); padding: 6px 10px; border-radius: 6px;">💡 의도: 학생별 종합 리포트</p>
         </div>
         
-        <div class="card">
-            <h4 style="font-size: 16px; margin-bottom: var(--space-2); color: var(--primary);">AI 챗봇 (전역)</h4>
-            <p class="text-sm text-secondary" style="margin-bottom: var(--space-2);">Floating Component</p>
-            <ul class="text-sm" style="line-height: 1.6;">
+        <div class="card" style="border: 2px solid rgba(255,255,255,0.15);">
+            <h4 style="font-size: 17px; margin-bottom: var(--space-2); color: var(--primary);">AI 챗봇 (전역)</h4>
+            <p class="text-sm" style="margin-bottom: var(--space-2); color: var(--text-secondary); background: rgba(255,255,255,0.05); padding: 4px 8px; border-radius: 4px; display: inline-block;">Floating Component</p>
+            <ul class="text-sm" style="line-height: 1.6; color: var(--text-primary); margin-top: var(--space-3);">
                 <li>우하단 플로팅 버튼</li>
                 <li>Gemini 3 Pro 스트리밍 응답</li>
                 <li>학원생 데이터 컨텍스트 주입</li>
                 <li>자연어 질의응답 (24/7)</li>
             </ul>
-            <div style="margin-top: var(--space-2); background: rgba(252,100,1,0.08); padding: 8px 12px; border-radius: 6px; border: 1px solid rgba(252,100,1,0.2);">
-                <p class="text-xs" style="margin: 0; line-height: 1.5;"><strong>예시:</strong> "홍익대 지망생들의 평균 성적은?" → AI가 20명 데이터 기반 답변</p>
+            <div style="margin-top: var(--space-3); background: rgba(252,100,1,0.15); padding: 10px 14px; border-radius: 8px; border: 2px solid rgba(252,100,1,0.4);">
+                <p class="text-sm" style="margin: 0; line-height: 1.5; color: white;"><strong>예시:</strong> "홍익대 지망생들의 평균 성적은?" → AI가 20명 데이터 기반 답변</p>
             </div>
-            <p class="text-xs text-primary-color" style="margin-top: var(--space-2); font-weight: var(--weight-bold);">의도: 24/7 데이터 기반 상담</p>
+            <p class="text-xs text-primary-color" style="margin-top: var(--space-3); font-weight: var(--weight-bold); background: rgba(252,100,1,0.1); padding: 6px 10px; border-radius: 6px;">💡 의도: 24/7 데이터 기반 상담</p>
         </div>
         
-        <div class="card">
-            <h4 style="font-size: 16px; margin-bottom: var(--space-2);">인증 & 설정 (4개)</h4>
-            <p class="text-sm text-secondary" style="margin-bottom: var(--space-2);">지원 기능</p>
-            <ul class="text-sm" style="line-height: 1.6;">
-                <li><strong>Login:</strong> 이메일/비밀번호</li>
-                <li><strong>Signup:</strong> 회원가입 폼</li>
-                <li><strong>Settings:</strong> 학원 설정</li>
-                <li><strong>Profile:</strong> 사용자 프로필</li>
-                <li><strong>StudentAdd:</strong> 학생 등록 폼</li>
+        <div class="card" style="border: 2px solid rgba(255,255,255,0.15);">
+            <h4 style="font-size: 17px; margin-bottom: var(--space-2); color: white;">인증 & 설정 (5개)</h4>
+            <p class="text-sm" style="margin-bottom: var(--space-2); color: var(--text-secondary); background: rgba(255,255,255,0.05); padding: 4px 8px; border-radius: 4px; display: inline-block;">지원 기능</p>
+            <ul class="text-sm" style="line-height: 1.6; color: var(--text-primary); margin-top: var(--space-3);">
+                <li><strong style="color: white;">Login:</strong> 이메일/비밀번호</li>
+                <li><strong style="color: white;">Signup:</strong> 회원가입 폼</li>
+                <li><strong style="color: white;">Settings:</strong> 학원 설정</li>
+                <li><strong style="color: white;">Profile:</strong> 사용자 프로필</li>
+                <li><strong style="color: white;">StudentAdd:</strong> 학생 등록 폼</li>
             </ul>
-            <p class="text-xs text-primary-color" style="margin-top: var(--space-2); font-weight: var(--weight-bold);">의도: 완전한 학원 관리 시스템</p>
+            <p class="text-xs text-primary-color" style="margin-top: var(--space-3); font-weight: var(--weight-bold); background: rgba(252,100,1,0.1); padding: 6px 10px; border-radius: 6px;">💡 의도: 완전한 학원 관리 시스템</p>
         </div>
     </div>
     
