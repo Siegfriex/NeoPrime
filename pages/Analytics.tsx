@@ -1,25 +1,64 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell, ReferenceLine
 } from 'recharts';
 import { 
-  Sparkles, Search, ArrowRight, Brain, TrendingUp,
-  Target, Users, Zap, Filter,
-  SplitSquareHorizontal, GitCompare, Sliders, Loader2,
-  CheckCircle2, Plus, AlertTriangle, MessageSquare, ChevronRight, X
+  Sparkles, Search, ArrowRight, Brain, TrendingUp, TrendingDown,
+  Target, Users, Zap, Filter, Activity,
+  GitCompare, Sliders, Loader2,
+  CheckCircle2, AlertTriangle, ChevronRight, X,
+  Layout, History, Bookmark, Share2, MoreHorizontal, Settings
 } from 'lucide-react';
 import { analyzeAcademyData, AnalyzeAcademyDataResponse } from '../services/geminiService';
+
+// --- Types & Mock Data ---
+
+interface KPICardProps {
+  label: string;
+  value: string;
+  trend: string;
+  trendValue: number;
+  icon: React.ElementType;
+}
+
+const KPICard: React.FC<KPICardProps> = ({ label, value, trend, trendValue, icon: Icon }) => (
+  <div className="bg-white p-4 rounded-2xl border border-gray-200 shadow-sm flex flex-col justify-between hover:border-[#FC6401]/30 transition-all">
+    <div className="flex justify-between items-start mb-2">
+      <div className="p-2 rounded-xl bg-gray-50 text-gray-500">
+        <Icon className="w-4 h-4" />
+      </div>
+      <div className={`flex items-center gap-1 text-xs font-bold px-1.5 py-0.5 rounded ${trendValue >= 0 ? 'bg-emerald-50 text-emerald-600' : 'bg-rose-50 text-rose-600'}`}>
+        {trendValue >= 0 ? <TrendingUp className="w-3 h-3" /> : <TrendingDown className="w-3 h-3" />}
+        {trend}
+      </div>
+    </div>
+    <div>
+      <div className="text-2xl font-bold text-gray-900 tracking-tight">{value}</div>
+      <div className="text-xs font-medium text-gray-400 mt-1 uppercase">{label}</div>
+    </div>
+  </div>
+);
 
 const Analytics: React.FC = () => {
   // --- State ---
   const [query, setQuery] = useState('');
-  const [aiAnswer, setAiAnswer] = useState<AnalyzeAcademyDataResponse | null>(null);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
-  const [activeDetailTab, setActiveDetailTab] = useState<'drilldown' | 'segment' | 'simulation'>('drilldown');
+  const [activeTab, setActiveTab] = useState<'explain' | 'compare' | 'simulate'>('explain');
   const [conversationContext, setConversationContext] = useState<string>("");
-  const scrollRef = useRef<HTMLDivElement>(null);
+  const [showSessionHistory, setShowSessionHistory] = useState(false);
+  
+  // AI Response State
+  const [aiData, setAiData] = useState<AnalyzeAcademyDataResponse | null>(null);
 
-  // --- Functions ---
+  // Simulation State
+  const [simParams, setSimParams] = useState({
+    riskRatio: 30,
+    attendance: 85,
+    lecture: 40
+  });
+  const [simResult, setSimResult] = useState({ current: 52, predicted: 52 });
+
+  // --- Handlers ---
 
   const handleAsk = async (e?: React.FormEvent, overrideQuery?: string) => {
     e?.preventDefault();
@@ -27,19 +66,14 @@ const Analytics: React.FC = () => {
     if (!q.trim()) return;
 
     if (overrideQuery) setQuery(q);
-
     setIsAnalyzing(true);
 
     try {
         const result = await analyzeAcademyData(q, conversationContext);
         if (result) {
-            setAiAnswer(result);
-            setConversationContext(prev => prev + `\n\n[User]: ${q}\n[AI]: ${result.summary}`);
-            
-            // Mode switching
-            if (result.mode === 'explain') setActiveDetailTab('drilldown');
-            if (result.mode === 'compare') setActiveDetailTab('segment');
-            if (result.mode === 'simulate') setActiveDetailTab('simulation');
+            setAiData(result);
+            setConversationContext(prev => prev + `\nQ: ${q}\nA: ${result.summary}`);
+            if (result.mode) setActiveTab(result.mode);
         }
     } catch (error) {
         console.error("Analytics Error", error);
@@ -48,370 +82,461 @@ const Analytics: React.FC = () => {
     }
   };
 
-  const handleInsightClick = (insightTitle: string) => {
-      const prompt = `Analyze detail for insight: "${insightTitle}". Provide objective evidence and explanation.`;
-      handleAsk(undefined, prompt);
+  const handleFindingClick = (text: string) => {
+      handleAsk(undefined, `Insight 분석: "${text}"에 대해 자세히 설명해줘`);
   };
 
-  // --- Chart Data Helpers ---
-  const getFactorData = () => {
-    if (aiAnswer?.mode === 'explain' && aiAnswer.explainResult && aiAnswer.explainResult.factors) {
-      return aiAnswer.explainResult.factors.map(f => ({
-          name: f.name.length > 8 ? f.name.substring(0, 8) + '..' : f.name, 
-          full_name: f.name,
-          value: f.impact || 0, 
-          fill: f.direction === 'positive' ? '#10b981' : '#f43f5e' 
-      }));
-    }
-    return [];
-  };
+  // Real-time Simulation Mock Logic
+  useEffect(() => {
+    const base = 52;
+    const riskEffect = (30 - simParams.riskRatio) * 0.5; 
+    const attEffect = (simParams.attendance - 85) * 0.3;
+    const lecEffect = (simParams.lecture - 40) * 0.2;
+    setSimResult({
+        current: 52,
+        predicted: Math.min(99, Math.round(base + riskEffect + attEffect + lecEffect))
+    });
+  }, [simParams]);
 
-  const getCompareData = () => {
-      if (aiAnswer?.mode === 'compare' && aiAnswer.compareResult) {
-          const { segmentA, segmentB } = aiAnswer.compareResult;
-          return [
-              { name: '합격률(%)', A: segmentA.metrics.acceptanceRate, B: segmentB.metrics.acceptanceRate },
-              { name: '실기평균', A: segmentA.metrics.avgPracticalScore, B: segmentB.metrics.avgPracticalScore },
-              { name: '출결(%)', A: segmentA.metrics.avgAttendanceRate, B: segmentB.metrics.avgAttendanceRate }
-          ];
-      }
-      return [];
-  };
+  // --- Mock Data Helpers ---
+  const explainData = aiData?.explainResult?.factors || [
+    { name: '실기 평균', impact: 6.2, direction: 'positive' },
+    { name: '출결율', impact: 2.1, direction: 'positive' },
+    { name: '상향 지원', impact: -4.5, direction: 'negative' },
+    { name: '수능 최저', impact: -1.8, direction: 'negative' },
+    { name: '경쟁률', impact: -0.5, direction: 'negative' },
+  ];
 
-  const getSimulateData = () => {
-      if (aiAnswer?.mode === 'simulate' && aiAnswer.simulateResult) {
-          const { baseline, scenario } = aiAnswer.simulateResult;
-          return [
-              { name: '현재 상태', prob: baseline.acceptanceRate, fill: '#9ca3af' },
-              { name: '시뮬레이션', prob: scenario.acceptanceRate, fill: '#FC6401' }
-          ];
-      }
-      return [];
-  };
+  const compareData = [
+    { name: '합격률', A: 78, B: 45 },
+    { name: '실기 A권', A: 60, B: 20 },
+    { name: '출결 95%+', A: 92, B: 75 },
+  ];
 
   return (
-    <div className="max-w-[1600px] mx-auto pb-12 animate-in fade-in duration-500">
+    <div className="min-h-screen bg-[#F7F8FA] font-sans text-gray-900 pb-12 relative animate-in fade-in duration-500">
       
-      {/* --- Header --- */}
-      <div className="mb-8 flex flex-col md:flex-row md:items-end justify-between gap-4">
-        <div>
-           <div className="flex items-center gap-2 mb-2">
-             <span className="bg-gray-900 text-white text-xs font-bold px-2 py-1 rounded border border-gray-700">PRO</span>
-             <span className="text-[#FC6401] font-bold text-xs uppercase tracking-wider flex items-center gap-1">
-                <Sparkles className="w-3 h-3" />
-                Meta-AI Powered
-             </span>
-           </div>
-           <h1 className="text-3xl font-bold text-gray-900">Meta-Intelligence Console</h1>
-           <p className="text-gray-500 mt-2 flex items-center gap-2">
-              <Brain className="w-4 h-4 text-gray-400" />
-              Tuned with Academy-Specific Meta Parameters
-           </p>
+      {/* ================= [1] COMMAND LAYER (Sticky Top) ================= */}
+      <div className="sticky top-20 z-30 bg-white/80 backdrop-blur-md border-b border-gray-200 shadow-sm">
+        <div className="max-w-[1800px] mx-auto px-6 py-4">
+            
+            {/* Main Search Bar Row */}
+            <div className="flex items-center gap-6">
+                <div className="flex items-center gap-3 shrink-0">
+                    <div className="w-10 h-10 bg-gray-900 rounded-xl flex items-center justify-center shadow-md">
+                        <Brain className="w-5 h-5 text-[#FC6401]" />
+                    </div>
+                    <div className="hidden md:block">
+                        <h1 className="text-lg font-bold text-gray-900 leading-none">Meta-Intelligence</h1>
+                        <p className="text-[10px] text-gray-500 font-medium mt-1">AI Powered Console</p>
+                    </div>
+                </div>
+
+                <div className="flex-1 max-w-3xl relative">
+                    <form onSubmit={(e) => handleAsk(e)}>
+                        <div className="relative group">
+                            <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                                <Sparkles className={`w-5 h-5 ${isAnalyzing ? 'text-[#FC6401] animate-pulse' : 'text-gray-400 group-focus-within:text-[#FC6401]'}`} />
+                            </div>
+                            <input 
+                                type="text" 
+                                className="w-full bg-gray-50 border border-gray-200 text-gray-900 text-sm rounded-2xl pl-11 pr-32 py-3.5 focus:ring-2 focus:ring-[#FC6401] focus:border-[#FC6401] focus:bg-white outline-none transition-all shadow-inner placeholder:text-gray-400 font-medium"
+                                placeholder="무엇이든 물어보세요 (예: 홍대 합격률 하락 원인 Explain / 특강 효과 Compare)"
+                                value={query}
+                                onChange={(e) => setQuery(e.target.value)}
+                                disabled={isAnalyzing}
+                            />
+                            <div className="absolute right-2 top-2 bottom-2 flex gap-2">
+                                <button 
+                                    type="submit"
+                                    disabled={!query.trim() || isAnalyzing}
+                                    className="bg-[#FC6401] hover:bg-[#e55a00] text-white px-4 rounded-xl font-bold text-xs transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2 shadow-md shadow-[#FC6401]/20"
+                                >
+                                    {isAnalyzing ? <Loader2 className="w-4 h-4 animate-spin" /> : 'Ask NeoPrime'}
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <div className="flex items-center gap-3 ml-auto shrink-0">
+                    <button 
+                        onClick={() => setShowSessionHistory(!showSessionHistory)}
+                        className={`p-2.5 rounded-xl border transition-colors ${showSessionHistory ? 'bg-gray-100 border-gray-300 text-gray-900' : 'bg-white border-gray-200 text-gray-500 hover:bg-gray-50'}`}
+                    >
+                        <History className="w-5 h-5" />
+                    </button>
+                    <button className="p-2.5 bg-white border border-gray-200 text-gray-500 hover:bg-gray-50 rounded-xl transition-colors">
+                        <Settings className="w-5 h-5" />
+                    </button>
+                </div>
+            </div>
+
+            {/* Context & Mode Sub-header */}
+            <div className="flex items-center justify-between mt-4 pl-[3.25rem]">
+                <div className="flex items-center gap-2">
+                    {['2026 정시', '미대입시', '강남본원', '홍익대'].map((tag, i) => (
+                        <button key={i} className="px-2.5 py-1 bg-white border border-gray-200 text-gray-600 text-xs font-bold rounded-lg hover:border-[#FC6401] hover:text-[#FC6401] transition-all">
+                            {tag}
+                        </button>
+                    ))}
+                    <div className="h-4 w-px bg-gray-300 mx-2"></div>
+                    <button className="text-xs font-bold text-gray-400 hover:text-gray-600 flex items-center gap-1">
+                        <Filter className="w-3 h-3" /> 필터 변경
+                    </button>
+                </div>
+
+                <div className="flex bg-gray-100/50 p-1 rounded-lg border border-gray-200">
+                    {[
+                        { id: 'explain', label: 'Explain', icon: Search },
+                        { id: 'compare', label: 'Compare', icon: GitCompare },
+                        { id: 'simulate', label: 'Simulate', icon: Sliders },
+                    ].map(mode => (
+                        <button
+                            key={mode.id}
+                            onClick={() => setActiveTab(mode.id as any)}
+                            className={`px-3 py-1.5 rounded-md text-xs font-bold flex items-center gap-1.5 transition-all ${
+                                activeTab === mode.id 
+                                ? 'bg-white text-[#FC6401] shadow-sm ring-1 ring-black/5' 
+                                : 'text-gray-500 hover:text-gray-900'
+                            }`}
+                        >
+                            <mode.icon className="w-3 h-3" />
+                            {mode.label}
+                        </button>
+                    ))}
+                </div>
+            </div>
         </div>
       </div>
 
-      {/* --- Section 1: Ask NeoPrime --- */}
-      <section className="mb-10">
-        <div className="bg-gradient-to-br from-gray-900 to-gray-800 rounded-2xl p-1 shadow-xl">
-          <div className="bg-[#1F2937] rounded-xl p-6 md:p-8">
-             <div className="flex flex-col gap-4">
-               <div className="flex items-center gap-3 mb-2">
-                 <div className="p-2 bg-[#FC6401]/20 rounded-lg">
-                    <Sparkles className="w-5 h-5 text-[#FC6401] animate-pulse" />
-                 </div>
-                 <h2 className="text-white font-bold text-lg">Ask NeoPrime</h2>
-               </div>
-               
-               <form onSubmit={handleAsk} className="relative">
-                 <input 
-                    type="text" 
-                    placeholder="예) 홍대 합격률 하락 원인 분석해줘 (Explain) 또는 특강 수강생 효과 비교해줘 (Compare)"
-                    className="w-full bg-gray-800/50 border border-gray-700 text-white placeholder-gray-500 rounded-2xl pl-6 pr-32 py-4 focus:ring-2 focus:ring-[#FC6401] focus:border-transparent outline-none transition-all text-lg"
-                    value={query}
-                    onChange={(e) => setQuery(e.target.value)}
-                    disabled={isAnalyzing}
-                 />
-                 <button 
-                    type="submit"
-                    disabled={isAnalyzing}
-                    className="absolute right-2 top-2 bottom-2 bg-[#FC6401] hover:bg-[#e55a00] text-white px-6 rounded-xl font-bold transition-all flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
-                 >
-                    {isAnalyzing ? (
-                        <>
-                            <Loader2 className="w-4 h-4 animate-spin" /> 분석 중...
-                        </>
-                    ) : (
-                        <>
-                            분석하기 <ArrowRight className="w-4 h-4" />
-                        </>
-                    )}
-                 </button>
-               </form>
+      <div className="max-w-[1800px] mx-auto p-6 flex flex-col lg:flex-row gap-6">
+        
+        {/* ================= [2] INTELLIGENCE LAYER (Left 70%) ================= */}
+        <div className="flex-1 space-y-6 min-w-0">
+            
+            {/* 2-1. Academy Pulse Strip */}
+            <div className="space-y-3">
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <KPICard label="예상 합격률" value="72%" trend="+4.2%p" trendValue={4.2} icon={Target} />
+                    <KPICard label="재원생 수" value="142명" trend="+12%" trendValue={12} icon={Users} />
+                    <KPICard label="위험군 학생" value="18명" trend="-5명" trendValue={5} icon={AlertTriangle} />
+                    <KPICard label="상향 지원율" value="38%" trend="-2.1%p" trendValue={-2.1} icon={TrendingUp} />
+                </div>
+                {/* Pulse AI Summary */}
+                <div className="bg-gray-100/50 rounded-xl px-4 py-3 flex items-start gap-3 border border-gray-200/50">
+                    <Activity className="w-4 h-4 text-gray-400 mt-0.5 shrink-0" />
+                    <p className="text-xs text-gray-600 font-medium leading-relaxed">
+                        <strong className="text-gray-900">Pulse Insight:</strong> 전년 대비 합격률은 상승세(+4.2%p)이나, 상향 지원율이 여전히 높아(38%) 중위권 학생들의 리스크 관리가 필요합니다.
+                    </p>
+                </div>
+            </div>
 
-               {/* Preset Questions */}
-               {!aiAnswer && (
-                   <div className="flex flex-wrap gap-2">
-                      {[
-                        "📉 홍대 합격률 하락 원인 (Explain)", 
-                        "🆚 특강 수강생 vs 미수강생 성과 비교 (Compare)", 
-                        "🎚️ 상향 지원율 10% 감소 시 합격률 예측 (Simulate)"
-                      ].map((q, i) => (
-                        <button 
-                          key={i} 
-                          onClick={() => handleInsightClick(q)}
-                          disabled={isAnalyzing}
-                          className="text-xs md:text-sm text-gray-400 bg-gray-800/50 hover:bg-gray-700 hover:text-white px-3 py-1.5 rounded-lg border border-gray-700 transition-colors disabled:opacity-50"
-                        >
-                          {q}
-                        </button>
-                      ))}
-                   </div>
-               )}
-             </div>
-
-             {/* AI Answer Display */}
-             {aiAnswer && (
-               <div className="mt-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
-                 <div className="bg-gray-800/50 rounded-2xl border border-gray-700 p-6">
-                    <div className="flex items-start gap-4">
-                       <div className="p-3 bg-[#FC6401]/20 rounded-xl shrink-0">
-                          <Brain className="w-6 h-6 text-[#FC6401]" />
-                       </div>
-                       <div className="flex-1 w-full">
-                          <div className="flex items-center gap-2 mb-2">
-                             <span className={`px-2 py-0.5 rounded text-[10px] font-bold uppercase border ${
-                                 aiAnswer.mode === 'explain' ? 'bg-blue-500/10 text-blue-400 border-blue-500/20' :
-                                 aiAnswer.mode === 'compare' ? 'bg-purple-500/10 text-purple-400 border-purple-500/20' :
-                                 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20'
-                             }`}>
-                                 {aiAnswer.mode.toUpperCase()} MODE
-                             </span>
-                          </div>
-                          <p className="text-white text-lg font-medium leading-relaxed mb-6">
-                             {aiAnswer.summary}
-                          </p>
-                          
-                          {/* Explain Factors */}
-                          {aiAnswer.mode === 'explain' && aiAnswer.explainResult && (
-                             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-                                {aiAnswer.explainResult.factors?.slice(0, 3).map((f, i) => (
-                                    <div key={i} className="bg-gray-900/50 p-4 rounded-xl border border-gray-700">
-                                        <div className="text-gray-400 text-xs font-bold uppercase mb-1">{f.name}</div>
-                                        <div className={`text-2xl font-bold ${f.direction === 'positive' ? 'text-emerald-400' : 'text-rose-400'}`}>
-                                            {f.impact > 0 ? '+' : ''}{f.impact}
-                                        </div>
-                                    </div>
-                                ))}
-                             </div>
-                          )}
-
-                          {/* Compare Lift */}
-                          {aiAnswer.mode === 'compare' && aiAnswer.compareResult && aiAnswer.compareResult.lift && (
-                              <div className="flex gap-8 mb-6 p-4 bg-gray-900/50 rounded-xl border border-gray-700">
-                                  <div>
-                                      <div className="text-gray-400 text-xs font-bold uppercase mb-1">Lift (개선효과)</div>
-                                      <div className="text-3xl font-bold text-emerald-400">+{aiAnswer.compareResult.lift.acceptanceRate}%p</div>
-                                  </div>
-                                  <div className="h-full w-px bg-gray-700"></div>
-                                  <div>
-                                      <div className="text-gray-400 text-xs font-bold uppercase mb-1">통계적 유의성</div>
-                                      <div className="text-lg font-bold text-white">높음 (p{'<'}0.05)</div>
-                                  </div>
-                              </div>
-                          )}
-
-                          <div className="p-4 bg-[#FC6401]/10 border border-[#FC6401]/20 rounded-xl flex items-start gap-3">
-                             <Zap className="w-5 h-5 text-[#FC6401] shrink-0 mt-0.5" />
-                             <div>
-                                 <div className="text-[#FC6401] font-bold text-sm mb-1">AI 권장 액션</div>
-                                 <p className="text-gray-300 text-sm">{aiAnswer.recommendation}</p>
-                             </div>
-                          </div>
-
-                          {/* Follow-up Context Input */}
-                          <div className="mt-6 pt-4 border-t border-gray-700">
-                              <div className="flex items-center gap-2 mb-2 text-xs font-bold text-gray-400">
-                                  <MessageSquare className="w-3 h-3" />
-                                  <span>이어서 질문하기 (Context-Aware)</span>
-                              </div>
-                              <form onSubmit={(e) => {
-                                  e.preventDefault();
-                                  const target = e.target as typeof e.target & {
-                                      followup: { value: string };
-                                  };
-                                  handleAsk(e, target.followup.value);
-                                  target.followup.value = '';
-                              }} className="relative">
-                                  <input 
-                                      name="followup"
-                                      type="text" 
-                                      placeholder="예) 그렇다면 출결을 95%로 올리면 어떻게 되나요?"
-                                      className="w-full bg-gray-900 border border-gray-600 text-white rounded-xl pl-4 pr-12 py-3 focus:ring-1 focus:ring-[#FC6401] focus:border-[#FC6401] outline-none text-sm"
-                                  />
-                                  <button type="submit" className="absolute right-2 top-2 p-1.5 bg-gray-700 text-white rounded-lg hover:bg-[#FC6401] transition-colors">
-                                      <ArrowRight className="w-4 h-4" />
-                                  </button>
-                              </form>
-                          </div>
-                       </div>
+            {/* 2-2. Visual Analysis Panel */}
+            <div className="bg-white rounded-3xl border border-gray-200 shadow-sm overflow-hidden flex flex-col min-h-[600px]">
+                {/* Header */}
+                <div className="px-8 py-6 border-b border-gray-100 flex justify-between items-center">
+                    <div>
+                        <h2 className="text-xl font-bold text-gray-900 flex items-center gap-2">
+                            {activeTab === 'explain' && <Layout className="w-5 h-5 text-gray-400" />}
+                            {activeTab === 'compare' && <GitCompare className="w-5 h-5 text-gray-400" />}
+                            {activeTab === 'simulate' && <Sliders className="w-5 h-5 text-gray-400" />}
+                            
+                            {activeTab === 'explain' && "성과 요인 분석 (Waterfall)"}
+                            {activeTab === 'compare' && "세그먼트 비교 분석"}
+                            {activeTab === 'simulate' && "전략 시뮬레이터 (What-if)"}
+                        </h2>
+                        <p className="text-sm text-gray-500 mt-1">
+                            {activeTab === 'explain' && "합격률 변화에 영향을 미친 긍정/부정 요인을 시각화합니다."}
+                            {activeTab === 'compare' && "두 그룹 간의 성과 차이를 비교하여 특징을 도출합니다."}
+                            {activeTab === 'simulate' && "주요 변수를 조정하여 예상 합격률 변화를 예측합니다."}
+                        </p>
                     </div>
-                 </div>
-               </div>
-             )}
-          </div>
-        </div>
-      </section>
+                    {/* Mode specific controls */}
+                    {activeTab === 'explain' && (
+                        <div className="flex gap-2">
+                            <button className="px-3 py-1.5 text-xs font-bold bg-gray-100 text-gray-600 rounded-lg hover:bg-gray-200">전년 대비</button>
+                            <button className="px-3 py-1.5 text-xs font-bold bg-white border border-gray-200 text-gray-400 rounded-lg hover:text-gray-600">목표 대비</button>
+                        </div>
+                    )}
+                </div>
 
-      {/* --- Section 2: Insight Carousel --- */}
-      <section className="mb-12">
-         <div className="flex items-center justify-between mb-6">
-            <div className="flex items-center gap-2">
-                <SplitSquareHorizontal className="w-5 h-5 text-gray-500" />
-                <h3 className="text-xl font-bold text-gray-900">핵심 인사이트 (Key Findings)</h3>
+                {/* Content Body */}
+                <div className="flex-1 p-8 bg-[#FDFDFD]">
+                    
+                    {/* MODE: EXPLAIN */}
+                    {activeTab === 'explain' && (
+                        <div className="h-full flex flex-col justify-center animate-in fade-in slide-in-from-bottom-2">
+                            <div className="h-[400px] w-full">
+                                <ResponsiveContainer width="100%" height="100%">
+                                    <BarChart data={explainData} layout="vertical" margin={{ left: 40, right: 40 }}>
+                                        <CartesianGrid strokeDasharray="3 3" horizontal={true} vertical={false} stroke="#f3f4f6" />
+                                        <XAxis type="number" hide domain={[-8, 8]} />
+                                        <YAxis dataKey="name" type="category" width={100} tick={{fontSize: 13, fontWeight: '600', fill: '#374151'}} axisLine={false} tickLine={false} />
+                                        <Tooltip cursor={{fill: '#f9fafb'}} contentStyle={{borderRadius: '12px', border: 'none', boxShadow: '0 10px 15px -3px rgb(0 0 0 / 0.1)'}} />
+                                        <ReferenceLine x={0} stroke="#9ca3af" strokeWidth={2} />
+                                        <Bar dataKey="impact" barSize={40} radius={[4, 4, 4, 4]}>
+                                            {explainData.map((entry, index) => (
+                                                <Cell key={`cell-${index}`} fill={entry.direction === 'positive' ? '#10b981' : '#f43f5e'} cursor="pointer" />
+                                            ))}
+                                        </Bar>
+                                    </BarChart>
+                                </ResponsiveContainer>
+                            </div>
+                            <div className="mt-8 grid grid-cols-3 gap-6">
+                                <div className="p-4 bg-emerald-50 rounded-xl border border-emerald-100">
+                                    <div className="text-xs font-bold text-emerald-600 uppercase mb-1">최대 긍정 요인</div>
+                                    <div className="font-bold text-gray-900">실기 평균 상승 (+6.2)</div>
+                                    <p className="text-xs text-emerald-700/70 mt-1">A권대 학생 비중 15% 증가 기여</p>
+                                </div>
+                                <div className="p-4 bg-rose-50 rounded-xl border border-rose-100">
+                                    <div className="text-xs font-bold text-rose-600 uppercase mb-1">최대 부정 요인</div>
+                                    <div className="font-bold text-gray-900">상향 지원 과다 (-4.5)</div>
+                                    <p className="text-xs text-rose-700/70 mt-1">소신 지원 비율 40% 초과로 상쇄</p>
+                                </div>
+                                <div className="p-4 bg-gray-50 rounded-xl border border-gray-100 flex items-center justify-center">
+                                    <button className="text-sm font-bold text-gray-500 hover:text-[#FC6401] flex items-center gap-2">
+                                        세부 요인 더보기 <ChevronRight className="w-4 h-4" />
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+
+                    {/* MODE: COMPARE */}
+                    {activeTab === 'compare' && (
+                        <div className="h-full animate-in fade-in slide-in-from-bottom-2">
+                            <div className="flex gap-4 mb-8">
+                                <div className="flex-1 p-4 rounded-xl border-2 border-[#FC6401]/20 bg-[#FFF0E6]/10 flex justify-between items-center">
+                                    <span className="text-sm font-bold text-gray-600">그룹 A: 특강 수강생</span>
+                                    <span className="w-3 h-3 rounded-full bg-[#FC6401]"></span>
+                                </div>
+                                <div className="flex-1 p-4 rounded-xl border-2 border-gray-100 bg-gray-50 flex justify-between items-center">
+                                    <span className="text-sm font-bold text-gray-600">그룹 B: 미수강생</span>
+                                    <span className="w-3 h-3 rounded-full bg-gray-300"></span>
+                                </div>
+                            </div>
+                            
+                            <div className="h-[350px] w-full">
+                                <ResponsiveContainer width="100%" height="100%">
+                                    <BarChart data={compareData} barSize={48} barGap={8}>
+                                        <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f3f4f6" />
+                                        <XAxis dataKey="name" tick={{fontSize: 12, fontWeight: 'bold', fill: '#4b5563'}} axisLine={false} tickLine={false} />
+                                        <YAxis axisLine={false} tickLine={false} />
+                                        <Tooltip cursor={{fill: '#f9fafb'}} contentStyle={{borderRadius: '12px'}} />
+                                        <Bar dataKey="A" fill="#FC6401" radius={[6, 6, 0, 0]} name="특강 수강" />
+                                        <Bar dataKey="B" fill="#E5E7EB" radius={[6, 6, 0, 0]} name="미수강" />
+                                    </BarChart>
+                                </ResponsiveContainer>
+                            </div>
+
+                            <div className="mt-6 flex items-center justify-center gap-2 text-sm text-gray-600 bg-gray-50 p-3 rounded-xl border border-gray-100">
+                                <CheckCircle2 className="w-4 h-4 text-emerald-500" />
+                                <span>특강 수강 그룹의 합격률이 <strong className="text-[#FC6401]">+33%p</strong> 더 높습니다 (신뢰도 98%)</span>
+                            </div>
+                        </div>
+                    )}
+
+                    {/* MODE: SIMULATE */}
+                    {activeTab === 'simulate' && (
+                        <div className="h-full flex flex-col lg:flex-row gap-12 animate-in fade-in slide-in-from-bottom-2">
+                            <div className="flex-1 space-y-8 py-4">
+                                <div>
+                                    <div className="flex justify-between mb-2">
+                                        <label className="text-sm font-bold text-gray-700">상향 지원 비율 (Risk Tolerance)</label>
+                                        <span className="text-sm font-bold text-[#FC6401]">{simParams.riskRatio}%</span>
+                                    </div>
+                                    <input 
+                                        type="range" min="0" max="100" 
+                                        value={simParams.riskRatio} 
+                                        onChange={(e) => setSimParams({...simParams, riskRatio: parseInt(e.target.value)})}
+                                        className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-[#FC6401]" 
+                                    />
+                                    <div className="flex justify-between mt-1 text-[10px] text-gray-400 font-medium">
+                                        <span>안정 지향 (Low)</span>
+                                        <span>도전 지향 (High)</span>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <div className="flex justify-between mb-2">
+                                        <label className="text-sm font-bold text-gray-700">출결 달성률 목표</label>
+                                        <span className="text-sm font-bold text-blue-600">{simParams.attendance}%</span>
+                                    </div>
+                                    <input 
+                                        type="range" min="50" max="100" 
+                                        value={simParams.attendance} 
+                                        onChange={(e) => setSimParams({...simParams, attendance: parseInt(e.target.value)})}
+                                        className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-blue-600" 
+                                    />
+                                </div>
+
+                                <div>
+                                    <div className="flex justify-between mb-2">
+                                        <label className="text-sm font-bold text-gray-700">특강 수강률</label>
+                                        <span className="text-sm font-bold text-emerald-600">{simParams.lecture}%</span>
+                                    </div>
+                                    <input 
+                                        type="range" min="0" max="100" 
+                                        value={simParams.lecture} 
+                                        onChange={(e) => setSimParams({...simParams, lecture: parseInt(e.target.value)})}
+                                        className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-emerald-600" 
+                                    />
+                                </div>
+                            </div>
+
+                            <div className="w-full lg:w-[320px] bg-gray-900 rounded-2xl p-8 flex flex-col items-center justify-center text-white relative overflow-hidden shadow-xl">
+                                <div className="absolute top-0 right-0 p-24 bg-[#FC6401] rounded-full blur-[80px] opacity-20"></div>
+                                <div className="relative z-10 text-center">
+                                    <p className="text-sm text-gray-400 font-bold uppercase tracking-wider mb-6">Predicted Pass Rate</p>
+                                    
+                                    <div className="flex items-end justify-center gap-4 mb-2">
+                                        <span className="text-3xl font-bold text-gray-500 line-through decoration-gray-500/50">{simResult.current}%</span>
+                                        <ArrowRight className="w-6 h-6 text-gray-500 mb-2" />
+                                        <span className="text-6xl font-bold text-[#FC6401]">{simResult.predicted}%</span>
+                                    </div>
+                                    
+                                    <div className={`inline-block px-3 py-1 rounded-full text-sm font-bold mt-4 ${
+                                        simResult.predicted >= simResult.current ? 'bg-emerald-500/20 text-emerald-400' : 'bg-rose-500/20 text-rose-400'
+                                    }`}>
+                                        {simResult.predicted >= simResult.current ? '+' : ''}{simResult.predicted - simResult.current}%p 변동 예상
+                                    </div>
+
+                                    <button className="mt-8 w-full py-3 bg-white text-gray-900 rounded-xl font-bold text-sm hover:bg-gray-100 transition-colors shadow-lg">
+                                        Action Queue에 시나리오 적용
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+                </div>
             </div>
-            <div className="flex gap-2">
-                <button className="p-2 rounded-full border border-gray-200 hover:bg-gray-50" onClick={() => scrollRef.current?.scrollBy({left: -300, behavior: 'smooth'})}>
-                    <ChevronRight className="w-4 h-4 rotate-180" />
-                </button>
-                <button className="p-2 rounded-full border border-gray-200 hover:bg-gray-50" onClick={() => scrollRef.current?.scrollBy({left: 300, behavior: 'smooth'})}>
-                    <ChevronRight className="w-4 h-4" />
-                </button>
-            </div>
-         </div>
-         <div ref={scrollRef} className="flex gap-6 overflow-x-auto pb-6 snap-x snap-mandatory scrollbar-hide" style={{scrollbarWidth: 'none', msOverflowStyle: 'none'}}>
-            {[
-                { title: "상향 라인 과다 위험", summary: "상향 지원 비율이 과도합니다.", type: "risk", color: "rose" },
-                { title: "국민대 성과 이상치", summary: "합격률이 전국 평균보다 높습니다.", type: "positive", color: "emerald" },
-                { title: "겨울특강 A 코스 효과", summary: "특강 수강생 성적이 우수합니다.", type: "neutral", color: "blue" },
-                { title: "중위권 이탈 위험", summary: "중위권 학생 관리가 필요합니다.", type: "risk", color: "amber" }
-            ].map((card, i) => (
-                <div key={i} className="min-w-[300px] snap-center bg-white rounded-2xl p-6 border border-gray-200 shadow-sm hover:shadow-md transition-all cursor-pointer group" onClick={() => handleInsightClick(card.title)}>
-                    <div className={`w-full h-1 bg-${card.color}-500 mb-4 rounded-full`}></div>
-                    <h4 className="font-bold text-gray-900 group-hover:text-[#FC6401] transition-colors">{card.title}</h4>
-                    <p className="text-sm text-gray-600 mt-2 mb-4">{card.summary}</p>
-                    <div className="flex justify-between items-center text-xs">
-                        <span className={`px-2 py-1 rounded bg-${card.color}-50 text-${card.color}-600 font-bold border border-${card.color}-100`}>
-                            {card.type.toUpperCase()}
-                        </span>
-                        <span className="text-gray-400 font-medium">Auto-detected</span>
+        </div>
+
+        {/* ================= [3] INSIGHT LAYER (Right 30%) ================= */}
+        <div className="w-full lg:w-[380px] space-y-6 shrink-0">
+            
+            {/* 3-1. NeoPrime Insight (Sticky Note) */}
+            <div className="bg-gradient-to-br from-[#FFF0E6] to-white p-6 rounded-2xl border border-[#FC6401]/20 shadow-sm sticky top-4">
+                <div className="flex items-center gap-2 mb-4">
+                    <div className="p-1.5 bg-[#FC6401] rounded-lg">
+                        <Brain className="w-4 h-4 text-white" />
+                    </div>
+                    <span className="font-bold text-[#FC6401] text-sm">NeoPrime Insight</span>
+                </div>
+                <div className="space-y-4">
+                    <p className="text-sm text-gray-800 font-medium leading-relaxed">
+                        {aiData?.summary || "전년 대비 합격률은 +4.2%p 상승했으며, 실기 평균 +6.2점이 주된 원인입니다. 다만 상향 지원 과다가 -4.5%p를 상쇄하고 있습니다."}
+                    </p>
+                    <div className="p-3 bg-white/60 rounded-xl border border-[#FC6401]/10">
+                        <div className="flex items-center gap-2 mb-1">
+                            <Zap className="w-3 h-3 text-[#FC6401]" />
+                            <span className="text-xs font-bold text-gray-500 uppercase">권장 액션</span>
+                        </div>
+                        <p className="text-xs text-gray-700 font-bold">
+                            {aiData?.recommendation || "상향 2개 이상 학생 9명의 라인 조정 상담을 우선 진행하세요."}
+                        </p>
                     </div>
                 </div>
-            ))}
-         </div>
-      </section>
-
-      {/* --- Section 3: Detailed Analysis Views --- */}
-      <section>
-         <div className="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden min-h-[600px] flex flex-col">
-            <div className="border-b border-gray-100 flex overflow-x-auto bg-gray-50/50">
-               <button onClick={() => setActiveDetailTab('drilldown')} className={`px-8 py-5 text-sm font-bold flex items-center gap-2 border-b-2 transition-colors ${activeDetailTab === 'drilldown' ? 'border-[#FC6401] text-[#FC6401] bg-white' : 'border-transparent text-gray-500'}`}>
-                  <Search className="w-4 h-4" /> Explain
-               </button>
-               <button onClick={() => setActiveDetailTab('segment')} className={`px-8 py-5 text-sm font-bold flex items-center gap-2 border-b-2 transition-colors ${activeDetailTab === 'segment' ? 'border-[#FC6401] text-[#FC6401] bg-white' : 'border-transparent text-gray-500'}`}>
-                  <GitCompare className="w-4 h-4" /> Compare
-               </button>
-               <button onClick={() => setActiveDetailTab('simulation')} className={`px-8 py-5 text-sm font-bold flex items-center gap-2 border-b-2 transition-colors ${activeDetailTab === 'simulation' ? 'border-[#FC6401] text-[#FC6401] bg-white' : 'border-transparent text-gray-500'}`}>
-                  <Sliders className="w-4 h-4" /> Simulate
-               </button>
             </div>
 
-            <div className="p-8 flex-1 bg-[#F7F9FB]">
-               {/* Explain View */}
-               {activeDetailTab === 'drilldown' && (
-                  <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 h-full animate-in fade-in duration-300">
-                     <div className="lg:col-span-2 bg-white p-6 rounded-2xl border border-gray-200 shadow-sm h-96">
-                        <ResponsiveContainer width="100%" height="100%">
-                           <BarChart data={getFactorData()} layout="vertical">
-                              <CartesianGrid strokeDasharray="3 3" horizontal={false} stroke="#f3f4f6" />
-                              <XAxis type="number" hide />
-                              <YAxis dataKey="name" type="category" width={100} tick={{fontSize: 12, fontWeight: 'bold'}} axisLine={false} tickLine={false} />
-                              <Bar dataKey="value" barSize={32} radius={[4, 4, 4, 4]}>
-                                 {getFactorData().map((entry, index) => (
-                                    <Cell key={`cell-${index}`} fill={entry.fill} />
-                                 ))}
-                              </Bar>
-                           </BarChart>
-                        </ResponsiveContainer>
-                     </div>
-                     <div className="bg-white p-6 rounded-2xl border border-gray-200 shadow-sm flex items-center justify-center text-center text-gray-500">
-                        {aiAnswer?.explainResult?.factors?.[0]?.explanation || "분석 결과가 여기에 표시됩니다."}
-                     </div>
-                  </div>
-               )}
-
-               {/* Compare View */}
-               {activeDetailTab === 'segment' && (
-                   <div className="bg-white p-6 rounded-2xl border border-gray-200 shadow-sm h-96 animate-in fade-in">
-                       <ResponsiveContainer width="100%" height="100%">
-                           <BarChart data={getCompareData()} layout="vertical" barSize={30}>
-                                <CartesianGrid strokeDasharray="3 3" horizontal={true} stroke="#f3f4f6" />
-                                <XAxis type="number" hide />
-                                <YAxis dataKey="name" type="category" width={100} tick={{fontSize: 12, fontWeight: 'bold'}} axisLine={false} tickLine={false} />
-                                <Tooltip cursor={{fill: 'transparent'}} />
-                                <Bar dataKey="A" fill="#FC6401" radius={[0, 4, 4, 0]} />
-                                <Bar dataKey="B" fill="#e5e7eb" radius={[0, 4, 4, 0]} />
-                           </BarChart>
-                       </ResponsiveContainer>
-                   </div>
-               )}
-
-               {/* Simulate View */}
-               {activeDetailTab === 'simulation' && (
-                  <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 h-full animate-in fade-in duration-300">
-                     <div className="bg-white p-6 rounded-2xl border border-gray-200 shadow-sm lg:col-span-1">
-                        <div className="mb-6 pb-6 border-b border-gray-100">
-                           <h4 className="text-lg font-bold text-gray-900 mb-2">파라미터 조정</h4>
-                           <p className="text-sm text-gray-500">슬라이더를 움직여 합격률 변화를 예측하세요.</p>
-                        </div>
-                        <div className="space-y-6">
-                           {aiAnswer?.simulateResult?.controls?.map((ctrl, i) => (
-                               <div key={i}>
-                                   <div className="flex justify-between mb-2">
-                                       <label className="text-sm font-bold text-gray-700">{ctrl.control}</label>
-                                       <span className="text-sm font-bold text-[#FC6401]">{ctrl.targetValue} (목표)</span>
-                                   </div>
-                                   <input type="range" className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-not-allowed" disabled value={50} />
-                                   <p className="text-xs text-gray-400 mt-1">예측 효과: {ctrl.estimatedDelta > 0 ? '+' : ''}{ctrl.estimatedDelta}%</p>
-                               </div>
-                           )) || (
-                               <div className="text-center text-gray-400 py-10">시뮬레이션 데이터 없음</div>
-                           )}
-                        </div>
-                     </div>
-                     <div className="lg:col-span-2 bg-white p-6 rounded-2xl border border-gray-200 shadow-sm flex flex-col items-center justify-center">
-                        <div className="h-64 w-full max-w-md">
-                           <ResponsiveContainer width="100%" height="100%">
-                              <BarChart data={getSimulateData()}>
-                                 <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e5e7eb" />
-                                 <XAxis dataKey="name" tick={{fontSize: 14, fontWeight: 'bold'}} axisLine={false} tickLine={false} />
-                                 <YAxis hide domain={[0, 100]} />
-                                 <Bar dataKey="prob" radius={[8, 8, 0, 0]}>
-                                    {getSimulateData().map((entry, index) => (
-                                       <Cell key={`cell-${index}`} fill={entry.fill} />
-                                    ))}
-                                 </Bar>
-                              </BarChart>
-                           </ResponsiveContainer>
-                        </div>
-                        {getSimulateData().length > 0 && (
-                            <div className="mt-4 flex gap-8">
-                               <div className="text-center">
-                                  <div className="text-gray-400 text-sm font-bold uppercase">현재</div>
-                                  <div className="text-2xl font-bold text-gray-600">{getSimulateData()[0].prob}%</div>
-                               </div>
-                               <ArrowRight className="w-8 h-8 text-gray-300 mt-2" />
-                               <div className="text-center">
-                                  <div className="text-[#FC6401] text-sm font-bold uppercase">시뮬레이션</div>
-                                  <div className="text-4xl font-bold text-[#FC6401]">{getSimulateData()[1].prob}%</div>
-                               </div>
+            {/* 3-2. Key Findings Cards */}
+            <div>
+                <div className="flex justify-between items-center mb-3 px-1">
+                    <h3 className="text-xs font-bold text-gray-500 uppercase">Key Findings (Auto)</h3>
+                    <span className="text-[10px] bg-gray-100 px-1.5 py-0.5 rounded text-gray-500">3 New</span>
+                </div>
+                <div className="space-y-3">
+                    {[
+                        { type: 'RISK', score: 85, title: '상향 라인 과다 위험', desc: '소신 지원 비율 40% 초과 구간 감지', color: 'rose' },
+                        { type: 'OPPTY', score: 62, title: '국민대 실기 성과', desc: '평균 대비 +15% 성과 달성 중', color: 'emerald' },
+                        { type: 'TREND', score: 78, title: '겨울특강 효과 검증', desc: 'A반 성적 급상승 패턴 확인', color: 'blue' },
+                    ].map((item, i) => (
+                        <div 
+                            key={i} 
+                            onClick={() => handleFindingClick(item.title)}
+                            className="bg-white p-4 rounded-xl border border-gray-200 shadow-sm hover:border-[#FC6401] hover:shadow-md cursor-pointer transition-all group"
+                        >
+                            <div className="flex justify-between items-start mb-1.5">
+                                <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded border ${
+                                    item.color === 'rose' ? 'bg-rose-50 text-rose-600 border-rose-100' :
+                                    item.color === 'emerald' ? 'bg-emerald-50 text-emerald-600 border-emerald-100' :
+                                    'bg-blue-50 text-blue-600 border-blue-100'
+                                }`}>{item.type} {item.score}%</span>
+                                <ArrowRight className="w-3 h-3 text-gray-300 group-hover:text-[#FC6401] transition-colors" />
                             </div>
-                        )}
-                     </div>
-                  </div>
-               )}
+                            <h4 className="text-sm font-bold text-gray-900 mb-1">{item.title}</h4>
+                            <p className="text-xs text-gray-500">{item.desc}</p>
+                        </div>
+                    ))}
+                </div>
             </div>
-         </div>
-      </section>
+
+            {/* 3-3. Risky Students List */}
+            <div className="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
+                <div className="px-4 py-3 border-b border-gray-100 flex justify-between items-center bg-gray-50/50">
+                    <h3 className="text-xs font-bold text-gray-500 uppercase">집중 관리 대상 (Top 5)</h3>
+                    <button className="text-[10px] font-bold text-[#FC6401] hover:underline">전체보기</button>
+                </div>
+                <div className="divide-y divide-gray-100">
+                    {['김민준', '이서연', '박지훈', '최예나', '정우성'].map((name, i) => (
+                        <div key={i} className="px-4 py-3 flex items-center justify-between hover:bg-gray-50 transition-colors group">
+                            <div className="flex items-center gap-3">
+                                <div className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center text-xs font-bold text-gray-500">
+                                    {name[0]}
+                                </div>
+                                <div>
+                                    <div className="text-sm font-bold text-gray-900 leading-none mb-1">{name}</div>
+                                    <div className="text-[10px] text-gray-400 font-medium">상향 과다 • 출결 위험</div>
+                                </div>
+                            </div>
+                            <div className="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                                <button className="p-1.5 bg-[#FFF0E6] text-[#FC6401] rounded-lg hover:bg-[#FC6401] hover:text-white transition-colors" title="라인 조정">
+                                    <Sliders className="w-3 h-3" />
+                                </button>
+                                <button className="p-1.5 bg-gray-100 text-gray-500 rounded-lg hover:bg-gray-200 transition-colors" title="상세 보기">
+                                    <ChevronRight className="w-3 h-3" />
+                                </button>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            </div>
+
+        </div>
+      </div>
+
+      {/* [4] Session History Slide-over (Optional Visual) */}
+      {showSessionHistory && (
+          <div className="fixed inset-y-0 left-0 w-80 bg-white shadow-2xl z-50 transform transition-transform duration-300 border-r border-gray-200 flex flex-col">
+              <div className="p-6 border-b border-gray-100 flex justify-between items-center">
+                  <h3 className="font-bold text-gray-900">Session History</h3>
+                  <button onClick={() => setShowSessionHistory(false)} className="text-gray-400 hover:text-gray-900"><X className="w-5 h-5"/></button>
+              </div>
+              <div className="flex-1 p-4 overflow-y-auto">
+                  <div className="text-xs font-bold text-gray-400 uppercase mb-4">Today</div>
+                  <div className="space-y-4">
+                      <div className="text-sm">
+                          <p className="font-bold text-gray-900 mb-1">홍대 합격률 원인 분석</p>
+                          <p className="text-xs text-gray-500 line-clamp-2">실기 평균 상승이 주된 원인으로 파악되었습니다...</p>
+                      </div>
+                      <div className="text-sm">
+                          <p className="font-bold text-gray-900 mb-1">특강 효과 비교</p>
+                          <p className="text-xs text-gray-500 line-clamp-2">수강생 그룹의 합격률이 33%p 더 높습니다...</p>
+                      </div>
+                  </div>
+              </div>
+              <div className="p-4 border-t border-gray-100 bg-gray-50 flex gap-2">
+                  <button className="flex-1 py-2 bg-white border border-gray-200 rounded-xl text-xs font-bold text-gray-600 flex items-center justify-center gap-2 hover:bg-gray-50">
+                      <Bookmark className="w-3 h-3" /> 저장
+                  </button>
+                  <button className="flex-1 py-2 bg-white border border-gray-200 rounded-xl text-xs font-bold text-gray-600 flex items-center justify-center gap-2 hover:bg-gray-50">
+                      <Share2 className="w-3 h-3" /> 공유
+                  </button>
+              </div>
+          </div>
+      )}
+
     </div>
   );
 };
