@@ -1,0 +1,273 @@
+/* ============================================
+   NEOPRIME IR DECK - DESIGN SYSTEM
+   Version: 1.0.0
+   Primary: #FC6401 | Accent: #0D47A1
+   Fonts: Pretendard (KR) + Hanken Grotesk (EN)
+   ============================================ */
+
+/* ---- Google Fonts ---- */
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css');
+@import url('https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700;800&display=swap');
+
+/* ---- CSS Custom Properties ---- */
+:root {
+  /* Colors - Primary */
+  --primary: #FC6401;
+  --primary-light: #FF8534;
+  --primary-dark: #D45400;
+  
+  /* Colors - Accent */
+  --accent: #0D47A1;
+  --accent-light: #1565C0;
+  --accent-dark: #0A3A8A;
+  
+  /* Colors - Background */
+  --bg-dark: #0A0A0A;
+  --bg-card: #1A1A1A;
+  --bg-card-hover: #252525;
+  --bg-light: #FFFFFF;
+  --bg-light-alt: #F5F5F5;
+  
+  /* Colors - Text */
+  --text-primary: #FFFFFF;
+  --text-secondary: #9E9E9E;
+  --text-tertiary: #666666;
+  --text-dark: #0A0A0A;
+  
+  /* Colors - Semantic */
+  --success: #00C853;
+  --success-bg: rgba(0, 200, 83, 0.15);
+  --warning: #FFD600;
+  --warning-bg: rgba(255, 214, 0, 0.15);
+  --error: #FF1744;
+  --error-bg: rgba(255, 23, 68, 0.15);
+  --info: #2196F3;
+  --info-bg: rgba(33, 150, 243, 0.15);
+  
+  /* Typography - Font Families */
+  --font-kr: 'Pretendard Variable', 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-en: 'Hanken Grotesk', sans-serif;
+  
+  /* Typography - Font Sizes */
+  --display-xl: 96px;
+  --display-l: 72px;
+  --h1: 56px;
+  --h2: 40px;
+  --h3: 32px;
+  --h4: 24px;
+  --body-lg: 20px;
+  --body: 18px;
+  --body-sm: 16px;
+  --caption: 14px;
+  --overline: 12px;
+  
+  /* Typography - Font Weights */
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-semibold: 600;
+  --weight-bold: 700;
+  --weight-extrabold: 800;
+  
+  /* Typography - Line Heights */
+  --lh-tight: 1.0;
+  --lh-snug: 1.1;
+  --lh-normal: 1.2;
+  --lh-relaxed: 1.35;
+  --lh-loose: 1.6;
+  
+  /* Spacing - Base Unit 8px */
+  --space-1: 8px;
+  --space-2: 16px;
+  --space-3: 24px;
+  --space-4: 32px;
+  --space-5: 40px;
+  --space-6: 48px;
+  --space-8: 64px;
+  --space-10: 80px;
+  
+  /* Border Radius */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-2xl: 24px;
+  
+  /* Shadows */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.5);
+  --shadow-glow: 0 0 20px rgba(252, 100, 1, 0.3);
+  
+  /* Transitions */
+  --transition-fast: 150ms ease;
+  --transition-normal: 300ms ease;
+  --transition-slow: 500ms ease;
+}
+
+/* ---- Typography Classes ---- */
+.display-xl {
+  font-family: var(--font-en);
+  font-size: var(--display-xl);
+  font-weight: var(--weight-extrabold);
+  line-height: var(--lh-tight);
+  letter-spacing: -0.02em;
+}
+
+.display-l {
+  font-family: var(--font-en);
+  font-size: var(--display-l);
+  font-weight: var(--weight-bold);
+  line-height: var(--lh-snug);
+  letter-spacing: -0.01em;
+}
+
+.h1 {
+  font-family: var(--font-kr);
+  font-size: var(--h1);
+  font-weight: var(--weight-bold);
+  line-height: var(--lh-normal);
+}
+
+.h2 {
+  font-family: var(--font-kr);
+  font-size: var(--h2);
+  font-weight: var(--weight-semibold);
+  line-height: 1.25;
+}
+
+.h3 {
+  font-family: var(--font-kr);
+  font-size: var(--h3);
+  font-weight: var(--weight-semibold);
+  line-height: 1.3;
+}
+
+.h4 {
+  font-family: var(--font-kr);
+  font-size: var(--h4);
+  font-weight: var(--weight-semibold);
+  line-height: var(--lh-relaxed);
+}
+
+.body-lg {
+  font-family: var(--font-kr);
+  font-size: var(--body-lg);
+  font-weight: var(--weight-regular);
+  line-height: var(--lh-loose);
+}
+
+.body {
+  font-family: var(--font-kr);
+  font-size: var(--body);
+  font-weight: var(--weight-regular);
+  line-height: var(--lh-loose);
+}
+
+.body-sm {
+  font-family: var(--font-kr);
+  font-size: var(--body-sm);
+  font-weight: var(--weight-regular);
+  line-height: 1.5;
+}
+
+.caption {
+  font-family: var(--font-kr);
+  font-size: var(--caption);
+  font-weight: var(--weight-regular);
+  line-height: 1.4;
+}
+
+.overline {
+  font-family: var(--font-en);
+  font-size: var(--overline);
+  font-weight: var(--weight-semibold);
+  line-height: var(--lh-normal);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+/* ---- Color Utility Classes ---- */
+.text-primary { color: var(--text-primary); }
+.text-secondary { color: var(--text-secondary); }
+.text-accent { color: var(--primary); }
+.text-accent-blue { color: var(--accent); }
+.text-success { color: var(--success); }
+.text-warning { color: var(--warning); }
+.text-error { color: var(--error); }
+
+.bg-dark { background-color: var(--bg-dark); }
+.bg-card { background-color: var(--bg-card); }
+.bg-primary { background-color: var(--primary); }
+.bg-accent { background-color: var(--accent); }
+
+/* ---- Badge Components ---- */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 12px;
+  border-radius: 100px;
+  font-size: var(--caption);
+  font-weight: var(--weight-medium);
+}
+
+.badge-success {
+  background-color: var(--success-bg);
+  color: var(--success);
+}
+
+.badge-warning {
+  background-color: var(--warning-bg);
+  color: var(--warning);
+}
+
+.badge-error {
+  background-color: var(--error-bg);
+  color: var(--error);
+}
+
+.badge-info {
+  background-color: var(--info-bg);
+  color: var(--info);
+}
+
+.badge-primary {
+  background-color: rgba(252, 100, 1, 0.15);
+  color: var(--primary);
+}
+
+/* ---- Status Indicators ---- */
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: 8px;
+}
+
+.status-dot.success { background-color: var(--success); }
+.status-dot.warning { background-color: var(--warning); }
+.status-dot.error { background-color: var(--error); }
+
+/* ---- Dividers ---- */
+.divider {
+  width: 60px;
+  height: 4px;
+  background: linear-gradient(90deg, var(--primary), var(--primary-light));
+  border-radius: 2px;
+  margin: var(--space-3) 0;
+}
+
+.divider-center {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* ---- Print/PDF Styles ---- */
+@media print {
+  :root {
+    --bg-dark: #FFFFFF;
+    --bg-card: #F5F5F5;
+    --text-primary: #0A0A0A;
+    --text-secondary: #666666;
+  }
+}

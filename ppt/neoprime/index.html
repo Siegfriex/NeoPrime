@@ -1,0 +1,1662 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="NeoPrime 데이터 드리븐 예체능 입시 인텔리전스 플랫폼 투자 소개서">
+    <title>NeoPrime IR Deck - 데이터 드리븐 예체능 입시 인텔리전스</title>
+    <link rel="stylesheet" href="/node_modules/reveal.js/dist/reset.css">
+    <link rel="stylesheet" href="/node_modules/reveal.js/dist/reveal.css">
+    <link rel="stylesheet" href="/node_modules/reveal.js/dist/theme/black.css">
+    <link rel="stylesheet" href="/shared/design-system.css">
+    <link rel="stylesheet" href="/shared/grid.css">
+    <style>
+        /* ==================== WCAG & Accessibility ==================== */
+        
+        /* Skip to main content link for keyboard users */
+        .skip-link {
+            position: absolute;
+            top: -40px;
+            left: 0;
+            background: #E65100;
+            color: #ffffff;
+            padding: 8px 16px;
+            text-decoration: none;
+            z-index: 100;
+            border-radius: 0 0 4px 0;
+            font-weight: 600;
+        }
+        .skip-link:focus {
+            top: 0;
+        }
+        
+        /* Focus indicators for keyboard navigation */
+        *:focus-visible {
+            outline: 3px solid #FF9800;
+            outline-offset: 2px;
+            border-radius: 2px;
+        }
+        
+        /* Reduced motion for users who prefer it */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+        
+        /* High contrast mode support */
+        @media (prefers-contrast: high) {
+            :root {
+                --primary: #FF6F00;
+                --text-secondary: #BDBDBD;
+            }
+        }
+        
+        /* Color system - NeoPrime Brand - WCAG AA compliant */
+        :root {
+            --primary: #E65100;          /* Enhanced from #FC6401 for better contrast */
+            --primary-dark: #BF360C;
+            --primary-light: rgba(230,81,0,0.16);
+            --primary-lighter: rgba(230,81,0,0.08);
+            
+            /* WCAG AA compliant text colors */
+            --text-primary: #FFFFFF;
+            --text-secondary: #B0BEC5;   /* Enhanced contrast */
+            --text-muted: #90A4AE;       /* Enhanced contrast */
+            
+            /* Semantic colors - WCAG compliant */
+            --success: #00C853;
+            --warning: #FFB300;
+            --error: #F44336;
+            
+            /* Background colors */
+            --bg-dark: rgba(0,0,0,0.4);
+            --bg-card: rgba(255,255,255,0.06);
+            --bg-card-hover: rgba(255,255,255,0.08);
+            
+            /* Spacing system */
+            --space-1: 4px;
+            --space-2: 8px;
+            --space-3: 16px;
+            --space-4: 24px;
+            --space-5: 32px;
+            --space-6: 48px;
+            --space-8: 64px;
+            
+            /* Border radius */
+            --radius-sm: 4px;
+            --radius-md: 8px;
+            --radius-lg: 12px;
+            --radius-xl: 16px;
+            
+            /* Font weights */
+            --weight-regular: 400;
+            --weight-medium: 500;
+            --weight-semibold: 600;
+            --weight-bold: 700;
+            --weight-extrabold: 800;
+            
+            /* Font families */
+            --font-base: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans KR', sans-serif;
+            --font-en: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            
+            /* Shadows */
+            --shadow-sm: 0 1px 2px rgba(0,0,0,0.3);
+            --shadow-md: 0 4px 6px rgba(0,0,0,0.4);
+            --shadow-lg: 0 10px 15px rgba(0,0,0,0.5);
+            --shadow-xl: 0 20px 25px rgba(0,0,0,0.6);
+            
+            /* Transitions */
+            --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-base: 200ms cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-slow: 300ms cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        /* ==================== Global Typography ==================== */
+        
+        body {
+            font-family: var(--font-base);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            text-rendering: optimizeLegibility;
+        }
+        
+        /* Reveal.js Overrides with improved typography */
+        .reveal .slides { 
+            text-align: left;
+            font-family: var(--font-base);
+        }
+        .reveal .slides section {
+            padding: 64px 80px;
+            height: 100%;
+            box-sizing: border-box;
+        }
+        
+        /* Headings with improved hierarchy and readability */
+        .reveal h1, .reveal h2, .reveal h3, .reveal h4 { 
+            text-transform: none; 
+            font-weight: var(--weight-bold);
+            margin: 0 0 var(--space-3) 0;
+            line-height: 1.2;
+            letter-spacing: -0.02em;
+            color: var(--text-primary);
+        }
+        .reveal h1 { 
+            font-size: 72px; 
+            line-height: 1.1; 
+            letter-spacing: -0.03em;
+        }
+        .reveal h2 { 
+            font-size: 48px; 
+            line-height: 1.2; 
+        }
+        .reveal h3 { 
+            font-size: 32px; 
+            line-height: 1.3; 
+        }
+        .reveal h4 { 
+            font-size: 24px; 
+            line-height: 1.4; 
+        }
+        
+        /* Lists with improved spacing */
+        .reveal ul, .reveal ol { 
+            margin: 0; 
+            padding-left: 24px; 
+        }
+        .reveal li { 
+            margin-bottom: 12px; 
+            line-height: 1.6;
+            color: var(--text-primary);
+        }
+        
+        /* Tables with enhanced styling */
+        .reveal table { 
+            width: 100%; 
+            border-collapse: collapse;
+            box-shadow: var(--shadow-sm);
+            border-radius: var(--radius-md);
+            overflow: hidden;
+        }
+        .reveal th, .reveal td { 
+            padding: 18px 20px; 
+            text-align: left; 
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+            transition: background-color var(--transition-base);
+        }
+        .reveal tbody tr:hover {
+            background-color: rgba(255,255,255,0.03);
+        }
+        .reveal th { 
+            font-weight: var(--weight-semibold); 
+            color: var(--text-secondary);
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            background-color: rgba(255,255,255,0.04);
+        }
+        .reveal td {
+            font-size: 16px;
+            line-height: 1.5;
+        }
+        
+        /* Paragraph improvements */
+        .reveal p {
+            line-height: 1.6;
+            margin-bottom: var(--space-3);
+        }
+        
+        /* Strong and emphasis */
+        .reveal strong {
+            font-weight: var(--weight-bold);
+            color: var(--text-primary);
+        }
+        .reveal em {
+            font-style: italic;
+            color: var(--text-secondary);
+        }
+        
+        /* ==================== Grid System (Fallback) ==================== */
+        
+        .grid {
+            display: grid;
+            width: 100%;
+        }
+        .grid-2 { grid-template-columns: repeat(2, 1fr); }
+        .grid-3 { grid-template-columns: repeat(3, 1fr); }
+        .grid-4 { grid-template-columns: repeat(4, 1fr); }
+        .grid-2x2 { 
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: var(--space-4);
+        }
+        
+        .gap-2 { gap: var(--space-2); }
+        .gap-3 { gap: var(--space-3); }
+        .gap-4 { gap: var(--space-4); }
+        .gap-6 { gap: var(--space-6); }
+        .gap-8 { gap: var(--space-8); }
+        
+        /* Flexbox utilities */
+        .flex { display: flex; }
+        .flex-col { flex-direction: column; }
+        .items-center { align-items: center; }
+        .justify-center { justify-content: center; }
+        .justify-between { justify-content: space-between; }
+        
+        /* ==================== Layout Components ==================== */
+        
+        /* Slide Header with improved typography */
+        .slide-header { 
+            margin-bottom: var(--space-5);
+        }
+        .slide-header .overline { 
+            color: var(--primary); 
+            margin-bottom: var(--space-2);
+            display: inline-block;
+            font-size: 13px;
+            font-weight: var(--weight-semibold);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            padding: 4px 12px;
+            background: var(--primary-lighter);
+            border-radius: var(--radius-sm);
+        }
+        .slide-header h2 { 
+            font-size: 48px; 
+            line-height: 1.2;
+            margin-top: var(--space-2);
+        }
+        .slide-header p { 
+            color: var(--text-secondary); 
+            margin-top: var(--space-2);
+            font-size: 18px;
+            line-height: 1.6;
+        }
+        
+        /* Center Slide */
+        .center-slide {
+            display: flex !important;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+        
+        /* Overline for center slides */
+        .overline {
+            font-size: 13px;
+            font-weight: var(--weight-semibold);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text-secondary);
+            margin-bottom: var(--space-2);
+        }
+        
+        /* Card with enhanced design */
+        .card {
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            padding: var(--space-4);
+            box-shadow: var(--shadow-sm);
+            transition: all var(--transition-base);
+            border: 1px solid rgba(255,255,255,0.06);
+        }
+        .card:hover {
+            background: var(--bg-card-hover);
+            box-shadow: var(--shadow-md);
+            transform: translateY(-2px);
+        }
+        .card-header { 
+            font-size: 13px; 
+            color: var(--primary); 
+            font-weight: var(--weight-semibold);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin-bottom: var(--space-3);
+            display: block;
+        }
+        
+        /* ==================== Component Styles ==================== */
+        
+        /* Metric with improved accessibility */
+        .metric { 
+            text-align: center;
+            padding: var(--space-3);
+        }
+        .metric-value { 
+            font-size: 56px; 
+            font-weight: var(--weight-extrabold); 
+            color: var(--primary);
+            font-family: var(--font-en);
+            line-height: 1.1;
+            display: block;
+            margin-bottom: var(--space-2);
+        }
+        .metric-label { 
+            font-size: 15px; 
+            color: var(--text-secondary); 
+            margin-top: var(--space-1);
+            line-height: 1.4;
+            font-weight: var(--weight-medium);
+        }
+        
+        /* Progress Bar with animation and accessibility */
+        .progress-bar { 
+            background: rgba(255,255,255,0.12); 
+            height: 10px; 
+            border-radius: var(--radius-sm);
+            margin-top: var(--space-2);
+            overflow: hidden;
+            position: relative;
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.3);
+        }
+        .progress-fill { 
+            height: 100%; 
+            border-radius: var(--radius-sm);
+            background: var(--primary);
+            transition: width var(--transition-slow);
+            position: relative;
+            box-shadow: var(--shadow-sm);
+        }
+        .progress-fill::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(255,255,255,0.2),
+                transparent
+            );
+        }
+        
+        /* Highlight Box with enhanced design */
+        .highlight-box {
+            background: var(--primary-light);
+            border-left: 4px solid var(--primary);
+            padding: var(--space-4) var(--space-5);
+            border-radius: 0 var(--radius-md) var(--radius-md) 0;
+            box-shadow: var(--shadow-sm);
+            transition: all var(--transition-base);
+        }
+        .highlight-box:hover {
+            box-shadow: var(--shadow-md);
+            border-left-width: 6px;
+        }
+        
+        /* Step with improved design */
+        .step {
+            display: flex;
+            gap: var(--space-3);
+            padding: var(--space-4);
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            margin-bottom: var(--space-3);
+            border: 1px solid rgba(255,255,255,0.06);
+            transition: all var(--transition-base);
+            box-shadow: var(--shadow-sm);
+        }
+        .step:hover {
+            background: var(--bg-card-hover);
+            border-color: rgba(255,255,255,0.1);
+            box-shadow: var(--shadow-md);
+            transform: translateX(4px);
+        }
+        .step-num {
+            width: 40px;
+            height: 40px;
+            background: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: var(--weight-bold);
+            font-size: 16px;
+            flex-shrink: 0;
+            font-family: var(--font-en);
+            box-shadow: var(--shadow-md);
+            transition: transform var(--transition-base);
+        }
+        .step:hover .step-num {
+            transform: scale(1.1);
+        }
+        .step-content h4 { 
+            margin-bottom: var(--space-1); 
+            font-size: 19px;
+            line-height: 1.4;
+            color: var(--text-primary);
+        }
+        .step-content p { 
+            color: var(--text-secondary); 
+            font-size: 15px; 
+            margin: 0;
+            line-height: 1.6;
+        }
+        
+        /* Before/After Comparison with enhanced styling */
+        .comparison-grid { 
+            display: grid; 
+            grid-template-columns: 1fr 64px 1fr; 
+            gap: var(--space-4); 
+            align-items: center;
+        }
+        .before-card, .after-card { 
+            padding: var(--space-5); 
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-md);
+            transition: all var(--transition-base);
+        }
+        .before-card { 
+            background: rgba(255,23,68,0.1); 
+            border: 2px solid rgba(255,23,68,0.25);
+        }
+        .before-card:hover {
+            border-color: rgba(255,23,68,0.4);
+            box-shadow: var(--shadow-lg);
+        }
+        .after-card { 
+            background: rgba(0,200,83,0.1); 
+            border: 2px solid rgba(0,200,83,0.25);
+        }
+        .after-card:hover {
+            border-color: rgba(0,200,83,0.4);
+            box-shadow: var(--shadow-lg);
+        }
+        .comparison-arrow { 
+            font-size: 36px; 
+            color: var(--primary); 
+            text-align: center;
+            font-family: var(--font-en);
+            font-weight: var(--weight-bold);
+            line-height: 1;
+        }
+        
+        /* Flow with improved design */
+        .flow { 
+            display: flex; 
+            align-items: center; 
+            gap: var(--space-2);
+        }
+        .flow-item { 
+            flex: 1; 
+            background: var(--bg-card); 
+            padding: var(--space-4); 
+            border-radius: var(--radius-lg);
+            text-align: center;
+            border: 1px solid rgba(255,255,255,0.06);
+            transition: all var(--transition-base);
+            box-shadow: var(--shadow-sm);
+        }
+        .flow-item:hover {
+            background: var(--bg-card-hover);
+            box-shadow: var(--shadow-md);
+            transform: translateY(-2px);
+        }
+        .flow-arrow { 
+            color: var(--primary); 
+            font-size: 28px;
+            flex-shrink: 0;
+            font-weight: var(--weight-bold);
+        }
+        
+        /* Demo Screen with enhanced design */
+        .demo-screen {
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.08);
+            box-shadow: var(--shadow-md);
+            transition: all var(--transition-base);
+        }
+        .demo-screen:hover {
+            box-shadow: var(--shadow-lg);
+            border-color: rgba(255,255,255,0.12);
+        }
+        .demo-header {
+            background: rgba(255,255,255,0.06);
+            padding: 16px 24px;
+            font-size: 15px;
+            font-weight: var(--weight-semibold);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            color: var(--text-primary);
+            letter-spacing: 0.01em;
+        }
+        .demo-content { 
+            padding: var(--space-5);
+        }
+        
+        /* Chat with improved design */
+        .chat-msg {
+            padding: var(--space-3) var(--space-4);
+            border-radius: var(--radius-lg);
+            margin-bottom: var(--space-3);
+            font-size: 15px;
+            line-height: 1.6;
+            box-shadow: var(--shadow-sm);
+            transition: all var(--transition-base);
+        }
+        .chat-msg:hover {
+            box-shadow: var(--shadow-md);
+            transform: translateX(2px);
+        }
+        .chat-user { 
+            background: rgba(255,255,255,0.08); 
+            margin-left: 80px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .chat-ai { 
+            background: var(--primary-light); 
+            margin-right: 80px;
+            border: 1px solid var(--primary);
+            border-opacity: 0.2;
+        }
+        .chat-msg strong {
+            font-weight: var(--weight-semibold);
+            display: block;
+            margin-bottom: var(--space-1);
+            color: var(--text-primary);
+        }
+        
+        /* Tag with improved accessibility */
+        .tag {
+            display: inline-block;
+            padding: 6px 14px;
+            background: var(--primary-light);
+            color: var(--primary);
+            border-radius: var(--radius-sm);
+            font-size: 12px;
+            font-weight: var(--weight-semibold);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            border: 1px solid var(--primary);
+            border-opacity: 0.3;
+            transition: all var(--transition-fast);
+        }
+        .tag:hover {
+            background: var(--primary);
+            color: #FFFFFF;
+            transform: scale(1.05);
+        }
+        
+        /* ==================== Text Utilities ==================== */
+        
+        /* Font sizes with improved readability */
+        .text-xs { font-size: 13px; line-height: 1.5; }
+        .text-sm { font-size: 15px; line-height: 1.6; }
+        .text-base { font-size: 16px; line-height: 1.6; }
+        .text-lg { font-size: 20px; line-height: 1.5; }
+        .text-xl { font-size: 24px; line-height: 1.4; }
+        
+        /* Text colors - WCAG compliant */
+        .text-primary { color: var(--text-primary); }
+        .text-secondary { color: var(--text-secondary); }
+        .text-muted { color: var(--text-muted); }
+        .text-primary-color { color: var(--primary); }
+        
+        /* Font weights */
+        .font-regular { font-weight: var(--weight-regular); }
+        .font-medium { font-weight: var(--weight-medium); }
+        .font-semibold { font-weight: var(--weight-semibold); }
+        .font-bold { font-weight: var(--weight-bold); }
+        .font-extrabold { font-weight: var(--weight-extrabold); }
+        
+        /* Badge with enhanced design */
+        .badge {
+            display: inline-block;
+            padding: 6px 14px;
+            border-radius: var(--radius-sm);
+            font-size: 12px;
+            font-weight: var(--weight-semibold);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            transition: all var(--transition-fast);
+            border: 1px solid transparent;
+        }
+        .badge-primary {
+            background: var(--primary-light);
+            color: var(--primary);
+            border-color: var(--primary);
+            border-opacity: 0.3;
+        }
+        .badge-success {
+            background: rgba(0,200,83,0.15);
+            color: var(--success);
+            border-color: var(--success);
+            border-opacity: 0.3;
+        }
+        .badge-warning {
+            background: rgba(255,179,0,0.15);
+            color: var(--warning);
+            border-color: var(--warning);
+            border-opacity: 0.3;
+        }
+        .badge-error {
+            background: rgba(244,67,54,0.15);
+            color: var(--error);
+            border-color: var(--error);
+            border-opacity: 0.3;
+        }
+        
+        /* ==================== Print Styles ==================== */
+        
+        @media print {
+            .skip-link {
+                display: none;
+            }
+            .card, .demo-screen, .step {
+                break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Skip to main content for keyboard users -->
+    <a href="#main-content" class="skip-link">메인 콘텐츠로 건너뛰기</a>
+    
+<div class="reveal">
+<div class="slides" id="main-content" role="main">
+
+<!-- ==================== HOOK ==================== -->
+
+<!-- 01: Cover -->
+<section class="center-slide" aria-labelledby="cover-title">
+    <span class="overline" role="doc-subtitle">Investor Relations Deck</span>
+    <h1 id="cover-title" style="font-size: 72px; font-family: var(--font-en); margin: var(--space-3) 0;">NeoPrime</h1>
+    <p class="text-lg text-secondary" style="margin-bottom: var(--space-6);">데이터 드리븐 예체능 입시 인텔리전스 플랫폼</p>
+    <div class="highlight-box" style="max-width: 720px;">
+        <p style="font-size: 24px; margin: 0; text-align: center; line-height: 1.5;">원장의 20년 암묵지를 <strong class="text-primary-color">데이터로 증명</strong>하는 AI 엔진</p>
+    </div>
+    <p class="text-sm text-secondary" style="margin-top: var(--space-8);">
+        <time datetime="2026-01">2026년 1월</time> | Seed Round
+    </p>
+</section>
+
+<!-- 02: The Question -->
+<section class="center-slide" aria-labelledby="question-title">
+    <span class="overline" role="doc-subtitle">The Question</span>
+    <h2 id="question-title" style="font-size: 40px; max-width: 900px; line-height: 1.5; margin-top: var(--space-4);">
+        매년 <strong>200명</strong>의 학생을 <strong class="text-primary-color">원장 혼자</strong><br>
+        "서울대 쓸지, 홍대 1지망 둘지"<br>
+        <strong class="text-primary-color">감으로</strong> 결정해야 한다면?
+    </h2>
+    <p class="text-secondary" style="margin-top: var(--space-5); font-size: 18px;">잘 맞으면 "역시 내 감", 틀리면 자책 — 이 스트레스가 매년 반복됩니다</p>
+</section>
+
+<!-- 03: One-liner -->
+<section class="center-slide" aria-labelledby="solution-title">
+    <span class="overline" role="doc-subtitle">Our Solution</span>
+    <h2 id="solution-title" style="font-size: 48px; margin-top: var(--space-4); line-height: 1.3;">
+        원장의 눈을 <strong class="text-primary-color">AI가 배웁니다</strong>
+    </h2>
+    <p class="text-secondary text-lg" style="margin-top: var(--space-3);">원장의 A~F 평가 × 20만 건 합격 데이터 = 숫자로 증명된 예측</p>
+    <div class="grid grid-3 gap-6" role="region" aria-label="주요 성과 지표" style="margin-top: var(--space-8); max-width: 800px;">
+        <div class="metric">
+            <div class="metric-value" aria-label="홍대 합격 확률 78퍼센트">78<span style="font-size: 0.6em;">%</span></div>
+            <div class="metric-label">홍대 합격 확률</div>
+        </div>
+        <div class="metric">
+            <div class="metric-value" style="color: var(--text-primary);">+</div>
+            <div class="metric-label">&nbsp;</div>
+        </div>
+        <div class="metric">
+            <div class="metric-value" style="font-size: 20px; color: var(--text-primary); line-height: 1.4;">"명암 집중 시<br>합격선 도달"</div>
+            <div class="metric-label">행동 처방</div>
+        </div>
+    </div>
+</section>
+
+<!-- ==================== PROBLEM ==================== -->
+
+<!-- 04: Section Title -->
+<section class="center-slide" aria-labelledby="section-problem">
+    <span class="overline" role="doc-subtitle">Section 01</span>
+    <h1 id="section-problem" style="font-size: 72px; color: var(--primary); margin-top: var(--space-3);">Problem</h1>
+    <p class="text-secondary text-lg">예체능 입시 학원 원장의 <strong>3대 고통</strong></p>
+</section>
+
+<!-- 05: Pain Point 1 -->
+<section>
+    <div class="slide-header">
+        <span class="overline">Problem 01</span>
+        <h2>라인 잡기 부담</h2>
+    </div>
+    <div class="grid grid-2 gap-6">
+        <div>
+            <div class="card" style="margin-bottom: var(--space-3);">
+                <div class="card-header">상황</div>
+                <p class="text-lg">학생 200명의 합격 라인을 <strong>원장 1인이 최종 결정</strong></p>
+                <p class="text-sm text-muted" style="margin-top: var(--space-1);">"이 학생, 서울대까지 쓸까? 홍대를 1지망으로 둘까?"</p>
+            </div>
+            <div class="card">
+                <div class="card-header" style="color: var(--error);">결과</div>
+                <ul style="font-size: 16px; margin-top: var(--space-2);">
+                    <li>맞으면 "역시 내 감" — 틀리면 <strong>극심한 자책</strong></li>
+                    <li>한 해만 합격률 하락해도 <strong>학원 생존 위협</strong></li>
+                    <li>객관적 근거 없이 <strong>"감"에만 의존</strong></li>
+                </ul>
+            </div>
+        </div>
+        <div class="demo-screen">
+            <div class="demo-header">현재 원장의 의사결정 과정</div>
+            <div class="demo-content" style="text-align: center; padding: var(--space-6);">
+                <p style="font-size: 32px; font-weight: var(--weight-bold); margin-bottom: var(--space-4);">학생 200명 × 대학 5지망</p>
+                <p style="font-size: 56px; font-weight: var(--weight-extrabold); color: var(--primary);">= 1,000개 결정</p>
+                <p class="text-sm text-muted" style="margin-top: var(--space-4);">매년 입시 직전 2개월간 원장의 머릿속에서만 처리</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 06: Pain Point 2 -->
+<section>
+    <div class="slide-header">
+        <span class="overline">Problem 02</span>
+        <h2>설명회 근거 부족</h2>
+    </div>
+    <div class="grid grid-2 gap-6">
+        <div>
+            <div class="card" style="margin-bottom: var(--space-3);">
+                <div class="card-header">상황</div>
+                <p class="text-lg">학부모: "우리 아이 수준이면 홍대/이대 어느 정도로 보세요?"</p>
+                <p class="text-sm text-muted" style="margin-top: var(--space-1);">수치, 그래프, 사례 데이터가 <strong>전혀 없음</strong></p>
+            </div>
+            <div class="card">
+                <div class="card-header" style="color: var(--error);">결과</div>
+                <ul style="font-size: 16px; margin-top: var(--space-2);">
+                    <li>"설명은 잘 했지만, <strong>남는 자료는 없다</strong>"</li>
+                    <li>학부모 설득력 부족 → <strong>신뢰도 저하</strong></li>
+                    <li>같은 설명을 수십 번 반복 → <strong>피로도 극대화</strong></li>
+                </ul>
+            </div>
+        </div>
+        <div class="demo-screen">
+            <div class="demo-header">학부모 상담 현장</div>
+            <div class="demo-content">
+                <div class="chat-msg chat-user">
+                    <strong>학부모:</strong> "홍대 합격 가능성이 몇 %쯤 되나요?"
+                </div>
+                <div class="chat-msg chat-ai" style="background: rgba(255,255,255,0.05);">
+                    <strong>원장:</strong> "음... 제 경험상 70-80% 정도...?"
+                </div>
+                <div class="chat-msg chat-user" style="background: rgba(255,23,68,0.1);">
+                    <strong>학부모:</strong> "그 근거가 뭔가요? 데이터가 있나요?"
+                </div>
+                <p class="text-sm text-muted" style="text-align: center; margin-top: var(--space-4);">매번 반복되는 난감한 상황</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 07: Pain Point 3 -->
+<section>
+    <div class="slide-header">
+        <span class="overline">Problem 03</span>
+        <h2>강사·분원 퀄리티 편차</h2>
+    </div>
+    <div class="grid grid-2 gap-6">
+        <div>
+            <div class="card" style="margin-bottom: var(--space-3);">
+                <div class="card-header">상황</div>
+                <p class="text-lg">각 강사는 잘하지만, <strong>평가 기준·코멘트 톤이 제각각</strong></p>
+                <p class="text-sm text-muted" style="margin-top: var(--space-1);">"이 친구들이 내 기준과 같은 눈으로 보고 있나?"</p>
+            </div>
+            <div class="card">
+                <div class="card-header" style="color: var(--error);">결과</div>
+                <ul style="font-size: 16px; margin-top: var(--space-2);">
+                    <li>강사 A: 관대 → 강사 B: 엄격 → <strong>학생 혼란</strong></li>
+                    <li>분원이 늘어날수록 <strong>품질 관리 불가능</strong></li>
+                    <li>학원 브랜드 <strong>일관성 붕괴</strong></li>
+                </ul>
+            </div>
+        </div>
+        <div class="demo-screen">
+            <div class="demo-header">강사별 평가 편차 (동일 작품)</div>
+            <div class="demo-content">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>강사</th>
+                            <th style="text-align: center;">구도</th>
+                            <th style="text-align: center;">톤</th>
+                            <th style="text-align: center;">총점</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>강사 A</td>
+                            <td style="text-align: center; color: var(--success);">9</td>
+                            <td style="text-align: center; color: var(--success);">8</td>
+                            <td style="text-align: center;"><strong>A-</strong></td>
+                        </tr>
+                        <tr>
+                            <td>강사 B</td>
+                            <td style="text-align: center; color: var(--warning);">7</td>
+                            <td style="text-align: center; color: var(--warning);">6</td>
+                            <td style="text-align: center;"><strong>B+</strong></td>
+                        </tr>
+                        <tr>
+                            <td>강사 C</td>
+                            <td style="text-align: center; color: var(--error);">6</td>
+                            <td style="text-align: center; color: var(--error);">5</td>
+                            <td style="text-align: center;"><strong>B</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p class="text-sm" style="text-align: center; margin-top: var(--space-3); color: var(--warning);">같은 작품인데 A-부터 B까지 2등급 차이</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 08: Market Gap -->
+<section>
+    <div class="slide-header">
+        <span class="overline">Market Gap</span>
+        <h2>예체능 실기 AI = <span class="text-primary-color">무주공산</span></h2>
+    </div>
+    <table style="margin-top: var(--space-4);">
+        <thead>
+            <tr>
+                <th style="width: 25%;">영역</th>
+                <th style="width: 50%;">경쟁사 현황</th>
+                <th style="width: 25%; text-align: center;">공백</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>수능/정시</strong></td>
+                <td class="text-muted">서울런 AI (1,220만 건), AIM, 바이브온</td>
+                <td style="text-align: center;"><span class="badge badge-success">포화</span></td>
+            </tr>
+            <tr>
+                <td><strong>예체능 실기</strong></td>
+                <td style="color: var(--error);"><strong>거의 없음</strong></td>
+                <td style="text-align: center;"><span class="badge badge-error">무주공산</span></td>
+            </tr>
+            <tr>
+                <td><strong>실기 평가 AI</strong></td>
+                <td style="color: var(--error);"><strong>완전 공백</strong></td>
+                <td style="text-align: center;"><span class="badge badge-primary">NeoPrime Only</span></td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="highlight-box" style="margin-top: var(--space-5);">
+        <p style="margin: 0;"><strong>바이브온:</strong> 생기부·학종 AI, 정확도 91.1%, 가입자 20만, <strong>12억+ 투자</strong></p>
+        <p class="text-sm text-muted" style="margin-top: var(--space-1);">→ 그러나 예체능 실기 평가는 <strong>완전 공백</strong>. NeoPrime만이 가능.</p>
+    </div>
+</section>
+
+<!-- ==================== SOLUTION ==================== -->
+
+<!-- 09: Section Title -->
+<section class="center-slide">
+    <span class="overline">Section 02</span>
+    <h1 style="font-size: 72px; color: var(--primary); margin-top: var(--space-3);">Solution</h1>
+    <p class="text-muted text-lg">원장의 눈을 AI가 배웁니다</p>
+</section>
+
+<!-- 10: Core Value -->
+<section>
+    <div class="slide-header">
+        <span class="overline">Core Value</span>
+        <h2>원장의 20년 감을 <span class="text-primary-color">그대로 숫자로</span></h2>
+    </div>
+    <div class="flow" style="margin-top: var(--space-5);">
+        <div class="flow-item">
+            <div class="card-header">입력</div>
+            <p style="font-size: 18px; margin: var(--space-2) 0 0;">원장의 A~F 평가</p>
+            <p class="text-sm text-muted">20년간 쌓인 암묵지</p>
+        </div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-item">
+            <div class="card-header">데이터</div>
+            <p style="font-size: 18px; margin: var(--space-2) 0 0;">20만 건 합격 데이터</p>
+            <p class="text-sm text-muted">226,695행 입시 빅데이터</p>
+        </div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-item">
+            <div class="card-header">AI 학습</div>
+            <p style="font-size: 18px; margin: var(--space-2) 0 0;">Theory Engine v3</p>
+            <p class="text-sm text-muted">평가↔합격 패턴 학습</p>
+        </div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-item" style="background: rgba(252,100,1,0.1); border: 1px solid rgba(252,100,1,0.3);">
+            <div class="card-header">출력</div>
+            <p style="font-size: 18px; margin: var(--space-2) 0 0;"><strong>숫자 + 글</strong></p>
+            <p class="text-sm text-muted">합격확률 + 행동처방</p>
+        </div>
+    </div>
+    <div class="highlight-box" style="margin-top: var(--space-6); text-align: center;">
+        <p style="font-size: 20px; margin: 0;">"원장이 A- 준 학생 50명 중 <span class="text-primary-color font-bold">홍대 합격 32명, 이대 10명</span>"</p>
+        <p class="text-sm text-muted" style="margin-top: var(--space-1);">이제 감이 아니라 <strong>데이터로 증명</strong>합니다</p>
+    </div>
+</section>
+
+<!-- 11: 3-Step Value -->
+<section>
+    <div class="slide-header">
+        <span class="overline">3-Step Value</span>
+        <h2>3단계 가치 제안</h2>
+    </div>
+    <div class="grid grid-3 gap-4" style="margin-top: var(--space-4);">
+        <div class="card" style="border-top: 3px solid var(--primary);">
+            <span class="tag">1단계</span>
+            <h3 style="font-size: 24px; margin: var(--space-3) 0 var(--space-2);">증명</h3>
+            <p class="text-muted" style="margin-bottom: var(--space-3);">"내 감을 숫자로 보여주고 싶다"</p>
+            <div style="background: var(--bg-dark); padding: var(--space-3); border-radius: var(--radius-md);">
+                <p class="text-sm text-muted">입시 설명회 슬라이드:</p>
+                <p style="margin-top: var(--space-1);">"원장이 A- 준 학생 50명 중<br><strong>홍대 합격 32명 (64%)</strong>"</p>
+            </div>
+        </div>
+        <div class="card" style="border-top: 3px solid var(--primary);">
+            <span class="tag">2단계</span>
+            <h3 style="font-size: 24px; margin: var(--space-3) 0 var(--space-2);">확장</h3>
+            <p class="text-muted" style="margin-bottom: var(--space-3);">"강사·분원 퀄리티 표준화"</p>
+            <div style="background: var(--bg-dark); padding: var(--space-3); border-radius: var(--radius-md);">
+                <p class="text-sm text-muted">품질 관리 자동화:</p>
+                <p style="margin-top: var(--space-1);">"어느 강사가 그려줘도<br><strong>원장의 눈으로 평가</strong>"</p>
+            </div>
+        </div>
+        <div class="card" style="border-top: 3px solid var(--primary);">
+            <span class="tag">3단계</span>
+            <h3 style="font-size: 24px; margin: var(--space-3) 0 var(--space-2);">교정</h3>
+            <p class="text-muted" style="margin-bottom: var(--space-3);">"내 편향에 대한 피드백"</p>
+            <div style="background: var(--bg-dark); padding: var(--space-3); border-radius: var(--radius-md);">
+                <p class="text-sm text-muted">자기 인사이트:</p>
+                <p style="margin-top: var(--space-1);">"과대평가하던 스타일이<br><strong>데이터로 보인다</strong>"</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 12: Hybrid Output -->
+<section>
+    <div class="slide-header">
+        <span class="overline">Hybrid Output</span>
+        <h2>숫자 + 글 = <span class="text-primary-color">하이브리드 출력</span></h2>
+    </div>
+    <div class="grid grid-2 gap-6" style="margin-top: var(--space-4);">
+        <div>
+            <div class="card" style="margin-bottom: var(--space-3);">
+                <div class="card-header">숫자 (정량화)</div>
+                <p style="font-size: 24px; margin-top: var(--space-2);">홍대 A전형 합격 가능성: <span class="text-primary-color font-bold">78%</span></p>
+            </div>
+            <div class="card" style="margin-bottom: var(--space-3);">
+                <div class="card-header">통계 (근거)</div>
+                <p style="margin-top: var(--space-2);">유사 프로필 학생 85명 중 66명 합격 (77.6%)</p>
+            </div>
+            <div class="card">
+                <div class="card-header">행동 처방 (LLM)</div>
+                <p style="margin-top: var(--space-2);">"현재 실기 A- 수준에서 남은 4주간 <strong>명암 집중</strong> 시 합격선 도달 가능. 주 5회 이상 출석 유지 필수."</p>
+            </div>
+        </div>
+        <div class="demo-screen">
+            <div class="demo-header">실제 출력 화면 예시</div>
+            <div class="demo-content">
+                <div class="flex justify-between items-center" style="margin-bottom: var(--space-4);">
+                    <div>
+                        <p class="text-sm text-muted">학생</p>
+                        <p style="font-size: 20px; font-weight: var(--weight-semibold);">김민수 (고3)</p>
+                    </div>
+                    <div style="text-align: right;">
+                        <p class="text-sm text-muted">현재 레벨</p>
+                        <p style="font-size: 20px; font-weight: var(--weight-semibold); color: var(--primary);">A-</p>
+                    </div>
+                </div>
+                <div style="background: rgba(252,100,1,0.08); padding: var(--space-3); border-radius: var(--radius-md); margin-bottom: var(--space-3);">
+                    <p class="text-sm text-muted" style="margin-bottom: var(--space-2);">합격 확률</p>
+                    <div class="flex justify-between" style="margin-bottom: 8px;"><span>홍대</span><span class="text-primary-color font-bold">78%</span></div>
+                    <div class="flex justify-between" style="margin-bottom: 8px;"><span>이대</span><span class="font-bold">65%</span></div>
+                    <div class="flex justify-between"><span>서울대</span><span style="color: var(--warning);" class="font-bold">42%</span></div>
+                </div>
+                <div style="background: rgba(255,255,255,0.05); padding: var(--space-3); border-radius: var(--radius-md);">
+                    <p class="text-sm text-muted">AI 피드백</p>
+                    <p style="margin-top: var(--space-1);">"명암 대비 강화 필요. 4주간 집중 시 홍대 라인 확정 가능."</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 13: Problem-Solution Match -->
+<section>
+    <div class="slide-header">
+        <span class="overline">Problem → Solution</span>
+        <h2>문제를 이렇게 해결합니다</h2>
+    </div>
+    <div style="margin-top: var(--space-4);">
+        <div class="comparison-grid" style="margin-bottom: var(--space-3);">
+            <div class="before-card">
+                <p class="text-sm" style="color: var(--error); margin-bottom: var(--space-2);">BEFORE</p>
+                <h4 style="margin-bottom: var(--space-1);">라인 잡기 부담</h4>
+                <p class="text-sm text-muted">원장 1인 결정의 스트레스</p>
+            </div>
+            <div class="comparison-arrow">→</div>
+            <div class="after-card">
+                <p class="text-sm" style="color: var(--success); margin-bottom: var(--space-2);">AFTER</p>
+                <h4 style="margin-bottom: var(--space-1);">Theory Engine v3</h4>
+                <p class="text-sm">자동 합격 예측 + 라인 추천</p>
+            </div>
+        </div>
+        <div class="comparison-grid" style="margin-bottom: var(--space-3);">
+            <div class="before-card">
+                <p class="text-sm" style="color: var(--error); margin-bottom: var(--space-2);">BEFORE</p>
+                <h4 style="margin-bottom: var(--space-1);">설명회 근거 부족</h4>
+                <p class="text-sm text-muted">"감"으로만 설명</p>
+            </div>
+            <div class="comparison-arrow">→</div>
+            <div class="after-card">
+                <p class="text-sm" style="color: var(--success); margin-bottom: var(--space-2);">AFTER</p>
+                <h4 style="margin-bottom: var(--space-1);">데이터 기반 리포트</h4>
+                <p class="text-sm">수치·그래프·사례 자동 생성</p>
+            </div>
+        </div>
+        <div class="comparison-grid">
+            <div class="before-card">
+                <p class="text-sm" style="color: var(--error); margin-bottom: var(--space-2);">BEFORE</p>
+                <h4 style="margin-bottom: var(--space-1);">강사 편차</h4>
+                <p class="text-sm text-muted">평가 기준 제각각</p>
+            </div>
+            <div class="comparison-arrow">→</div>
+            <div class="after-card">
+                <p class="text-sm" style="color: var(--success); margin-bottom: var(--space-2);">AFTER</p>
+                <h4 style="margin-bottom: var(--space-1);">AI 피드백 표준화</h4>
+                <p class="text-sm">원장 스타일 학습 (Gemini LLM)</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ==================== PRODUCT DEMO ==================== -->
+
+<!-- 14: Section Title -->
+<section class="center-slide">
+    <span class="overline">Section 03</span>
+    <h1 style="font-size: 72px; color: var(--primary); margin-top: var(--space-3);">Product Demo</h1>
+    <p class="text-muted text-lg">실제로 이렇게 작동합니다</p>
+</section>
+
+<!-- 15: Scenario 1 -->
+<section>
+    <div class="slide-header">
+        <span class="overline">Scenario 01</span>
+        <h2>원장의 라인 잡기</h2>
+        <p>"이 학생, 서울대까지 쓸까? 홍대를 1지망으로 둘까?"</p>
+    </div>
+    <div class="grid grid-2 gap-6">
+        <div>
+            <div class="step">
+                <div class="step-num">1</div>
+                <div class="step-content">
+                    <h4>학생 선택</h4>
+                    <p>학생 리스트에서 김민수 선택</p>
+                </div>
+            </div>
+            <div class="step">
+                <div class="step-num">2</div>
+                <div class="step-content">
+                    <h4>현재 평가 확인</h4>
+                    <p>구도 8, 톤 7, 발상 8, 완성도 7 = A-</p>
+                </div>
+            </div>
+            <div class="step">
+                <div class="step-num">3</div>
+                <div class="step-content">
+                    <h4>합격 예측 실행</h4>
+                    <p>Theory Engine이 자동 계산</p>
+                </div>
+            </div>
+            <div class="step">
+                <div class="step-num">4</div>
+                <div class="step-content">
+                    <h4>라인 확정</h4>
+                    <p>홍대 78% → 1지망 결정</p>
+                </div>
+            </div>
+        </div>
+        <div class="demo-screen">
+            <div class="demo-header">합격 예측 결과</div>
+            <div class="demo-content">
+                <p class="text-sm text-muted" style="margin-bottom: var(--space-3);">김민수 (고3) | 현재 레벨: A-</p>
+                <div style="margin-bottom: var(--space-3);">
+                    <div class="flex justify-between" style="margin-bottom: 4px;"><span>홍익대 (1지망 추천)</span><span class="text-primary-color font-bold">78%</span></div>
+                    <div class="progress-bar"><div class="progress-fill" style="width: 78%;"></div></div>
+                </div>
+                <div style="margin-bottom: var(--space-3);">
+                    <div class="flex justify-between" style="margin-bottom: 4px;"><span>이화여대</span><span class="font-bold">65%</span></div>
+                    <div class="progress-bar"><div class="progress-fill" style="width: 65%; background: var(--text-primary);"></div></div>
+                </div>
+                <div style="margin-bottom: var(--space-3);">
+                    <div class="flex justify-between" style="margin-bottom: 4px;"><span>서울대 (상향)</span><span style="color: var(--warning);" class="font-bold">42%</span></div>
+                    <div class="progress-bar"><div class="progress-fill" style="width: 42%; background: var(--warning);"></div></div>
+                </div>
+                <div style="background: rgba(0,200,83,0.1); padding: var(--space-2) var(--space-3); border-radius: var(--radius-md); margin-top: var(--space-4);">
+                    <p class="text-sm" style="color: var(--success);">추천: 홍대 1지망, 이대 2지망</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 16: Scenario 1 Before/After -->
+<section>
+    <div class="slide-header">
+        <span class="overline">Scenario 01 Result</span>
+        <h2>원장의 라인 잡기: <span class="text-primary-color">Before vs After</span></h2>
+    </div>
+    <div class="comparison-grid" style="margin-top: var(--space-5);">
+        <div class="before-card" style="padding: var(--space-5);">
+            <p style="color: var(--error); font-weight: var(--weight-semibold); margin-bottom: var(--space-4);">BEFORE (감에 의존)</p>
+            <div class="metric" style="margin-bottom: var(--space-4);">
+                <div class="metric-value" style="color: var(--error);">30분</div>
+                <div class="metric-label">학생 1명당 소요 시간</div>
+            </div>
+            <ul style="font-size: 15px;">
+                <li>200명 × 30분 = <strong>100시간</strong></li>
+                <li>엑셀 수기 입력 + 경험 기반 판단</li>
+                <li>근거 자료 없음</li>
+                <li>실수 가능성 높음</li>
+            </ul>
+        </div>
+        <div class="comparison-arrow">→</div>
+        <div class="after-card" style="padding: var(--space-5);">
+            <p style="color: var(--success); font-weight: var(--weight-semibold); margin-bottom: var(--space-4);">AFTER (데이터 기반)</p>
+            <div class="metric" style="margin-bottom: var(--space-4);">
+                <div class="metric-value" style="color: var(--success);">3분</div>
+                <div class="metric-label">학생 1명당 소요 시간</div>
+            </div>
+            <ul style="font-size: 15px;">
+                <li>200명 × 3분 = <strong>10시간</strong></li>
+                <li>자동 계산 + 추천</li>
+                <li>수치·그래프 근거 자료</li>
+                <li>일관된 기준 적용</li>
+            </ul>
+        </div>
+    </div>
+    <div class="highlight-box" style="margin-top: var(--space-5); text-align: center;">
+        <p style="font-size: 20px; margin: 0;">시간 절감: <span class="text-primary-color font-bold">90시간 (90%)</span> | 정확도 향상: 감 → 데이터</p>
+    </div>
+</section>
+
+<!-- 17: Scenario 2 -->
+<section>
+    <div class="slide-header">
+        <span class="overline">Scenario 02</span>
+        <h2>강사의 주간 평가 입력</h2>
+        <p>"학생 작품에 대한 피드백을 원장 스타일로 자동 생성"</p>
+    </div>
+    <div class="grid grid-2 gap-6">
+        <div>
+            <div class="step">
+                <div class="step-num">1</div>
+                <div class="step-content">
+                    <h4>학생 선택</h4>
+                    <p>평가 대상 학생 선택</p>
+                </div>
+            </div>
+            <div class="step">
+                <div class="step-num">2</div>
+                <div class="step-content">
+                    <h4>4축 점수 입력</h4>
+                    <p>구도/톤/발상/완성도 0-10점</p>
+                </div>
+            </div>
+            <div class="step">
+                <div class="step-num">3</div>
+                <div class="step-content">
+                    <h4>작품 상태 입력</h4>
+                    <p>"인물 비례 부족, 배경 단조로움"</p>
+                </div>
+            </div>
+            <div class="step" style="background: rgba(252,100,1,0.1);">
+                <div class="step-num">4</div>
+                <div class="step-content">
+                    <h4 class="text-primary-color">AI 피드백 생성</h4>
+                    <p>원장 스타일로 자동 생성 (2-3초)</p>
+                </div>
+            </div>
+            <div class="step">
+                <div class="step-num">5</div>
+                <div class="step-content">
+                    <h4>검토 후 저장</h4>
+                    <p>필요시 수정 후 저장</p>
+                </div>
+            </div>
+        </div>
+        <div class="demo-screen">
+            <div class="demo-header">AI 피드백 생성</div>
+            <div class="demo-content">
+                <div style="background: rgba(255,255,255,0.05); padding: var(--space-3); border-radius: var(--radius-md); margin-bottom: var(--space-3);">
+                    <p class="text-sm text-muted">입력된 상태</p>
+                    <p style="margin-top: var(--space-1);">"인물 비례 부족, 배경 단조로움"</p>
+                </div>
+                <p style="text-align: center; color: var(--primary); font-size: 24px; margin: var(--space-2) 0;">↓</p>
+                <div style="background: rgba(252,100,1,0.08); padding: var(--space-3); border-radius: var(--radius-md); border: 1px solid rgba(252,100,1,0.2);">
+                    <p class="text-sm text-primary-color" style="margin-bottom: var(--space-2);">AI 생성 피드백 (원장 스타일)</p>
+                    <p style="line-height: 1.6;">
+                        <strong>진단:</strong> 인물 비례에서 상체가 길어 보이는 경향. 배경의 밀도가 부족해 공간이 허전함.<br><br>
+                        <strong>처방:</strong> 이번 주 인체 비례 드로잉 집중 (하루 30분). 배경 오브젝트 2-3개 추가 연습.<br><br>
+                        <strong>기대:</strong> 2주 후 B+ → A- 레벨 도달 가능.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 18: Key Features -->
+<section>
+    <div class="slide-header">
+        <span class="overline">Key Features</span>
+        <h2>핵심 기능 4가지</h2>
+    </div>
+    <div class="grid grid-2x2" style="margin-top: var(--space-4);">
+        <div class="card">
+            <div class="card-header">합격 예측</div>
+            <ul style="margin-top: var(--space-2); font-size: 15px;">
+                <li>학생 프로필 → 대학별 합격 확률</li>
+                <li>TOP/HIGH/MID/LOW 라인 분류</li>
+                <li>유사 사례 비교 (85명 중 66명 합격)</li>
+            </ul>
+            <p class="text-sm text-muted" style="margin-top: var(--space-3);">사용자: 원장, 학생, 학부모</p>
+        </div>
+        <div class="card">
+            <div class="card-header">AI 피드백 생성</div>
+            <ul style="margin-top: var(--space-2); font-size: 15px;">
+                <li>강사 입력 → 원장 스타일 피드백</li>
+                <li>진단/처방/기대 3단 구조</li>
+                <li>Gemini LLM 기반</li>
+            </ul>
+            <p class="text-sm text-muted" style="margin-top: var(--space-3);">사용자: 원장, 강사</p>
+        </div>
+        <div class="card">
+            <div class="card-header">성장 추적</div>
+            <ul style="margin-top: var(--space-2); font-size: 15px;">
+                <li>주간 평가 기록 → 성장 곡선</li>
+                <li>B- → B → B+ → A- 시각화</li>
+                <li>합격 확률 변화 추이</li>
+            </ul>
+            <p class="text-sm text-muted" style="margin-top: var(--space-3);">사용자: 모든 사용자</p>
+        </div>
+        <div class="card">
+            <div class="card-header">데이터 리포트</div>
+            <ul style="margin-top: var(--space-2); font-size: 15px;">
+                <li>설명회용 자동 생성</li>
+                <li>학원 전체 현황 대시보드</li>
+                <li>PDF 다운로드</li>
+            </ul>
+            <p class="text-sm text-muted" style="margin-top: var(--space-3);">사용자: 원장, 학부모</p>
+        </div>
+    </div>
+</section>
+
+<!-- 19: Technology -->
+<section>
+    <div class="slide-header">
+        <span class="overline">Technology</span>
+        <h2>Theory Engine v3</h2>
+        <p>5단계 파이프라인으로 합격 예측</p>
+    </div>
+    <div class="flow" style="margin-top: var(--space-5);">
+        <div class="flow-item">
+            <p class="text-primary-color font-bold">1</p>
+            <p style="font-size: 16px; margin-top: var(--space-1);"><strong>RAWSCORE</strong></p>
+            <p class="text-sm text-muted">원점수 → 표준점수</p>
+        </div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-item">
+            <p class="text-primary-color font-bold">2</p>
+            <p style="font-size: 16px; margin-top: var(--space-1);"><strong>INDEX</strong></p>
+            <p class="text-sm text-muted">누적백분위 계산</p>
+        </div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-item">
+            <p class="text-primary-color font-bold">3</p>
+            <p style="font-size: 16px; margin-top: var(--space-1);"><strong>PERCENTAGE</strong></p>
+            <p class="text-sm text-muted">대학별 환산점수</p>
+        </div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-item">
+            <p class="text-primary-color font-bold">4</p>
+            <p style="font-size: 16px; margin-top: var(--space-1);"><strong>RESTRICT</strong></p>
+            <p class="text-sm text-muted">결격 사유 체크</p>
+        </div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-item" style="background: rgba(252,100,1,0.1); border: 1px solid rgba(252,100,1,0.3);">
+            <p class="text-primary-color font-bold">5</p>
+            <p style="font-size: 16px; margin-top: var(--space-1);"><strong>판정</strong></p>
+            <p class="text-sm">합격 라인 분류</p>
+        </div>
+    </div>
+    <div class="grid grid-4 gap-4" style="margin-top: var(--space-6);">
+        <div class="metric">
+            <div class="metric-value">226,695</div>
+            <div class="metric-label">데이터 행 수</div>
+        </div>
+        <div class="metric">
+            <div class="metric-value">13</div>
+            <div class="metric-label">엑셀 시트</div>
+        </div>
+        <div class="metric">
+            <div class="metric-value">17초</div>
+            <div class="metric-label">로딩 시간</div>
+        </div>
+        <div class="metric">
+            <div class="metric-value">95%+</div>
+            <div class="metric-label">목표 정확도</div>
+        </div>
+    </div>
+</section>
+
+<!-- ==================== MARKET & BM ==================== -->
+
+<!-- 20: Market -->
+<section>
+    <div class="slide-header">
+        <span class="overline">Market</span>
+        <h2>시장 기회</h2>
+    </div>
+    <div class="grid grid-2 gap-6" style="margin-top: var(--space-4);">
+        <div>
+            <div class="card" style="margin-bottom: var(--space-3);">
+                <div class="card-header">전국 학원 수</div>
+                <p style="font-size: 48px; font-weight: var(--weight-extrabold); color: var(--primary); margin: var(--space-2) 0;">4,854개</p>
+                <p class="text-sm text-muted">서울 521개 | 경기 1,106개 | 인천 2,320개</p>
+            </div>
+            <div class="card">
+                <div class="card-header">시장 규모</div>
+                <p style="font-size: 32px; font-weight: var(--weight-bold); margin: var(--space-2) 0;">1,200~1,500억원</p>
+                <p class="text-sm text-muted">AI 활용 거의 없음 (무주공산)</p>
+            </div>
+        </div>
+        <div>
+            <h4 style="margin-bottom: var(--space-3);">경쟁 우위</h4>
+            <table>
+                <thead>
+                    <tr>
+                        <th>요소</th>
+                        <th style="text-align: center;">경쟁사</th>
+                        <th style="text-align: center;">NeoPrime</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>데이터</td>
+                        <td class="text-muted" style="text-align: center;">0건</td>
+                        <td style="text-align: center; color: var(--success);"><strong>226,695행</strong></td>
+                    </tr>
+                    <tr>
+                        <td>예체능 특화</td>
+                        <td class="text-muted" style="text-align: center;">미지원</td>
+                        <td style="text-align: center; color: var(--success);"><strong>완성</strong></td>
+                    </tr>
+                    <tr>
+                        <td>실기 평가 AI</td>
+                        <td class="text-muted" style="text-align: center;">불가능</td>
+                        <td style="text-align: center; color: var(--success);"><strong>가능</strong></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+
+<!-- 21: Business Model -->
+<section>
+    <div class="slide-header">
+        <span class="overline">Business Model</span>
+        <h2>희소성 기반 BM</h2>
+        <p>"모두에게 파는 SaaS"가 아닌 "한정된 파트너에게만"</p>
+    </div>
+    <table style="margin-top: var(--space-4);">
+        <thead>
+            <tr>
+                <th>타입</th>
+                <th>대상</th>
+                <th style="text-align: center;">가격</th>
+                <th style="text-align: center;">제한</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr style="background: rgba(252,100,1,0.05);">
+                <td><strong class="text-primary-color">Elite Partner</strong></td>
+                <td>지역별 1~3곳 한정</td>
+                <td style="text-align: center;"><strong>월 400~600만</strong></td>
+                <td style="text-align: center;">희소성 보장</td>
+            </tr>
+            <tr>
+                <td><strong>Standard SaaS</strong></td>
+                <td>전국 수십~수백 학원</td>
+                <td style="text-align: center;">월 50~150만</td>
+                <td style="text-align: center;">확장성 확보</td>
+            </tr>
+            <tr>
+                <td><strong>Public Module</strong></td>
+                <td>교육청·학교</td>
+                <td style="text-align: center;">프로젝트 단위</td>
+                <td style="text-align: center;">제로섬 회피</td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="highlight-box" style="margin-top: var(--space-5);">
+        <p style="font-weight: var(--weight-semibold); margin-bottom: var(--space-2);">Elite Partner 단위 경제</p>
+        <div class="flex gap-8">
+            <span><span class="text-muted">월 ARPU:</span> <strong>500만원</strong></span>
+            <span><span class="text-muted">월 비용:</span> <strong>50만원</strong></span>
+            <span><span class="text-muted">마진률:</span> <strong class="text-primary-color">90%</strong></span>
+        </div>
+    </div>
+</section>
+
+<!-- 22: Financials -->
+<section>
+    <div class="slide-header">
+        <span class="overline">Financials</span>
+        <h2>재무 예측 (Base Case)</h2>
+    </div>
+    <table style="margin-top: var(--space-4);">
+        <thead>
+            <tr>
+                <th>구분</th>
+                <th style="text-align: center;">Year 1</th>
+                <th style="text-align: center;">Year 2</th>
+                <th style="text-align: center;">Year 3</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Elite 파트너</td>
+                <td style="text-align: center;">10곳</td>
+                <td style="text-align: center;">20곳</td>
+                <td style="text-align: center;">35곳</td>
+            </tr>
+            <tr>
+                <td>Standard 파트너</td>
+                <td style="text-align: center;">30곳</td>
+                <td style="text-align: center;">100곳</td>
+                <td style="text-align: center;">200곳</td>
+            </tr>
+            <tr style="background: rgba(252,100,1,0.05);">
+                <td><strong>연 매출</strong></td>
+                <td style="text-align: center;"><strong class="text-primary-color">96억원</strong></td>
+                <td style="text-align: center;"><strong class="text-primary-color">240억원</strong></td>
+                <td style="text-align: center;"><strong class="text-primary-color">450억원</strong></td>
+            </tr>
+            <tr>
+                <td>연 이익</td>
+                <td style="text-align: center;">27억원</td>
+                <td style="text-align: center;">120억원</td>
+                <td style="text-align: center;">270억원</td>
+            </tr>
+            <tr>
+                <td>마진률</td>
+                <td style="text-align: center;">28%</td>
+                <td style="text-align: center;">50%</td>
+                <td style="text-align: center;">60%</td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+
+<!-- ==================== ROADMAP & ASK ==================== -->
+
+<!-- 23: Roadmap -->
+<section>
+    <div class="slide-header">
+        <span class="overline">Roadmap</span>
+        <h2>개발 로드맵</h2>
+    </div>
+    <div class="grid grid-4 gap-4" style="margin-top: var(--space-4);">
+        <div class="card" style="border-top: 3px solid var(--success);">
+            <span class="badge badge-success" style="margin-bottom: var(--space-2);">완료</span>
+            <h4 style="margin-bottom: var(--space-2);">Theory Engine v3</h4>
+            <ul class="text-sm text-muted" style="padding-left: 16px;">
+                <li>5단계 파이프라인 구현</li>
+                <li>226,695행 데이터 로드</li>
+                <li>9/9 테스트 통과</li>
+            </ul>
+        </div>
+        <div class="card" style="border-top: 3px solid var(--warning);">
+            <span class="badge badge-warning" style="margin-bottom: var(--space-2);">진행 중</span>
+            <h4 style="margin-bottom: var(--space-2);">정확도 개선</h4>
+            <ul class="text-sm text-muted" style="padding-left: 16px;">
+                <li>58% → 95%+ (6시간)</li>
+                <li>INDEX 우회 로직</li>
+                <li>RAWSCORE 탐구과목</li>
+            </ul>
+        </div>
+        <div class="card" style="border-top: 3px solid var(--primary);">
+            <span class="badge badge-primary" style="margin-bottom: var(--space-2);">다음 단계</span>
+            <h4 style="margin-bottom: var(--space-2);">웹 대시보드</h4>
+            <ul class="text-sm text-muted" style="padding-left: 16px;">
+                <li>React 프론트엔드</li>
+                <li>Vertex AI 모델 훈련</li>
+                <li>LLM 피드백 연동</li>
+            </ul>
+        </div>
+        <div class="card" style="border-top: 3px solid var(--text-secondary);">
+            <span class="badge" style="background: rgba(255,255,255,0.1); color: var(--text-secondary); margin-bottom: var(--space-2);">향후</span>
+            <h4 style="margin-bottom: var(--space-2);">파일럿 & 확장</h4>
+            <ul class="text-sm text-muted" style="padding-left: 16px;">
+                <li>네오캣 파일럿 (4개월)</li>
+                <li>Elite 10곳 확보</li>
+                <li>체대/음대 확장</li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<!-- 24: Team -->
+<section>
+    <div class="slide-header">
+        <span class="overline">Team</span>
+        <h2>필요 팀 구성</h2>
+    </div>
+    <div class="grid grid-4 gap-4" style="margin-top: var(--space-4);">
+        <div class="card" style="text-align: center;">
+            <p style="font-size: 14px; font-weight: var(--weight-bold); color: var(--primary); margin-bottom: var(--space-3);">CEO / PM</p>
+            <p class="text-sm text-muted">에듀테크 창업 경험<br>입시 도메인 이해</p>
+            <p class="text-sm text-primary-color" style="margin-top: var(--space-3);">P0 (필수)</p>
+        </div>
+        <div class="card" style="text-align: center;">
+            <p style="font-size: 14px; font-weight: var(--weight-bold); color: var(--primary); margin-bottom: var(--space-3);">CTO</p>
+            <p class="text-sm text-muted">AI/ML 프로덕트 리드<br>GCP 전문성</p>
+            <p class="text-sm text-primary-color" style="margin-top: var(--space-3);">P0 (필수)</p>
+        </div>
+        <div class="card" style="text-align: center;">
+            <p style="font-size: 14px; font-weight: var(--weight-bold); color: var(--primary); margin-bottom: var(--space-3);">ML Lead</p>
+            <p class="text-sm text-muted">Vertex AI 경험<br>추천 시스템 구축</p>
+            <p class="text-sm text-primary-color" style="margin-top: var(--space-3);">P0 (필수)</p>
+        </div>
+        <div class="card" style="text-align: center;">
+            <p style="font-size: 14px; font-weight: var(--weight-bold); color: var(--primary); margin-bottom: var(--space-3);">Domain Expert</p>
+            <p class="text-sm text-muted">미대입시 컨설팅 10년+<br>원장 네트워크</p>
+            <p class="text-sm" style="margin-top: var(--space-3);">P1</p>
+        </div>
+    </div>
+    <div class="highlight-box" style="margin-top: var(--space-5);">
+        <p style="margin: 0;">초기 팀 비용: <strong>월 3,700만원</strong> (8.5명)</p>
+    </div>
+</section>
+
+<!-- 25: Ask -->
+<section>
+    <div class="slide-header">
+        <span class="overline">Ask</span>
+        <h2>투자 요청</h2>
+    </div>
+    <div class="grid grid-2 gap-6" style="margin-top: var(--space-4);">
+        <div>
+            <div class="card" style="background: rgba(252,100,1,0.08); border: 1px solid rgba(252,100,1,0.2); margin-bottom: var(--space-4);">
+                <p class="text-sm text-primary-color" style="font-weight: var(--weight-semibold);">시드 라운드</p>
+                <p style="font-size: 56px; font-weight: var(--weight-extrabold); color: var(--primary); margin: var(--space-2) 0;">3~5억원</p>
+            </div>
+            <h4 style="margin-bottom: var(--space-3);">자금 사용 계획</h4>
+            <table>
+                <tbody>
+                    <tr><td>팀 비용 (6개월)</td><td style="text-align: right;"><strong>2.22억원</strong></td></tr>
+                    <tr><td>인프라 비용</td><td style="text-align: right;">0.35억원</td></tr>
+                    <tr><td>마케팅 & PR</td><td style="text-align: right;">0.30억원</td></tr>
+                    <tr><td>예비 (10%)</td><td style="text-align: right;">0.27억원</td></tr>
+                </tbody>
+            </table>
+        </div>
+        <div>
+            <h4 style="margin-bottom: var(--space-3);">기대 효과</h4>
+            <div class="card" style="margin-bottom: var(--space-3);">
+                <div class="card-header">6개월 후</div>
+                <ul style="margin-top: var(--space-2); font-size: 15px;">
+                    <li>Elite 파트너: <strong>10곳 확보</strong></li>
+                    <li>월 매출: <strong>5억원</strong></li>
+                    <li>Theory Engine: <strong>95%+ 완성도</strong></li>
+                    <li>웹 MVP: <strong>출시 완료</strong></li>
+                </ul>
+            </div>
+            <div class="card">
+                <div class="card-header">12개월 후</div>
+                <ul style="margin-top: var(--space-2); font-size: 15px;">
+                    <li>Elite 15곳 + Standard 30곳</li>
+                    <li>월 매출: <strong>20억원</strong></li>
+                    <li>시리즈A 준비 완료</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 26: Q&A -->
+<section class="center-slide">
+    <h1 style="font-size: 72px;">Q&A</h1>
+    <p style="font-size: 32px; color: var(--primary); margin-top: var(--space-4);">Thank You</p>
+    <div style="margin-top: var(--space-8);">
+        <p class="text-muted">NeoPrime</p>
+        <p class="text-sm text-muted">데이터 드리븐 예체능 입시 인텔리전스 플랫폼</p>
+    </div>
+</section>
+
+</div>
+</div>
+
+<script src="/node_modules/reveal.js/dist/reveal.js"></script>
+<script>
+    Reveal.initialize({
+        hash: true,
+        slideNumber: true,
+        showSlideNumber: 'all',
+        transition: 'fade',
+        backgroundTransition: 'fade',
+        pdfSeparateFragments: false,
+        pdfMaxPagesPerSlide: 1,
+        width: 1920,
+        height: 1080,
+        margin: 0,
+    });
+</script>
+</body>
+</html>
