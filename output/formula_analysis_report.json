@@ -1,0 +1,370 @@
+{
+  "metadata_summary": {
+    "total_sheets_with_formulas": 3,
+    "total_formula_columns": 14
+  },
+  "sheet_dependencies": {
+    "INDEX": [
+      "INFO"
+    ],
+    "문과계열분석결과": [
+      "COMPUTE",
+      "SUBJECT",
+      "수능"
+    ],
+    "이과계열분석결과": [
+      "COMPUTE",
+      "SUBJECT",
+      "수능"
+    ]
+  },
+  "formula_patterns": {
+    "conditional": 4,
+    "index_match": 4,
+    "aggregation_sum": 2,
+    "aggregation_avg": 2,
+    "lookup": 0,
+    "other": 2
+  },
+  "core_formulas": {
+    "이과계열분석결과": {
+      "col_3": {
+        "description": "적정점수/예상점수/소신점수 판정 로직",
+        "formula": "=IF(OR(수능입력!$C$18=\"\",수능입력!$C$18=0,수능입력!$C$18>9,수능입력!$C$19=\"\",수능입력!$C$19=0,수능입력!$C$19>9),\"오류(영어국사)\",IFERROR(VLOOKUP($AK6,RESTRICT!$A:$C,3,FALSE),IFERROR(VLOOKUP($AK6,RESTRICT!$E:$G,3,FALSE),IFERROR(VLOOKUP($B6&\" \"&$C6,RESTRICT!$I:$L,4,FALSE),IF($G6=0,\"제외(수탐)\",IF($G6*1>=$J6*1,\"적정점수 이상\",IF($G6*1>=$K6*1,\"예상점수 이상\",IF($G6*1>=$L6*1,\"소신점수 이상\",IF($G6*1<$L6*1,\"소신점수 미만\",0/0)))))))))",
+        "pattern": "conditional",
+        "dependencies": [
+          "=IF(OR(수능입력C18",
+          "=\"\",수능입력C18",
+          "=0,수능입력C18",
+          ">9,수능입력C19",
+          "=\"\",수능입력C19",
+          "=0,수능입력C19",
+          "C18",
+          "C19",
+          "AK6",
+          "B6",
+          "C6",
+          "G6",
+          "J6",
+          "K6",
+          "L6"
+        ],
+        "key_references": {
+          "수능입력": "영어/국사 등급 검증",
+          "RESTRICT": "제한 조건 테이블 (3개 영역)",
+          "G6": "현재 점수",
+          "J6": "적정점수 기준",
+          "K6": "예상점수 기준",
+          "L6": "소신점수 기준"
+        }
+      },
+      "col_4": {
+        "description": "COMPUTE 시트 기반 점수 변환 (첫 번째 지표)",
+        "formula": "=IFERROR(INDEX(COMPUTE!$A$1:$UG$72,MATCH(E$5,COMPUTE!$B$1:$B$72,0),MATCH($AK6,COMPUTE!$A$2:$UG$2,0)),0)",
+        "pattern": "index_match",
+        "dependencies": [
+          "=IFERROR(INDEX(COMPUTEA1",
+          ":$UG$72,MATCH(E$5,COMPUTEB1",
+          ":$B$72,0),MATCH($AK6,COMPUTEA2",
+          "A1UG72",
+          "B1B72",
+          "A2UG2",
+          "A1",
+          "UG72",
+          "E5",
+          "B1",
+          "B72",
+          "AK6",
+          "A2",
+          "UG2"
+        ],
+        "key_references": {
+          "COMPUTE": "점수 변환표 (72행 × 553컬럼)",
+          "E$5": "행 헤더 (대학명 또는 지표명)",
+          "AK6": "열 헤더 (대학 코드)"
+        }
+      },
+      "col_5": {
+        "description": "COMPUTE 시트 기반 점수 변환 (두 번째 지표)",
+        "formula": "=IFERROR(INDEX(COMPUTE!$A$1:$UG$72,MATCH(F$5,COMPUTE!$B$1:$B$72,0),MATCH($AK6,COMPUTE!$A$2:$UG$2,0)),0)",
+        "pattern": "index_match",
+        "dependencies": [
+          "=IFERROR(INDEX(COMPUTEA1",
+          ":$UG$72,MATCH(F$5,COMPUTEB1",
+          ":$B$72,0),MATCH($AK6,COMPUTEA2",
+          "A1UG72",
+          "B1B72",
+          "A2UG2",
+          "A1",
+          "UG72",
+          "F5",
+          "B1",
+          "B72",
+          "AK6",
+          "A2",
+          "UG2"
+        ],
+        "key_references": {
+          "COMPUTE": "점수 변환표",
+          "F$5": "행 헤더",
+          "AK6": "열 헤더"
+        }
+      },
+      "col_6": {
+        "description": "점수 합계",
+        "formula": "=SUM(E6,F6)",
+        "pattern": "aggregation_sum",
+        "dependencies": [
+          "E6",
+          "F6"
+        ]
+      },
+      "col_7": {
+        "description": "평균 점수 계산 (HLOOKUP 기반)",
+        "formula": "=IF($G6=0,\"\",IF(AND(IFERROR(HLOOKUP($AK6,COMPUTE!$2:$8,4,FALSE),\"\")=\"\",IFERROR(HLOOKUP($AK6,COMPUTE!$2:$8,5,FALSE),\"\")=\"\"),\"\",MAX(0.00001,AVERAGE(HLOOKUP($AK6,COMPUTE!$2:$8,4,FALSE),HLOOKUP($AK6,COMPUTE!$2:$8,5,FALSE)))))",
+        "pattern": "aggregation_avg",
+        "dependencies": [
+          "G6",
+          "AK6"
+        ],
+        "key_references": {
+          "COMPUTE": "HLOOKUP으로 4행, 5행 (또는 6행, 7행) 조회",
+          "MAX(0.00001, ...)": "최소값 보정"
+        }
+      },
+      "col_8": {
+        "description": "조건부 포맷팅 및 VLOOKUP",
+        "formula": "=IF(H6=\"\",\"\",ROUND(HLOOKUP($AK6,COMPUTE!$2:$8,4,FALSE)*VLOOKUP(\"수학(이과)\",SUBJECT1!$A:$D,4,FALSE)/100,0)&\" ／ \"&VLOOKUP(\"수학(이과)\",SUBJECT1!$A:$D,4,FALSE))",
+        "pattern": "conditional",
+        "dependencies": [
+          "H6",
+          "AK6",
+          "SUBJECT1"
+        ],
+        "key_references": {
+          "SUBJECT1": "과목별 가중치 조회",
+          "HLOOKUP": "COMPUTE 시트 조회",
+          "ROUND": "반올림 처리"
+        }
+      }
+    },
+    "문과계열분석결과": {
+      "col_3": {
+        "description": "적정점수/예상점수/소신점수 판정 로직",
+        "formula": "=IF(OR(수능입력!$C$18=\"\",수능입력!$C$18=0,수능입력!$C$18>9,수능입력!$C$19=\"\",수능입력!$C$19=0,수능입력!$C$19>9),\"오류(영어국사)\",IFERROR(VLOOKUP($AK6,RESTRICT!$A:$C,3,FALSE),IFERROR(VLOOKUP($AK6,RESTRICT!$E:$G,3,FALSE),IFERROR(VLOOKUP($B6&\" \"&$C6,RESTRICT!$I:$L,4,FALSE),IF($G6=0,\"제외(수탐)\",IF($G6*1>=$J6*1,\"적정점수 이상\",IF($G6*1>=$K6*1,\"예상점수 이상\",IF($G6*1>=$L6*1,\"소신점수 이상\",IF($G6*1<$L6*1,\"소신점수 미만\",0/0)))))))))",
+        "pattern": "conditional",
+        "dependencies": [
+          "=IF(OR(수능입력C18",
+          "=\"\",수능입력C18",
+          "=0,수능입력C18",
+          ">9,수능입력C19",
+          "=\"\",수능입력C19",
+          "=0,수능입력C19",
+          "C18",
+          "C19",
+          "AK6",
+          "B6",
+          "C6",
+          "G6",
+          "J6",
+          "K6",
+          "L6"
+        ],
+        "key_references": {
+          "수능입력": "영어/국사 등급 검증",
+          "RESTRICT": "제한 조건 테이블 (3개 영역)",
+          "G6": "현재 점수",
+          "J6": "적정점수 기준",
+          "K6": "예상점수 기준",
+          "L6": "소신점수 기준"
+        }
+      },
+      "col_4": {
+        "description": "COMPUTE 시트 기반 점수 변환 (첫 번째 지표)",
+        "formula": "=IFERROR(INDEX(COMPUTE!$A$1:$UG$72,MATCH(E$5,COMPUTE!$B$1:$B$72,0),MATCH($AK6,COMPUTE!$A$2:$UG$2,0)),0)",
+        "pattern": "index_match",
+        "dependencies": [
+          "=IFERROR(INDEX(COMPUTEA1",
+          ":$UG$72,MATCH(E$5,COMPUTEB1",
+          ":$B$72,0),MATCH($AK6,COMPUTEA2",
+          "A1UG72",
+          "B1B72",
+          "A2UG2",
+          "A1",
+          "UG72",
+          "E5",
+          "B1",
+          "B72",
+          "AK6",
+          "A2",
+          "UG2"
+        ],
+        "key_references": {
+          "COMPUTE": "점수 변환표 (72행 × 553컬럼)",
+          "E$5": "행 헤더 (대학명 또는 지표명)",
+          "AK6": "열 헤더 (대학 코드)"
+        }
+      },
+      "col_5": {
+        "description": "COMPUTE 시트 기반 점수 변환 (두 번째 지표)",
+        "formula": "=IFERROR(INDEX(COMPUTE!$A$1:$UG$72,MATCH(F$5,COMPUTE!$B$1:$B$72,0),MATCH($AK6,COMPUTE!$A$2:$UG$2,0)),0)",
+        "pattern": "index_match",
+        "dependencies": [
+          "=IFERROR(INDEX(COMPUTEA1",
+          ":$UG$72,MATCH(F$5,COMPUTEB1",
+          ":$B$72,0),MATCH($AK6,COMPUTEA2",
+          "A1UG72",
+          "B1B72",
+          "A2UG2",
+          "A1",
+          "UG72",
+          "F5",
+          "B1",
+          "B72",
+          "AK6",
+          "A2",
+          "UG2"
+        ],
+        "key_references": {
+          "COMPUTE": "점수 변환표",
+          "F$5": "행 헤더",
+          "AK6": "열 헤더"
+        }
+      },
+      "col_6": {
+        "description": "점수 합계",
+        "formula": "=SUM(E6,F6)",
+        "pattern": "aggregation_sum",
+        "dependencies": [
+          "E6",
+          "F6"
+        ]
+      },
+      "col_7": {
+        "description": "평균 점수 계산 (HLOOKUP 기반)",
+        "formula": "=IF($G6=0,\"\",IF(AND(IFERROR(HLOOKUP($AK6,COMPUTE!$2:$8,6,FALSE),\"\")=\"\",IFERROR(HLOOKUP($AK6,COMPUTE!$2:$8,7,FALSE),\"\")=\"\"),\"\",MAX(0.00001,AVERAGE(HLOOKUP($AK6,COMPUTE!$2:$8,6,FALSE),HLOOKUP($AK6,COMPUTE!$2:$8,7,FALSE)))))",
+        "pattern": "aggregation_avg",
+        "dependencies": [
+          "G6",
+          "AK6"
+        ],
+        "key_references": {
+          "COMPUTE": "HLOOKUP으로 4행, 5행 (또는 6행, 7행) 조회",
+          "MAX(0.00001, ...)": "최소값 보정"
+        }
+      },
+      "col_8": {
+        "description": "조건부 포맷팅 및 VLOOKUP",
+        "formula": "=IF(H6=\"\",\"\",ROUND(HLOOKUP($AK6,COMPUTE!$2:$8,6,FALSE)*VLOOKUP(\"수학(문과)\",SUBJECT1!$A:$D,4,FALSE)/100,0)&\" ／ \"&VLOOKUP(\"수학(문과)\",SUBJECT1!$A:$D,4,FALSE))",
+        "pattern": "conditional",
+        "dependencies": [
+          "H6",
+          "AK6",
+          "SUBJECT1"
+        ],
+        "key_references": {
+          "SUBJECT1": "과목별 가중치 조회",
+          "HLOOKUP": "COMPUTE 시트 조회",
+          "ROUND": "반올림 처리"
+        }
+      }
+    }
+  },
+  "detailed_patterns": {
+    "conditional": [
+      {
+        "sheet": "문과계열분석결과",
+        "column": "col_3",
+        "formula": "=IF(OR(수능입력!$C$18=\"\",수능입력!$C$18=0,수능입력!$C$18>9,수능입력!$C$19=\"\",수능입력!$C$19=0,수능입력!$C$19>9),\"오류(영어국사)\",IFERROR(VLOOKUP($AK6,RESTRICT!$A:$C,3,FALSE),IFERROR(VLOOKUP($AK6,RESTRICT!$E:$G,3,FALSE),IFERROR(VLOOKUP($B6&\" \"&$C6,RESTRICT!$I:$L,4,FALSE),IF($G6=0,\"제외(수탐)\",IF($G6*1>=$J6*1,\"적정점수 이상\",IF($G6*1>=$K6*1,\"예상점수 이상\",IF($G6*1>=$L6*1,\"소신점수 이상\",IF($G6*1<$L6*1,\"소신점수 미만\",0/0)))))))))",
+        "sample_row": 6
+      },
+      {
+        "sheet": "문과계열분석결과",
+        "column": "col_8",
+        "formula": "=IF(H6=\"\",\"\",ROUND(HLOOKUP($AK6,COMPUTE!$2:$8,6,FALSE)*VLOOKUP(\"수학(문과)\",SUBJECT1!$A:$D,4,FALSE)/100,0)&\" ／ \"&VLOOKUP(\"수학(문과)\",SUBJECT1!$A:$D,4,FALSE))",
+        "sample_row": 6
+      },
+      {
+        "sheet": "이과계열분석결과",
+        "column": "col_3",
+        "formula": "=IF(OR(수능입력!$C$18=\"\",수능입력!$C$18=0,수능입력!$C$18>9,수능입력!$C$19=\"\",수능입력!$C$19=0,수능입력!$C$19>9),\"오류(영어국사)\",IFERROR(VLOOKUP($AK6,RESTRICT!$A:$C,3,FALSE),IFERROR(VLOOKUP($AK6,RESTRICT!$E:$G,3,FALSE),IFERROR(VLOOKUP($B6&\" \"&$C6,RESTRICT!$I:$L,4,FALSE),IF($G6=0,\"제외(수탐)\",IF($G6*1>=$J6*1,\"적정점수 이상\",IF($G6*1>=$K6*1,\"예상점수 이상\",IF($G6*1>=$L6*1,\"소신점수 이상\",IF($G6*1<$L6*1,\"소신점수 미만\",0/0)))))))))",
+        "sample_row": 6
+      },
+      {
+        "sheet": "이과계열분석결과",
+        "column": "col_8",
+        "formula": "=IF(H6=\"\",\"\",ROUND(HLOOKUP($AK6,COMPUTE!$2:$8,4,FALSE)*VLOOKUP(\"수학(이과)\",SUBJECT1!$A:$D,4,FALSE)/100,0)&\" ／ \"&VLOOKUP(\"수학(이과)\",SUBJECT1!$A:$D,4,FALSE))",
+        "sample_row": 6
+      }
+    ],
+    "index_match": [
+      {
+        "sheet": "문과계열분석결과",
+        "column": "col_4",
+        "formula": "=IFERROR(INDEX(COMPUTE!$A$1:$UG$72,MATCH(E$5,COMPUTE!$B$1:$B$72,0),MATCH($AK6,COMPUTE!$A$2:$UG$2,0)),0)",
+        "sample_row": 6
+      },
+      {
+        "sheet": "문과계열분석결과",
+        "column": "col_5",
+        "formula": "=IFERROR(INDEX(COMPUTE!$A$1:$UG$72,MATCH(F$5,COMPUTE!$B$1:$B$72,0),MATCH($AK6,COMPUTE!$A$2:$UG$2,0)),0)",
+        "sample_row": 6
+      },
+      {
+        "sheet": "이과계열분석결과",
+        "column": "col_4",
+        "formula": "=IFERROR(INDEX(COMPUTE!$A$1:$UG$72,MATCH(E$5,COMPUTE!$B$1:$B$72,0),MATCH($AK6,COMPUTE!$A$2:$UG$2,0)),0)",
+        "sample_row": 6
+      },
+      {
+        "sheet": "이과계열분석결과",
+        "column": "col_5",
+        "formula": "=IFERROR(INDEX(COMPUTE!$A$1:$UG$72,MATCH(F$5,COMPUTE!$B$1:$B$72,0),MATCH($AK6,COMPUTE!$A$2:$UG$2,0)),0)",
+        "sample_row": 6
+      }
+    ],
+    "aggregation_sum": [
+      {
+        "sheet": "문과계열분석결과",
+        "column": "col_6",
+        "formula": "=SUM(E6,F6)",
+        "sample_row": 6
+      },
+      {
+        "sheet": "이과계열분석결과",
+        "column": "col_6",
+        "formula": "=SUM(E6,F6)",
+        "sample_row": 6
+      }
+    ],
+    "aggregation_avg": [
+      {
+        "sheet": "문과계열분석결과",
+        "column": "col_7",
+        "formula": "=IF($G6=0,\"\",IF(AND(IFERROR(HLOOKUP($AK6,COMPUTE!$2:$8,6,FALSE),\"\")=\"\",IFERROR(HLOOKUP($AK6,COMPUTE!$2:$8,7,FALSE),\"\")=\"\"),\"\",MAX(0.00001,AVERAGE(HLOOKUP($AK6,COMPUTE!$2:$8,6,FALSE),HLOOKUP($AK6,COMPUTE!$2:$8,7,FALSE)))))",
+        "sample_row": 6
+      },
+      {
+        "sheet": "이과계열분석결과",
+        "column": "col_7",
+        "formula": "=IF($G6=0,\"\",IF(AND(IFERROR(HLOOKUP($AK6,COMPUTE!$2:$8,4,FALSE),\"\")=\"\",IFERROR(HLOOKUP($AK6,COMPUTE!$2:$8,5,FALSE),\"\")=\"\"),\"\",MAX(0.00001,AVERAGE(HLOOKUP($AK6,COMPUTE!$2:$8,4,FALSE),HLOOKUP($AK6,COMPUTE!$2:$8,5,FALSE)))))",
+        "sample_row": 6
+      }
+    ],
+    "lookup": [],
+    "other": [
+      {
+        "sheet": "INDEX",
+        "column": "col_2",
+        "formula": "=IFERROR(INFO!$B$18/INFO!$B$18,0)",
+        "sample_row": 2
+      },
+      {
+        "sheet": "INDEX",
+        "column": "col_26",
+        "formula": "=INFO!$B$18",
+        "sample_row": 9
+      }
+    ]
+  }
+}

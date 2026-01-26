@@ -1,0 +1,39 @@
+{
+  "test_summary": {
+    "total_cases": 140,
+    "total_passed": 140,
+    "total_failed": 0,
+    "overall_pass_rate": 1.0,
+    "total_errors": 0,
+    "scenario_1": {
+      "total": 30,
+      "passed": 30,
+      "failed": 0,
+      "pass_rate": 1.0
+    },
+    "scenario_2": {
+      "total": 30,
+      "passed": 30,
+      "failed": 0,
+      "pass_rate": 1.0
+    },
+    "scenario_3": {
+      "total": 30,
+      "passed": 30,
+      "failed": 0,
+      "pass_rate": 1.0
+    },
+    "scenario_4": {
+      "total": 20,
+      "passed": 20,
+      "failed": 0,
+      "pass_rate": 1.0
+    },
+    "scenario_5": {
+      "total": 30,
+      "passed": 30,
+      "failed": 0,
+      "pass_rate": 1.0
+    }
+  }
+}

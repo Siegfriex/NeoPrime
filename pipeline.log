@@ -1,0 +1,915 @@
+2026-01-26 16:06:34,648 [INFO] ============================================================
+2026-01-26 16:06:34,649 [INFO] NEO GOD Ultra Pipeline v2.0 시작
+2026-01-26 16:06:34,649 [INFO] ============================================================
+2026-01-26 16:06:34,649 [INFO] [Phase 1] 고속 정찰 시작...
+2026-01-26 16:06:35,033 [INFO] 타겟 시트 식별: 6개
+2026-01-26 16:06:35,033 [INFO] [Phase 2] 물리적 이원화 추출 시작...
+2026-01-26 16:06:35,280 [INFO] 시트 추출 중: 이과계열분석결과
+2026-01-26 16:06:37,085 [INFO] 시트 추출 중: 문과계열분석결과
+2026-01-26 16:06:38,868 [INFO] 시트 추출 중: SUBJECT1
+2026-01-26 16:06:39,517 [INFO] 시트 추출 중: SUBJECT3
+2026-01-26 16:06:43,431 [INFO] 시트 추출 중: INDEX
+2026-01-26 16:06:47,698 [INFO] 시트 추출 중: RAWSCORE
+2026-01-26 16:06:48,732 [INFO] Phase 2 완료: 총 9개 청크 생성
+2026-01-26 16:06:48,732 [INFO] [Phase 3] Date-First 정규화 시작...
+2026-01-26 16:06:48,733 [INFO] 청크 정규화 중: output\이과계열분석결과_chunk_0000.parquet
+2026-01-26 16:06:49,278 [INFO] 청크 정규화 중: output\문과계열분석결과_chunk_0000.parquet
+2026-01-26 16:06:49,778 [INFO] 청크 정규화 중: output\SUBJECT1_chunk_0000.parquet
+2026-01-26 16:06:49,922 [INFO] 청크 정규화 중: output\SUBJECT3_chunk_0000.parquet
+2026-01-26 16:06:52,186 [INFO] 청크 정규화 중: output\INDEX_chunk_0000.parquet
+2026-01-26 16:06:52,477 [INFO] 청크 정규화 중: output\INDEX_chunk_0001.parquet
+2026-01-26 16:06:52,779 [INFO] 청크 정규화 중: output\INDEX_chunk_0002.parquet
+2026-01-26 16:06:53,042 [INFO] 청크 정규화 중: output\INDEX_chunk_0003.parquet
+2026-01-26 16:06:53,325 [INFO] 청크 정규화 중: output\RAWSCORE_chunk_0000.parquet
+2026-01-26 16:06:53,453 [INFO] Phase 3 완료: 총 9개 정규화 청크 생성
+2026-01-26 16:06:53,454 [INFO] [Phase 4] Staging Table 적재 시작...
+2026-01-26 16:06:54,997 [ERROR] 파이프라인 실패: 403 GET https://bigquery.googleapis.com/bigquery/v2/projects/neoprime0305/datasets/ds_neoprime_entrance?prettyPrint=false: Access Denied: Dataset neoprime0305:ds_neoprime_entrance: Permission bigquery.datasets.get denied on dataset neoprime0305:ds_neoprime_entrance (or it may not exist).
+Traceback (most recent call last):
+  File "Y:\0126\0126\master_pipeline.py", line 156, in execute
+    loader = StagingTableLoader(
+        self.config['bigquery']['project_id'],
+    ...<2 lines>...
+        self.config['bigquery'].get('location', 'asia-northeast3')
+    )
+  File "Y:\0126\0126\phase4_load.py", line 65, in __init__
+    self._ensure_dataset_exists()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "Y:\0126\0126\phase4_load.py", line 77, in _ensure_dataset_exists
+    self.client.create_dataset(dataset, exists_ok=True)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "Y:\0126\python_env.env\Lib\site-packages\google\cloud\bigquery\client.py", line 724, in create_dataset
+    return self.get_dataset(dataset.reference, retry=retry)
+           ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "Y:\0126\python_env.env\Lib\site-packages\google\cloud\bigquery\client.py", line 919, in get_dataset
+    api_response = self._call_api(
+        retry,
+    ...<5 lines>...
+        query_params=query_params,
+    )
+  File "Y:\0126\python_env.env\Lib\site-packages\google\cloud\bigquery\client.py", line 861, in _call_api
+    return call()
+  File "Y:\0126\python_env.env\Lib\site-packages\google\api_core\retry\retry_unary.py", line 294, in retry_wrapped_func
+    return retry_target(
+        target,
+    ...<3 lines>...
+        on_error=on_error,
+    )
+  File "Y:\0126\python_env.env\Lib\site-packages\google\api_core\retry\retry_unary.py", line 156, in retry_target
+    next_sleep = _retry_error_helper(
+        exc,
+    ...<6 lines>...
+        timeout,
+    )
+  File "Y:\0126\python_env.env\Lib\site-packages\google\api_core\retry\retry_base.py", line 214, in _retry_error_helper
+    raise final_exc from source_exc
+  File "Y:\0126\python_env.env\Lib\site-packages\google\api_core\retry\retry_unary.py", line 147, in retry_target
+    result = target()
+  File "Y:\0126\python_env.env\Lib\site-packages\google\cloud\_http\__init__.py", line 494, in api_request
+    raise exceptions.from_http_response(response)
+google.api_core.exceptions.Forbidden: 403 GET https://bigquery.googleapis.com/bigquery/v2/projects/neoprime0305/datasets/ds_neoprime_entrance?prettyPrint=false: Access Denied: Dataset neoprime0305:ds_neoprime_entrance: Permission bigquery.datasets.get denied on dataset neoprime0305:ds_neoprime_entrance (or it may not exist).
+2026-01-26 16:06:55,000 [INFO] [완료] 총 실행 시간: 20.35초
+2026-01-26 16:06:55,000 [INFO] [완료] 최종 리포트: output\pipeline_report.json
+2026-01-26 16:06:55,000 [WARNING] 시도 1 실패, 5초 후 재시도: 403 GET https://bigquery.googleapis.com/bigquery/v2/projects/neoprime0305/datasets/ds_neoprime_entrance?prettyPrint=false: Access Denied: Dataset neoprime0305:ds_neoprime_entrance: Permission bigquery.datasets.get denied on dataset neoprime0305:ds_neoprime_entrance (or it may not exist).
+2026-01-26 16:07:00,000 [INFO] ============================================================
+2026-01-26 16:07:00,000 [INFO] NEO GOD Ultra Pipeline v2.0 시작
+2026-01-26 16:07:00,000 [INFO] ============================================================
+2026-01-26 16:07:00,000 [INFO] [Phase 1] 고속 정찰 시작...
+2026-01-26 16:07:00,299 [INFO] 타겟 시트 식별: 6개
+2026-01-26 16:07:00,299 [INFO] [Phase 2] 물리적 이원화 추출 시작...
+2026-01-26 16:07:00,299 [INFO] 시트 추출 중: 이과계열분석결과
+2026-01-26 16:07:02,083 [INFO] 시트 추출 중: 문과계열분석결과
+2026-01-26 16:07:03,864 [INFO] 시트 추출 중: SUBJECT1
+2026-01-26 16:07:04,564 [INFO] 시트 추출 중: SUBJECT3
+2026-01-26 16:07:08,264 [INFO] 시트 추출 중: INDEX
+2026-01-26 16:07:12,494 [INFO] 시트 추출 중: RAWSCORE
+2026-01-26 16:07:13,490 [INFO] Phase 2 완료: 총 9개 청크 생성
+2026-01-26 16:07:13,490 [INFO] [Phase 3] Date-First 정규화 시작...
+2026-01-26 16:07:13,490 [INFO] 청크 정규화 중: output\이과계열분석결과_chunk_0000.parquet
+2026-01-26 16:07:14,004 [INFO] 청크 정규화 중: output\문과계열분석결과_chunk_0000.parquet
+2026-01-26 16:07:14,550 [INFO] 청크 정규화 중: output\SUBJECT1_chunk_0000.parquet
+2026-01-26 16:07:14,713 [INFO] 청크 정규화 중: output\SUBJECT3_chunk_0000.parquet
+2026-01-26 16:07:16,863 [INFO] 청크 정규화 중: output\INDEX_chunk_0000.parquet
+2026-01-26 16:07:17,164 [INFO] 청크 정규화 중: output\INDEX_chunk_0001.parquet
+2026-01-26 16:07:17,429 [INFO] 청크 정규화 중: output\INDEX_chunk_0002.parquet
+2026-01-26 16:07:17,709 [INFO] 청크 정규화 중: output\INDEX_chunk_0003.parquet
+2026-01-26 16:07:17,971 [INFO] 청크 정규화 중: output\RAWSCORE_chunk_0000.parquet
+2026-01-26 16:07:18,100 [INFO] Phase 3 완료: 총 9개 정규화 청크 생성
+2026-01-26 16:07:18,100 [INFO] [Phase 4] Staging Table 적재 시작...
+2026-01-26 16:07:19,301 [ERROR] 파이프라인 실패: 403 GET https://bigquery.googleapis.com/bigquery/v2/projects/neoprime0305/datasets/ds_neoprime_entrance?prettyPrint=false: Access Denied: Dataset neoprime0305:ds_neoprime_entrance: Permission bigquery.datasets.get denied on dataset neoprime0305:ds_neoprime_entrance (or it may not exist).
+Traceback (most recent call last):
+  File "Y:\0126\0126\master_pipeline.py", line 156, in execute
+    loader = StagingTableLoader(
+        self.config['bigquery']['project_id'],
+    ...<2 lines>...
+        self.config['bigquery'].get('location', 'asia-northeast3')
+    )
+  File "Y:\0126\0126\phase4_load.py", line 65, in __init__
+    self._ensure_dataset_exists()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "Y:\0126\0126\phase4_load.py", line 77, in _ensure_dataset_exists
+    self.client.create_dataset(dataset, exists_ok=True)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "Y:\0126\python_env.env\Lib\site-packages\google\cloud\bigquery\client.py", line 724, in create_dataset
+    return self.get_dataset(dataset.reference, retry=retry)
+           ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "Y:\0126\python_env.env\Lib\site-packages\google\cloud\bigquery\client.py", line 919, in get_dataset
+    api_response = self._call_api(
+        retry,
+    ...<5 lines>...
+        query_params=query_params,
+    )
+  File "Y:\0126\python_env.env\Lib\site-packages\google\cloud\bigquery\client.py", line 861, in _call_api
+    return call()
+  File "Y:\0126\python_env.env\Lib\site-packages\google\api_core\retry\retry_unary.py", line 294, in retry_wrapped_func
+    return retry_target(
+        target,
+    ...<3 lines>...
+        on_error=on_error,
+    )
+  File "Y:\0126\python_env.env\Lib\site-packages\google\api_core\retry\retry_unary.py", line 156, in retry_target
+    next_sleep = _retry_error_helper(
+        exc,
+    ...<6 lines>...
+        timeout,
+    )
+  File "Y:\0126\python_env.env\Lib\site-packages\google\api_core\retry\retry_base.py", line 214, in _retry_error_helper
+    raise final_exc from source_exc
+  File "Y:\0126\python_env.env\Lib\site-packages\google\api_core\retry\retry_unary.py", line 147, in retry_target
+    result = target()
+  File "Y:\0126\python_env.env\Lib\site-packages\google\cloud\_http\__init__.py", line 494, in api_request
+    raise exceptions.from_http_response(response)
+google.api_core.exceptions.Forbidden: 403 GET https://bigquery.googleapis.com/bigquery/v2/projects/neoprime0305/datasets/ds_neoprime_entrance?prettyPrint=false: Access Denied: Dataset neoprime0305:ds_neoprime_entrance: Permission bigquery.datasets.get denied on dataset neoprime0305:ds_neoprime_entrance (or it may not exist).
+2026-01-26 16:07:19,302 [INFO] [완료] 총 실행 시간: 19.30초
+2026-01-26 16:07:19,302 [INFO] [완료] 최종 리포트: output\pipeline_report.json
+2026-01-26 16:07:19,302 [WARNING] 시도 2 실패, 5초 후 재시도: 403 GET https://bigquery.googleapis.com/bigquery/v2/projects/neoprime0305/datasets/ds_neoprime_entrance?prettyPrint=false: Access Denied: Dataset neoprime0305:ds_neoprime_entrance: Permission bigquery.datasets.get denied on dataset neoprime0305:ds_neoprime_entrance (or it may not exist).
+2026-01-26 16:07:24,302 [INFO] ============================================================
+2026-01-26 16:07:24,302 [INFO] NEO GOD Ultra Pipeline v2.0 시작
+2026-01-26 16:07:24,302 [INFO] ============================================================
+2026-01-26 16:07:24,302 [INFO] [Phase 1] 고속 정찰 시작...
+2026-01-26 16:07:24,545 [INFO] 타겟 시트 식별: 6개
+2026-01-26 16:07:24,545 [INFO] [Phase 2] 물리적 이원화 추출 시작...
+2026-01-26 16:07:24,545 [INFO] 시트 추출 중: 이과계열분석결과
+2026-01-26 16:07:26,351 [INFO] 시트 추출 중: 문과계열분석결과
+2026-01-26 16:07:28,090 [INFO] 시트 추출 중: SUBJECT1
+2026-01-26 16:07:28,756 [INFO] 시트 추출 중: SUBJECT3
+2026-01-26 16:07:32,463 [INFO] 시트 추출 중: INDEX
+2026-01-26 16:07:36,813 [INFO] 시트 추출 중: RAWSCORE
+2026-01-26 16:07:37,917 [INFO] Phase 2 완료: 총 9개 청크 생성
+2026-01-26 16:07:37,917 [INFO] [Phase 3] Date-First 정규화 시작...
+2026-01-26 16:07:37,918 [INFO] 청크 정규화 중: output\이과계열분석결과_chunk_0000.parquet
+2026-01-26 16:07:38,433 [INFO] 청크 정규화 중: output\문과계열분석결과_chunk_0000.parquet
+2026-01-26 16:07:38,938 [INFO] 청크 정규화 중: output\SUBJECT1_chunk_0000.parquet
+2026-01-26 16:07:39,092 [INFO] 청크 정규화 중: output\SUBJECT3_chunk_0000.parquet
+2026-01-26 16:07:41,354 [INFO] 청크 정규화 중: output\INDEX_chunk_0000.parquet
+2026-01-26 16:07:41,635 [INFO] 청크 정규화 중: output\INDEX_chunk_0001.parquet
+2026-01-26 16:07:41,924 [INFO] 청크 정규화 중: output\INDEX_chunk_0002.parquet
+2026-01-26 16:07:42,195 [INFO] 청크 정규화 중: output\INDEX_chunk_0003.parquet
+2026-01-26 16:07:42,474 [INFO] 청크 정규화 중: output\RAWSCORE_chunk_0000.parquet
+2026-01-26 16:07:42,623 [INFO] Phase 3 완료: 총 9개 정규화 청크 생성
+2026-01-26 16:07:42,623 [INFO] [Phase 4] Staging Table 적재 시작...
+2026-01-26 16:07:43,695 [ERROR] 파이프라인 실패: 403 GET https://bigquery.googleapis.com/bigquery/v2/projects/neoprime0305/datasets/ds_neoprime_entrance?prettyPrint=false: Access Denied: Dataset neoprime0305:ds_neoprime_entrance: Permission bigquery.datasets.get denied on dataset neoprime0305:ds_neoprime_entrance (or it may not exist).
+Traceback (most recent call last):
+  File "Y:\0126\0126\master_pipeline.py", line 156, in execute
+    loader = StagingTableLoader(
+        self.config['bigquery']['project_id'],
+    ...<2 lines>...
+        self.config['bigquery'].get('location', 'asia-northeast3')
+    )
+  File "Y:\0126\0126\phase4_load.py", line 65, in __init__
+    self._ensure_dataset_exists()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "Y:\0126\0126\phase4_load.py", line 77, in _ensure_dataset_exists
+    self.client.create_dataset(dataset, exists_ok=True)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "Y:\0126\python_env.env\Lib\site-packages\google\cloud\bigquery\client.py", line 724, in create_dataset
+    return self.get_dataset(dataset.reference, retry=retry)
+           ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "Y:\0126\python_env.env\Lib\site-packages\google\cloud\bigquery\client.py", line 919, in get_dataset
+    api_response = self._call_api(
+        retry,
+    ...<5 lines>...
+        query_params=query_params,
+    )
+  File "Y:\0126\python_env.env\Lib\site-packages\google\cloud\bigquery\client.py", line 861, in _call_api
+    return call()
+  File "Y:\0126\python_env.env\Lib\site-packages\google\api_core\retry\retry_unary.py", line 294, in retry_wrapped_func
+    return retry_target(
+        target,
+    ...<3 lines>...
+        on_error=on_error,
+    )
+  File "Y:\0126\python_env.env\Lib\site-packages\google\api_core\retry\retry_unary.py", line 156, in retry_target
+    next_sleep = _retry_error_helper(
+        exc,
+    ...<6 lines>...
+        timeout,
+    )
+  File "Y:\0126\python_env.env\Lib\site-packages\google\api_core\retry\retry_base.py", line 214, in _retry_error_helper
+    raise final_exc from source_exc
+  File "Y:\0126\python_env.env\Lib\site-packages\google\api_core\retry\retry_unary.py", line 147, in retry_target
+    result = target()
+  File "Y:\0126\python_env.env\Lib\site-packages\google\cloud\_http\__init__.py", line 494, in api_request
+    raise exceptions.from_http_response(response)
+google.api_core.exceptions.Forbidden: 403 GET https://bigquery.googleapis.com/bigquery/v2/projects/neoprime0305/datasets/ds_neoprime_entrance?prettyPrint=false: Access Denied: Dataset neoprime0305:ds_neoprime_entrance: Permission bigquery.datasets.get denied on dataset neoprime0305:ds_neoprime_entrance (or it may not exist).
+2026-01-26 16:07:43,696 [INFO] [완료] 총 실행 시간: 19.39초
+2026-01-26 16:07:43,696 [INFO] [완료] 최종 리포트: output\pipeline_report.json
+2026-01-26 16:09:51,202 [INFO] ============================================================
+2026-01-26 16:09:51,202 [INFO] NEO GOD Ultra Pipeline v2.0 시작
+2026-01-26 16:09:51,202 [INFO] ============================================================
+2026-01-26 16:09:51,202 [INFO] [Phase 1] 고속 정찰 시작...
+2026-01-26 16:09:51,598 [INFO] 타겟 시트 식별: 6개
+2026-01-26 16:09:51,598 [INFO] [Phase 2] 물리적 이원화 추출 시작...
+2026-01-26 16:09:51,842 [INFO] 시트 추출 중: 이과계열분석결과
+2026-01-26 16:09:53,591 [INFO] 시트 추출 중: 문과계열분석결과
+2026-01-26 16:09:55,318 [INFO] 시트 추출 중: SUBJECT1
+2026-01-26 16:09:55,950 [INFO] 시트 추출 중: SUBJECT3
+2026-01-26 16:09:59,457 [INFO] 시트 추출 중: INDEX
+2026-01-26 16:10:03,394 [INFO] 시트 추출 중: RAWSCORE
+2026-01-26 16:10:04,360 [INFO] Phase 2 완료: 총 9개 청크 생성
+2026-01-26 16:10:04,360 [INFO] [Phase 3] Date-First 정규화 시작...
+2026-01-26 16:10:04,360 [INFO] 청크 정규화 중: output\이과계열분석결과_chunk_0000.parquet
+2026-01-26 16:10:04,910 [INFO] 청크 정규화 중: output\문과계열분석결과_chunk_0000.parquet
+2026-01-26 16:10:05,424 [INFO] 청크 정규화 중: output\SUBJECT1_chunk_0000.parquet
+2026-01-26 16:10:05,649 [INFO] 청크 정규화 중: output\SUBJECT3_chunk_0000.parquet
+2026-01-26 16:10:07,966 [INFO] 청크 정규화 중: output\INDEX_chunk_0000.parquet
+2026-01-26 16:10:08,203 [INFO] 청크 정규화 중: output\INDEX_chunk_0001.parquet
+2026-01-26 16:10:08,438 [INFO] 청크 정규화 중: output\INDEX_chunk_0002.parquet
+2026-01-26 16:10:08,693 [INFO] 청크 정규화 중: output\INDEX_chunk_0003.parquet
+2026-01-26 16:10:08,925 [INFO] 청크 정규화 중: output\RAWSCORE_chunk_0000.parquet
+2026-01-26 16:10:09,081 [INFO] Phase 3 완료: 총 9개 정규화 청크 생성
+2026-01-26 16:10:09,081 [INFO] [Phase 4] Staging Table 적재 시작...
+2026-01-26 16:10:10,444 [ERROR] 파이프라인 실패: 403 GET https://bigquery.googleapis.com/bigquery/v2/projects/neoprime0305/datasets/ds_neoprime_entrance?prettyPrint=false: Access Denied: Dataset neoprime0305:ds_neoprime_entrance: Permission bigquery.datasets.get denied on dataset neoprime0305:ds_neoprime_entrance (or it may not exist).
+Traceback (most recent call last):
+  File "Y:\0126\0126\master_pipeline.py", line 156, in execute
+    loader = StagingTableLoader(
+        self.config['bigquery']['project_id'],
+    ...<2 lines>...
+        self.config['bigquery'].get('location', 'asia-northeast3')
+    )
+  File "Y:\0126\0126\phase4_load.py", line 65, in __init__
+    self._ensure_dataset_exists()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "Y:\0126\0126\phase4_load.py", line 77, in _ensure_dataset_exists
+    self.client.create_dataset(dataset, exists_ok=True)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "Y:\0126\python_env.env\Lib\site-packages\google\cloud\bigquery\client.py", line 724, in create_dataset
+    return self.get_dataset(dataset.reference, retry=retry)
+           ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "Y:\0126\python_env.env\Lib\site-packages\google\cloud\bigquery\client.py", line 919, in get_dataset
+    api_response = self._call_api(
+        retry,
+    ...<5 lines>...
+        query_params=query_params,
+    )
+  File "Y:\0126\python_env.env\Lib\site-packages\google\cloud\bigquery\client.py", line 861, in _call_api
+    return call()
+  File "Y:\0126\python_env.env\Lib\site-packages\google\api_core\retry\retry_unary.py", line 294, in retry_wrapped_func
+    return retry_target(
+        target,
+    ...<3 lines>...
+        on_error=on_error,
+    )
+  File "Y:\0126\python_env.env\Lib\site-packages\google\api_core\retry\retry_unary.py", line 156, in retry_target
+    next_sleep = _retry_error_helper(
+        exc,
+    ...<6 lines>...
+        timeout,
+    )
+  File "Y:\0126\python_env.env\Lib\site-packages\google\api_core\retry\retry_base.py", line 214, in _retry_error_helper
+    raise final_exc from source_exc
+  File "Y:\0126\python_env.env\Lib\site-packages\google\api_core\retry\retry_unary.py", line 147, in retry_target
+    result = target()
+  File "Y:\0126\python_env.env\Lib\site-packages\google\cloud\_http\__init__.py", line 494, in api_request
+    raise exceptions.from_http_response(response)
+google.api_core.exceptions.Forbidden: 403 GET https://bigquery.googleapis.com/bigquery/v2/projects/neoprime0305/datasets/ds_neoprime_entrance?prettyPrint=false: Access Denied: Dataset neoprime0305:ds_neoprime_entrance: Permission bigquery.datasets.get denied on dataset neoprime0305:ds_neoprime_entrance (or it may not exist).
+2026-01-26 16:10:10,447 [INFO] [완료] 총 실행 시간: 19.24초
+2026-01-26 16:10:10,447 [INFO] [완료] 최종 리포트: output\pipeline_report.json
+2026-01-26 16:10:10,447 [WARNING] 시도 1 실패, 5초 후 재시도: 403 GET https://bigquery.googleapis.com/bigquery/v2/projects/neoprime0305/datasets/ds_neoprime_entrance?prettyPrint=false: Access Denied: Dataset neoprime0305:ds_neoprime_entrance: Permission bigquery.datasets.get denied on dataset neoprime0305:ds_neoprime_entrance (or it may not exist).
+2026-01-26 16:10:15,448 [INFO] ============================================================
+2026-01-26 16:10:15,448 [INFO] NEO GOD Ultra Pipeline v2.0 시작
+2026-01-26 16:10:15,448 [INFO] ============================================================
+2026-01-26 16:10:15,448 [INFO] [Phase 1] 고속 정찰 시작...
+2026-01-26 16:10:15,768 [INFO] 타겟 시트 식별: 6개
+2026-01-26 16:10:15,768 [INFO] [Phase 2] 물리적 이원화 추출 시작...
+2026-01-26 16:10:15,768 [INFO] 시트 추출 중: 이과계열분석결과
+2026-01-26 16:10:17,710 [INFO] 시트 추출 중: 문과계열분석결과
+2026-01-26 16:10:19,604 [INFO] 시트 추출 중: SUBJECT1
+2026-01-26 16:10:20,371 [INFO] 시트 추출 중: SUBJECT3
+2026-01-26 16:10:24,148 [INFO] 시트 추출 중: INDEX
+2026-01-26 16:10:28,126 [INFO] 시트 추출 중: RAWSCORE
+2026-01-26 16:10:29,043 [INFO] Phase 2 완료: 총 9개 청크 생성
+2026-01-26 16:10:29,043 [INFO] [Phase 3] Date-First 정규화 시작...
+2026-01-26 16:10:29,043 [INFO] 청크 정규화 중: output\이과계열분석결과_chunk_0000.parquet
+2026-01-26 16:10:29,622 [INFO] 청크 정규화 중: output\문과계열분석결과_chunk_0000.parquet
+2026-01-26 16:10:30,174 [INFO] 청크 정규화 중: output\SUBJECT1_chunk_0000.parquet
+2026-01-26 16:10:30,355 [INFO] 청크 정규화 중: output\SUBJECT3_chunk_0000.parquet
+2026-01-26 16:10:32,598 [INFO] 청크 정규화 중: output\INDEX_chunk_0000.parquet
+2026-01-26 16:10:32,851 [INFO] 청크 정규화 중: output\INDEX_chunk_0001.parquet
+2026-01-26 16:10:33,114 [INFO] 청크 정규화 중: output\INDEX_chunk_0002.parquet
+2026-01-26 16:10:33,356 [INFO] 청크 정규화 중: output\INDEX_chunk_0003.parquet
+2026-01-26 16:10:33,612 [INFO] 청크 정규화 중: output\RAWSCORE_chunk_0000.parquet
+2026-01-26 16:10:33,779 [INFO] Phase 3 완료: 총 9개 정규화 청크 생성
+2026-01-26 16:10:33,779 [INFO] [Phase 4] Staging Table 적재 시작...
+2026-01-26 16:10:34,892 [ERROR] 파이프라인 실패: 403 GET https://bigquery.googleapis.com/bigquery/v2/projects/neoprime0305/datasets/ds_neoprime_entrance?prettyPrint=false: Access Denied: Dataset neoprime0305:ds_neoprime_entrance: Permission bigquery.datasets.get denied on dataset neoprime0305:ds_neoprime_entrance (or it may not exist).
+Traceback (most recent call last):
+  File "Y:\0126\0126\master_pipeline.py", line 156, in execute
+    loader = StagingTableLoader(
+        self.config['bigquery']['project_id'],
+    ...<2 lines>...
+        self.config['bigquery'].get('location', 'asia-northeast3')
+    )
+  File "Y:\0126\0126\phase4_load.py", line 65, in __init__
+    self._ensure_dataset_exists()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "Y:\0126\0126\phase4_load.py", line 77, in _ensure_dataset_exists
+    self.client.create_dataset(dataset, exists_ok=True)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "Y:\0126\python_env.env\Lib\site-packages\google\cloud\bigquery\client.py", line 724, in create_dataset
+    return self.get_dataset(dataset.reference, retry=retry)
+           ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "Y:\0126\python_env.env\Lib\site-packages\google\cloud\bigquery\client.py", line 919, in get_dataset
+    api_response = self._call_api(
+        retry,
+    ...<5 lines>...
+        query_params=query_params,
+    )
+  File "Y:\0126\python_env.env\Lib\site-packages\google\cloud\bigquery\client.py", line 861, in _call_api
+    return call()
+  File "Y:\0126\python_env.env\Lib\site-packages\google\api_core\retry\retry_unary.py", line 294, in retry_wrapped_func
+    return retry_target(
+        target,
+    ...<3 lines>...
+        on_error=on_error,
+    )
+  File "Y:\0126\python_env.env\Lib\site-packages\google\api_core\retry\retry_unary.py", line 156, in retry_target
+    next_sleep = _retry_error_helper(
+        exc,
+    ...<6 lines>...
+        timeout,
+    )
+  File "Y:\0126\python_env.env\Lib\site-packages\google\api_core\retry\retry_base.py", line 214, in _retry_error_helper
+    raise final_exc from source_exc
+  File "Y:\0126\python_env.env\Lib\site-packages\google\api_core\retry\retry_unary.py", line 147, in retry_target
+    result = target()
+  File "Y:\0126\python_env.env\Lib\site-packages\google\cloud\_http\__init__.py", line 494, in api_request
+    raise exceptions.from_http_response(response)
+google.api_core.exceptions.Forbidden: 403 GET https://bigquery.googleapis.com/bigquery/v2/projects/neoprime0305/datasets/ds_neoprime_entrance?prettyPrint=false: Access Denied: Dataset neoprime0305:ds_neoprime_entrance: Permission bigquery.datasets.get denied on dataset neoprime0305:ds_neoprime_entrance (or it may not exist).
+2026-01-26 16:10:34,894 [INFO] [완료] 총 실행 시간: 19.45초
+2026-01-26 16:10:34,894 [INFO] [완료] 최종 리포트: output\pipeline_report.json
+2026-01-26 16:10:34,894 [WARNING] 시도 2 실패, 5초 후 재시도: 403 GET https://bigquery.googleapis.com/bigquery/v2/projects/neoprime0305/datasets/ds_neoprime_entrance?prettyPrint=false: Access Denied: Dataset neoprime0305:ds_neoprime_entrance: Permission bigquery.datasets.get denied on dataset neoprime0305:ds_neoprime_entrance (or it may not exist).
+2026-01-26 16:10:39,894 [INFO] ============================================================
+2026-01-26 16:10:39,894 [INFO] NEO GOD Ultra Pipeline v2.0 시작
+2026-01-26 16:10:39,894 [INFO] ============================================================
+2026-01-26 16:10:39,894 [INFO] [Phase 1] 고속 정찰 시작...
+2026-01-26 16:10:40,171 [INFO] 타겟 시트 식별: 6개
+2026-01-26 16:10:40,171 [INFO] [Phase 2] 물리적 이원화 추출 시작...
+2026-01-26 16:10:40,172 [INFO] 시트 추출 중: 이과계열분석결과
+2026-01-26 16:10:41,956 [INFO] 시트 추출 중: 문과계열분석결과
+2026-01-26 16:10:43,774 [INFO] 시트 추출 중: SUBJECT1
+2026-01-26 16:10:44,410 [INFO] 시트 추출 중: SUBJECT3
+2026-01-26 16:10:48,068 [INFO] 시트 추출 중: INDEX
+2026-01-26 16:10:52,425 [INFO] 시트 추출 중: RAWSCORE
+2026-01-26 16:10:53,366 [INFO] Phase 2 완료: 총 9개 청크 생성
+2026-01-26 16:10:53,366 [INFO] [Phase 3] Date-First 정규화 시작...
+2026-01-26 16:10:53,366 [INFO] 청크 정규화 중: output\이과계열분석결과_chunk_0000.parquet
+2026-01-26 16:10:53,905 [INFO] 청크 정규화 중: output\문과계열분석결과_chunk_0000.parquet
+2026-01-26 16:10:54,399 [INFO] 청크 정규화 중: output\SUBJECT1_chunk_0000.parquet
+2026-01-26 16:10:54,562 [INFO] 청크 정규화 중: output\SUBJECT3_chunk_0000.parquet
+2026-01-26 16:10:56,782 [INFO] 청크 정규화 중: output\INDEX_chunk_0000.parquet
+2026-01-26 16:10:57,045 [INFO] 청크 정규화 중: output\INDEX_chunk_0001.parquet
+2026-01-26 16:10:57,272 [INFO] 청크 정규화 중: output\INDEX_chunk_0002.parquet
+2026-01-26 16:10:57,525 [INFO] 청크 정규화 중: output\INDEX_chunk_0003.parquet
+2026-01-26 16:10:57,781 [INFO] 청크 정규화 중: output\RAWSCORE_chunk_0000.parquet
+2026-01-26 16:10:57,951 [INFO] Phase 3 완료: 총 9개 정규화 청크 생성
+2026-01-26 16:10:57,951 [INFO] [Phase 4] Staging Table 적재 시작...
+2026-01-26 16:10:58,999 [ERROR] 파이프라인 실패: 403 GET https://bigquery.googleapis.com/bigquery/v2/projects/neoprime0305/datasets/ds_neoprime_entrance?prettyPrint=false: Access Denied: Dataset neoprime0305:ds_neoprime_entrance: Permission bigquery.datasets.get denied on dataset neoprime0305:ds_neoprime_entrance (or it may not exist).
+Traceback (most recent call last):
+  File "Y:\0126\0126\master_pipeline.py", line 156, in execute
+    loader = StagingTableLoader(
+        self.config['bigquery']['project_id'],
+    ...<2 lines>...
+        self.config['bigquery'].get('location', 'asia-northeast3')
+    )
+  File "Y:\0126\0126\phase4_load.py", line 65, in __init__
+    self._ensure_dataset_exists()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "Y:\0126\0126\phase4_load.py", line 77, in _ensure_dataset_exists
+    self.client.create_dataset(dataset, exists_ok=True)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "Y:\0126\python_env.env\Lib\site-packages\google\cloud\bigquery\client.py", line 724, in create_dataset
+    return self.get_dataset(dataset.reference, retry=retry)
+           ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "Y:\0126\python_env.env\Lib\site-packages\google\cloud\bigquery\client.py", line 919, in get_dataset
+    api_response = self._call_api(
+        retry,
+    ...<5 lines>...
+        query_params=query_params,
+    )
+  File "Y:\0126\python_env.env\Lib\site-packages\google\cloud\bigquery\client.py", line 861, in _call_api
+    return call()
+  File "Y:\0126\python_env.env\Lib\site-packages\google\api_core\retry\retry_unary.py", line 294, in retry_wrapped_func
+    return retry_target(
+        target,
+    ...<3 lines>...
+        on_error=on_error,
+    )
+  File "Y:\0126\python_env.env\Lib\site-packages\google\api_core\retry\retry_unary.py", line 156, in retry_target
+    next_sleep = _retry_error_helper(
+        exc,
+    ...<6 lines>...
+        timeout,
+    )
+  File "Y:\0126\python_env.env\Lib\site-packages\google\api_core\retry\retry_base.py", line 214, in _retry_error_helper
+    raise final_exc from source_exc
+  File "Y:\0126\python_env.env\Lib\site-packages\google\api_core\retry\retry_unary.py", line 147, in retry_target
+    result = target()
+  File "Y:\0126\python_env.env\Lib\site-packages\google\cloud\_http\__init__.py", line 494, in api_request
+    raise exceptions.from_http_response(response)
+google.api_core.exceptions.Forbidden: 403 GET https://bigquery.googleapis.com/bigquery/v2/projects/neoprime0305/datasets/ds_neoprime_entrance?prettyPrint=false: Access Denied: Dataset neoprime0305:ds_neoprime_entrance: Permission bigquery.datasets.get denied on dataset neoprime0305:ds_neoprime_entrance (or it may not exist).
+2026-01-26 16:10:59,000 [INFO] [완료] 총 실행 시간: 19.11초
+2026-01-26 16:10:59,000 [INFO] [완료] 최종 리포트: output\pipeline_report.json
+2026-01-26 17:49:23,444 [INFO] ============================================================
+2026-01-26 17:49:23,444 [INFO] NEO GOD Ultra Pipeline v2.0 시작
+2026-01-26 17:49:23,444 [INFO] ============================================================
+2026-01-26 17:49:23,444 [INFO] [Phase 1] 고속 정찰 시작...
+2026-01-26 17:49:23,796 [INFO] 타겟 시트 식별: 6개
+2026-01-26 17:49:23,796 [INFO] [Phase 2] 물리적 이원화 추출 시작...
+2026-01-26 17:49:23,994 [INFO] 시트 추출 중: 이과계열분석결과
+2026-01-26 17:49:25,761 [INFO] 시트 추출 중: 문과계열분석결과
+2026-01-26 17:49:27,491 [INFO] 시트 추출 중: SUBJECT1
+2026-01-26 17:49:28,141 [INFO] 시트 추출 중: SUBJECT3
+2026-01-26 17:49:31,685 [INFO] 시트 추출 중: INDEX
+2026-01-26 17:49:35,929 [INFO] 시트 추출 중: RAWSCORE
+2026-01-26 17:49:36,903 [INFO] Phase 2 완료: 총 9개 청크 생성
+2026-01-26 17:49:36,903 [INFO] [Phase 3] Date-First 정규화 시작...
+2026-01-26 17:49:36,904 [INFO] 청크 정규화 중: output\이과계열분석결과_chunk_0000.parquet
+2026-01-26 17:49:37,518 [INFO] 청크 정규화 중: output\문과계열분석결과_chunk_0000.parquet
+2026-01-26 17:49:38,048 [INFO] 청크 정규화 중: output\SUBJECT1_chunk_0000.parquet
+2026-01-26 17:49:38,246 [INFO] 청크 정규화 중: output\SUBJECT3_chunk_0000.parquet
+2026-01-26 17:49:40,746 [INFO] 청크 정규화 중: output\INDEX_chunk_0000.parquet
+2026-01-26 17:49:40,992 [INFO] 청크 정규화 중: output\INDEX_chunk_0001.parquet
+2026-01-26 17:49:41,235 [INFO] 청크 정규화 중: output\INDEX_chunk_0002.parquet
+2026-01-26 17:49:41,479 [INFO] 청크 정규화 중: output\INDEX_chunk_0003.parquet
+2026-01-26 17:49:41,706 [INFO] 청크 정규화 중: output\RAWSCORE_chunk_0000.parquet
+2026-01-26 17:49:41,872 [INFO] Phase 3 완료: 총 9개 정규화 청크 생성
+2026-01-26 17:49:41,872 [INFO] [Phase 4] Staging Table 적재 시작...
+2026-01-26 17:49:43,234 [ERROR] 파이프라인 실패: 403 GET https://bigquery.googleapis.com/bigquery/v2/projects/neoprime0305/datasets/ds_neoprime_entrance?prettyPrint=false: Access Denied: Dataset neoprime0305:ds_neoprime_entrance: Permission bigquery.datasets.get denied on dataset neoprime0305:ds_neoprime_entrance (or it may not exist).
+Traceback (most recent call last):
+  File "Y:\0126\0126\master_pipeline.py", line 156, in execute
+    loader = StagingTableLoader(
+        self.config['bigquery']['project_id'],
+    ...<2 lines>...
+        self.config['bigquery'].get('location', 'asia-northeast3')
+    )
+  File "Y:\0126\0126\phase4_load.py", line 65, in __init__
+    self._ensure_dataset_exists()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "Y:\0126\0126\phase4_load.py", line 77, in _ensure_dataset_exists
+    self.client.create_dataset(dataset, exists_ok=True)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "Y:\0126\python_env.env\Lib\site-packages\google\cloud\bigquery\client.py", line 724, in create_dataset
+    return self.get_dataset(dataset.reference, retry=retry)
+           ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "Y:\0126\python_env.env\Lib\site-packages\google\cloud\bigquery\client.py", line 919, in get_dataset
+    api_response = self._call_api(
+        retry,
+    ...<5 lines>...
+        query_params=query_params,
+    )
+  File "Y:\0126\python_env.env\Lib\site-packages\google\cloud\bigquery\client.py", line 861, in _call_api
+    return call()
+  File "Y:\0126\python_env.env\Lib\site-packages\google\api_core\retry\retry_unary.py", line 294, in retry_wrapped_func
+    return retry_target(
+        target,
+    ...<3 lines>...
+        on_error=on_error,
+    )
+  File "Y:\0126\python_env.env\Lib\site-packages\google\api_core\retry\retry_unary.py", line 156, in retry_target
+    next_sleep = _retry_error_helper(
+        exc,
+    ...<6 lines>...
+        timeout,
+    )
+  File "Y:\0126\python_env.env\Lib\site-packages\google\api_core\retry\retry_base.py", line 214, in _retry_error_helper
+    raise final_exc from source_exc
+  File "Y:\0126\python_env.env\Lib\site-packages\google\api_core\retry\retry_unary.py", line 147, in retry_target
+    result = target()
+  File "Y:\0126\python_env.env\Lib\site-packages\google\cloud\_http\__init__.py", line 494, in api_request
+    raise exceptions.from_http_response(response)
+google.api_core.exceptions.Forbidden: 403 GET https://bigquery.googleapis.com/bigquery/v2/projects/neoprime0305/datasets/ds_neoprime_entrance?prettyPrint=false: Access Denied: Dataset neoprime0305:ds_neoprime_entrance: Permission bigquery.datasets.get denied on dataset neoprime0305:ds_neoprime_entrance (or it may not exist).
+2026-01-26 17:49:43,236 [INFO] [완료] 총 실행 시간: 19.79초
+2026-01-26 17:49:43,236 [INFO] [완료] 최종 리포트: output\pipeline_report.json
+2026-01-26 17:49:43,236 [WARNING] 시도 1 실패, 5초 후 재시도: 403 GET https://bigquery.googleapis.com/bigquery/v2/projects/neoprime0305/datasets/ds_neoprime_entrance?prettyPrint=false: Access Denied: Dataset neoprime0305:ds_neoprime_entrance: Permission bigquery.datasets.get denied on dataset neoprime0305:ds_neoprime_entrance (or it may not exist).
+2026-01-26 17:49:48,237 [INFO] ============================================================
+2026-01-26 17:49:48,237 [INFO] NEO GOD Ultra Pipeline v2.0 시작
+2026-01-26 17:49:48,237 [INFO] ============================================================
+2026-01-26 17:49:48,237 [INFO] [Phase 1] 고속 정찰 시작...
+2026-01-26 17:49:48,514 [INFO] 타겟 시트 식별: 6개
+2026-01-26 17:49:48,514 [INFO] [Phase 2] 물리적 이원화 추출 시작...
+2026-01-26 17:49:48,514 [INFO] 시트 추출 중: 이과계열분석결과
+2026-01-26 17:49:50,420 [INFO] 시트 추출 중: 문과계열분석결과
+2026-01-26 17:49:52,249 [INFO] 시트 추출 중: SUBJECT1
+2026-01-26 17:49:52,976 [INFO] 시트 추출 중: SUBJECT3
+2026-01-26 17:49:56,739 [INFO] 시트 추출 중: INDEX
+2026-01-26 17:50:00,991 [INFO] 시트 추출 중: RAWSCORE
+2026-01-26 17:50:02,114 [INFO] Phase 2 완료: 총 9개 청크 생성
+2026-01-26 17:50:02,114 [INFO] [Phase 3] Date-First 정규화 시작...
+2026-01-26 17:50:02,114 [INFO] 청크 정규화 중: output\이과계열분석결과_chunk_0000.parquet
+2026-01-26 17:50:02,699 [INFO] 청크 정규화 중: output\문과계열분석결과_chunk_0000.parquet
+2026-01-26 17:50:03,238 [INFO] 청크 정규화 중: output\SUBJECT1_chunk_0000.parquet
+2026-01-26 17:50:03,416 [INFO] 청크 정규화 중: output\SUBJECT3_chunk_0000.parquet
+2026-01-26 17:50:05,810 [INFO] 청크 정규화 중: output\INDEX_chunk_0000.parquet
+2026-01-26 17:50:06,062 [INFO] 청크 정규화 중: output\INDEX_chunk_0001.parquet
+2026-01-26 17:50:06,321 [INFO] 청크 정규화 중: output\INDEX_chunk_0002.parquet
+2026-01-26 17:50:06,569 [INFO] 청크 정규화 중: output\INDEX_chunk_0003.parquet
+2026-01-26 17:50:06,818 [INFO] 청크 정규화 중: output\RAWSCORE_chunk_0000.parquet
+2026-01-26 17:50:06,991 [INFO] Phase 3 완료: 총 9개 정규화 청크 생성
+2026-01-26 17:50:06,991 [INFO] [Phase 4] Staging Table 적재 시작...
+2026-01-26 17:50:08,033 [ERROR] 파이프라인 실패: 403 GET https://bigquery.googleapis.com/bigquery/v2/projects/neoprime0305/datasets/ds_neoprime_entrance?prettyPrint=false: Access Denied: Dataset neoprime0305:ds_neoprime_entrance: Permission bigquery.datasets.get denied on dataset neoprime0305:ds_neoprime_entrance (or it may not exist).
+Traceback (most recent call last):
+  File "Y:\0126\0126\master_pipeline.py", line 156, in execute
+    loader = StagingTableLoader(
+        self.config['bigquery']['project_id'],
+    ...<2 lines>...
+        self.config['bigquery'].get('location', 'asia-northeast3')
+    )
+  File "Y:\0126\0126\phase4_load.py", line 65, in __init__
+    self._ensure_dataset_exists()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "Y:\0126\0126\phase4_load.py", line 77, in _ensure_dataset_exists
+    self.client.create_dataset(dataset, exists_ok=True)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "Y:\0126\python_env.env\Lib\site-packages\google\cloud\bigquery\client.py", line 724, in create_dataset
+    return self.get_dataset(dataset.reference, retry=retry)
+           ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "Y:\0126\python_env.env\Lib\site-packages\google\cloud\bigquery\client.py", line 919, in get_dataset
+    api_response = self._call_api(
+        retry,
+    ...<5 lines>...
+        query_params=query_params,
+    )
+  File "Y:\0126\python_env.env\Lib\site-packages\google\cloud\bigquery\client.py", line 861, in _call_api
+    return call()
+  File "Y:\0126\python_env.env\Lib\site-packages\google\api_core\retry\retry_unary.py", line 294, in retry_wrapped_func
+    return retry_target(
+        target,
+    ...<3 lines>...
+        on_error=on_error,
+    )
+  File "Y:\0126\python_env.env\Lib\site-packages\google\api_core\retry\retry_unary.py", line 156, in retry_target
+    next_sleep = _retry_error_helper(
+        exc,
+    ...<6 lines>...
+        timeout,
+    )
+  File "Y:\0126\python_env.env\Lib\site-packages\google\api_core\retry\retry_base.py", line 214, in _retry_error_helper
+    raise final_exc from source_exc
+  File "Y:\0126\python_env.env\Lib\site-packages\google\api_core\retry\retry_unary.py", line 147, in retry_target
+    result = target()
+  File "Y:\0126\python_env.env\Lib\site-packages\google\cloud\_http\__init__.py", line 494, in api_request
+    raise exceptions.from_http_response(response)
+google.api_core.exceptions.Forbidden: 403 GET https://bigquery.googleapis.com/bigquery/v2/projects/neoprime0305/datasets/ds_neoprime_entrance?prettyPrint=false: Access Denied: Dataset neoprime0305:ds_neoprime_entrance: Permission bigquery.datasets.get denied on dataset neoprime0305:ds_neoprime_entrance (or it may not exist).
+2026-01-26 17:50:08,035 [INFO] [완료] 총 실행 시간: 19.80초
+2026-01-26 17:50:08,035 [INFO] [완료] 최종 리포트: output\pipeline_report.json
+2026-01-26 17:50:08,035 [WARNING] 시도 2 실패, 5초 후 재시도: 403 GET https://bigquery.googleapis.com/bigquery/v2/projects/neoprime0305/datasets/ds_neoprime_entrance?prettyPrint=false: Access Denied: Dataset neoprime0305:ds_neoprime_entrance: Permission bigquery.datasets.get denied on dataset neoprime0305:ds_neoprime_entrance (or it may not exist).
+2026-01-26 17:50:13,036 [INFO] ============================================================
+2026-01-26 17:50:13,036 [INFO] NEO GOD Ultra Pipeline v2.0 시작
+2026-01-26 17:50:13,036 [INFO] ============================================================
+2026-01-26 17:50:13,036 [INFO] [Phase 1] 고속 정찰 시작...
+2026-01-26 17:50:13,282 [INFO] 타겟 시트 식별: 6개
+2026-01-26 17:50:13,282 [INFO] [Phase 2] 물리적 이원화 추출 시작...
+2026-01-26 17:50:13,282 [INFO] 시트 추출 중: 이과계열분석결과
+2026-01-26 17:50:15,121 [INFO] 시트 추출 중: 문과계열분석결과
+2026-01-26 17:50:16,903 [INFO] 시트 추출 중: SUBJECT1
+2026-01-26 17:50:17,544 [INFO] 시트 추출 중: SUBJECT3
+2026-01-26 17:50:21,227 [INFO] 시트 추출 중: INDEX
+2026-01-26 17:50:25,423 [INFO] 시트 추출 중: RAWSCORE
+2026-01-26 17:50:26,405 [INFO] Phase 2 완료: 총 9개 청크 생성
+2026-01-26 17:50:26,405 [INFO] [Phase 3] Date-First 정규화 시작...
+2026-01-26 17:50:26,405 [INFO] 청크 정규화 중: output\이과계열분석결과_chunk_0000.parquet
+2026-01-26 17:50:26,914 [INFO] 청크 정규화 중: output\문과계열분석결과_chunk_0000.parquet
+2026-01-26 17:50:27,467 [INFO] 청크 정규화 중: output\SUBJECT1_chunk_0000.parquet
+2026-01-26 17:50:27,649 [INFO] 청크 정규화 중: output\SUBJECT3_chunk_0000.parquet
+2026-01-26 17:50:29,913 [INFO] 청크 정규화 중: output\INDEX_chunk_0000.parquet
+2026-01-26 17:50:30,165 [INFO] 청크 정규화 중: output\INDEX_chunk_0001.parquet
+2026-01-26 17:50:30,402 [INFO] 청크 정규화 중: output\INDEX_chunk_0002.parquet
+2026-01-26 17:50:30,654 [INFO] 청크 정규화 중: output\INDEX_chunk_0003.parquet
+2026-01-26 17:50:30,886 [INFO] 청크 정규화 중: output\RAWSCORE_chunk_0000.parquet
+2026-01-26 17:50:31,058 [INFO] Phase 3 완료: 총 9개 정규화 청크 생성
+2026-01-26 17:50:31,058 [INFO] [Phase 4] Staging Table 적재 시작...
+2026-01-26 17:50:32,135 [ERROR] 파이프라인 실패: 403 GET https://bigquery.googleapis.com/bigquery/v2/projects/neoprime0305/datasets/ds_neoprime_entrance?prettyPrint=false: Access Denied: Dataset neoprime0305:ds_neoprime_entrance: Permission bigquery.datasets.get denied on dataset neoprime0305:ds_neoprime_entrance (or it may not exist).
+Traceback (most recent call last):
+  File "Y:\0126\0126\master_pipeline.py", line 156, in execute
+    loader = StagingTableLoader(
+        self.config['bigquery']['project_id'],
+    ...<2 lines>...
+        self.config['bigquery'].get('location', 'asia-northeast3')
+    )
+  File "Y:\0126\0126\phase4_load.py", line 65, in __init__
+    self._ensure_dataset_exists()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "Y:\0126\0126\phase4_load.py", line 77, in _ensure_dataset_exists
+    self.client.create_dataset(dataset, exists_ok=True)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "Y:\0126\python_env.env\Lib\site-packages\google\cloud\bigquery\client.py", line 724, in create_dataset
+    return self.get_dataset(dataset.reference, retry=retry)
+           ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "Y:\0126\python_env.env\Lib\site-packages\google\cloud\bigquery\client.py", line 919, in get_dataset
+    api_response = self._call_api(
+        retry,
+    ...<5 lines>...
+        query_params=query_params,
+    )
+  File "Y:\0126\python_env.env\Lib\site-packages\google\cloud\bigquery\client.py", line 861, in _call_api
+    return call()
+  File "Y:\0126\python_env.env\Lib\site-packages\google\api_core\retry\retry_unary.py", line 294, in retry_wrapped_func
+    return retry_target(
+        target,
+    ...<3 lines>...
+        on_error=on_error,
+    )
+  File "Y:\0126\python_env.env\Lib\site-packages\google\api_core\retry\retry_unary.py", line 156, in retry_target
+    next_sleep = _retry_error_helper(
+        exc,
+    ...<6 lines>...
+        timeout,
+    )
+  File "Y:\0126\python_env.env\Lib\site-packages\google\api_core\retry\retry_base.py", line 214, in _retry_error_helper
+    raise final_exc from source_exc
+  File "Y:\0126\python_env.env\Lib\site-packages\google\api_core\retry\retry_unary.py", line 147, in retry_target
+    result = target()
+  File "Y:\0126\python_env.env\Lib\site-packages\google\cloud\_http\__init__.py", line 494, in api_request
+    raise exceptions.from_http_response(response)
+google.api_core.exceptions.Forbidden: 403 GET https://bigquery.googleapis.com/bigquery/v2/projects/neoprime0305/datasets/ds_neoprime_entrance?prettyPrint=false: Access Denied: Dataset neoprime0305:ds_neoprime_entrance: Permission bigquery.datasets.get denied on dataset neoprime0305:ds_neoprime_entrance (or it may not exist).
+2026-01-26 17:50:32,136 [INFO] [완료] 총 실행 시간: 19.10초
+2026-01-26 17:50:32,137 [INFO] [완료] 최종 리포트: output\pipeline_report.json
+2026-01-26 17:50:56,865 [INFO] ============================================================
+2026-01-26 17:50:56,866 [INFO] NEO GOD Ultra Pipeline v2.0 시작
+2026-01-26 17:50:56,866 [INFO] ============================================================
+2026-01-26 17:50:56,866 [INFO] [Phase 1] 고속 정찰 시작...
+2026-01-26 17:50:57,234 [INFO] 타겟 시트 식별: 6개
+2026-01-26 17:50:57,234 [INFO] [Phase 2] 물리적 이원화 추출 시작...
+2026-01-26 17:50:57,436 [INFO] 시트 추출 중: 이과계열분석결과
+2026-01-26 17:50:59,260 [INFO] 시트 추출 중: 문과계열분석결과
+2026-01-26 17:51:01,110 [INFO] 시트 추출 중: SUBJECT1
+2026-01-26 17:51:01,776 [INFO] 시트 추출 중: SUBJECT3
+2026-01-26 17:51:05,521 [INFO] 시트 추출 중: INDEX
+2026-01-26 17:51:09,783 [INFO] 시트 추출 중: RAWSCORE
+2026-01-26 17:51:10,697 [INFO] Phase 2 완료: 총 9개 청크 생성
+2026-01-26 17:51:10,698 [INFO] [Phase 3] Date-First 정규화 시작...
+2026-01-26 17:51:10,698 [INFO] 청크 정규화 중: output\이과계열분석결과_chunk_0000.parquet
+2026-01-26 17:51:11,252 [INFO] 청크 정규화 중: output\문과계열분석결과_chunk_0000.parquet
+2026-01-26 17:51:11,768 [INFO] 청크 정규화 중: output\SUBJECT1_chunk_0000.parquet
+2026-01-26 17:51:11,957 [INFO] 청크 정규화 중: output\SUBJECT3_chunk_0000.parquet
+2026-01-26 17:51:14,222 [INFO] 청크 정규화 중: output\INDEX_chunk_0000.parquet
+2026-01-26 17:51:14,450 [INFO] 청크 정규화 중: output\INDEX_chunk_0001.parquet
+2026-01-26 17:51:14,686 [INFO] 청크 정규화 중: output\INDEX_chunk_0002.parquet
+2026-01-26 17:51:14,939 [INFO] 청크 정규화 중: output\INDEX_chunk_0003.parquet
+2026-01-26 17:51:15,166 [INFO] 청크 정규화 중: output\RAWSCORE_chunk_0000.parquet
+2026-01-26 17:51:15,331 [INFO] Phase 3 완료: 총 9개 정규화 청크 생성
+2026-01-26 17:51:15,331 [INFO] [Phase 4] Staging Table 적재 시작...
+2026-01-26 17:51:47,648 [INFO] Phase 4 완료: 상태=failed
+2026-01-26 17:51:47,648 [INFO] [완료] 총 실행 시간: 50.78초
+2026-01-26 17:51:47,648 [INFO] [완료] 최종 리포트: output\pipeline_report.json
+2026-01-26 17:56:33,285 [INFO] ============================================================
+2026-01-26 17:56:33,285 [INFO] NEO GOD Ultra Pipeline v2.0 시작
+2026-01-26 17:56:33,285 [INFO] ============================================================
+2026-01-26 17:56:33,285 [INFO] [Phase 1] 고속 정찰 시작...
+2026-01-26 17:56:33,639 [INFO] 타겟 시트 식별: 6개
+2026-01-26 17:56:33,639 [INFO] [Phase 2] 물리적 이원화 추출 시작...
+2026-01-26 17:56:33,850 [INFO] 시트 추출 중: 이과계열분석결과
+2026-01-26 17:56:35,599 [INFO] 시트 추출 중: 문과계열분석결과
+2026-01-26 17:56:37,327 [INFO] 시트 추출 중: SUBJECT1
+2026-01-26 17:56:37,972 [INFO] 시트 추출 중: SUBJECT3
+2026-01-26 17:56:41,467 [INFO] 시트 추출 중: INDEX
+2026-01-26 17:56:45,389 [INFO] 시트 추출 중: RAWSCORE
+2026-01-26 17:56:46,289 [INFO] Phase 2 완료: 총 9개 청크 생성
+2026-01-26 17:56:46,289 [INFO] [Phase 3] Date-First 정규화 시작...
+2026-01-26 17:56:46,292 [INFO] 청크 정규화 중: output\이과계열분석결과_chunk_0000.parquet
+2026-01-26 17:56:46,809 [INFO] 청크 정규화 중: output\문과계열분석결과_chunk_0000.parquet
+2026-01-26 17:56:47,318 [INFO] 청크 정규화 중: output\SUBJECT1_chunk_0000.parquet
+2026-01-26 17:56:47,476 [INFO] 청크 정규화 중: output\SUBJECT3_chunk_0000.parquet
+2026-01-26 17:56:49,715 [INFO] 청크 정규화 중: output\INDEX_chunk_0000.parquet
+2026-01-26 17:56:49,942 [INFO] 청크 정규화 중: output\INDEX_chunk_0001.parquet
+2026-01-26 17:56:50,187 [INFO] 청크 정규화 중: output\INDEX_chunk_0002.parquet
+2026-01-26 17:56:50,422 [INFO] 청크 정규화 중: output\INDEX_chunk_0003.parquet
+2026-01-26 17:56:50,643 [INFO] 청크 정규화 중: output\RAWSCORE_chunk_0000.parquet
+2026-01-26 17:56:50,797 [INFO] Phase 3 완료: 총 9개 정규화 청크 생성
+2026-01-26 17:56:50,797 [INFO] [Phase 4] Staging Table 적재 시작...
+2026-01-26 17:56:56,469 [INFO] Phase 4 완료: 상태=failed
+2026-01-26 17:56:56,469 [INFO] [완료] 총 실행 시간: 23.18초
+2026-01-26 17:56:56,469 [INFO] [완료] 최종 리포트: output\pipeline_report.json
+2026-01-26 17:57:24,211 [INFO] ============================================================
+2026-01-26 17:57:24,211 [INFO] NEO GOD Ultra Pipeline v2.0 시작
+2026-01-26 17:57:24,211 [INFO] ============================================================
+2026-01-26 17:57:24,211 [INFO] [Phase 1] 고속 정찰 시작...
+2026-01-26 17:57:24,560 [INFO] 타겟 시트 식별: 6개
+2026-01-26 17:57:24,560 [INFO] [Phase 2] 물리적 이원화 추출 시작...
+2026-01-26 17:57:24,757 [INFO] 시트 추출 중: 이과계열분석결과
+2026-01-26 17:57:26,570 [INFO] 시트 추출 중: 문과계열분석결과
+2026-01-26 17:57:28,412 [INFO] 시트 추출 중: SUBJECT1
+2026-01-26 17:57:29,065 [INFO] 시트 추출 중: SUBJECT3
+2026-01-26 17:57:32,807 [INFO] 시트 추출 중: INDEX
+2026-01-26 17:57:36,977 [INFO] 시트 추출 중: RAWSCORE
+2026-01-26 17:57:37,968 [INFO] Phase 2 완료: 총 9개 청크 생성
+2026-01-26 17:57:37,968 [INFO] [Phase 3] Date-First 정규화 시작...
+2026-01-26 17:57:37,969 [INFO] 청크 정규화 중: output\이과계열분석결과_chunk_0000.parquet
+2026-01-26 17:57:38,528 [INFO] 청크 정규화 중: output\문과계열분석결과_chunk_0000.parquet
+2026-01-26 17:57:39,042 [INFO] 청크 정규화 중: output\SUBJECT1_chunk_0000.parquet
+2026-01-26 17:57:39,245 [INFO] 청크 정규화 중: output\SUBJECT3_chunk_0000.parquet
+2026-01-26 17:57:42,158 [INFO] 청크 정규화 중: output\INDEX_chunk_0000.parquet
+2026-01-26 17:57:42,452 [INFO] 청크 정규화 중: output\INDEX_chunk_0001.parquet
+2026-01-26 17:57:42,723 [INFO] 청크 정규화 중: output\INDEX_chunk_0002.parquet
+2026-01-26 17:57:42,992 [INFO] 청크 정규화 중: output\INDEX_chunk_0003.parquet
+2026-01-26 17:57:43,291 [INFO] 청크 정규화 중: output\RAWSCORE_chunk_0000.parquet
+2026-01-26 17:57:43,469 [INFO] Phase 3 완료: 총 9개 정규화 청크 생성
+2026-01-26 17:57:43,469 [INFO] [Phase 4] Staging Table 적재 시작...
+2026-01-26 17:57:48,965 [INFO] Phase 4 완료: 상태=failed
+2026-01-26 17:57:48,966 [INFO] [완료] 총 실행 시간: 24.75초
+2026-01-26 17:57:48,966 [INFO] [완료] 최종 리포트: output\pipeline_report.json
+2026-01-26 17:58:52,835 [INFO] ============================================================
+2026-01-26 17:58:52,836 [INFO] NEO GOD Ultra Pipeline v2.0 시작
+2026-01-26 17:58:52,836 [INFO] ============================================================
+2026-01-26 17:58:52,836 [INFO] [Phase 1] 고속 정찰 시작...
+2026-01-26 17:58:53,237 [INFO] 타겟 시트 식별: 6개
+2026-01-26 17:58:53,237 [INFO] [Phase 2] 물리적 이원화 추출 시작...
+2026-01-26 17:58:53,433 [INFO] 시트 추출 중: 이과계열분석결과
+2026-01-26 17:58:55,126 [INFO] 시트 추출 중: 문과계열분석결과
+2026-01-26 17:58:56,902 [INFO] 시트 추출 중: SUBJECT1
+2026-01-26 17:58:57,597 [INFO] 시트 추출 중: SUBJECT3
+2026-01-26 17:59:01,265 [INFO] 시트 추출 중: INDEX
+2026-01-26 17:59:05,582 [INFO] 시트 추출 중: RAWSCORE
+2026-01-26 17:59:06,512 [INFO] Phase 2 완료: 총 9개 청크 생성
+2026-01-26 17:59:06,512 [INFO] [Phase 3] Date-First 정규화 시작...
+2026-01-26 17:59:06,512 [INFO] 청크 정규화 중: output\이과계열분석결과_chunk_0000.parquet
+2026-01-26 17:59:07,094 [INFO] 청크 정규화 중: output\문과계열분석결과_chunk_0000.parquet
+2026-01-26 17:59:07,656 [INFO] 청크 정규화 중: output\SUBJECT1_chunk_0000.parquet
+2026-01-26 17:59:07,826 [INFO] 청크 정규화 중: output\SUBJECT3_chunk_0000.parquet
+2026-01-26 17:59:10,067 [INFO] 청크 정규화 중: output\INDEX_chunk_0000.parquet
+2026-01-26 17:59:10,296 [INFO] 청크 정규화 중: output\INDEX_chunk_0001.parquet
+2026-01-26 17:59:10,531 [INFO] 청크 정규화 중: output\INDEX_chunk_0002.parquet
+2026-01-26 17:59:10,761 [INFO] 청크 정규화 중: output\INDEX_chunk_0003.parquet
+2026-01-26 17:59:10,994 [INFO] 청크 정규화 중: output\RAWSCORE_chunk_0000.parquet
+2026-01-26 17:59:11,160 [INFO] Phase 3 완료: 총 9개 정규화 청크 생성
+2026-01-26 17:59:11,160 [INFO] [Phase 4] Staging Table 적재 시작...
+2026-01-26 17:59:12,259 [INFO] [Phase 4] 시트 '이과계열분석결과' → 테이블 'tb_raw_2026_이과계열분석결과' (5,833 rows)
+2026-01-26 17:59:16,853 [INFO] [Phase 4] 시트 '문과계열분석결과' → 테이블 'tb_raw_2026_문과계열분석결과' (5,833 rows)
+2026-01-26 17:59:21,085 [INFO] [Phase 4] 시트 'SUBJECT1' → 테이블 'tb_raw_2026_SUBJECT1' (1,004 rows)
+2026-01-26 17:59:25,676 [INFO] [Phase 4] 시트 'SUBJECT3' → 테이블 'tb_raw_2026_SUBJECT3' (1,464 rows)
+2026-01-26 17:59:33,001 [INFO] [Phase 4] 시트 'INDEX' → 테이블 'tb_raw_2026_INDEX' (199,920 rows)
+2026-01-26 17:59:45,254 [INFO] [Phase 4] 시트 'RAWSCORE' → 테이블 'tb_raw_2026_RAWSCORE' (11,366 rows)
+2026-01-26 17:59:50,555 [ERROR] 파이프라인 실패: 'target_table'
+Traceback (most recent call last):
+  File "Y:\0126\0126\master_pipeline.py", line 226, in execute
+    loader.generate_upload_report(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self.results['phase4'],
+        ^^^^^^^^^^^^^^^^^^^^^^^
+        all_normalized_chunks,
+        ^^^^^^^^^^^^^^^^^^^^^^
+        str(self.output_dir)
+        ^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "Y:\0126\0126\phase4_load.py", line 356, in generate_upload_report
+    'table_id': result['target_table'],
+                ~~~~~~^^^^^^^^^^^^^^^^
+KeyError: 'target_table'
+2026-01-26 17:59:50,556 [INFO] [완료] 총 실행 시간: 57.72초
+2026-01-26 17:59:50,556 [INFO] [완료] 최종 리포트: output\pipeline_report.json
+2026-01-26 17:59:50,556 [WARNING] 시도 1 실패, 5초 후 재시도: 'target_table'
+2026-01-26 17:59:55,556 [INFO] ============================================================
+2026-01-26 17:59:55,557 [INFO] NEO GOD Ultra Pipeline v2.0 시작
+2026-01-26 17:59:55,557 [INFO] ============================================================
+2026-01-26 17:59:55,557 [INFO] [Phase 1] 고속 정찰 시작...
+2026-01-26 17:59:55,816 [INFO] 타겟 시트 식별: 6개
+2026-01-26 17:59:55,816 [INFO] [Phase 2] 물리적 이원화 추출 시작...
+2026-01-26 17:59:55,816 [INFO] 시트 추출 중: 이과계열분석결과
+2026-01-26 17:59:57,628 [INFO] 시트 추출 중: 문과계열분석결과
+2026-01-26 17:59:59,470 [INFO] 시트 추출 중: SUBJECT1
+2026-01-26 18:00:00,165 [INFO] 시트 추출 중: SUBJECT3
+2026-01-26 18:00:03,937 [INFO] 시트 추출 중: INDEX
+2026-01-26 18:00:08,123 [INFO] 시트 추출 중: RAWSCORE
+2026-01-26 18:00:09,088 [INFO] Phase 2 완료: 총 9개 청크 생성
+2026-01-26 18:00:09,088 [INFO] [Phase 3] Date-First 정규화 시작...
+2026-01-26 18:00:09,088 [INFO] 청크 정규화 중: output\이과계열분석결과_chunk_0000.parquet
+2026-01-26 18:00:09,690 [INFO] 청크 정규화 중: output\문과계열분석결과_chunk_0000.parquet
+2026-01-26 18:00:10,216 [INFO] 청크 정규화 중: output\SUBJECT1_chunk_0000.parquet
+2026-01-26 18:00:10,374 [INFO] 청크 정규화 중: output\SUBJECT3_chunk_0000.parquet
+2026-01-26 18:00:12,792 [INFO] 청크 정규화 중: output\INDEX_chunk_0000.parquet
+2026-01-26 18:00:13,062 [INFO] 청크 정규화 중: output\INDEX_chunk_0001.parquet
+2026-01-26 18:00:13,344 [INFO] 청크 정규화 중: output\INDEX_chunk_0002.parquet
+2026-01-26 18:00:13,628 [INFO] 청크 정규화 중: output\INDEX_chunk_0003.parquet
+2026-01-26 18:00:13,882 [INFO] 청크 정규화 중: output\RAWSCORE_chunk_0000.parquet
+2026-01-26 18:00:14,025 [INFO] Phase 3 완료: 총 9개 정규화 청크 생성
+2026-01-26 18:00:14,025 [INFO] [Phase 4] Staging Table 적재 시작...
+2026-01-26 18:00:14,752 [INFO] [Phase 4] 시트 '이과계열분석결과' → 테이블 'tb_raw_2026_이과계열분석결과' (5,833 rows)
+2026-01-26 18:00:19,270 [INFO] [Phase 4] 시트 '문과계열분석결과' → 테이블 'tb_raw_2026_문과계열분석결과' (5,833 rows)
+2026-01-26 18:00:26,870 [INFO] [Phase 4] 시트 'SUBJECT1' → 테이블 'tb_raw_2026_SUBJECT1' (1,004 rows)
+2026-01-26 18:00:30,992 [INFO] [Phase 4] 시트 'SUBJECT3' → 테이블 'tb_raw_2026_SUBJECT3' (1,464 rows)
+2026-01-26 18:00:38,743 [INFO] [Phase 4] 시트 'INDEX' → 테이블 'tb_raw_2026_INDEX' (199,920 rows)
+2026-01-26 18:00:53,232 [INFO] [Phase 4] 시트 'RAWSCORE' → 테이블 'tb_raw_2026_RAWSCORE' (11,366 rows)
+2026-01-26 18:01:00,223 [ERROR] 파이프라인 실패: 'target_table'
+Traceback (most recent call last):
+  File "Y:\0126\0126\master_pipeline.py", line 226, in execute
+    loader.generate_upload_report(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self.results['phase4'],
+        ^^^^^^^^^^^^^^^^^^^^^^^
+        all_normalized_chunks,
+        ^^^^^^^^^^^^^^^^^^^^^^
+        str(self.output_dir)
+        ^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "Y:\0126\0126\phase4_load.py", line 356, in generate_upload_report
+    'table_id': result['target_table'],
+                ~~~~~~^^^^^^^^^^^^^^^^
+KeyError: 'target_table'
+2026-01-26 18:01:00,224 [INFO] [완료] 총 실행 시간: 64.67초
+2026-01-26 18:01:00,224 [INFO] [완료] 최종 리포트: output\pipeline_report.json
+2026-01-26 18:01:00,224 [WARNING] 시도 2 실패, 5초 후 재시도: 'target_table'
+2026-01-26 18:01:05,224 [INFO] ============================================================
+2026-01-26 18:01:05,224 [INFO] NEO GOD Ultra Pipeline v2.0 시작
+2026-01-26 18:01:05,224 [INFO] ============================================================
+2026-01-26 18:01:05,224 [INFO] [Phase 1] 고속 정찰 시작...
+2026-01-26 18:01:05,481 [INFO] 타겟 시트 식별: 6개
+2026-01-26 18:01:05,481 [INFO] [Phase 2] 물리적 이원화 추출 시작...
+2026-01-26 18:01:05,481 [INFO] 시트 추출 중: 이과계열분석결과
+2026-01-26 18:01:07,345 [INFO] 시트 추출 중: 문과계열분석결과
+2026-01-26 18:01:09,223 [INFO] 시트 추출 중: SUBJECT1
+2026-01-26 18:01:09,963 [INFO] 시트 추출 중: SUBJECT3
+2026-01-26 18:01:13,804 [INFO] 시트 추출 중: INDEX
+2026-01-26 18:01:18,247 [INFO] 시트 추출 중: RAWSCORE
+2026-01-26 18:01:19,372 [INFO] Phase 2 완료: 총 9개 청크 생성
+2026-01-26 18:01:19,372 [INFO] [Phase 3] Date-First 정규화 시작...
+2026-01-26 18:01:19,372 [INFO] 청크 정규화 중: output\이과계열분석결과_chunk_0000.parquet
+2026-01-26 18:01:19,966 [INFO] 청크 정규화 중: output\문과계열분석결과_chunk_0000.parquet
+2026-01-26 18:01:20,531 [INFO] 청크 정규화 중: output\SUBJECT1_chunk_0000.parquet
+2026-01-26 18:01:20,736 [INFO] 청크 정규화 중: output\SUBJECT3_chunk_0000.parquet
+2026-01-26 18:01:23,269 [INFO] 청크 정규화 중: output\INDEX_chunk_0000.parquet
+2026-01-26 18:01:23,547 [INFO] 청크 정규화 중: output\INDEX_chunk_0001.parquet
+2026-01-26 18:01:23,803 [INFO] 청크 정규화 중: output\INDEX_chunk_0002.parquet
+2026-01-26 18:01:24,065 [INFO] 청크 정규화 중: output\INDEX_chunk_0003.parquet
+2026-01-26 18:01:24,330 [INFO] 청크 정규화 중: output\RAWSCORE_chunk_0000.parquet
+2026-01-26 18:01:24,505 [INFO] Phase 3 완료: 총 9개 정규화 청크 생성
+2026-01-26 18:01:24,506 [INFO] [Phase 4] Staging Table 적재 시작...
+2026-01-26 18:01:25,284 [INFO] [Phase 4] 시트 '이과계열분석결과' → 테이블 'tb_raw_2026_이과계열분석결과' (5,833 rows)
+2026-01-26 18:01:29,439 [INFO] [Phase 4] 시트 '문과계열분석결과' → 테이블 'tb_raw_2026_문과계열분석결과' (5,833 rows)
+2026-01-26 18:01:33,278 [INFO] [Phase 4] 시트 'SUBJECT1' → 테이블 'tb_raw_2026_SUBJECT1' (1,004 rows)
+2026-01-26 18:01:37,862 [INFO] [Phase 4] 시트 'SUBJECT3' → 테이블 'tb_raw_2026_SUBJECT3' (1,464 rows)
+2026-01-26 18:01:45,633 [INFO] [Phase 4] 시트 'INDEX' → 테이블 'tb_raw_2026_INDEX' (199,920 rows)
+2026-01-26 18:01:58,881 [INFO] [Phase 4] 시트 'RAWSCORE' → 테이블 'tb_raw_2026_RAWSCORE' (11,366 rows)
+2026-01-26 18:02:06,994 [ERROR] 파이프라인 실패: 'target_table'
+Traceback (most recent call last):
+  File "Y:\0126\0126\master_pipeline.py", line 226, in execute
+    loader.generate_upload_report(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self.results['phase4'],
+        ^^^^^^^^^^^^^^^^^^^^^^^
+        all_normalized_chunks,
+        ^^^^^^^^^^^^^^^^^^^^^^
+        str(self.output_dir)
+        ^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "Y:\0126\0126\phase4_load.py", line 356, in generate_upload_report
+    'table_id': result['target_table'],
+                ~~~~~~^^^^^^^^^^^^^^^^
+KeyError: 'target_table'
+2026-01-26 18:02:06,995 [INFO] [완료] 총 실행 시간: 61.77초
+2026-01-26 18:02:06,995 [INFO] [완료] 최종 리포트: output\pipeline_report.json
+2026-01-26 18:02:56,537 [INFO] ============================================================
+2026-01-26 18:02:56,537 [INFO] NEO GOD Ultra Pipeline v2.0 시작
+2026-01-26 18:02:56,537 [INFO] ============================================================
+2026-01-26 18:02:56,537 [INFO] [Phase 1] 고속 정찰 시작...
+2026-01-26 18:02:56,978 [INFO] 타겟 시트 식별: 6개
+2026-01-26 18:02:56,978 [INFO] [Phase 2] 물리적 이원화 추출 시작...
+2026-01-26 18:02:57,211 [INFO] 시트 추출 중: 이과계열분석결과
+2026-01-26 18:02:59,160 [INFO] 시트 추출 중: 문과계열분석결과
+2026-01-26 18:03:01,211 [INFO] 시트 추출 중: SUBJECT1
+2026-01-26 18:03:01,923 [INFO] 시트 추출 중: SUBJECT3
+2026-01-26 18:03:06,273 [INFO] 시트 추출 중: INDEX
+2026-01-26 18:03:10,668 [INFO] 시트 추출 중: RAWSCORE
+2026-01-26 18:03:11,740 [INFO] Phase 2 완료: 총 9개 청크 생성
+2026-01-26 18:03:11,740 [INFO] [Phase 3] Date-First 정규화 시작...
+2026-01-26 18:03:11,741 [INFO] 청크 정규화 중: output\이과계열분석결과_chunk_0000.parquet
+2026-01-26 18:03:12,372 [INFO] 청크 정규화 중: output\문과계열분석결과_chunk_0000.parquet
+2026-01-26 18:03:12,989 [INFO] 청크 정규화 중: output\SUBJECT1_chunk_0000.parquet
+2026-01-26 18:03:13,173 [INFO] 청크 정규화 중: output\SUBJECT3_chunk_0000.parquet
+2026-01-26 18:03:15,579 [INFO] 청크 정규화 중: output\INDEX_chunk_0000.parquet
+2026-01-26 18:03:15,819 [INFO] 청크 정규화 중: output\INDEX_chunk_0001.parquet
+2026-01-26 18:03:16,059 [INFO] 청크 정규화 중: output\INDEX_chunk_0002.parquet
+2026-01-26 18:03:16,312 [INFO] 청크 정규화 중: output\INDEX_chunk_0003.parquet
+2026-01-26 18:03:16,567 [INFO] 청크 정규화 중: output\RAWSCORE_chunk_0000.parquet
+2026-01-26 18:03:16,743 [INFO] Phase 3 완료: 총 9개 정규화 청크 생성
+2026-01-26 18:03:16,743 [INFO] [Phase 4] Staging Table 적재 시작...
+2026-01-26 18:03:17,755 [INFO] [Phase 4] 시트 '이과계열분석결과' → 테이블 'tb_raw_2026_이과계열분석결과' (5,833 rows)
+2026-01-26 18:03:24,278 [INFO] [Phase 4] 시트 '문과계열분석결과' → 테이블 'tb_raw_2026_문과계열분석결과' (5,833 rows)
+2026-01-26 18:03:28,239 [INFO] [Phase 4] 시트 'SUBJECT1' → 테이블 'tb_raw_2026_SUBJECT1' (1,004 rows)
+2026-01-26 18:03:32,533 [INFO] [Phase 4] 시트 'SUBJECT3' → 테이블 'tb_raw_2026_SUBJECT3' (1,464 rows)
+2026-01-26 18:03:43,571 [INFO] [Phase 4] 시트 'INDEX' → 테이블 'tb_raw_2026_INDEX' (199,920 rows)
+2026-01-26 18:03:57,998 [INFO] [Phase 4] 시트 'RAWSCORE' → 테이블 'tb_raw_2026_RAWSCORE' (11,366 rows)
+2026-01-26 18:04:05,692 [INFO] Phase 4 완료: 상태=partial
+2026-01-26 18:04:05,692 [INFO] [완료] 총 실행 시간: 69.15초
+2026-01-26 18:04:05,692 [INFO] [완료] 최종 리포트: output\pipeline_report.json

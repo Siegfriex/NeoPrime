@@ -1,0 +1,30 @@
+{
+  "sheet_name": "INDEX",
+  "columns_with_formulas": [
+    "col_2",
+    "col_26"
+  ],
+  "formula_samples": {
+    "col_2": {
+      "sample_row": 2,
+      "formula": "=IFERROR(INFO!$B$18/INFO!$B$18,0)",
+      "dependencies": [
+        "=IFERROR(INFOB18",
+        "/INFOB18",
+        "B18"
+      ]
+    },
+    "col_26": {
+      "sample_row": 9,
+      "formula": "=INFO!$B$18",
+      "dependencies": [
+        "=INFOB18",
+        "B18"
+      ]
+    }
+  },
+  "formula_patterns": {
+    "col_2": "other",
+    "col_26": "other"
+  }
+}

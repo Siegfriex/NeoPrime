@@ -1,0 +1,148 @@
+{
+  "total_rows": 160,
+  "total_cols": 10,
+  "columns": {
+    "col_0": {
+      "dtype": "float64",
+      "null_count": 29,
+      "null_ratio": 0.18125,
+      "unique_count": 95,
+      "sample_values": [
+        69.72,
+        69.72,
+        85.67,
+        46382.0,
+        46382.0
+      ],
+      "stats": {
+        "mean": 8751.388396946564,
+        "std": 17988.768075529744,
+        "min": 0.65,
+        "max": 47471.0
+      }
+    },
+    "col_1": {
+      "dtype": "str",
+      "null_count": 0,
+      "null_ratio": 0.0,
+      "unique_count": 131,
+      "sample_values": [
+        "45295",
+        "45295",
+        "88.77",
+        "47.92",
+        "44966"
+      ]
+    },
+    "col_2": {
+      "dtype": "str",
+      "null_count": 0,
+      "null_ratio": 0.0,
+      "unique_count": 135,
+      "sample_values": [
+        "",
+        "17.97",
+        "21.92",
+        "30.61",
+        "68.42"
+      ]
+    },
+    "col_3": {
+      "dtype": "str",
+      "null_count": 0,
+      "null_ratio": 0.0,
+      "unique_count": 131,
+      "sample_values": [
+        "44408",
+        "90.01",
+        "47315",
+        "53.86",
+        "76.52"
+      ]
+    },
+    "col_4": {
+      "dtype": "str",
+      "null_count": 0,
+      "null_ratio": 0.0,
+      "unique_count": 126,
+      "sample_values": [
+        "43919",
+        "32.48",
+        "36.43",
+        "마나자",
+        "마가타"
+      ]
+    },
+    "col_5": {
+      "dtype": "str",
+      "null_count": 0,
+      "null_ratio": 0.0,
+      "unique_count": 131,
+      "sample_values": [
+        "",
+        "83.49",
+        "46378",
+        "61.84",
+        "76.54"
+      ]
+    },
+    "col_6": {
+      "dtype": "str",
+      "null_count": 0,
+      "null_ratio": 0.0,
+      "unique_count": 128,
+      "sample_values": [
+        "",
+        "86.86",
+        "45412",
+        "카하사",
+        "8.01"
+      ]
+    },
+    "col_7": {
+      "dtype": "str",
+      "null_count": 0,
+      "null_ratio": 0.0,
+      "unique_count": 131,
+      "sample_values": [
+        "46223",
+        "바나바",
+        "바나바",
+        "바나바",
+        "46036"
+      ]
+    },
+    "col_8": {
+      "dtype": "str",
+      "null_count": 0,
+      "null_ratio": 0.0,
+      "unique_count": 132,
+      "sample_values": [
+        "12.91",
+        "18.84",
+        "47321",
+        "47321",
+        "라타차"
+      ]
+    },
+    "col_9": {
+      "dtype": "float64",
+      "null_count": 27,
+      "null_ratio": 0.16875,
+      "unique_count": 106,
+      "sample_values": [
+        19.76,
+        46185.0,
+        45.22,
+        45.22,
+        45.22
+      ],
+      "stats": {
+        "mean": 11008.803458646615,
+        "std": 19549.911537273427,
+        "min": 0.38,
+        "max": 47408.0
+      }
+    }
+  }
+}

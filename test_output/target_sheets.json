@@ -1,0 +1,20 @@
+{
+  "primary": [
+    "INDEX",
+    "RAWSCORE"
+  ],
+  "secondary": [
+    "이과계열분석결과",
+    "문과계열분석결과",
+    "SUBJECT1",
+    "SUBJECT3"
+  ],
+  "all_targets": [
+    "INDEX",
+    "RAWSCORE",
+    "이과계열분석결과",
+    "문과계열분석결과",
+    "SUBJECT1",
+    "SUBJECT3"
+  ]
+}

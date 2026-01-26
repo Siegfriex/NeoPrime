@@ -1,0 +1,155 @@
+{
+  "scan_time": "2026-01-26T18:02:56",
+  "file_path": "Y:\\0126\\0126\\202511고속성장분석기(가채점)20251114.xlsx",
+  "file_size_mb": 23.36,
+  "total_sheets": 15,
+  "sheets": [
+    {
+      "name": "INFO",
+      "rows": 41,
+      "columns": 26,
+      "target_type": "light",
+      "estimated_memory_mb": 0.02,
+      "has_data": true
+    },
+    {
+      "name": "원점수입력",
+      "rows": 46,
+      "columns": 8,
+      "target_type": "light",
+      "estimated_memory_mb": 0.01,
+      "has_data": true
+    },
+    {
+      "name": "수능입력",
+      "rows": 46,
+      "columns": 14,
+      "target_type": "light",
+      "estimated_memory_mb": 0.01,
+      "has_data": true
+    },
+    {
+      "name": "내신입력",
+      "rows": 29,
+      "columns": 24,
+      "target_type": "light",
+      "estimated_memory_mb": 0.01,
+      "has_data": true
+    },
+    {
+      "name": "이과계열분석결과",
+      "rows": 5835,
+      "columns": 59,
+      "target_type": "medium",
+      "estimated_memory_mb": 6.57,
+      "has_data": true
+    },
+    {
+      "name": "문과계열분석결과",
+      "rows": 5835,
+      "columns": 59,
+      "target_type": "medium",
+      "estimated_memory_mb": 6.57,
+      "has_data": true
+    },
+    {
+      "name": "COMPUTE",
+      "rows": 72,
+      "columns": 553,
+      "target_type": "light",
+      "estimated_memory_mb": 0.76,
+      "has_data": true
+    },
+    {
+      "name": "RESTRICT",
+      "rows": 560,
+      "columns": 12,
+      "target_type": "light",
+      "estimated_memory_mb": 0.13,
+      "has_data": true
+    },
+    {
+      "name": "SUBJECT1",
+      "rows": 1005,
+      "columns": 45,
+      "target_type": "medium",
+      "estimated_memory_mb": 0.86,
+      "has_data": true
+    },
+    {
+      "name": "SUBJECT2",
+      "rows": 105,
+      "columns": 258,
+      "target_type": "light",
+      "estimated_memory_mb": 0.52,
+      "has_data": true
+    },
+    {
+      "name": "SUBJECT3",
+      "rows": 1465,
+      "columns": 560,
+      "target_type": "medium",
+      "estimated_memory_mb": 15.65,
+      "has_data": true
+    },
+    {
+      "name": "PERCENTAGE",
+      "rows": 853,
+      "columns": 1101,
+      "target_type": "light",
+      "estimated_memory_mb": 17.91,
+      "has_data": true
+    },
+    {
+      "name": "INDEX",
+      "rows": 199921,
+      "columns": 27,
+      "target_type": "heavy",
+      "estimated_memory_mb": 102.96,
+      "has_data": true
+    },
+    {
+      "name": "RAWSCORE",
+      "rows": 11367,
+      "columns": 10,
+      "target_type": "heavy",
+      "estimated_memory_mb": 2.17,
+      "has_data": true
+    },
+    {
+      "name": "메모장",
+      "rows": 1,
+      "columns": 1,
+      "target_type": "light",
+      "estimated_memory_mb": 0.0,
+      "has_data": true
+    }
+  ],
+  "targets": {
+    "primary": [
+      "INDEX",
+      "RAWSCORE"
+    ],
+    "secondary": [
+      "이과계열분석결과",
+      "문과계열분석결과",
+      "SUBJECT1",
+      "SUBJECT3"
+    ],
+    "excluded": [
+      "INFO",
+      "원점수입력",
+      "수능입력",
+      "내신입력",
+      "COMPUTE",
+      "RESTRICT",
+      "SUBJECT2",
+      "PERCENTAGE",
+      "메모장"
+    ]
+  },
+  "execution_time_sec": 0.2571,
+  "engine": "openpyxl_fallback",
+  "memory_estimate_mb": 154.15,
+  "available_memory_mb": 14039.45
+}

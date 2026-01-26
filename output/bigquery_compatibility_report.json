@@ -1,0 +1,1132 @@
+{
+  "verification_date": "2026-01-26T16:23:02.224061",
+  "sheets": {
+    "INDEX": {
+      "sheet_name": "INDEX",
+      "total_columns": 27,
+      "columns": {
+        "INDEX": {
+          "pandas_dtype": "str",
+          "bigquery_type": "STRING",
+          "issues": [],
+          "warnings": [],
+          "compatible": true
+        },
+        "Unnamed: 1": {
+          "pandas_dtype": "str",
+          "bigquery_type": "STRING",
+          "issues": [],
+          "warnings": [],
+          "compatible": true
+        },
+        "Unnamed: 2": {
+          "pandas_dtype": "str",
+          "bigquery_type": "STRING",
+          "issues": [],
+          "warnings": [],
+          "compatible": true
+        },
+        "Unnamed: 3": {
+          "pandas_dtype": "str",
+          "bigquery_type": "STRING",
+          "issues": [],
+          "warnings": [],
+          "compatible": true
+        },
+        "Unnamed: 4": {
+          "pandas_dtype": "str",
+          "bigquery_type": "STRING",
+          "issues": [],
+          "warnings": [],
+          "compatible": true
+        },
+        "Unnamed: 5": {
+          "pandas_dtype": "str",
+          "bigquery_type": "STRING",
+          "issues": [],
+          "warnings": [],
+          "compatible": true
+        },
+        "Unnamed: 6": {
+          "pandas_dtype": "str",
+          "bigquery_type": "STRING",
+          "issues": [],
+          "warnings": [],
+          "compatible": true
+        },
+        "Unnamed: 7": {
+          "pandas_dtype": "str",
+          "bigquery_type": "STRING",
+          "issues": [],
+          "warnings": [],
+          "compatible": true
+        },
+        "Unnamed: 8": {
+          "pandas_dtype": "str",
+          "bigquery_type": "STRING",
+          "issues": [],
+          "warnings": [],
+          "compatible": true
+        },
+        "Unnamed: 9": {
+          "pandas_dtype": "str",
+          "bigquery_type": "STRING",
+          "issues": [],
+          "warnings": [],
+          "compatible": true
+        },
+        "Unnamed: 10": {
+          "pandas_dtype": "str",
+          "bigquery_type": "STRING",
+          "issues": [],
+          "warnings": [],
+          "compatible": true
+        },
+        "Unnamed: 11": {
+          "pandas_dtype": "str",
+          "bigquery_type": "STRING",
+          "issues": [],
+          "warnings": [],
+          "compatible": true
+        },
+        "Unnamed: 12": {
+          "pandas_dtype": "str",
+          "bigquery_type": "STRING",
+          "issues": [],
+          "warnings": [],
+          "compatible": true
+        },
+        "Unnamed: 13": {
+          "pandas_dtype": "str",
+          "bigquery_type": "STRING",
+          "issues": [],
+          "warnings": [],
+          "compatible": true
+        },
+        "Unnamed: 14": {
+          "pandas_dtype": "str",
+          "bigquery_type": "STRING",
+          "issues": [],
+          "warnings": [],
+          "compatible": true
+        },
+        "Unnamed: 15": {
+          "pandas_dtype": "str",
+          "bigquery_type": "STRING",
+          "issues": [],
+          "warnings": [],
+          "compatible": true
+        },
+        "Unnamed: 16": {
+          "pandas_dtype": "str",
+          "bigquery_type": "STRING",
+          "issues": [],
+          "warnings": [],
+          "compatible": true
+        },
+        "Unnamed: 17": {
+          "pandas_dtype": "str",
+          "bigquery_type": "STRING",
+          "issues": [],
+          "warnings": [],
+          "compatible": true
+        },
+        "Unnamed: 18": {
+          "pandas_dtype": "str",
+          "bigquery_type": "STRING",
+          "issues": [],
+          "warnings": [],
+          "compatible": true
+        },
+        "Unnamed: 19": {
+          "pandas_dtype": "str",
+          "bigquery_type": "STRING",
+          "issues": [],
+          "warnings": [],
+          "compatible": true
+        },
+        "Unnamed: 20": {
+          "pandas_dtype": "str",
+          "bigquery_type": "STRING",
+          "issues": [],
+          "warnings": [],
+          "compatible": true
+        },
+        "Unnamed: 21": {
+          "pandas_dtype": "str",
+          "bigquery_type": "STRING",
+          "issues": [],
+          "warnings": [],
+          "compatible": true
+        },
+        "Unnamed: 22": {
+          "pandas_dtype": "str",
+          "bigquery_type": "STRING",
+          "issues": [],
+          "warnings": [],
+          "compatible": true
+        },
+        "Unnamed: 23": {
+          "pandas_dtype": "str",
+          "bigquery_type": "STRING",
+          "issues": [],
+          "warnings": [],
+          "compatible": true
+        },
+        "Unnamed: 24": {
+          "pandas_dtype": "str",
+          "bigquery_type": "STRING",
+          "issues": [],
+          "warnings": [],
+          "compatible": true
+        },
+        "Unnamed: 25": {
+          "pandas_dtype": "str",
+          "bigquery_type": "STRING",
+          "issues": [],
+          "warnings": [],
+          "compatible": true
+        },
+        "Unnamed: 26": {
+          "pandas_dtype": "str",
+          "bigquery_type": "STRING",
+          "issues": [],
+          "warnings": [],
+          "compatible": true
+        }
+      },
+      "total_issues": 0,
+      "total_warnings": 0,
+      "overall_compatible": true
+    },
+    "RAWSCORE": {
+      "sheet_name": "RAWSCORE",
+      "total_columns": 10,
+      "columns": {
+        "영역": {
+          "pandas_dtype": "str",
+          "bigquery_type": "STRING",
+          "issues": [],
+          "warnings": [],
+          "compatible": true
+        },
+        "과목명": {
+          "pandas_dtype": "str",
+          "bigquery_type": "STRING",
+          "issues": [],
+          "warnings": [],
+          "compatible": true
+        },
+        "원점수": {
+          "pandas_dtype": "str",
+          "bigquery_type": "STRING",
+          "issues": [],
+          "warnings": [],
+          "compatible": true
+        },
+        "Unnamed: 3": {
+          "pandas_dtype": "str",
+          "bigquery_type": "STRING",
+          "issues": [],
+          "warnings": [],
+          "compatible": true
+        },
+        "Unnamed: 4": {
+          "pandas_dtype": "str",
+          "bigquery_type": "STRING",
+          "issues": [],
+          "warnings": [],
+          "compatible": true
+        },
+        "과목명-원점수": {
+          "pandas_dtype": "str",
+          "bigquery_type": "STRING",
+          "issues": [],
+          "warnings": [],
+          "compatible": true
+        },
+        "202511(가채점)": {
+          "pandas_dtype": "str",
+          "bigquery_type": "STRING",
+          "issues": [],
+          "warnings": [],
+          "compatible": true
+        },
+        "Unnamed: 7": {
+          "pandas_dtype": "str",
+          "bigquery_type": "STRING",
+          "issues": [],
+          "warnings": [],
+          "compatible": true
+        },
+        "Unnamed: 8": {
+          "pandas_dtype": "str",
+          "bigquery_type": "STRING",
+          "issues": [],
+          "warnings": [],
+          "compatible": true
+        },
+        "Unnamed: 9": {
+          "pandas_dtype": "str",
+          "bigquery_type": "STRING",
+          "issues": [],
+          "warnings": [],
+          "compatible": true
+        }
+      },
+      "total_issues": 0,
+      "total_warnings": 0,
+      "overall_compatible": true
+    },
+    "이과계열분석결과": {
+      "sheet_name": "이과계열분석결과",
+      "total_columns": 59,
+      "columns": {
+        "< 미적·기하 and 과학탐구 응시자 기준 분석결과 >": {
+          "pandas_dtype": "str",
+          "bigquery_type": "STRING",
+          "issues": [],
+          "warnings": [],
+          "compatible": true
+        },
+        "Unnamed: 1": {
+          "pandas_dtype": "str",
+          "bigquery_type": "STRING",
+          "issues": [],
+          "warnings": [],
+          "compatible": true
+        },
+        "Unnamed: 2": {
+          "pandas_dtype": "str",
+          "bigquery_type": "STRING",
+          "issues": [],
+          "warnings": [],
+          "compatible": true
+        },
+        "Unnamed: 3": {
+          "pandas_dtype": "str",
+          "bigquery_type": "STRING",
+          "issues": [],
+          "warnings": [],
+          "compatible": true
+        },
+        "Unnamed: 4": {
+          "pandas_dtype": "str",
+          "bigquery_type": "STRING",
+          "issues": [],
+          "warnings": [],
+          "compatible": true
+        },
+        "Unnamed: 5": {
+          "pandas_dtype": "str",
+          "bigquery_type": "STRING",
+          "issues": [],
+          "warnings": [],
+          "compatible": true
+        },
+        "Unnamed: 6": {
+          "pandas_dtype": "str",
+          "bigquery_type": "STRING",
+          "issues": [],
+          "warnings": [],
+          "compatible": true
+        },
+        "Unnamed: 7": {
+          "pandas_dtype": "str",
+          "bigquery_type": "STRING",
+          "issues": [],
+          "warnings": [],
+          "compatible": true
+        },
+        "Unnamed: 8": {
+          "pandas_dtype": "str",
+          "bigquery_type": "STRING",
+          "issues": [],
+          "warnings": [],
+          "compatible": true
+        },
+        "Unnamed: 9": {
+          "pandas_dtype": "str",
+          "bigquery_type": "STRING",
+          "issues": [],
+          "warnings": [],
+          "compatible": true
+        },
+        "Unnamed: 10": {
+          "pandas_dtype": "str",
+          "bigquery_type": "STRING",
+          "issues": [],
+          "warnings": [],
+          "compatible": true
+        },
+        "Unnamed: 11": {
+          "pandas_dtype": "str",
+          "bigquery_type": "STRING",
+          "issues": [],
+          "warnings": [],
+          "compatible": true
+        },
+        "Unnamed: 12": {
+          "pandas_dtype": "str",
+          "bigquery_type": "STRING",
+          "issues": [],
+          "warnings": [],
+          "compatible": true
+        },
+        "Unnamed: 13": {
+          "pandas_dtype": "str",
+          "bigquery_type": "STRING",
+          "issues": [],
+          "warnings": [],
+          "compatible": true
+        },
+        "Unnamed: 14": {
+          "pandas_dtype": "str",
+          "bigquery_type": "STRING",
+          "issues": [],
+          "warnings": [],
+          "compatible": true
+        },
+        "Unnamed: 15": {
+          "pandas_dtype": "str",
+          "bigquery_type": "STRING",
+          "issues": [],
+          "warnings": [],
+          "compatible": true
+        },
+        "Unnamed: 16": {
+          "pandas_dtype": "str",
+          "bigquery_type": "STRING",
+          "issues": [],
+          "warnings": [],
+          "compatible": true
+        },
+        "Unnamed: 17": {
+          "pandas_dtype": "str",
+          "bigquery_type": "STRING",
+          "issues": [],
+          "warnings": [],
+          "compatible": true
+        },
+        "Unnamed: 18": {
+          "pandas_dtype": "str",
+          "bigquery_type": "STRING",
+          "issues": [],
+          "warnings": [],
+          "compatible": true
+        },
+        "Unnamed: 19": {
+          "pandas_dtype": "str",
+          "bigquery_type": "STRING",
+          "issues": [],
+          "warnings": [],
+          "compatible": true
+        },
+        "Unnamed: 20": {
+          "pandas_dtype": "str",
+          "bigquery_type": "STRING",
+          "issues": [],
+          "warnings": [],
+          "compatible": true
+        },
+        "Unnamed: 21": {
+          "pandas_dtype": "str",
+          "bigquery_type": "STRING",
+          "issues": [],
+          "warnings": [],
+          "compatible": true
+        },
+        "Unnamed: 22": {
+          "pandas_dtype": "str",
+          "bigquery_type": "STRING",
+          "issues": [],
+          "warnings": [],
+          "compatible": true
+        },
+        "Unnamed: 23": {
+          "pandas_dtype": "str",
+          "bigquery_type": "STRING",
+          "issues": [],
+          "warnings": [],
+          "compatible": true
+        },
+        "Unnamed: 24": {
+          "pandas_dtype": "str",
+          "bigquery_type": "STRING",
+          "issues": [],
+          "warnings": [],
+          "compatible": true
+        },
+        "Unnamed: 25": {
+          "pandas_dtype": "str",
+          "bigquery_type": "STRING",
+          "issues": [],
+          "warnings": [],
+          "compatible": true
+        },
+        "Unnamed: 26": {
+          "pandas_dtype": "str",
+          "bigquery_type": "STRING",
+          "issues": [],
+          "warnings": [],
+          "compatible": true
+        },
+        "Unnamed: 27": {
+          "pandas_dtype": "str",
+          "bigquery_type": "STRING",
+          "issues": [],
+          "warnings": [],
+          "compatible": true
+        },
+        "Unnamed: 28": {
+          "pandas_dtype": "str",
+          "bigquery_type": "STRING",
+          "issues": [],
+          "warnings": [],
+          "compatible": true
+        },
+        "Unnamed: 29": {
+          "pandas_dtype": "str",
+          "bigquery_type": "STRING",
+          "issues": [],
+          "warnings": [],
+          "compatible": true
+        },
+        "Unnamed: 30": {
+          "pandas_dtype": "str",
+          "bigquery_type": "STRING",
+          "issues": [],
+          "warnings": [],
+          "compatible": true
+        },
+        "Unnamed: 31": {
+          "pandas_dtype": "str",
+          "bigquery_type": "STRING",
+          "issues": [],
+          "warnings": [],
+          "compatible": true
+        },
+        "Unnamed: 32": {
+          "pandas_dtype": "str",
+          "bigquery_type": "STRING",
+          "issues": [],
+          "warnings": [],
+          "compatible": true
+        },
+        "Unnamed: 33": {
+          "pandas_dtype": "str",
+          "bigquery_type": "STRING",
+          "issues": [],
+          "warnings": [],
+          "compatible": true
+        },
+        "Unnamed: 34": {
+          "pandas_dtype": "str",
+          "bigquery_type": "STRING",
+          "issues": [],
+          "warnings": [],
+          "compatible": true
+        },
+        "Unnamed: 35": {
+          "pandas_dtype": "str",
+          "bigquery_type": "STRING",
+          "issues": [],
+          "warnings": [],
+          "compatible": true
+        },
+        "Unnamed: 36": {
+          "pandas_dtype": "str",
+          "bigquery_type": "STRING",
+          "issues": [],
+          "warnings": [],
+          "compatible": true
+        },
+        "Unnamed: 37": {
+          "pandas_dtype": "str",
+          "bigquery_type": "STRING",
+          "issues": [],
+          "warnings": [],
+          "compatible": true
+        },
+        "Unnamed: 38": {
+          "pandas_dtype": "str",
+          "bigquery_type": "STRING",
+          "issues": [],
+          "warnings": [],
+          "compatible": true
+        },
+        "Unnamed: 39": {
+          "pandas_dtype": "str",
+          "bigquery_type": "STRING",
+          "issues": [],
+          "warnings": [],
+          "compatible": true
+        },
+        "Unnamed: 40": {
+          "pandas_dtype": "str",
+          "bigquery_type": "STRING",
+          "issues": [],
+          "warnings": [],
+          "compatible": true
+        },
+        "Unnamed: 41": {
+          "pandas_dtype": "str",
+          "bigquery_type": "STRING",
+          "issues": [],
+          "warnings": [],
+          "compatible": true
+        },
+        "Unnamed: 42": {
+          "pandas_dtype": "str",
+          "bigquery_type": "STRING",
+          "issues": [],
+          "warnings": [],
+          "compatible": true
+        },
+        "Unnamed: 43": {
+          "pandas_dtype": "str",
+          "bigquery_type": "STRING",
+          "issues": [],
+          "warnings": [],
+          "compatible": true
+        },
+        "Unnamed: 44": {
+          "pandas_dtype": "str",
+          "bigquery_type": "STRING",
+          "issues": [],
+          "warnings": [],
+          "compatible": true
+        },
+        "Unnamed: 45": {
+          "pandas_dtype": "str",
+          "bigquery_type": "STRING",
+          "issues": [],
+          "warnings": [],
+          "compatible": true
+        },
+        "Unnamed: 46": {
+          "pandas_dtype": "str",
+          "bigquery_type": "STRING",
+          "issues": [],
+          "warnings": [],
+          "compatible": true
+        },
+        "Unnamed: 47": {
+          "pandas_dtype": "str",
+          "bigquery_type": "STRING",
+          "issues": [],
+          "warnings": [],
+          "compatible": true
+        },
+        "Unnamed: 48": {
+          "pandas_dtype": "str",
+          "bigquery_type": "STRING",
+          "issues": [],
+          "warnings": [],
+          "compatible": true
+        },
+        "Unnamed: 49": {
+          "pandas_dtype": "str",
+          "bigquery_type": "STRING",
+          "issues": [],
+          "warnings": [],
+          "compatible": true
+        },
+        "Unnamed: 50": {
+          "pandas_dtype": "str",
+          "bigquery_type": "STRING",
+          "issues": [],
+          "warnings": [],
+          "compatible": true
+        },
+        "Unnamed: 51": {
+          "pandas_dtype": "str",
+          "bigquery_type": "STRING",
+          "issues": [],
+          "warnings": [],
+          "compatible": true
+        },
+        "Unnamed: 52": {
+          "pandas_dtype": "str",
+          "bigquery_type": "STRING",
+          "issues": [],
+          "warnings": [],
+          "compatible": true
+        },
+        "Unnamed: 53": {
+          "pandas_dtype": "str",
+          "bigquery_type": "STRING",
+          "issues": [],
+          "warnings": [],
+          "compatible": true
+        },
+        "Unnamed: 54": {
+          "pandas_dtype": "str",
+          "bigquery_type": "STRING",
+          "issues": [],
+          "warnings": [],
+          "compatible": true
+        },
+        "Unnamed: 55": {
+          "pandas_dtype": "str",
+          "bigquery_type": "STRING",
+          "issues": [],
+          "warnings": [],
+          "compatible": true
+        },
+        "Unnamed: 56": {
+          "pandas_dtype": "str",
+          "bigquery_type": "STRING",
+          "issues": [],
+          "warnings": [],
+          "compatible": true
+        },
+        "Unnamed: 57": {
+          "pandas_dtype": "str",
+          "bigquery_type": "STRING",
+          "issues": [],
+          "warnings": [],
+          "compatible": true
+        },
+        "Unnamed: 58": {
+          "pandas_dtype": "str",
+          "bigquery_type": "STRING",
+          "issues": [],
+          "warnings": [],
+          "compatible": true
+        }
+      },
+      "total_issues": 0,
+      "total_warnings": 0,
+      "overall_compatible": true
+    },
+    "문과계열분석결과": {
+      "sheet_name": "문과계열분석결과",
+      "total_columns": 59,
+      "columns": {
+        "< 확률과통계 or 사회탐구 응시자 기준 분석결과 >": {
+          "pandas_dtype": "str",
+          "bigquery_type": "STRING",
+          "issues": [],
+          "warnings": [],
+          "compatible": true
+        },
+        "Unnamed: 1": {
+          "pandas_dtype": "str",
+          "bigquery_type": "STRING",
+          "issues": [],
+          "warnings": [],
+          "compatible": true
+        },
+        "Unnamed: 2": {
+          "pandas_dtype": "str",
+          "bigquery_type": "STRING",
+          "issues": [],
+          "warnings": [],
+          "compatible": true
+        },
+        "Unnamed: 3": {
+          "pandas_dtype": "str",
+          "bigquery_type": "STRING",
+          "issues": [],
+          "warnings": [],
+          "compatible": true
+        },
+        "Unnamed: 4": {
+          "pandas_dtype": "str",
+          "bigquery_type": "STRING",
+          "issues": [],
+          "warnings": [],
+          "compatible": true
+        },
+        "Unnamed: 5": {
+          "pandas_dtype": "str",
+          "bigquery_type": "STRING",
+          "issues": [],
+          "warnings": [],
+          "compatible": true
+        },
+        "Unnamed: 6": {
+          "pandas_dtype": "str",
+          "bigquery_type": "STRING",
+          "issues": [],
+          "warnings": [],
+          "compatible": true
+        },
+        "Unnamed: 7": {
+          "pandas_dtype": "str",
+          "bigquery_type": "STRING",
+          "issues": [],
+          "warnings": [],
+          "compatible": true
+        },
+        "Unnamed: 8": {
+          "pandas_dtype": "str",
+          "bigquery_type": "STRING",
+          "issues": [],
+          "warnings": [],
+          "compatible": true
+        },
+        "Unnamed: 9": {
+          "pandas_dtype": "str",
+          "bigquery_type": "STRING",
+          "issues": [],
+          "warnings": [],
+          "compatible": true
+        },
+        "Unnamed: 10": {
+          "pandas_dtype": "str",
+          "bigquery_type": "STRING",
+          "issues": [],
+          "warnings": [],
+          "compatible": true
+        },
+        "Unnamed: 11": {
+          "pandas_dtype": "str",
+          "bigquery_type": "STRING",
+          "issues": [],
+          "warnings": [],
+          "compatible": true
+        },
+        "Unnamed: 12": {
+          "pandas_dtype": "str",
+          "bigquery_type": "STRING",
+          "issues": [],
+          "warnings": [],
+          "compatible": true
+        },
+        "Unnamed: 13": {
+          "pandas_dtype": "str",
+          "bigquery_type": "STRING",
+          "issues": [],
+          "warnings": [],
+          "compatible": true
+        },
+        "Unnamed: 14": {
+          "pandas_dtype": "str",
+          "bigquery_type": "STRING",
+          "issues": [],
+          "warnings": [],
+          "compatible": true
+        },
+        "Unnamed: 15": {
+          "pandas_dtype": "str",
+          "bigquery_type": "STRING",
+          "issues": [],
+          "warnings": [],
+          "compatible": true
+        },
+        "Unnamed: 16": {
+          "pandas_dtype": "str",
+          "bigquery_type": "STRING",
+          "issues": [],
+          "warnings": [],
+          "compatible": true
+        },
+        "Unnamed: 17": {
+          "pandas_dtype": "str",
+          "bigquery_type": "STRING",
+          "issues": [],
+          "warnings": [],
+          "compatible": true
+        },
+        "Unnamed: 18": {
+          "pandas_dtype": "str",
+          "bigquery_type": "STRING",
+          "issues": [],
+          "warnings": [],
+          "compatible": true
+        },
+        "Unnamed: 19": {
+          "pandas_dtype": "str",
+          "bigquery_type": "STRING",
+          "issues": [],
+          "warnings": [],
+          "compatible": true
+        },
+        "Unnamed: 20": {
+          "pandas_dtype": "str",
+          "bigquery_type": "STRING",
+          "issues": [],
+          "warnings": [],
+          "compatible": true
+        },
+        "Unnamed: 21": {
+          "pandas_dtype": "str",
+          "bigquery_type": "STRING",
+          "issues": [],
+          "warnings": [],
+          "compatible": true
+        },
+        "Unnamed: 22": {
+          "pandas_dtype": "str",
+          "bigquery_type": "STRING",
+          "issues": [],
+          "warnings": [],
+          "compatible": true
+        },
+        "Unnamed: 23": {
+          "pandas_dtype": "str",
+          "bigquery_type": "STRING",
+          "issues": [],
+          "warnings": [],
+          "compatible": true
+        },
+        "Unnamed: 24": {
+          "pandas_dtype": "str",
+          "bigquery_type": "STRING",
+          "issues": [],
+          "warnings": [],
+          "compatible": true
+        },
+        "Unnamed: 25": {
+          "pandas_dtype": "str",
+          "bigquery_type": "STRING",
+          "issues": [],
+          "warnings": [],
+          "compatible": true
+        },
+        "Unnamed: 26": {
+          "pandas_dtype": "str",
+          "bigquery_type": "STRING",
+          "issues": [],
+          "warnings": [],
+          "compatible": true
+        },
+        "Unnamed: 27": {
+          "pandas_dtype": "str",
+          "bigquery_type": "STRING",
+          "issues": [],
+          "warnings": [],
+          "compatible": true
+        },
+        "Unnamed: 28": {
+          "pandas_dtype": "str",
+          "bigquery_type": "STRING",
+          "issues": [],
+          "warnings": [],
+          "compatible": true
+        },
+        "Unnamed: 29": {
+          "pandas_dtype": "str",
+          "bigquery_type": "STRING",
+          "issues": [],
+          "warnings": [],
+          "compatible": true
+        },
+        "Unnamed: 30": {
+          "pandas_dtype": "str",
+          "bigquery_type": "STRING",
+          "issues": [],
+          "warnings": [],
+          "compatible": true
+        },
+        "Unnamed: 31": {
+          "pandas_dtype": "str",
+          "bigquery_type": "STRING",
+          "issues": [],
+          "warnings": [],
+          "compatible": true
+        },
+        "Unnamed: 32": {
+          "pandas_dtype": "str",
+          "bigquery_type": "STRING",
+          "issues": [],
+          "warnings": [],
+          "compatible": true
+        },
+        "Unnamed: 33": {
+          "pandas_dtype": "str",
+          "bigquery_type": "STRING",
+          "issues": [],
+          "warnings": [],
+          "compatible": true
+        },
+        "Unnamed: 34": {
+          "pandas_dtype": "str",
+          "bigquery_type": "STRING",
+          "issues": [],
+          "warnings": [],
+          "compatible": true
+        },
+        "Unnamed: 35": {
+          "pandas_dtype": "str",
+          "bigquery_type": "STRING",
+          "issues": [],
+          "warnings": [],
+          "compatible": true
+        },
+        "Unnamed: 36": {
+          "pandas_dtype": "str",
+          "bigquery_type": "STRING",
+          "issues": [],
+          "warnings": [],
+          "compatible": true
+        },
+        "Unnamed: 37": {
+          "pandas_dtype": "str",
+          "bigquery_type": "STRING",
+          "issues": [],
+          "warnings": [],
+          "compatible": true
+        },
+        "Unnamed: 38": {
+          "pandas_dtype": "str",
+          "bigquery_type": "STRING",
+          "issues": [],
+          "warnings": [],
+          "compatible": true
+        },
+        "Unnamed: 39": {
+          "pandas_dtype": "str",
+          "bigquery_type": "STRING",
+          "issues": [],
+          "warnings": [],
+          "compatible": true
+        },
+        "Unnamed: 40": {
+          "pandas_dtype": "str",
+          "bigquery_type": "STRING",
+          "issues": [],
+          "warnings": [],
+          "compatible": true
+        },
+        "Unnamed: 41": {
+          "pandas_dtype": "str",
+          "bigquery_type": "STRING",
+          "issues": [],
+          "warnings": [],
+          "compatible": true
+        },
+        "Unnamed: 42": {
+          "pandas_dtype": "str",
+          "bigquery_type": "STRING",
+          "issues": [],
+          "warnings": [],
+          "compatible": true
+        },
+        "Unnamed: 43": {
+          "pandas_dtype": "str",
+          "bigquery_type": "STRING",
+          "issues": [],
+          "warnings": [],
+          "compatible": true
+        },
+        "Unnamed: 44": {
+          "pandas_dtype": "str",
+          "bigquery_type": "STRING",
+          "issues": [],
+          "warnings": [],
+          "compatible": true
+        },
+        "Unnamed: 45": {
+          "pandas_dtype": "str",
+          "bigquery_type": "STRING",
+          "issues": [],
+          "warnings": [],
+          "compatible": true
+        },
+        "Unnamed: 46": {
+          "pandas_dtype": "str",
+          "bigquery_type": "STRING",
+          "issues": [],
+          "warnings": [],
+          "compatible": true
+        },
+        "Unnamed: 47": {
+          "pandas_dtype": "str",
+          "bigquery_type": "STRING",
+          "issues": [],
+          "warnings": [],
+          "compatible": true
+        },
+        "Unnamed: 48": {
+          "pandas_dtype": "str",
+          "bigquery_type": "STRING",
+          "issues": [],
+          "warnings": [],
+          "compatible": true
+        },
+        "Unnamed: 49": {
+          "pandas_dtype": "str",
+          "bigquery_type": "STRING",
+          "issues": [],
+          "warnings": [],
+          "compatible": true
+        },
+        "Unnamed: 50": {
+          "pandas_dtype": "str",
+          "bigquery_type": "STRING",
+          "issues": [],
+          "warnings": [],
+          "compatible": true
+        },
+        "Unnamed: 51": {
+          "pandas_dtype": "str",
+          "bigquery_type": "STRING",
+          "issues": [],
+          "warnings": [],
+          "compatible": true
+        },
+        "Unnamed: 52": {
+          "pandas_dtype": "str",
+          "bigquery_type": "STRING",
+          "issues": [],
+          "warnings": [],
+          "compatible": true
+        },
+        "Unnamed: 53": {
+          "pandas_dtype": "str",
+          "bigquery_type": "STRING",
+          "issues": [],
+          "warnings": [],
+          "compatible": true
+        },
+        "Unnamed: 54": {
+          "pandas_dtype": "str",
+          "bigquery_type": "STRING",
+          "issues": [],
+          "warnings": [],
+          "compatible": true
+        },
+        "Unnamed: 55": {
+          "pandas_dtype": "str",
+          "bigquery_type": "STRING",
+          "issues": [],
+          "warnings": [],
+          "compatible": true
+        },
+        "Unnamed: 56": {
+          "pandas_dtype": "str",
+          "bigquery_type": "STRING",
+          "issues": [],
+          "warnings": [],
+          "compatible": true
+        },
+        "Unnamed: 57": {
+          "pandas_dtype": "str",
+          "bigquery_type": "STRING",
+          "issues": [],
+          "warnings": [],
+          "compatible": true
+        },
+        "Unnamed: 58": {
+          "pandas_dtype": "str",
+          "bigquery_type": "STRING",
+          "issues": [],
+          "warnings": [],
+          "compatible": true
+        }
+      },
+      "total_issues": 0,
+      "total_warnings": 0,
+      "overall_compatible": true
+    }
+  },
+  "summary": {
+    "total_sheets": 4,
+    "compatible_sheets": 4,
+    "total_issues": 0,
+    "total_warnings": 0
+  }
+}

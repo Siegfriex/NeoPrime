@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(*)",
+      "Write(*)",
+      "Read(*)",
+      "Edit(*)",
+      "Grep(*)",
+      "Glob(*)",
+      "LSP(*)"
+    ],
+    "deny": [
+      "Read(./.env)",
+      "Read(./secrets/**)"
+    ]
+  },
+  "initialPermissionMode": "auto-accept"
+}

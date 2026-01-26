@@ -1,0 +1,245 @@
+{
+  "upload_time": "2026-01-26T18:04:05",
+  "project_id": "neoprime0305",
+  "dataset_id": "ds_neoprime_entrance",
+  "tables": [
+    "이과계열분석결과",
+    "문과계열분석결과",
+    "SUBJECT1",
+    "SUBJECT3",
+    "INDEX",
+    "RAWSCORE"
+  ],
+  "source_files": [
+    "output\\normalized_이과계열분석결과_chunk_0000_part_000.parquet",
+    "output\\normalized_문과계열분석결과_chunk_0000_part_000.parquet",
+    "output\\normalized_SUBJECT1_chunk_0000_part_000.parquet",
+    "output\\normalized_SUBJECT3_chunk_0000_part_000.parquet",
+    "output\\normalized_INDEX_chunk_0000_part_000.parquet",
+    "output\\normalized_INDEX_chunk_0001_part_000.parquet",
+    "output\\normalized_INDEX_chunk_0002_part_000.parquet",
+    "output\\normalized_INDEX_chunk_0003_part_000.parquet",
+    "output\\normalized_RAWSCORE_chunk_0000_part_000.parquet"
+  ],
+  "upload_stats": {
+    "total_rows": 225420,
+    "chunks_uploaded": 9,
+    "tables_created": 6,
+    "status": "partial"
+  },
+  "sheets_detail": {
+    "이과계열분석결과": {
+      "status": "failed",
+      "staging_table": "tb_raw_2026_이과계열분석결과_staging",
+      "target_table": "tb_raw_2026_이과계열분석결과",
+      "loaded_rows": 5833,
+      "validation": {
+        "expected_row_count": 5833,
+        "actual_row_count": 5833,
+        "row_count_match": true,
+        "null_ratios": {
+          "and": 0,
+          "unnamed_1": 0.0005143151037202125,
+          "unnamed_2": 0.0005143151037202125,
+          "unnamed_3": 0.0005143151037202125,
+          "unnamed_4": 0.0006857534716269502,
+          "unnamed_5": 0.0006857534716269502,
+          "unnamed_6": 0.0006857534716269502,
+          "unnamed_7": 0.9252528715926625,
+          "unnamed_8": 0.9252528715926625,
+          "unnamed_9": 0.0006857534716269502
+        },
+        "high_null_columns": [
+          "unnamed_7",
+          "unnamed_8"
+        ],
+        "passed": false,
+        "failure_reasons": [
+          "높은 NULL 비율 컬럼: ['unnamed_7', 'unnamed_8']"
+        ]
+      },
+      "errors": [
+        "검증 실패: [\"높은 NULL 비율 컬럼: ['unnamed_7', 'unnamed_8']\"]"
+      ]
+    },
+    "문과계열분석결과": {
+      "status": "failed",
+      "staging_table": "tb_raw_2026_문과계열분석결과_staging",
+      "target_table": "tb_raw_2026_문과계열분석결과",
+      "loaded_rows": 5833,
+      "validation": {
+        "expected_row_count": 5833,
+        "actual_row_count": 5833,
+        "row_count_match": true,
+        "null_ratios": {
+          "or": 0,
+          "unnamed_1": 0.0005143151037202125,
+          "unnamed_2": 0.0005143151037202125,
+          "unnamed_3": 0.0005143151037202125,
+          "unnamed_4": 0.0006857534716269502,
+          "unnamed_5": 0.0006857534716269502,
+          "unnamed_6": 0.0006857534716269502,
+          "unnamed_7": 0.9252528715926625,
+          "unnamed_8": 0.9252528715926625,
+          "unnamed_9": 0.0006857534716269502
+        },
+        "high_null_columns": [
+          "unnamed_7",
+          "unnamed_8"
+        ],
+        "passed": false,
+        "failure_reasons": [
+          "높은 NULL 비율 컬럼: ['unnamed_7', 'unnamed_8']"
+        ]
+      },
+      "errors": [
+        "검증 실패: [\"높은 NULL 비율 컬럼: ['unnamed_7', 'unnamed_8']\"]"
+      ]
+    },
+    "SUBJECT1": {
+      "status": "failed",
+      "staging_table": "tb_raw_2026_SUBJECT1_staging",
+      "target_table": "tb_raw_2026_SUBJECT1",
+      "loaded_rows": 1004,
+      "validation": {
+        "expected_row_count": 1004,
+        "actual_row_count": 1004,
+        "row_count_match": true,
+        "null_ratios": {
+          "column_0": 0.9611553784860558,
+          "unnamed_1": 0.9611553784860558,
+          "unnamed_2": 0.9611553784860558,
+          "unnamed_3": 0.9611553784860558,
+          "unnamed_4": 0.9611553784860558,
+          "unnamed_5": 0.9611553784860558,
+          "unnamed_6": 0.9611553784860558,
+          "unnamed_7": 0.9611553784860558,
+          "column_8": 0.00298804780876494,
+          "unnamed_9": 0.00298804780876494
+        },
+        "high_null_columns": [
+          "column_0",
+          "unnamed_1",
+          "unnamed_2",
+          "unnamed_3",
+          "unnamed_4",
+          "unnamed_5",
+          "unnamed_6",
+          "unnamed_7"
+        ],
+        "passed": false,
+        "failure_reasons": [
+          "높은 NULL 비율 컬럼: ['column_0', 'unnamed_1', 'unnamed_2', 'unnamed_3', 'unnamed_4', 'unnamed_5', 'unnamed_6', 'unnamed_7']"
+        ]
+      },
+      "errors": [
+        "검증 실패: [\"높은 NULL 비율 컬럼: ['column_0', 'unnamed_1', 'unnamed_2', 'unnamed_3', 'unnamed_4', 'unnamed_5', 'unnamed_6', 'unnamed_7']\"]"
+      ]
+    },
+    "SUBJECT3": {
+      "status": "success",
+      "staging_table": "tb_raw_2026_SUBJECT3_staging",
+      "target_table": "tb_raw_2026_SUBJECT3",
+      "loaded_rows": 1464,
+      "validation": {
+        "expected_row_count": 1464,
+        "actual_row_count": 1464,
+        "row_count_match": true,
+        "null_ratios": {
+          "column_0": 0.001366120218579235,
+          "unnamed_1": 0.001366120218579235,
+          "unnamed_2": 0.0020491803278688526,
+          "unnamed_3": 0.001366120218579235,
+          "unnamed_4": 0.0020491803278688526,
+          "unnamed_5": 0.0020491803278688526,
+          "unnamed_6": 0.0020491803278688526,
+          "unnamed_7": 0.0020491803278688526,
+          "unnamed_8": 0.0020491803278688526,
+          "unnamed_9": 0.0020491803278688526
+        },
+        "high_null_columns": [],
+        "passed": true,
+        "failure_reasons": []
+      },
+      "errors": [],
+      "backup_table": "tb_raw_2026_SUBJECT3_backup_1769418212"
+    },
+    "INDEX": {
+      "status": "failed",
+      "staging_table": "tb_raw_2026_INDEX_staging",
+      "target_table": "tb_raw_2026_INDEX",
+      "loaded_rows": 199920,
+      "validation": {
+        "expected_row_count": 199920,
+        "actual_row_count": 199920,
+        "row_count_match": true,
+        "null_ratios": {
+          "index": 0,
+          "unnamed_1": 1.0,
+          "unnamed_2": 0,
+          "unnamed_3": 0,
+          "unnamed_4": 1.0,
+          "unnamed_5": 1.0,
+          "unnamed_6": 1.0,
+          "unnamed_7": 1.0,
+          "unnamed_8": 1.0,
+          "unnamed_9": 1.0
+        },
+        "high_null_columns": [
+          "unnamed_1",
+          "unnamed_4",
+          "unnamed_5",
+          "unnamed_6",
+          "unnamed_7",
+          "unnamed_8",
+          "unnamed_9"
+        ],
+        "passed": false,
+        "failure_reasons": [
+          "높은 NULL 비율 컬럼: ['unnamed_1', 'unnamed_4', 'unnamed_5', 'unnamed_6', 'unnamed_7', 'unnamed_8', 'unnamed_9']"
+        ]
+      },
+      "errors": [
+        "검증 실패: [\"높은 NULL 비율 컬럼: ['unnamed_1', 'unnamed_4', 'unnamed_5', 'unnamed_6', 'unnamed_7', 'unnamed_8', 'unnamed_9']\"]"
+      ]
+    },
+    "RAWSCORE": {
+      "status": "success",
+      "staging_table": "tb_raw_2026_RAWSCORE_staging",
+      "target_table": "tb_raw_2026_RAWSCORE",
+      "loaded_rows": 11366,
+      "validation": {
+        "expected_row_count": 11366,
+        "actual_row_count": 11366,
+        "row_count_match": true,
+        "null_ratios": {
+          "column_0": 0,
+          "column_1": 0,
+          "column_2": 8.798169980644026e-05,
+          "unnamed_3": 8.798169980644026e-05,
+          "unnamed_4": 8.798169980644026e-05,
+          "column_5": 0,
+          "col_202511": 8.798169980644026e-05,
+          "unnamed_7": 8.798169980644026e-05,
+          "unnamed_8": 8.798169980644026e-05,
+          "unnamed_9": 8.798169980644026e-05
+        },
+        "high_null_columns": [],
+        "passed": true,
+        "failure_reasons": []
+      },
+      "errors": [],
+      "backup_table": "tb_raw_2026_RAWSCORE_backup_1769418237"
+    }
+  },
+  "validation": {
+    "passed": true,
+    "failure_reasons": [
+      "이과계열분석결과: ['검증 실패: [\"높은 NULL 비율 컬럼: [\\'unnamed_7\\', \\'unnamed_8\\']\"]']",
+      "문과계열분석결과: ['검증 실패: [\"높은 NULL 비율 컬럼: [\\'unnamed_7\\', \\'unnamed_8\\']\"]']",
+      "SUBJECT1: ['검증 실패: [\"높은 NULL 비율 컬럼: [\\'column_0\\', \\'unnamed_1\\', \\'unnamed_2\\', \\'unnamed_3\\', \\'unnamed_4\\', \\'unnamed_5\\', \\'unnamed_6\\', \\'unnamed_7\\']\"]']",
+      "INDEX: ['검증 실패: [\"높은 NULL 비율 컬럼: [\\'unnamed_1\\', \\'unnamed_4\\', \\'unnamed_5\\', \\'unnamed_6\\', \\'unnamed_7\\', \\'unnamed_8\\', \\'unnamed_9\\']\"]']"
+    ]
+  },
+  "status": "partial"
+}

@@ -1,0 +1,178 @@
+{
+  "total_rows": 11366,
+  "total_cols": 10,
+  "columns": {
+    "column_0": {
+      "dtype": "str",
+      "null_count": 0,
+      "null_ratio": 0.0,
+      "unique_count": 7,
+      "sample_values": [
+        "0",
+        "국어",
+        "국어",
+        "국어",
+        "국어"
+      ]
+    },
+    "column_1": {
+      "dtype": "str",
+      "null_count": 0,
+      "null_ratio": 0.0,
+      "unique_count": 34,
+      "sample_values": [
+        "0",
+        "국어(언매)",
+        "국어(언매)",
+        "국어(언매)",
+        "국어(언매)"
+      ]
+    },
+    "column_2": {
+      "dtype": "float64",
+      "null_count": 1,
+      "null_ratio": 8.798169980644026e-05,
+      "unique_count": 101,
+      "sample_values": [
+        100.0,
+        99.0,
+        98.0,
+        97.0,
+        96.0
+      ],
+      "stats": {
+        "mean": 47.050153981522215,
+        "std": 23.760533543288766,
+        "min": 0.0,
+        "max": 100.0
+      }
+    },
+    "unnamed_3": {
+      "dtype": "float64",
+      "null_count": 1,
+      "null_ratio": 8.798169980644026e-05,
+      "unique_count": 100,
+      "sample_values": [
+        76.0,
+        76.0,
+        76.0,
+        76.0,
+        76.0
+      ],
+      "stats": {
+        "mean": 36.03607567091949,
+        "std": 21.618018400185704,
+        "min": 0.0,
+        "max": 100.0
+      }
+    },
+    "unnamed_4": {
+      "dtype": "float64",
+      "null_count": 1,
+      "null_ratio": 8.798169980644026e-05,
+      "unique_count": 27,
+      "sample_values": [
+        24.0,
+        23.0,
+        22.0,
+        21.0,
+        20.0
+      ],
+      "stats": {
+        "mean": 11.014078310602727,
+        "std": 8.237593721650539,
+        "min": 0.0,
+        "max": 26.0
+      }
+    },
+    "column_5": {
+      "dtype": "str",
+      "null_count": 0,
+      "null_ratio": 0.0,
+      "unique_count": 11366,
+      "sample_values": [
+        "0-공통",
+        "국어(언매)-76-24",
+        "국어(언매)-76-23",
+        "국어(언매)-76-22",
+        "국어(언매)-76-21"
+      ]
+    },
+    "col_202511": {
+      "dtype": "float64",
+      "null_count": 1,
+      "null_ratio": 8.798169980644026e-05,
+      "unique_count": 132,
+      "sample_values": [
+        146.0,
+        145.0,
+        144.0,
+        143.0,
+        142.0
+      ],
+      "stats": {
+        "mean": 90.63642762868456,
+        "std": 30.472487344309677,
+        "min": 1.0,
+        "max": 146.0
+      }
+    },
+    "unnamed_7": {
+      "dtype": "float64",
+      "null_count": 1,
+      "null_ratio": 8.798169980644026e-05,
+      "unique_count": 101,
+      "sample_values": [
+        100.0,
+        100.0,
+        100.0,
+        100.0,
+        100.0
+      ],
+      "stats": {
+        "mean": 48.22798064232292,
+        "std": 28.883059173056356,
+        "min": 0.0,
+        "max": 100.0
+      }
+    },
+    "unnamed_8": {
+      "dtype": "float64",
+      "null_count": 1,
+      "null_ratio": 8.798169980644026e-05,
+      "unique_count": 9,
+      "sample_values": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "stats": {
+        "mean": 5.0725032996040476,
+        "std": 2.0380543965841444,
+        "min": 1.0,
+        "max": 9.0
+      }
+    },
+    "unnamed_9": {
+      "dtype": "float64",
+      "null_count": 1,
+      "null_ratio": 8.798169980644026e-05,
+      "unique_count": 875,
+      "sample_values": [
+        0.0792761915036513,
+        0.0792764349005863,
+        0.2175525164973339,
+        0.3198603570255026,
+        0.5294040703009274
+      ],
+      "stats": {
+        "mean": 52.75749743387853,
+        "std": 28.868737152167043,
+        "min": 0.0792761915036513,
+        "max": 100.00000000000004
+      }
+    }
+  }
+}

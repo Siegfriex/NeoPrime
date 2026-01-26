@@ -1,0 +1,556 @@
+// ============================================================
+// NEO GOD 통합 인텔리전스 시스템 - BigQuery 스키마
+// Generated from PRD v1.0
+// Database: Google Cloud BigQuery
+// Project: neoprime0305
+// Dataset: ds_neoprime_entrance
+// ============================================================
+
+// ============================================================
+// Enums
+// ============================================================
+
+Enum judgment_status {
+  error_english_history [note: '오류(영어국사)']
+  excluded_exploration [note: '제외(수탐)']
+  optimal_score_above [note: '적정점수 이상']
+  expected_score_above [note: '예상점수 이상']
+  challenge_score_above [note: '소신점수 이상']
+  challenge_score_below [note: '소신점수 미만']
+}
+
+Enum track_type {
+  science [note: '이과계열']
+  liberal_arts [note: '문과계열']
+}
+
+Enum subject_area {
+  korean [note: '국어']
+  math [note: '수학']
+  english [note: '영어']
+  korean_history [note: '한국사']
+  exploration [note: '탐구']
+  second_language [note: '제2외국어']
+  common [note: '공통']
+}
+
+// ============================================================
+// TableGroup: Raw Data
+// 원본 엑셀 시트에서 추출된 데이터 테이블
+// ============================================================
+
+TableGroup raw_data {
+  tb_index_2026
+  tb_rawscore_2026
+  tb_analysis_result_science_2026
+  tb_analysis_result_liberal_arts_2026
+}
+
+Table tb_index_2026 {
+  index_code string [pk, note: '대학 코드 (예: 510gs0t20509), 14,408개 고유값']
+  flag_1 string [note: 'Unnamed: 2, 플래그 값 "1"']
+  flag_2 string [note: 'Unnamed: 3, 플래그 값 "1"']
+  info_ref string [note: 'Unnamed: 26, INFO 시트 참조 (=INFO!$B$18)']
+  ingestion_timestamp timestamp [note: '데이터 적재 시점']
+  
+  Note: '''
+  INDEX 시트: 199,921행 × 27컬럼
+  - 대부분의 컬럼이 NULL (99% 이상)
+  - index_code 컬럼만 실제 데이터 보유
+  - BigQuery 파티셔닝: ingestion_timestamp (DATE)
+  - BigQuery 클러스터링: index_code
+  '''
+}
+
+Table tb_rawscore_2026 {
+  column_0 string [note: '영역, 과목 영역 (7개 고유값)']
+  column_1 string [note: '과목명, 세부 과목명 (34개 고유값)']
+  column_2 float [note: '원점수, 0.0-100.0, 평균: 47.05']
+  unnamed_3 float [note: 'Unnamed: 3, 추가 점수, 평균: 36.04']
+  unnamed_4 float [note: 'Unnamed: 4, 추가 점수, 평균: 11.01']
+  column_5 string [note: '과목명-원점수, 조합 필드 (11,366개 고유값)']
+  col_202511 float [note: '202511(가채점), 가채점 정보 1.0-146.0, 평균: 90.64']
+  unnamed_7 float [note: 'Unnamed: 7, 추가 점수, 평균: 48.23']
+  unnamed_8 float [note: 'Unnamed: 8, 등급 정보 1.0-9.0, 평균: 5.07']
+  unnamed_9 float [note: 'Unnamed: 9, 백분위 0.079-100.0, 평균: 52.76']
+  ingestion_timestamp timestamp [note: '데이터 적재 시점']
+  
+  Note: '''
+  RAWSCORE 시트: 11,367행 × 10컬럼
+  - NULL 비율: 0.000088% (매우 낮음)
+  - 모든 필드 유효성 검증 통과
+  - BigQuery 파티셔닝: ingestion_timestamp (DATE)
+  - BigQuery 클러스터링: column_1 (과목명)
+  '''
+}
+
+Table tb_analysis_result_science_2026 {
+  index_code string [pk, note: '대학 코드 ($AK6), INDEX 시트와 동일 형식']
+  university_name string [note: '대학명 ($B6)']
+  department_name string [note: '학과명 ($C6)']
+  current_score float [note: '현재 점수 ($G6)']
+  optimal_score float [note: '적정점수 기준값 ($J6)']
+  expected_score float [note: '예상점수 기준값 ($K6)']
+  challenge_score float [note: '소신점수 기준값 ($L6)']
+  indicator_name_1 string [note: '첫 번째 지표명 (E$5)']
+  indicator_name_2 string [note: '두 번째 지표명 (F$5)']
+  converted_score_1 float [note: 'col_4, COMPUTE 시트 기반 점수 변환 (첫 번째 지표)']
+  converted_score_2 float [note: 'col_5, COMPUTE 시트 기반 점수 변환 (두 번째 지표)']
+  score_sum float [note: 'col_6, 점수 합계 (converted_score_1 + converted_score_2)']
+  average_score float [note: 'col_7, 평균 점수 계산 (HLOOKUP 기반, COMPUTE 4행, 5행 평균)']
+  weighted_score_display string [note: 'col_8, 조건부 포맷팅 및 가중치 적용']
+  judgment_result judgment_status [note: 'col_3, 적정점수/예상점수/소신점수 판정 결과']
+  track_type track_type [default: 'science', note: '이과계열']
+  ingestion_timestamp timestamp [note: '데이터 적재 시점']
+  
+  Note: '''
+  이과계열분석결과 시트: 5,835행 × 59컬럼
+  - 주요 계산 컬럼: col_3 (판정), col_4/col_5 (COMPUTE 조회), col_7 (평균), col_8 (가중치)
+  - COMPUTE 시트 4행, 5행 사용 (이과계열)
+  - BigQuery 파티셔닝: ingestion_timestamp (DATE)
+  - BigQuery 클러스터링: index_code
+  '''
+}
+
+Table tb_analysis_result_liberal_arts_2026 {
+  index_code string [pk, note: '대학 코드 ($AK6), INDEX 시트와 동일 형식']
+  university_name string [note: '대학명 ($B6)']
+  department_name string [note: '학과명 ($C6)']
+  current_score float [note: '현재 점수 ($G6)']
+  optimal_score float [note: '적정점수 기준값 ($J6)']
+  expected_score float [note: '예상점수 기준값 ($K6)']
+  challenge_score float [note: '소신점수 기준값 ($L6)']
+  indicator_name_1 string [note: '첫 번째 지표명 (E$5)']
+  indicator_name_2 string [note: '두 번째 지표명 (F$5)']
+  converted_score_1 float [note: 'col_4, COMPUTE 시트 기반 점수 변환 (첫 번째 지표)']
+  converted_score_2 float [note: 'col_5, COMPUTE 시트 기반 점수 변환 (두 번째 지표)']
+  score_sum float [note: 'col_6, 점수 합계 (converted_score_1 + converted_score_2)']
+  average_score float [note: 'col_7, 평균 점수 계산 (HLOOKUP 기반, COMPUTE 6행, 7행 평균)']
+  weighted_score_display string [note: 'col_8, 조건부 포맷팅 및 가중치 적용']
+  judgment_result judgment_status [note: 'col_3, 적정점수/예상점수/소신점수 판정 결과']
+  track_type track_type [default: 'liberal_arts', note: '문과계열']
+  ingestion_timestamp timestamp [note: '데이터 적재 시점']
+  
+  Note: '''
+  문과계열분석결과 시트: 5,835행 × 59컬럼
+  - 주요 계산 컬럼: col_3 (판정), col_4/col_5 (COMPUTE 조회), col_7 (평균), col_8 (가중치)
+  - COMPUTE 시트 6행, 7행 사용 (문과계열)
+  - BigQuery 파티셔닝: ingestion_timestamp (DATE)
+  - BigQuery 클러스터링: index_code
+  '''
+}
+
+// ============================================================
+// TableGroup: Reference/Meta
+// 참조 시트 및 메타데이터 테이블
+// ============================================================
+
+TableGroup reference_meta {
+  tb_compute_pivot_2026
+  tb_restrict_area1_2026
+  tb_restrict_area2_2026
+  tb_restrict_area3_2026
+  tb_subject1_2026
+  tb_sat_input_2026
+}
+
+Table tb_compute_pivot_2026 {
+  university_code string [pk, note: '대학 코드 (COMPUTE!$A$2:$UG$2, 553개 대학)']
+  indicator_1 float [note: '지표 1 (COMPUTE!$B$1:$B$72 중 첫 번째)']
+  indicator_2 float [note: '지표 2']
+  indicator_3 float [note: '지표 3']
+  indicator_4 float [note: '지표 4, 이과계열 HLOOKUP 행 4']
+  indicator_5 float [note: '지표 5, 이과계열 HLOOKUP 행 5']
+  indicator_6 float [note: '지표 6, 문과계열 HLOOKUP 행 6']
+  indicator_7 float [note: '지표 7, 문과계열 HLOOKUP 행 7']
+  indicator_8 float
+  indicator_9 float
+  indicator_10 float
+  indicator_11 float
+  indicator_12 float
+  indicator_13 float
+  indicator_14 float
+  indicator_15 float
+  indicator_16 float
+  indicator_17 float
+  indicator_18 float
+  indicator_19 float
+  indicator_20 float
+  indicator_21 float
+  indicator_22 float
+  indicator_23 float
+  indicator_24 float
+  indicator_25 float
+  indicator_26 float
+  indicator_27 float
+  indicator_28 float
+  indicator_29 float
+  indicator_30 float
+  indicator_31 float
+  indicator_32 float
+  indicator_33 float
+  indicator_34 float
+  indicator_35 float
+  indicator_36 float
+  indicator_37 float
+  indicator_38 float
+  indicator_39 float
+  indicator_40 float
+  indicator_41 float
+  indicator_42 float
+  indicator_43 float
+  indicator_44 float
+  indicator_45 float
+  indicator_46 float
+  indicator_47 float
+  indicator_48 float
+  indicator_49 float
+  indicator_50 float
+  indicator_51 float
+  indicator_52 float
+  indicator_53 float
+  indicator_54 float
+  indicator_55 float
+  indicator_56 float
+  indicator_57 float
+  indicator_58 float
+  indicator_59 float
+  indicator_60 float
+  indicator_61 float
+  indicator_62 float
+  indicator_63 float
+  indicator_64 float
+  indicator_65 float
+  indicator_66 float
+  indicator_67 float
+  indicator_68 float
+  indicator_69 float
+  indicator_70 float
+  indicator_71 float
+  indicator_72 float [note: '지표 72 (COMPUTE!$B$1:$B$72 중 마지막)']
+  ingestion_timestamp timestamp [note: '데이터 적재 시점']
+  
+  Note: '''
+  COMPUTE 시트: 72행 × 553컬럼 (PIVOT 변환)
+  - 원본 구조: 행 헤더 72개 지표, 열 헤더 553개 대학 코드
+  - 변환 전략: 72개 지표를 컬럼으로 변환 (PIVOT)
+  - 조회 방식: INDEX/MATCH($AK6, university_code) → indicator_N
+  - 이과계열: indicator_4, indicator_5 사용
+  - 문과계열: indicator_6, indicator_7 사용
+  - BigQuery 클러스터링: university_code
+  '''
+}
+
+Table tb_restrict_area1_2026 {
+  index_code string [pk, note: '대학 코드 (RESTRICT!$A:$C 영역)']
+  col_a string [note: 'RESTRICT!$A 컬럼']
+  col_b string [note: 'RESTRICT!$B 컬럼']
+  restrict_result string [note: 'RESTRICT!$C 컬럼, 제한 조건 결과 (VLOOKUP 3번째 컬럼)']
+  ingestion_timestamp timestamp [note: '데이터 적재 시점']
+  
+  Note: '''
+  RESTRICT 시트 영역 1: RESTRICT!$A:$C
+  - 첫 번째 제한 조건 테이블
+  - 폴백 전략 1단계: VLOOKUP($AK6, RESTRICT!$A:$C, 3, FALSE)
+  - BigQuery 클러스터링: index_code
+  '''
+}
+
+Table tb_restrict_area2_2026 {
+  index_code string [pk, note: '대학 코드 (RESTRICT!$E:$G 영역)']
+  col_e string [note: 'RESTRICT!$E 컬럼']
+  col_f string [note: 'RESTRICT!$F 컬럼']
+  restrict_result string [note: 'RESTRICT!$G 컬럼, 제한 조건 결과 (VLOOKUP 3번째 컬럼)']
+  ingestion_timestamp timestamp [note: '데이터 적재 시점']
+  
+  Note: '''
+  RESTRICT 시트 영역 2: RESTRICT!$E:$G
+  - 두 번째 제한 조건 테이블
+  - 폴백 전략 2단계: VLOOKUP($AK6, RESTRICT!$E:$G, 3, FALSE)
+  - BigQuery 클러스터링: index_code
+  '''
+}
+
+Table tb_restrict_area3_2026 {
+  name_combo string [pk, note: '대학명+학과명 조합 ($B6&" "&$C6, RESTRICT!$I:$L 영역)']
+  col_i string [note: 'RESTRICT!$I 컬럼']
+  col_j string [note: 'RESTRICT!$J 컬럼']
+  col_k string [note: 'RESTRICT!$K 컬럼']
+  restrict_result string [note: 'RESTRICT!$L 컬럼, 제한 조건 결과 (VLOOKUP 4번째 컬럼)']
+  ingestion_timestamp timestamp [note: '데이터 적재 시점']
+  
+  Note: '''
+  RESTRICT 시트 영역 3: RESTRICT!$I:$L
+  - 세 번째 제한 조건 테이블 (대학명+학과명 조합 검색)
+  - 폴백 전략 3단계: VLOOKUP($B6&" "&$C6, RESTRICT!$I:$L, 4, FALSE)
+  - BigQuery 클러스터링: name_combo
+  '''
+}
+
+Table tb_subject1_2026 {
+  subject_name string [pk, note: '과목명 (SUBJECT1!$A:$D 첫 번째 컬럼, 예: "수학(이과)", "수학(문과)")']
+  col_b string [note: 'SUBJECT1!$B 컬럼']
+  col_c string [note: 'SUBJECT1!$C 컬럼']
+  weight_value float [note: '가중치 값 (SUBJECT1!$D 컬럼, VLOOKUP 4번째 컬럼)']
+  ingestion_timestamp timestamp [note: '데이터 적재 시점']
+  
+  Note: '''
+  SUBJECT1 시트: 1,005행 × 4컬럼
+  - 용도: 과목별 가중치 조회
+  - 조회 패턴: VLOOKUP("수학(이과)", SUBJECT1!$A:$D, 4, FALSE)
+  - 이과계열: "수학(이과)" 가중치 사용
+  - 문과계열: "수학(문과)" 가중치 사용
+  - BigQuery 클러스터링: subject_name
+  '''
+}
+
+Table tb_sat_input_2026 {
+  input_id string [pk, note: '입력 ID']
+  english_grade int [note: '영어 등급 (수능입력!$C$18, 0-9)']
+  history_grade int [note: '국사 등급 (수능입력!$C$19, 0-9)']
+  ingestion_timestamp timestamp [note: '데이터 적재 시점']
+  
+  Note: '''
+  수능입력 시트: 영어/국사 등급 입력
+  - 판정 로직에서 영어/국사 등급 검증에 사용
+  - 조건: 등급이 NULL, 0, 또는 9 초과 시 "오류(영어국사)" 반환
+  '''
+}
+
+// ============================================================
+// TableGroup: Staging
+// Staging Table 전략을 위한 임시 테이블 그룹
+// ============================================================
+
+TableGroup staging {
+  tb_index_2026_staging
+  tb_rawscore_2026_staging
+  tb_analysis_result_science_2026_staging
+  tb_analysis_result_liberal_arts_2026_staging
+  tb_compute_pivot_2026_staging
+  tb_restrict_area1_2026_staging
+  tb_restrict_area2_2026_staging
+  tb_restrict_area3_2026_staging
+  tb_subject1_2026_staging
+}
+
+Table tb_index_2026_staging {
+  index_code string [pk]
+  flag_1 string
+  flag_2 string
+  info_ref string
+  ingestion_timestamp timestamp
+  
+  Note: 'Staging 테이블: 검증 후 원자적 전환 (Atomic Swap)'
+}
+
+Table tb_rawscore_2026_staging {
+  column_0 string
+  column_1 string
+  column_2 float
+  unnamed_3 float
+  unnamed_4 float
+  column_5 string
+  col_202511 float
+  unnamed_7 float
+  unnamed_8 float
+  unnamed_9 float
+  ingestion_timestamp timestamp
+  
+  Note: 'Staging 테이블: 검증 후 원자적 전환 (Atomic Swap)'
+}
+
+Table tb_analysis_result_science_2026_staging {
+  index_code string [pk]
+  university_name string
+  department_name string
+  current_score float
+  optimal_score float
+  expected_score float
+  challenge_score float
+  indicator_name_1 string
+  indicator_name_2 string
+  converted_score_1 float
+  converted_score_2 float
+  score_sum float
+  average_score float
+  weighted_score_display string
+  judgment_result judgment_status
+  track_type track_type
+  ingestion_timestamp timestamp
+  
+  Note: 'Staging 테이블: 검증 후 원자적 전환 (Atomic Swap)'
+}
+
+Table tb_analysis_result_liberal_arts_2026_staging {
+  index_code string [pk]
+  university_name string
+  department_name string
+  current_score float
+  optimal_score float
+  expected_score float
+  challenge_score float
+  indicator_name_1 string
+  indicator_name_2 string
+  converted_score_1 float
+  converted_score_2 float
+  score_sum float
+  average_score float
+  weighted_score_display string
+  judgment_result judgment_status
+  track_type track_type
+  ingestion_timestamp timestamp
+  
+  Note: 'Staging 테이블: 검증 후 원자적 전환 (Atomic Swap)'
+}
+
+Table tb_compute_pivot_2026_staging {
+  university_code string [pk]
+  indicator_1 float
+  indicator_2 float
+  indicator_3 float
+  indicator_4 float
+  indicator_5 float
+  indicator_6 float
+  indicator_7 float
+  indicator_8 float
+  indicator_9 float
+  indicator_10 float
+  indicator_11 float
+  indicator_12 float
+  indicator_13 float
+  indicator_14 float
+  indicator_15 float
+  indicator_16 float
+  indicator_17 float
+  indicator_18 float
+  indicator_19 float
+  indicator_20 float
+  indicator_21 float
+  indicator_22 float
+  indicator_23 float
+  indicator_24 float
+  indicator_25 float
+  indicator_26 float
+  indicator_27 float
+  indicator_28 float
+  indicator_29 float
+  indicator_30 float
+  indicator_31 float
+  indicator_32 float
+  indicator_33 float
+  indicator_34 float
+  indicator_35 float
+  indicator_36 float
+  indicator_37 float
+  indicator_38 float
+  indicator_39 float
+  indicator_40 float
+  indicator_41 float
+  indicator_42 float
+  indicator_43 float
+  indicator_44 float
+  indicator_45 float
+  indicator_46 float
+  indicator_47 float
+  indicator_48 float
+  indicator_49 float
+  indicator_50 float
+  indicator_51 float
+  indicator_52 float
+  indicator_53 float
+  indicator_54 float
+  indicator_55 float
+  indicator_56 float
+  indicator_57 float
+  indicator_58 float
+  indicator_59 float
+  indicator_60 float
+  indicator_61 float
+  indicator_62 float
+  indicator_63 float
+  indicator_64 float
+  indicator_65 float
+  indicator_66 float
+  indicator_67 float
+  indicator_68 float
+  indicator_69 float
+  indicator_70 float
+  indicator_71 float
+  indicator_72 float
+  ingestion_timestamp timestamp
+  
+  Note: 'Staging 테이블: 검증 후 원자적 전환 (Atomic Swap)'
+}
+
+Table tb_restrict_area1_2026_staging {
+  index_code string [pk]
+  col_a string
+  col_b string
+  restrict_result string
+  ingestion_timestamp timestamp
+  
+  Note: 'Staging 테이블: 검증 후 원자적 전환 (Atomic Swap)'
+}
+
+Table tb_restrict_area2_2026_staging {
+  index_code string [pk]
+  col_e string
+  col_f string
+  restrict_result string
+  ingestion_timestamp timestamp
+  
+  Note: 'Staging 테이블: 검증 후 원자적 전환 (Atomic Swap)'
+}
+
+Table tb_restrict_area3_2026_staging {
+  name_combo string [pk]
+  col_i string
+  col_j string
+  col_k string
+  restrict_result string
+  ingestion_timestamp timestamp
+  
+  Note: 'Staging 테이블: 검증 후 원자적 전환 (Atomic Swap)'
+}
+
+Table tb_subject1_2026_staging {
+  subject_name string [pk]
+  col_b string
+  col_c string
+  weight_value float
+  ingestion_timestamp timestamp
+  
+  Note: 'Staging 테이블: 검증 후 원자적 전환 (Atomic Swap)'
+}
+
+// ============================================================
+// References (Relationships)
+// 엑셀 수식의 관계성을 테이블 간 참조로 매핑
+// ============================================================
+
+// ANALYSIS_RESULT → INDEX (index_code 참조)
+Ref: tb_analysis_result_science_2026.index_code > tb_index_2026.index_code
+Ref: tb_analysis_result_liberal_arts_2026.index_code > tb_index_2026.index_code
+
+// ANALYSIS_RESULT → COMPUTE (INDEX/MATCH 조회)
+Ref: tb_analysis_result_science_2026.index_code > tb_compute_pivot_2026.university_code
+Ref: tb_analysis_result_liberal_arts_2026.index_code > tb_compute_pivot_2026.university_code
+
+// ANALYSIS_RESULT → RESTRICT (3단계 폴백 전략)
+Ref: tb_analysis_result_science_2026.index_code > tb_restrict_area1_2026.index_code
+Ref: tb_analysis_result_science_2026.index_code > tb_restrict_area2_2026.index_code
+Ref: tb_analysis_result_liberal_arts_2026.index_code > tb_restrict_area1_2026.index_code
+Ref: tb_analysis_result_liberal_arts_2026.index_code > tb_restrict_area2_2026.index_code
+
+// ANALYSIS_RESULT → RESTRICT_AREA3 (대학명+학과명 조합)
+// Note: 실제 조회는 CONCAT(university_name, ' ', department_name) = name_combo로 수행
+// DBML에서는 직접적인 문자열 연결 관계를 표현할 수 없으므로 논리적 관계로 표시
+Ref: tb_analysis_result_science_2026.university_name - tb_restrict_area3_2026.name_combo [note: '논리적 관계: CONCAT(university_name, " ", department_name) = name_combo']
+Ref: tb_analysis_result_liberal_arts_2026.university_name - tb_restrict_area3_2026.name_combo [note: '논리적 관계: CONCAT(university_name, " ", department_name) = name_combo']
+
+// ANALYSIS_RESULT → SUBJECT1 (과목별 가중치 조회)
+// Note: 실제 조회는 고정값 "수학(이과)" 또는 "수학(문과)"로 VLOOKUP 수행
+// DBML에서는 상수값 관계를 직접 표현할 수 없으므로 논리적 관계로 표시
+Ref: tb_analysis_result_science_2026.track_type - tb_subject1_2026.subject_name [note: '논리적 관계: track_type="science" → subject_name="수학(이과)"']
+Ref: tb_analysis_result_liberal_arts_2026.track_type - tb_subject1_2026.subject_name [note: '논리적 관계: track_type="liberal_arts" → subject_name="수학(문과)"']
