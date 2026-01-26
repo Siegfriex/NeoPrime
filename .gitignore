@@ -1,0 +1,41 @@
+# Google Cloud Service Account Keys
+neoprime-admin-key.json
+neoprime-loader-key.json
+*.json.key
+*-key.json
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+.venv
+
+# Logs
+*.log
+pipeline.log
+uploader.log
+
+# Output directories
+output/
+test_output/
+stress_test_output/
+
+# IDE
+.vscode/
+.cursor/
+.claude/
+
+# OS
+.DS_Store
+Thumbs.db
+~$*
+
+# Temporary files
+nul
+*.tmp
+*.temp
