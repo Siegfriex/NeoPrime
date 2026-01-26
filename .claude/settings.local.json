@@ -11,7 +11,8 @@
       "Bash(Y:\\\\0126\\\\python_env.env\\\\Scripts\\\\pip.exe install:*)",
       "Bash(taskkill:*)",
       "Bash(rd /s /q \"%LOCALAPPDATA%\\\\Temp\\\\gen_py\")",
-      "Bash(cmd /c \"dir /b Y:\\\\0126\\\\0126\\\\*.xlsx\")"
+      "Bash(cmd /c \"dir /b Y:\\\\0126\\\\0126\\\\*.xlsx\")",
+      "Bash(ls:*)"
     ],
     "deny": [
       "Read(./.env)",
