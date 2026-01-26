@@ -76,7 +76,37 @@ class StagingTableLoader:
             dataset.location = self.location
             self.client.create_dataset(dataset, exists_ok=True)
             print(f"[INFO] 데이터셋 생성 완료: {dataset_ref}")
-    
+
+    def _load_schema_from_json(self, schema_path: str) -> List[bigquery.SchemaField]:
+        """JSON 파일에서 BigQuery 스키마 로드 (v2.3)"""
+        with open(schema_path, 'r', encoding='utf-8') as f:
+            schema_json = json.load(f)
+        return [
+            bigquery.SchemaField(
+                name=field['name'],
+                field_type=field.get('type', 'STRING'),
+                mode=field.get('mode', 'NULLABLE'),
+                description=field.get('description', '')
+            )
+            for field in schema_json
+        ]
+
+    def _create_load_job_config(self, idx: int, schema_path: Optional[str] = None) -> LoadJobConfig:
+        """Load Job Config 생성 - Schema-First 지원 (v2.3)"""
+        if schema_path and Path(schema_path).exists():
+            schema = self._load_schema_from_json(schema_path)
+            return LoadJobConfig(
+                source_format=SourceFormat.PARQUET,
+                write_disposition=WriteDisposition.WRITE_TRUNCATE if idx == 0 else WriteDisposition.WRITE_APPEND,
+                schema=schema,
+                autodetect=False
+            )
+        return LoadJobConfig(
+            source_format=SourceFormat.PARQUET,
+            write_disposition=WriteDisposition.WRITE_TRUNCATE if idx == 0 else WriteDisposition.WRITE_APPEND,
+            autodetect=True
+        )
+
     def safe_load_with_staging(
         self,
         parquet_files: List[str],
@@ -308,7 +338,39 @@ class StagingTableLoader:
         """테이블 삭제"""
         table_ref = f"{self.project_id}.{self.dataset_id}.{table_name}"
         self.client.delete_table(table_ref, not_found_ok=True)
-    
+
+    def _validate_key_column(self, table_name: str, key_column: str) -> bool:
+        """키 컬럼 존재 검증 (v2.3 NEW-6)"""
+        try:
+            query = f"""
+            SELECT column_name FROM `{self.project_id}.{self.dataset_id}.INFORMATION_SCHEMA.COLUMNS`
+            WHERE table_name = '{table_name}' AND column_name = '{key_column}'
+            """
+            result = list(self.client.query(query).result())
+            exists = len(result) > 0
+            print(f"[검증] 키 컬럼 '{key_column}' {'존재' if exists else '미존재'}: {table_name}")
+            return exists
+        except Exception as e:
+            print(f"[에러] 키 컬럼 검증 실패: {e}")
+            return False
+
+    def _quarantine_table(self, staging_table: str, target_table: str) -> str:
+        """검증 실패 테이블 격리 (v2.3)"""
+        import datetime
+        timestamp = datetime.datetime.now().strftime('%Y%m%d_%H%M%S')
+        quarantine_name = f"{target_table}_quarantine_{timestamp}"
+        if self._table_exists(quarantine_name):
+            timestamp = datetime.datetime.now().strftime('%Y%m%d_%H%M%S_%f')
+            quarantine_name = f"{target_table}_quarantine_{timestamp}"
+
+        staging_ref = f"{self.project_id}.{self.dataset_id}.{staging_table}"
+        quarantine_ref = f"{self.project_id}.{self.dataset_id}.{quarantine_name}"
+        copy_job = self.client.copy_table(staging_ref, quarantine_ref)
+        copy_job.result()
+        self.client.delete_table(staging_ref, not_found_ok=True)
+        print(f"[격리] {staging_table} → {quarantine_name}")
+        return quarantine_name
+
     def _atomic_table_swap(self, staging: str, target: str):
         """
         원자적 테이블 전환

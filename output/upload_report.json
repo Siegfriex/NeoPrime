@@ -1,20 +1,36 @@
 {
-  "upload_time": "2026-01-26T18:04:05",
+  "upload_time": "2026-01-26T21:34:55",
   "project_id": "neoprime0305",
   "dataset_id": "ds_neoprime_entrance",
   "tables": [
+    "INFO",
+    "원점수입력",
+    "수능입력",
+    "내신입력",
     "이과계열분석결과",
     "문과계열분석결과",
+    "COMPUTE",
+    "RESTRICT",
     "SUBJECT1",
+    "SUBJECT2",
     "SUBJECT3",
+    "PERCENTAGE",
     "INDEX",
     "RAWSCORE"
   ],
   "source_files": [
+    "output\\normalized_INFO_chunk_0000_part_000.parquet",
+    "output\\normalized_원점수입력_chunk_0000_part_000.parquet",
+    "output\\normalized_수능입력_chunk_0000_part_000.parquet",
+    "output\\normalized_내신입력_chunk_0000_part_000.parquet",
     "output\\normalized_이과계열분석결과_chunk_0000_part_000.parquet",
     "output\\normalized_문과계열분석결과_chunk_0000_part_000.parquet",
+    "output\\normalized_COMPUTE_chunk_0000_part_000.parquet",
+    "output\\normalized_RESTRICT_chunk_0000_part_000.parquet",
     "output\\normalized_SUBJECT1_chunk_0000_part_000.parquet",
+    "output\\normalized_SUBJECT2_chunk_0000_part_000.parquet",
     "output\\normalized_SUBJECT3_chunk_0000_part_000.parquet",
+    "output\\normalized_PERCENTAGE_chunk_0000_part_000.parquet",
     "output\\normalized_INDEX_chunk_0000_part_000.parquet",
     "output\\normalized_INDEX_chunk_0001_part_000.parquet",
     "output\\normalized_INDEX_chunk_0002_part_000.parquet",
@@ -22,14 +38,119 @@
     "output\\normalized_RAWSCORE_chunk_0000_part_000.parquet"
   ],
   "upload_stats": {
-    "total_rows": 225420,
-    "chunks_uploaded": 9,
-    "tables_created": 6,
+    "total_rows": 27013,
+    "chunks_uploaded": 17,
+    "tables_created": 14,
     "status": "partial"
   },
   "sheets_detail": {
+    "INFO": {
+      "status": "success",
+      "staging_table": "tb_raw_2026_INFO_staging",
+      "target_table": "tb_raw_2026_INFO",
+      "loaded_rows": 17,
+      "validation": {
+        "expected_row_count": 17,
+        "actual_row_count": 17,
+        "row_count_match": true,
+        "null_ratios": {
+          "136_3_3": 0,
+          "unnamed_1": 0,
+          "unnamed_2": 0,
+          "unnamed_3": 0,
+          "_ingested_at": 0,
+          "_source_filename": 0,
+          "_row_id": 0
+        },
+        "high_null_columns": [],
+        "passed": true,
+        "failure_reasons": []
+      },
+      "errors": []
+    },
+    "원점수입력": {
+      "status": "success",
+      "staging_table": "tb_raw_2026_원점수입력_staging",
+      "target_table": "tb_raw_2026_원점수입력",
+      "loaded_rows": 44,
+      "validation": {
+        "expected_row_count": 44,
+        "actual_row_count": 44,
+        "row_count_match": true,
+        "null_ratios": {
+          "column_0": 0,
+          "unnamed_1": 0,
+          "unnamed_2": 0,
+          "unnamed_3": 0,
+          "unnamed_4": 0,
+          "unnamed_5": 0,
+          "unnamed_6": 0,
+          "unnamed_7": 0,
+          "_ingested_at": 0,
+          "_source_filename": 0
+        },
+        "high_null_columns": [],
+        "passed": true,
+        "failure_reasons": []
+      },
+      "errors": []
+    },
+    "수능입력": {
+      "status": "success",
+      "staging_table": "tb_raw_2026_수능입력_staging",
+      "target_table": "tb_raw_2026_수능입력",
+      "loaded_rows": 44,
+      "validation": {
+        "expected_row_count": 44,
+        "actual_row_count": 44,
+        "row_count_match": true,
+        "null_ratios": {
+          "col_20251113_date_20251114": 0,
+          "unnamed_1": 0,
+          "unnamed_2": 0.13636363636363635,
+          "unnamed_3": 0.18181818181818182,
+          "unnamed_4": 0.1590909090909091,
+          "unnamed_5": 0.1590909090909091,
+          "unnamed_6": 0.1590909090909091,
+          "unnamed_7": 0.1590909090909091,
+          "unnamed_8": 0.1590909090909091,
+          "unnamed_9": 0
+        },
+        "high_null_columns": [],
+        "passed": true,
+        "failure_reasons": []
+      },
+      "errors": []
+    },
+    "내신입력": {
+      "status": "success",
+      "staging_table": "tb_raw_2026_내신입력_staging",
+      "target_table": "tb_raw_2026_내신입력",
+      "loaded_rows": 27,
+      "validation": {
+        "expected_row_count": 27,
+        "actual_row_count": 27,
+        "row_count_match": true,
+        "null_ratios": {
+          "column_0": 0,
+          "unnamed_1": 0,
+          "unnamed_2": 0,
+          "unnamed_3": 0,
+          "unnamed_4": 0.18518518518518517,
+          "unnamed_5": 0.18518518518518517,
+          "unnamed_6": 0,
+          "unnamed_7": 0,
+          "unnamed_8": 0,
+          "unnamed_9": 0
+        },
+        "high_null_columns": [],
+        "passed": true,
+        "failure_reasons": []
+      },
+      "errors": []
+    },
     "이과계열분석결과": {
-      "status": "failed",
+      "status": "success",
       "staging_table": "tb_raw_2026_이과계열분석결과_staging",
       "target_table": "tb_raw_2026_이과계열분석결과",
       "loaded_rows": 5833,
@@ -39,31 +160,24 @@
         "row_count_match": true,
         "null_ratios": {
           "and": 0,
-          "unnamed_1": 0.0005143151037202125,
-          "unnamed_2": 0.0005143151037202125,
-          "unnamed_3": 0.0005143151037202125,
+          "unnamed_1": 0,
+          "unnamed_2": 0,
+          "unnamed_3": 0,
           "unnamed_4": 0.0006857534716269502,
           "unnamed_5": 0.0006857534716269502,
           "unnamed_6": 0.0006857534716269502,
-          "unnamed_7": 0.9252528715926625,
-          "unnamed_8": 0.9252528715926625,
+          "unnamed_7": 0.0006857534716269502,
+          "unnamed_8": 0,
           "unnamed_9": 0.0006857534716269502
         },
-        "high_null_columns": [
-          "unnamed_7",
-          "unnamed_8"
-        ],
-        "passed": false,
-        "failure_reasons": [
-          "높은 NULL 비율 컬럼: ['unnamed_7', 'unnamed_8']"
-        ]
+        "high_null_columns": [],
+        "passed": true,
+        "failure_reasons": []
       },
-      "errors": [
-        "검증 실패: [\"높은 NULL 비율 컬럼: ['unnamed_7', 'unnamed_8']\"]"
-      ]
+      "errors": []
     },
     "문과계열분석결과": {
-      "status": "failed",
+      "status": "success",
       "staging_table": "tb_raw_2026_문과계열분석결과_staging",
       "target_table": "tb_raw_2026_문과계열분석결과",
       "loaded_rows": 5833,
@@ -73,31 +187,78 @@
         "row_count_match": true,
         "null_ratios": {
           "or": 0,
-          "unnamed_1": 0.0005143151037202125,
-          "unnamed_2": 0.0005143151037202125,
-          "unnamed_3": 0.0005143151037202125,
+          "unnamed_1": 0,
+          "unnamed_2": 0,
+          "unnamed_3": 0,
           "unnamed_4": 0.0006857534716269502,
           "unnamed_5": 0.0006857534716269502,
           "unnamed_6": 0.0006857534716269502,
-          "unnamed_7": 0.9252528715926625,
-          "unnamed_8": 0.9252528715926625,
+          "unnamed_7": 0.0006857534716269502,
+          "unnamed_8": 0,
           "unnamed_9": 0.0006857534716269502
         },
-        "high_null_columns": [
-          "unnamed_7",
-          "unnamed_8"
-        ],
-        "passed": false,
-        "failure_reasons": [
-          "높은 NULL 비율 컬럼: ['unnamed_7', 'unnamed_8']"
-        ]
+        "high_null_columns": [],
+        "passed": true,
+        "failure_reasons": []
       },
-      "errors": [
-        "검증 실패: [\"높은 NULL 비율 컬럼: ['unnamed_7', 'unnamed_8']\"]"
-      ]
+      "errors": []
+    },
+    "COMPUTE": {
+      "status": "success",
+      "staging_table": "tb_raw_2026_COMPUTE_staging",
+      "target_table": "tb_raw_2026_COMPUTE",
+      "loaded_rows": 71,
+      "validation": {
+        "expected_row_count": 71,
+        "actual_row_count": 71,
+        "row_count_match": true,
+        "null_ratios": {
+          "column_0": 0,
+          "unnamed_1": 0,
+          "unnamed_2": 0.09859154929577464,
+          "column_3": 0.11267605633802817,
+          "column_4": 0.11267605633802817,
+          "column_5": 0.11267605633802817,
+          "1": 0.11267605633802817,
+          "2": 0.08450704225352113,
+          "3": 0.11267605633802817,
+          "column_9": 0.11267605633802817
+        },
+        "high_null_columns": [],
+        "passed": true,
+        "failure_reasons": []
+      },
+      "errors": []
+    },
+    "RESTRICT": {
+      "status": "success",
+      "staging_table": "tb_raw_2026_RESTRICT_staging",
+      "target_table": "tb_raw_2026_RESTRICT",
+      "loaded_rows": 558,
+      "validation": {
+        "expected_row_count": 558,
+        "actual_row_count": 558,
+        "row_count_match": true,
+        "null_ratios": {
+          "column_0": 0,
+          "unnamed_1": 0,
+          "unnamed_2": 0,
+          "unnamed_3": 0,
+          "2": 0,
+          "unnamed_5": 0,
+          "unnamed_6": 0,
+          "unnamed_7": 0,
+          "column_8": 0,
+          "unnamed_9": 0
+        },
+        "high_null_columns": [],
+        "passed": true,
+        "failure_reasons": []
+      },
+      "errors": []
     },
     "SUBJECT1": {
-      "status": "failed",
+      "status": "success",
       "staging_table": "tb_raw_2026_SUBJECT1_staging",
       "target_table": "tb_raw_2026_SUBJECT1",
       "loaded_rows": 1004,
@@ -106,35 +267,49 @@
         "actual_row_count": 1004,
         "row_count_match": true,
         "null_ratios": {
-          "column_0": 0.9611553784860558,
-          "unnamed_1": 0.9611553784860558,
-          "unnamed_2": 0.9611553784860558,
-          "unnamed_3": 0.9611553784860558,
-          "unnamed_4": 0.9611553784860558,
-          "unnamed_5": 0.9611553784860558,
-          "unnamed_6": 0.9611553784860558,
-          "unnamed_7": 0.9611553784860558,
+          "column_0": 0,
+          "unnamed_1": 0.00298804780876494,
+          "unnamed_2": 0.00298804780876494,
+          "unnamed_3": 0.00298804780876494,
+          "unnamed_4": 0.00298804780876494,
+          "unnamed_5": 0.00298804780876494,
+          "unnamed_6": 0.00298804780876494,
+          "unnamed_7": 0.00298804780876494,
           "column_8": 0.00298804780876494,
           "unnamed_9": 0.00298804780876494
         },
-        "high_null_columns": [
-          "column_0",
-          "unnamed_1",
-          "unnamed_2",
-          "unnamed_3",
-          "unnamed_4",
-          "unnamed_5",
-          "unnamed_6",
-          "unnamed_7"
-        ],
-        "passed": false,
-        "failure_reasons": [
-          "높은 NULL 비율 컬럼: ['column_0', 'unnamed_1', 'unnamed_2', 'unnamed_3', 'unnamed_4', 'unnamed_5', 'unnamed_6', 'unnamed_7']"
-        ]
+        "high_null_columns": [],
+        "passed": true,
+        "failure_reasons": []
       },
-      "errors": [
-        "검증 실패: [\"높은 NULL 비율 컬럼: ['column_0', 'unnamed_1', 'unnamed_2', 'unnamed_3', 'unnamed_4', 'unnamed_5', 'unnamed_6', 'unnamed_7']\"]"
-      ]
+      "errors": []
+    },
+    "SUBJECT2": {
+      "status": "success",
+      "staging_table": "tb_raw_2026_SUBJECT2_staging",
+      "target_table": "tb_raw_2026_SUBJECT2",
+      "loaded_rows": 104,
+      "validation": {
+        "expected_row_count": 104,
+        "actual_row_count": 104,
+        "row_count_match": true,
+        "null_ratios": {
+          "column_0": 0.028846153846153848,
+          "unnamed_1": 0.028846153846153848,
+          "unnamed_2": 0.028846153846153848,
+          "unnamed_3": 0.028846153846153848,
+          "unnamed_4": 0.028846153846153848,
+          "unnamed_5": 0.028846153846153848,
+          "unnamed_6": 0.028846153846153848,
+          "unnamed_7": 0.028846153846153848,
+          "unnamed_8": 0.028846153846153848,
+          "unnamed_9": 0.028846153846153848
+        },
+        "high_null_columns": [],
+        "passed": true,
+        "failure_reasons": []
+      },
+      "errors": []
     },
     "SUBJECT3": {
       "status": "success",
@@ -146,10 +321,10 @@
         "actual_row_count": 1464,
         "row_count_match": true,
         "null_ratios": {
-          "column_0": 0.001366120218579235,
-          "unnamed_1": 0.001366120218579235,
+          "column_0": 0,
+          "unnamed_1": 0,
           "unnamed_2": 0.0020491803278688526,
-          "unnamed_3": 0.001366120218579235,
+          "unnamed_3": 0,
           "unnamed_4": 0.0020491803278688526,
           "unnamed_5": 0.0020491803278688526,
           "unnamed_6": 0.0020491803278688526,
@@ -161,46 +336,43 @@
         "passed": true,
         "failure_reasons": []
       },
-      "errors": [],
-      "backup_table": "tb_raw_2026_SUBJECT3_backup_1769418212"
+      "errors": []
+    },
+    "PERCENTAGE": {
+      "status": "success",
+      "staging_table": "tb_raw_2026_PERCENTAGE_staging",
+      "target_table": "tb_raw_2026_PERCENTAGE",
+      "loaded_rows": 648,
+      "validation": {
+        "expected_row_count": 648,
+        "actual_row_count": 648,
+        "row_count_match": true,
+        "null_ratios": {
+          "column_0": 0.004629629629629629,
+          "unnamed_1": 0.004629629629629629,
+          "unnamed_2": 0.004629629629629629,
+          "unnamed_3": 0.004629629629629629,
+          "unnamed_4": 0.004629629629629629,
+          "unnamed_5": 0.004629629629629629,
+          "unnamed_6": 0.004629629629629629,
+          "unnamed_7": 0.004629629629629629,
+          "unnamed_8": 0.004629629629629629,
+          "unnamed_9": 0.004629629629629629
+        },
+        "high_null_columns": [],
+        "passed": true,
+        "failure_reasons": []
+      },
+      "errors": []
     },
     "INDEX": {
       "status": "failed",
       "staging_table": "tb_raw_2026_INDEX_staging",
       "target_table": "tb_raw_2026_INDEX",
-      "loaded_rows": 199920,
-      "validation": {
-        "expected_row_count": 199920,
-        "actual_row_count": 199920,
-        "row_count_match": true,
-        "null_ratios": {
-          "index": 0,
-          "unnamed_1": 1.0,
-          "unnamed_2": 0,
-          "unnamed_3": 0,
-          "unnamed_4": 1.0,
-          "unnamed_5": 1.0,
-          "unnamed_6": 1.0,
-          "unnamed_7": 1.0,
-          "unnamed_8": 1.0,
-          "unnamed_9": 1.0
-        },
-        "high_null_columns": [
-          "unnamed_1",
-          "unnamed_4",
-          "unnamed_5",
-          "unnamed_6",
-          "unnamed_7",
-          "unnamed_8",
-          "unnamed_9"
-        ],
-        "passed": false,
-        "failure_reasons": [
-          "높은 NULL 비율 컬럼: ['unnamed_1', 'unnamed_4', 'unnamed_5', 'unnamed_6', 'unnamed_7', 'unnamed_8', 'unnamed_9']"
-        ]
-      },
+      "loaded_rows": 0,
+      "validation": {},
       "errors": [
-        "검증 실패: [\"높은 NULL 비율 컬럼: ['unnamed_1', 'unnamed_4', 'unnamed_5', 'unnamed_6', 'unnamed_7', 'unnamed_8', 'unnamed_9']\"]"
+        "400 Provided Schema does not match Table neoprime0305:ds_neoprime_entrance.tb_raw_2026_INDEX_staging. Field unnamed_26 has changed type from FLOAT to STRING; reason: invalid, message: Provided Schema does not match Table neoprime0305:ds_neoprime_entrance.tb_raw_2026_INDEX_staging. Field unnamed_26 has changed type from FLOAT to STRING"
       ]
     },
     "RAWSCORE": {
@@ -228,17 +400,13 @@
         "passed": true,
         "failure_reasons": []
       },
-      "errors": [],
-      "backup_table": "tb_raw_2026_RAWSCORE_backup_1769418237"
+      "errors": []
     }
   },
   "validation": {
     "passed": true,
     "failure_reasons": [
-      "이과계열분석결과: ['검증 실패: [\"높은 NULL 비율 컬럼: [\\'unnamed_7\\', \\'unnamed_8\\']\"]']",
-      "문과계열분석결과: ['검증 실패: [\"높은 NULL 비율 컬럼: [\\'unnamed_7\\', \\'unnamed_8\\']\"]']",
-      "SUBJECT1: ['검증 실패: [\"높은 NULL 비율 컬럼: [\\'column_0\\', \\'unnamed_1\\', \\'unnamed_2\\', \\'unnamed_3\\', \\'unnamed_4\\', \\'unnamed_5\\', \\'unnamed_6\\', \\'unnamed_7\\']\"]']",
-      "INDEX: ['검증 실패: [\"높은 NULL 비율 컬럼: [\\'unnamed_1\\', \\'unnamed_4\\', \\'unnamed_5\\', \\'unnamed_6\\', \\'unnamed_7\\', \\'unnamed_8\\', \\'unnamed_9\\']\"]']"
+      "INDEX: ['400 Provided Schema does not match Table neoprime0305:ds_neoprime_entrance.tb_raw_2026_INDEX_staging. Field unnamed_26 has changed type from FLOAT to STRING; reason: invalid, message: Provided Schema does not match Table neoprime0305:ds_neoprime_entrance.tb_raw_2026_INDEX_staging. Field unnamed_26 has changed type from FLOAT to STRING']"
     ]
   },
   "status": "partial"

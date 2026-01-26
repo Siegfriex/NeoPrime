@@ -313,18 +313,32 @@ class DateFirstNormalizer:
             report['columns'][col] = col_info
         
         return report
-    
+
+    def _add_system_columns(self, df, source_filename, chunk_index, chunk_size):
+        """시스템 메타데이터 컬럼 추가 (v2.3)"""
+        import datetime
+        df = df.copy()
+        global_offset = chunk_index * chunk_size
+        df['_ingested_at'] = datetime.datetime.now().isoformat()
+        df['_source_filename'] = source_filename or 'unknown'
+        df['_row_id'] = range(global_offset + 2, global_offset + len(df) + 2)
+        return df
+
     # ========================
     # 통합 정규화 프로세스
     # ========================
-    
+
     def normalize_dataframe(
         self,
         df: pd.DataFrame,
         korean_mapping: dict = None,
         output_dir: str = './output',
         max_chunk_size_mb: int = 50,
-        file_prefix: str = 'clean_ingestion'
+        file_prefix: str = 'clean_ingestion',
+        chunk_index: int = 0,
+        chunk_size: int = 50000,
+        source_filename: str = None,
+        add_system_columns: bool = True
     ) -> Dict[str, Any]:
         """
         데이터프레임 전체 정규화
@@ -371,7 +385,11 @@ class DateFirstNormalizer:
         quality_path = output_path / 'data_quality_report.json'
         with open(quality_path, 'w', encoding='utf-8') as f:
             json.dump(quality_report, f, ensure_ascii=False, indent=2, default=str)
-        
+
+        if add_system_columns:
+            print("[Step 5.5] 시스템 메타데이터 컬럼 추가...")
+            df = self._add_system_columns(df, source_filename, chunk_index, chunk_size)
+
         print("[Step 6] Parquet 파일 분할 저장...")
         chunk_files = self._save_parquet_chunks(df, output_path, max_chunk_size_mb, file_prefix)
         

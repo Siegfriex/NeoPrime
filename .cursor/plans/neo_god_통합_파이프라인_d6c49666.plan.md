@@ -50,21 +50,33 @@ isProject: false
 ### v2.1~v2.3 보정 (유지)
 
 | 결함 ID | 결함 내용 | 심각도 | 보정 상태 |
+
 |---------|----------|--------|----------|
+
 | CF-1 | _row_id 청크 초기화 오류 | Critical | 보정됨 (A-3) |
+
 | CF-2 | Dual-Read 성능 상쇄 | Critical | 보정됨 (B-3) |
+
 | CF-3 | Autodetect 스키마 위험 | High | 보정됨 (A-6) |
 
 ### v2.4 보정 (신규)
 
 | 결함 ID | 결함 내용 | 심각도 | 보정 상태 |
+
 |---------|----------|--------|----------|
+
 | NEW-1 | 랜덤 시드 위치 불명확 | Medium | 보정됨 (A-3) |
+
 | NEW-6 | 비즈니스 뷰 키 컬럼 미검증 | High | 보정됨 (B-4) |
+
 | NEW-7 | 마이그레이션 호출 시점 불명확 | High | 보정됨 (A-3.5) |
+
 | NEW-9 | 요약 테이블 수치 불일치 | Low | 보정됨 (전체) |
+
 | 호출체인 | _add_system_columns 연결 단절 | High | 보정됨 (A-3) |
+
 | 격리고유명 | 동일 테이블 격리 시 덮어쓰기 | Medium | 보정됨 (B-1) |
+
 | Schema-First | 구현 상세 누락 | High | 보정됨 (A-6) |
 
 | TG-1 | has_data 필터링 허점 | Medium | 보정됨 (A-1) |
@@ -328,7 +340,7 @@ def normalize_dataframe(self, df, chunk_index=0, chunk_size=50000, source_filena
 
 **파일**: [phase4_load.py](y:\0126\0126\phase4_load.py)
 
-> **[NEW-1 보정]** 랜덤 시드 위치: **함수 내부**에서 설정 (다른 코드에 영향 방지)
+> **[NEW-1 보정] **랜덤 시드 위치: **함수 내부**에서 설정 (다른 코드에 영향 방지)
 
 ```python
 def _validate_staging_table(self, staging_table, expected_row_count, null_threshold, ...):
@@ -367,7 +379,8 @@ def _validate_staging_table(self, staging_table, expected_row_count, null_thresh
 ### A-3.5. 기존 테이블 마이그레이션 (신규)
 
 > **[AI-1 보정]** 기존 tb_raw_2026_RAWSCORE, SUBJECT3에 메타데이터 컬럼 추가
-> **[NEW-7 보정]** 마이그레이션 호출 시점: **Phase 4 시작 전** (Phase 3 완료 후)
+
+> **[NEW-7 보정] **마이그레이션 호출 시점: **Phase 4 시작 전** (Phase 3 완료 후)
 
 **문제**: 이미 존재하는 테이블에 메타데이터 컬럼 없으면 스키마 불일치
 
@@ -398,7 +411,6 @@ def execute(self):
     logger.info("[Phase 4] BigQuery 적재...")
     self._run_phase4()
 ```
-
 ```sql
 -- 기존 테이블 마이그레이션 (BigQuery DDL)
 ALTER TABLE `ds_neoprime_entrance.tb_raw_2026_RAWSCORE`
@@ -1020,6 +1032,7 @@ def save_formula_metadata(self, output_dir: str, sheet_name: str, formula_data: 
 **목적**: 원본 데이터는 보존하면서 정제된 데이터만 보는 2계층 구조
 
 > **[TG-2 보정]** 하드코딩 `column_0 IS NOT NULL` 제거 - 시트별 동적 필터 적용
+
 > **[NEW-6 보정]** 키 컬럼이 실제 테이블에 존재하는지 검증 후 필터 적용
 
 **문제**: 모든 15개 시트의 첫 번째 컬럼이 `column_0`이라는 보장 없음
@@ -1123,7 +1136,6 @@ def create_business_views(project_id: str, dataset_id: str):
             except Exception as e:
                 print(f"뷰 생성 실패: {view_name} - {e}")
 ```
-
 
 **SQL 직접 실행 버전**:
 
@@ -1285,27 +1297,49 @@ flowchart TD
 ### v2.2~v2.4 결함 보정 종합 현황
 
 | 결함 ID | 결함 내용 | 심각도 | 보정 방안 | 버전 |
+
 |---------|----------|--------|----------|------|
+
 | CF-1 | _row_id 청크 초기화 오류 | Critical | Global Offset 공식 | v2.1 |
+
 | CF-2 | Dual-Read 성능 상쇄 | Critical | 기존 클래스 활용 | v2.1 |
+
 | CF-3 | Autodetect 스키마 위험 | High | Python Dtype 정의 | v2.1 |
+
 | TG-1 | has_data 필터링 허점 | Medium | 조건 제거 | v2.1 |
+
 | TG-2 | 비즈니스 뷰 하드코딩 | Medium | 동적 필터 | v2.1 |
+
 | CR-1 | 전체 컬럼 검증 쿼리 폭발 | Critical | 랜덤 50개 샘플링 | v2.2 |
+
 | CR-2 | 메타데이터 추가 위치 | Critical | Phase 3에서 추가 | v2.2 |
+
 | CR-3 | ALTER RENAME 미지원 | Critical | client.copy_table() API | v2.2 + **v2.4** |
+
 | CR-4 | 0.95 vs 격리 모순 | High | 0.99로 상향 | v2.2 |
+
 | HI-1 | row_group_size 미사용 | High | 코드 연동 | v2.2 |
+
 | HI-2 | Dual-Read 기존 구현 충돌 | High | 기존 클래스 활용 | v2.2 |
+
 | HI-3 | Description JSON 잘림 | Medium | 라벨 + Description | v2.2 |
+
 | AI-1 | 기존 테이블 마이그레이션 | High | ALTER ADD COLUMN | v2.2 |
+
 | AI-2 | schema_extractor 통합 | Low | master_pipeline 통합 | v2.2 |
+
 | AI-3 | 뷰 컬럼 에러 | Medium | 조건부 EXCEPT | v2.2 |
+
 | **NEW-1** | 랜덤 시드 위치 불명확 | Medium | **함수 내부 설정** | **v2.4** |
+
 | **NEW-6** | 비즈니스 뷰 키 컬럼 미검증 | High | **_validate_key_column** | **v2.4** |
+
 | **NEW-7** | 마이그레이션 호출 시점 불명확 | High | **Phase 4 전 실행** | **v2.4** |
+
 | **NEW-8** | Schema-First Load 구현 누락 | High | **autodetect=False** | **v2.4** |
+
 | **호출체인** | _add_system_columns 연결 단절 | High | **완전한 호출 체인 명시** | **v2.4** |
+
 | **격리고유명** | 동일 테이블 격리 시 덮어쓰기 | Medium | **타임스탬프+밀리초** | **v2.4** |
 
 ---

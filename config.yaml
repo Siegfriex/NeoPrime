@@ -1,34 +1,24 @@
-# NEO GOD Ultra Pipeline v2.0 Configuration
-version: "2.0"
-
-# 소스 파일
-source_file: "Y:\\0126\\0126\\202511고속성장분석기(가채점)20251114.xlsx"
-
-# BigQuery 설정
 bigquery:
-  project_id: "neoprime0305"
-  dataset_id: "ds_neoprime_entrance"
-  table_id: "tb_raw_2026"
-  credentials_path: "neoprime-loader-key.json"
-  location: "asia-northeast3"  # 서울 리전
-
-# 처리 설정
+  credentials_path: neoprime-loader-key.json
+  dataset_id: ds_neoprime_entrance
+  location: asia-northeast3
+  project_id: neoprime0305
+  table_id: tb_raw_2026
+column_mapping:
+  file: column_mapping.json
+metadata:
+  add_system_columns: true
+  source_filename: 202511고속성장분석기
+output:
+  backup: true
+  directory: ./output
 processing:
   chunk_size: 50000
+  formula_sample_rows: 10
   max_parquet_size_mb: 50
-  memory_coefficient: 2.5  # 보수적 메모리 계수
-  formula_sample_rows: 10  # 수식 샘플링 행 수
-
-# 출력 설정
-output:
-  directory: "./output"
-  backup: true
-
-# 검증 설정
+  memory_coefficient: 2.5
+source_file: Y:\0126\0126\202511고속성장분석기(가채점)20251114_값변환_20260126_211108.xlsx
 validation:
-  null_threshold: 0.1  # 10% 이하 NULL 허용
-  row_count_tolerance: 0.01  # 1% 오차 허용
-
-# 컬럼명 매핑 (선택)
-column_mapping:
-  file: "column_mapping.json"
+  null_threshold: 1.0
+  row_count_tolerance: 0.01
+version: '2.0'

@@ -1,24 +1,24 @@
 {
   "pipeline_version": "2.0",
-  "execution_time_seconds": 69.15,
+  "execution_time_seconds": 163.36,
   "phases": {
     "phase1": {
       "status": "completed",
-      "scan_time_seconds": 0.2571,
+      "scan_time_seconds": 0.2338,
       "target_sheets": 6
     },
     "phase2": {
       "status": "completed",
-      "total_chunks": 9
+      "total_chunks": 17
     },
     "phase3": {
       "status": "completed",
-      "total_chunks": 9
+      "total_chunks": 17
     },
     "phase4": {
       "status": "partial",
-      "loaded_rows": 225420,
-      "tables_created": 6,
+      "loaded_rows": 27013,
+      "tables_created": 14,
       "validation_passed": true
     }
   },

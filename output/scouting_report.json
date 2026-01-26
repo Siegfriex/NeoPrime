@@ -1,7 +1,7 @@
 {
-  "scan_time": "2026-01-26T18:02:56",
-  "file_path": "Y:\\0126\\0126\\202511고속성장분석기(가채점)20251114.xlsx",
-  "file_size_mb": 23.36,
+  "scan_time": "2026-01-26T21:32:12",
+  "file_path": "Y:\\0126\\0126\\202511고속성장분석기(가채점)20251114_값변환_20260126_211108.xlsx",
+  "file_size_mb": 21.69,
   "total_sheets": 15,
   "sheets": [
     {
@@ -148,8 +148,8 @@
       "메모장"
     ]
   },
-  "execution_time_sec": 0.2571,
+  "execution_time_sec": 0.2338,
   "engine": "openpyxl_fallback",
   "memory_estimate_mb": 154.15,
-  "available_memory_mb": 14039.45
+  "available_memory_mb": 4920.7
 }

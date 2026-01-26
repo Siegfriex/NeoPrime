@@ -3,7 +3,7 @@
   "total_cols": 10,
   "columns": {
     "column_0": {
-      "dtype": "str",
+      "dtype": "object",
       "null_count": 0,
       "null_ratio": 0.0,
       "unique_count": 7,
@@ -16,7 +16,7 @@
       ]
     },
     "column_1": {
-      "dtype": "str",
+      "dtype": "object",
       "null_count": 0,
       "null_ratio": 0.0,
       "unique_count": 34,
@@ -86,7 +86,7 @@
       }
     },
     "column_5": {
-      "dtype": "str",
+      "dtype": "object",
       "null_count": 0,
       "null_ratio": 0.0,
       "unique_count": 11366,

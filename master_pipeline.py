@@ -86,9 +86,10 @@ class NeoGodUltraPipeline:
             self.results['phase1'] = scout_with_fallback(self.config['source_file'])
             generate_scouting_report(self.results['phase1'], str(self.output_dir))
             
+            # 모든 시트 적재 (메모장 제외)
             target_sheets = [
-                s['name'] for s in self.results['phase1']['sheets'] 
-                if s['target_type'] in ['heavy', 'medium']
+                s['name'] for s in self.results['phase1']['sheets']
+                if s['has_data'] and s['name'] != '메모장'
             ]
             logger.info(f"타겟 시트 식별: {len(target_sheets)}개")
             
@@ -134,6 +135,11 @@ class NeoGodUltraPipeline:
             all_normalized_chunks = []
             import pandas as pd
 
+            # 메타데이터 설정 (v2.3)
+            metadata_cfg = self.config.get('metadata', {})
+            add_system_cols = metadata_cfg.get('add_system_columns', False)
+            source_fname = metadata_cfg.get('source_filename', None)
+
             for idx, chunk_file in enumerate(all_value_chunks):
                 logger.info(f"청크 정규화 중: {chunk_file}")
                 df = pd.read_parquet(chunk_file)
@@ -147,13 +153,22 @@ class NeoGodUltraPipeline:
                     korean_mapping=korean_mapping,
                     output_dir=str(self.output_dir),
                     max_chunk_size_mb=self.config['processing']['max_parquet_size_mb'],
-                    file_prefix=file_prefix
+                    file_prefix=file_prefix,
+                    chunk_index=idx,
+                    chunk_size=self.config['processing']['chunk_size'],
+                    source_filename=source_fname,
+                    add_system_columns=add_system_cols
                 )
                 self.results['phase3'].append(result)
                 all_normalized_chunks.extend(result['parquet_chunks'])
-            
+
             logger.info(f"Phase 3 완료: 총 {len(all_normalized_chunks)}개 정규화 청크 생성")
-            
+
+            # Phase 3.5: 기존 테이블 마이그레이션 (v2.3)
+            if add_system_cols:
+                logger.info("[Phase 3.5] 기존 테이블 마이그레이션...")
+                self._migrate_existing_tables()
+
             # Phase 4: Staging Table 멱등성 적재 (시트별 테이블 분리)
             logger.info("[Phase 4] Staging Table 적재 시작...")
             from phase4_load import StagingTableLoader
@@ -240,7 +255,47 @@ class NeoGodUltraPipeline:
             logger.error(f"파이프라인 실패: {e}", exc_info=True)
             self._generate_final_report()
             raise
-    
+
+    def _migrate_existing_tables(self):
+        """기존 테이블에 메타데이터 컬럼 추가 (v2.3)"""
+        from google.cloud import bigquery
+        from google.oauth2 import service_account
+        try:
+            creds = service_account.Credentials.from_service_account_file(
+                self.config['bigquery']['credentials_path'],
+                scopes=['https://www.googleapis.com/auth/bigquery']
+            )
+            client = bigquery.Client(project=self.config['bigquery']['project_id'], credentials=creds)
+            dataset_id = self.config['bigquery']['dataset_id']
+            base_table = self.config['bigquery']['table_id']
+
+            query = f"""
+            SELECT table_name FROM `{self.config['bigquery']['project_id']}.{dataset_id}.INFORMATION_SCHEMA.TABLES`
+            WHERE table_name LIKE '{base_table}_%'
+            AND table_name NOT LIKE '%_staging' AND table_name NOT LIKE '%_backup_%' AND table_name NOT LIKE '%_quarantine_%'
+            """
+            tables = [row.table_name for row in client.query(query).result()]
+            logger.info(f"  기존 테이블 {len(tables)}개 발견")
+
+            for tbl in tables:
+                col_query = f"""
+                SELECT column_name FROM `{self.config['bigquery']['project_id']}.{dataset_id}.INFORMATION_SCHEMA.COLUMNS`
+                WHERE table_name = '{tbl}' AND column_name IN ('_ingested_at', '_source_filename', '_row_id')
+                """
+                existing = [r.column_name for r in client.query(col_query).result()]
+                if len(existing) == 3:
+                    continue
+                tbl_ref = f"`{self.config['bigquery']['project_id']}.{dataset_id}.{tbl}`"
+                if '_ingested_at' not in existing:
+                    client.query(f"ALTER TABLE {tbl_ref} ADD COLUMN IF NOT EXISTS _ingested_at STRING").result()
+                if '_source_filename' not in existing:
+                    client.query(f"ALTER TABLE {tbl_ref} ADD COLUMN IF NOT EXISTS _source_filename STRING").result()
+                if '_row_id' not in existing:
+                    client.query(f"ALTER TABLE {tbl_ref} ADD COLUMN IF NOT EXISTS _row_id INT64").result()
+                logger.info(f"  {tbl}: 메타데이터 컬럼 추가 완료")
+        except Exception as e:
+            logger.warning(f"  기존 테이블 마이그레이션 스킵: {e}")
+
     def _generate_final_report(self):
         """최종 리포트 생성"""
         total_time = time.perf_counter() - self.start_time if self.start_time else 0
